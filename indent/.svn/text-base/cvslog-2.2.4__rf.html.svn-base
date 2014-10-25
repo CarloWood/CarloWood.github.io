@@ -1,0 +1,330 @@
+<html>
+<title>CVS</title>
+<BODY BGCOLOR="#AAAAAA">
+<hr><center><h1>--- /indent ---</h1></center><hr>
+
+
+
+
+
+
+
+
+<A NAME="NEWS">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: NEWS</font></B><br></td><tr>
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>1999/11/04 23:12:27<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>O well, lets release it.</code><br>
+
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>1999/11/04 17:05:56<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Update of NEWS</code><br>
+
+<tr><td><b>Revision 1.20</b><td>carlo
+<td>1999/10/29 17:55:59<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 27 Oct 1999 18:16:38 -0400 (EDT)</code><br>
+<code>From: Kragen Sittler &lt;sittler@day.erim-int.com&gt;</code><br>
+<code>To: carlo@runaway.xs4all.nl</code><br>
+<code>Subject: update for 'info' texinfo file</code><br>
+<code></code><br>
+<code>This patch updates the info file in a number of ways:</code><br>
+<code>- corrects incorrect indentation in one example (TeX doesn't like &lt;tab&gt;</code><br>
+<code>  in @example);</code><br>
+<code>- corrects incorrect spellings of words;</code><br>
+<code>- corrects some usages of words and punctuation that I think might be</code><br>
+<code>  incorrect; some of the punctuation corrections may actually be</code><br>
+<code>  incorrect.</code><br>
+<code>- changes (c) to @copyright{};</code><br>
+<code>- uses more specific markup, including the new Texinfo 4.0 markup:</code><br>
+<code>  @file, @option, @command, @env, etc., in preference to @samp and</code><br>
+<code>  @code, where applicable;</code><br>
+<code>- changes spacing and page breaks to be a little more readable in the</code><br>
+<code>  printed version -- IMHO; you may disagree;</code><br>
+<code>- modification of dashes -- one en dash became an em dash, and another</code><br>
+<code>  became a hyphen;</code><br>
+<code>- modification of quotes in a couple of places;</code><br>
+<code>- corrected minor factual errors probably due to typos;</code><br>
+<code>- added a couple of things to the index;</code><br>
+<code>- added markup in a couple of places where it seemed to be missing;</code><br>
+<code>- tried and failed to fix the &quot;cross-key&quot;'s formatting.</code><br>
+
+<tr><td><b>Revision 1.19</b><td>carlo
+<td>1999/10/26 00:17:46<td>+5 -0
+<TR><TD COLSPAN=4>
+<code>Fixed bug causing --braces-on-if-line not to put a '{' brace on the same</code><br>
+<code>line as a '}' automatically on the next line.  Bug reported by David Luyer.</code><br>
+
+<tr><td><b>Revision 1.18</b><td>carlo
+<td>1999/10/19 23:38:11<td>+5 -0
+<TR><TD COLSPAN=4>
+<code>Update</code><br>
+
+
+</TABLE><br>
+
+
+
+
+
+
+
+<A NAME="backup.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: backup.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.9</b><td>carlo
+<td>1999/11/04 17:03:06<td>+22 -5
+<TR><TD COLSPAN=4>
+<code>Date: Sun, 24 Oct 1999 23:03:30 -0400</code><br>
+<code>From: &quot;Chris F.A. Johnson&quot; &lt;bq933@torfree.net&gt;</code><br>
+<code>Subject: &quot;GNU indent&quot;</code><br>
+<code></code><br>
+<code>I have made a modification (included as the output of &quot;diff -c&quot; which</code><br>
+<code>allows zero padding of numbered backup suffixes, controled by an</code><br>
+<code>environment variable, VERSION_WIDTH.</code><br>
+<code></code><br>
+<code>If the variable is set to a positive integer, that width will be used to</code><br>
+<code>zero-pad the backup suffix, e.g. if VERSION_WIDTH=2 the suffix would be</code><br>
+<code>~01~ instead of ~1~.</code><br>
+<code></code><br>
+<code>This improves alphabetical listing (with ls or a file requestor) when</code><br>
+<code>there are more than 10 backup versions. It may sound like overkill, but</code><br>
+<code>I have my text editor set to create a numbered backup with every save,</code><br>
+<code>and often there are more than 10 (even 20 or 30).</code><br>
+<code></code><br>
+<code>--</code><br>
+<code></code><br>
+<code>two bug fixes and update of documentation by Carlo Wood</code><br>
+
+
+</TABLE><br>
+
+<A NAME="comments.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: comments.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.13</b><td>carlo
+<td>1999/10/26 00:20:56<td>+6 -15
+<TR><TD COLSPAN=4>
+<code>Removed a few compiler warnings (mostly unused variables) reported to me</code><br>
+<code>by Nelson H. F. Beebe.</code><br>
+
+
+</TABLE><br>
+
+
+<A NAME="configure.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: configure.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.23</b><td>carlo
+<td>1999/10/30 01:58:33<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Bumped version number to 2.2.4</code><br>
+
+
+</TABLE><br>
+
+
+
+
+
+
+<A NAME="indent.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: indent.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.39</b><td>carlo
+<td>1999/10/30 01:56:08<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Ignore requests for (extra) blank lines prior to #else, #elif and #endif.</code><br>
+
+<tr><td><b>Revision 1.38</b><td>carlo
+<td>1999/10/26 00:20:56<td>+3 -3
+<TR><TD COLSPAN=4>
+<code>Removed a few compiler warnings (mostly unused variables) reported to me</code><br>
+<code>by Nelson H. F. Beebe.</code><br>
+
+<tr><td><b>Revision 1.37</b><td>carlo
+<td>1999/10/26 00:17:46<td>+4 -3
+<TR><TD COLSPAN=4>
+<code>Fixed bug causing --braces-on-if-line not to put a '{' brace on the same</code><br>
+<code>line as a '}' automatically on the next line.  Bug reported by David Luyer.</code><br>
+
+<tr><td><b>Revision 1.36</b><td>carlo
+<td>1999/10/11 16:04:23<td>+4 -4
+<TR><TD COLSPAN=4>
+<code>Treat #elif correctly. Thanks to Stuart Kemp for the bug report.</code><br>
+
+<tr><td><b>Revision 1.35</b><td>carlo
+<td>1999/10/10 13:49:27<td>+11 -5
+<TR><TD COLSPAN=4>
+<code>indent didn't recognize &quot;# else&quot; and &quot;# endif&quot; for what they are due</code><br>
+<code>to the space(s). Thanks to Stuart Kemp for the bug report.</code><br>
+
+
+</TABLE><br>
+
+
+
+
+
+<A NAME="indent.texinfo">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: indent.texinfo</font></B><br></td><tr>
+<tr><td><b>Revision 1.18</b><td>carlo
+<td>1999/11/04 17:03:06<td>+4 -1
+<TR><TD COLSPAN=4>
+<code>Date: Sun, 24 Oct 1999 23:03:30 -0400</code><br>
+<code>From: &quot;Chris F.A. Johnson&quot; &lt;bq933@torfree.net&gt;</code><br>
+<code>Subject: &quot;GNU indent&quot;</code><br>
+<code></code><br>
+<code>I have made a modification (included as the output of &quot;diff -c&quot; which</code><br>
+<code>allows zero padding of numbered backup suffixes, controled by an</code><br>
+<code>environment variable, VERSION_WIDTH.</code><br>
+<code></code><br>
+<code>If the variable is set to a positive integer, that width will be used to</code><br>
+<code>zero-pad the backup suffix, e.g. if VERSION_WIDTH=2 the suffix would be</code><br>
+<code>~01~ instead of ~1~.</code><br>
+<code></code><br>
+<code>This improves alphabetical listing (with ls or a file requestor) when</code><br>
+<code>there are more than 10 backup versions. It may sound like overkill, but</code><br>
+<code>I have my text editor set to create a numbered backup with every save,</code><br>
+<code>and often there are more than 10 (even 20 or 30).</code><br>
+<code></code><br>
+<code>--</code><br>
+<code></code><br>
+<code>two bug fixes and update of documentation by Carlo Wood</code><br>
+
+<tr><td><b>Revision 1.17</b><td>carlo
+<td>1999/10/29 17:55:59<td>+228 -211
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 27 Oct 1999 18:16:38 -0400 (EDT)</code><br>
+<code>From: Kragen Sittler &lt;sittler@day.erim-int.com&gt;</code><br>
+<code>To: carlo@runaway.xs4all.nl</code><br>
+<code>Subject: update for 'info' texinfo file</code><br>
+<code></code><br>
+<code>This patch updates the info file in a number of ways:</code><br>
+<code>- corrects incorrect indentation in one example (TeX doesn't like &lt;tab&gt;</code><br>
+<code>  in @example);</code><br>
+<code>- corrects incorrect spellings of words;</code><br>
+<code>- corrects some usages of words and punctuation that I think might be</code><br>
+<code>  incorrect; some of the punctuation corrections may actually be</code><br>
+<code>  incorrect.</code><br>
+<code>- changes (c) to @copyright{};</code><br>
+<code>- uses more specific markup, including the new Texinfo 4.0 markup:</code><br>
+<code>  @file, @option, @command, @env, etc., in preference to @samp and</code><br>
+<code>  @code, where applicable;</code><br>
+<code>- changes spacing and page breaks to be a little more readable in the</code><br>
+<code>  printed version -- IMHO; you may disagree;</code><br>
+<code>- modification of dashes -- one en dash became an em dash, and another</code><br>
+<code>  became a hyphen;</code><br>
+<code>- modification of quotes in a couple of places;</code><br>
+<code>- corrected minor factual errors probably due to typos;</code><br>
+<code>- added a couple of things to the index;</code><br>
+<code>- added markup in a couple of places where it seemed to be missing;</code><br>
+<code>- tried and failed to fix the &quot;cross-key&quot;'s formatting.</code><br>
+
+
+</TABLE><br>
+
+
+<A NAME="io.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: io.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.25</b><td>carlo
+<td>1999/11/04 23:09:33<td>+11 -11
+<TR><TD COLSPAN=4>
+<code>Bug fix: When the s_code buffer needed to be realloc-ed, bufbreak `ptr'</code><br>
+<code>were pointing into cyber space.  Now using an offset relative to the</code><br>
+<code>start of the buffer for the break points.</code><br>
+
+
+</TABLE><br>
+
+
+
+
+
+
+
+<A NAME="parse.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: parse.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.17</b><td>carlo
+<td>1999/10/26 00:20:56<td>+1 -4
+<TR><TD COLSPAN=4>
+<code>Removed a few compiler warnings (mostly unused variables) reported to me</code><br>
+<code>by Nelson H. F. Beebe.</code><br>
+
+
+</TABLE><br>
+
+
+<A NAME="texinfo2man.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: texinfo2man.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.5</b><td>carlo
+<td>1999/10/29 17:55:59<td>+20 -3
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 27 Oct 1999 18:16:38 -0400 (EDT)</code><br>
+<code>From: Kragen Sittler &lt;sittler@day.erim-int.com&gt;</code><br>
+<code>To: carlo@runaway.xs4all.nl</code><br>
+<code>Subject: update for 'info' texinfo file</code><br>
+<code></code><br>
+<code>This patch updates the info file in a number of ways:</code><br>
+<code>- corrects incorrect indentation in one example (TeX doesn't like &lt;tab&gt;</code><br>
+<code>  in @example);</code><br>
+<code>- corrects incorrect spellings of words;</code><br>
+<code>- corrects some usages of words and punctuation that I think might be</code><br>
+<code>  incorrect; some of the punctuation corrections may actually be</code><br>
+<code>  incorrect.</code><br>
+<code>- changes (c) to @copyright{};</code><br>
+<code>- uses more specific markup, including the new Texinfo 4.0 markup:</code><br>
+<code>  @file, @option, @command, @env, etc., in preference to @samp and</code><br>
+<code>  @code, where applicable;</code><br>
+<code>- changes spacing and page breaks to be a little more readable in the</code><br>
+<code>  printed version -- IMHO; you may disagree;</code><br>
+<code>- modification of dashes -- one en dash became an em dash, and another</code><br>
+<code>  became a hyphen;</code><br>
+<code>- modification of quotes in a couple of places;</code><br>
+<code>- corrected minor factual errors probably due to typos;</code><br>
+<code>- added a couple of things to the index;</code><br>
+<code>- added markup in a couple of places where it seemed to be missing;</code><br>
+<code>- tried and failed to fix the &quot;cross-key&quot;'s formatting.</code><br>
+
+
+</TABLE><br>
+
+<hr width=100%>
+<font size=2>
+<p>File made using version 1.52 of <a href="http://www.sslug.dk/cvs2html" target="_top">cvs2html</a> by carlo at 99-11-05  0:14   and only showing data between revisions V2_2_3:HEAD.</font></p>
+</body>
+</html>

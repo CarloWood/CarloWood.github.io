@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$ChessGame_8h.html" title="This file contains the declaration of class ChessGame." alt="" coords="69,83,181,112"/>
+<area shape="rect" id="node9" href="$PgnGame_8cc.html" title="This file contains the implementation of class PgnGame." alt="" coords="205,83,307,112"/>
+<area shape="rect" id="node5" href="$ChessGame_8cc.html" title="This file contains the implementation of class ChessGame." alt="" coords="5,160,123,189"/>
+<area shape="rect" id="node7" href="$tstpgn_8cc.html" title="A test application to test reading PGN files." alt="" coords="147,160,227,189"/>
+</map>

@@ -1,0 +1,233 @@
+<html>
+<head>
+<title>The xcw Namespace Project</title>
+<style>
+div.xml {
+  white-space: pre;
+  margin-top: 0;
+  margin-bottom: 1em;
+  padding: 10px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: #E1FFFD;
+  font-family: monospace;
+}
+div#body {
+  margin-left: 80px;
+  margin-right: 80px;
+}
+span.element, span.element_tag {
+  color: blue;
+  font-family: monospace;
+  font-size: 110%;
+}
+span.element_foo, span.element_foo_tag {
+  font-family: monospace;
+}
+span.foo_tag {
+  color: #aaaaaa;
+}
+div.xsd {
+  white-space: pre;
+  margin-top: 0;
+  margin-bottom: 1em;
+  padding: 10px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: #FEDBFF;
+  font-family: monospace;
+}
+</style>
+</head>
+<body>
+
+<div id="body">
+<h1>The xcw Namespace</h1>
+
+<h2>Introduction</h2>
+<p><b>This document</b> proposes a layout of the 'xcw namespace'.
+This namespace contains an XML definition for objects and their interfaces.
+The goal of this document is to define an extendable and exchangable format that allows
+to describe arbitrary objects
+(though <a href="http://en.wikipedia.org/wiki/Open_source">Open Source Software</a> (OSS) related),
+maintained by authors through-out the world, and how they might interact.</p>
+
+<p><b>The main purpose</b> of this format is to allow for a formal definition of how different open source projects
+and/or objects are interdependent and might interact with each other.</p>
+
+<p class="example">For example, an author of an open source project (see <a href="http://www.opensource.org/">Open Source Initiative</a>),
+as might be hosted by one of the several <a href="http://sourceforge.net/">SourceForge</a> sites or
+listed on <a href="http://freshmeat.net/">FreshMeat</a>, might have written a C++ library and
+put the complete description of their library in xcw namespace. This would include the name of the library
+and where to download as well as documentation of how to use it. However, it can also contain a
+machine readable description of what to add to several files of <em>other</em> projects in order
+to use it. For example, things to add to a configure.ac file and Makefile.am file
+(see <a href="http://sources.redhat.com/automake/">automake</a>); or instructions for adding it to
+an <a href="http://eclipse.techforge.com/">Eclipse</a> project. Subsequentently an Eclipse extension
+would be written that reads this XML file and adds the support for you. Once this has been done,
+other C++/java library vendors can add the same descriptions to the xcw namespace of their project;
+allowing users of their library to seemless add support for their library to Eclipse and/or automake.</p>
+
+<a name="root"><h2>XML files</h2></a>
+<p>Every definition is exported in the form of <a href="http://www.w3schools.com/xml/xml_whatis.asp">XML files</a>.
+A file that defines an object in the xcw namespace therefore has the form:</p>
+
+<div class="xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xcw:root xmlns:xcw=&quot;http://xcw.alinoe.com/&quot;&gt;
+  <i>[content]</i>
+&lt;/xcw:root&gt;
+</div>
+
+<p>Where <i>[content]</i> can be anything. Some of which is defined below.
+The <span class="element">xcw:root</span> is basically ignored, it can be used
+to group multiple projects into one file however. If you only define a single
+project. It could also be <span class="element">xcw:project</span>, or when
+it's a file that is included in another definition, it could for example be
+<span class="element">xcw:author</span>, when that is the root element.</p>
+
+<a name="definition_version"><h2>Definition Version</h2></a>
+
+<p>A <span class="element">xcw:definition_version</span> defines the version of the parent element's definition.</p>
+
+<p>For example, a definition of <span class="element_foo">parent</span> could be given as follows:</p>
+
+<div class="xml">&lt;<span class="foo_tag">parent</span>&gt;
+  &lt;xcw:definition_version&gt;
+    &lt;xcw:current&gt;2.20041109.2&lt;/xcw:current&gt;
+    &lt;xcw:interface&gt;2.20020718&lt;/xcw:interface&gt;
+    &lt;xcw:url&gt;http://thissite.org/parent.xml/&lt;/xcw:url&gt;
+  &lt;/xcw:definition_version&gt;
+  <i>[content]</i>
+&lt;/<span class="foo_tag">parent</span>&gt;
+</div>
+
+<p>The value given by <span class="element">xcw:current</span> defines the current version of the definition of
+<span class="element_foo">parent</span> in that particular file.</p>
+
+<p>The value given by <span class="element">xcw:interface</span> defines the 'interface' version.
+The meaning of that value is that if another project used a definition that was later than this
+version, it should still be able to work with the current version. More about this later.</p>
+
+<p>For example, if some other definition claims to be compatible with (expects) version 2.20020920,
+it will also be compatible with (be able to use) 2.20041109.2 because 2.20020920 &gt;= 2.20020718.</p>
+
+<p>When no <span class="element">xcw:interface</span> is given, it's value is equal to that of
+<span class="element">xcw:current</span>. In other words, the presence of <span class="element">xcw:interface</span>
+inside a <span class="element">xcw:definition_version</span> element is <em>optional</em>.</p>
+
+<p>The url given in <span class="element">xcw:url</span> is an option url that points to the
+the place where the latest version of the current file can be downloaded.</p>
+
+<p>In most cases, <span class="element">xcw:definition_version</span> will occur only once
+in any XML file, directly below the root tag: it's supposed to define the version of the
+current XML file. However, when the definition of some block that is maintained elsewhere
+has to be copied into a XML (instead of using the <span class="element">xcw:import</span> tag, see below)
+then this copy has to be <em>exactly</em> like it was in the original. As such,
+a second <span class="element">xcw:definition_version</span> can appear in the same XML, defining
+the version of a child element. One of the reasons this might happen is when some definition has
+to be available in full <em>off-line</em> (for example on a CD-rom, sold to people with internet).
+Such an XML file should not be placed on-line for public use however. It is encouraged to have
+only definitions on-line that contain only a single <span class="element">xcw:definition_version</span> element.</p>
+
+<a name="import"><h2>Importing An External Definition</h2></a>
+
+<p>When a definition is needed for which already a seperately maintained file exists,
+or when such 
+<a name="version_requirement"><h2>Version Requirement</h2></a>
+
+<p>An element that refers to, or uses, an external defintion in some way, should declare the version(s)
+it will be compatible with by means of a (list of) version requirement(s) for that external definition,
+by means of a <span class="element">xcw:version_requirement</span> element.</p>
+
+<p>For example, if some element <span class="element_foo">foobar</span> refers to an external
+(in another file, other site, and/or by another author) element <span class="element_foo">external</span>
+defined in some <span class="element_foo">namespace</span>,
+then it can require a minimal version (below which the defined object becomes invalid), as follows:</p>
+
+<div class="xml">&lt;<span class="foo_tag">namespace</span>&gt;
+  &lt;<span class="foo_tag">external</span>&gt;
+    &lt;xcw:version_requirement&gt;
+      &lt;xcw:compat&gt;1.20010803&lt;/xcw:compat&gt;
+      &lt;xcw:compat&gt;2.20050725.7&lt;/xcw:compat&gt;
+      ...
+    &lt;/xcw:version_requirement&gt;
+  &lt;<span class="foo_tag">/external</span>&gt;
+&lt;<span class="foo_tag">/namespace</span>&gt;
+&lt;<span class="foo_tag">foobar</span>&gt;
+  <i>[content using `external']</i>
+&lt;<span class="foo_tag">/foobar</span>&gt;
+</div>
+
+<p>Formally this means that the used definition of <span class="element_foo"><i>external</i></span> must
+have a <span class="element">xcw:current</span> and <span class="element">xcw:interface</span> version such that
+<code>interface &lt;= compat &lt;= current</code> for at least one of the <span class="element">xcw:compat</span>
+values listed.</p>
+
+<p>Each definition file is only allowed a single <span class="element">xcw:version_requirement</span> for
+each external element/object it uses.
+
+<a name="author"><h2>Author</h2></a>
+
+<p>Each element definition may contain an element <span class="element">xcw:author</span> in addition
+to the already mentioned <span class="element">xcw:definition_version</span>.</p>
+
+<p>The format of an <span class="element">xcw:author</span> element is given below in XSD style.
+See <a href="http://www.w3schools.com/dtd/dtd_intro.asp">http://www.w3schools.com/dtd/dtd_intro.asp</a>
+for a quick tutorial on XML Shema Definition syntax.</p>
+
+<div class="xsd">
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://xcw.alinoe.com"
+  xmlns="http://http://xcw.alinoe.com"
+  elementFormDefault="qualified"&gt;
+
+&lt;xs:element name="author"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+	&lt;xs:element name="name" type="xs:string"/&gt;
+	&lt;xs:element name="contact" type="xs:string"/&gt;
+	&lt;xs:element name="homepage" type="xs:string"/&gt;
+	&lt;xs:element name="public_key" type="xs:string"/&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+
+&lt;!ELEMENT author (name,contact,homepage?,public_key?)&gt;
+  &lt;!ELEMENT name (firstname,surname,restname?)&gt;
+    &lt;!ELEMENT firstname (#PCDATA)&gt;
+    &lt;!ELEMENT surname (#PCDATA) -- For alphabetic ordering --&gt;
+    &lt;!ELEMENT restname (#PCDATA) -- Optional names between firstname and surname --&gt;
+  &lt;!ELEMENT contact (email,address?,phone?,chat?)&gt;
+    &lt;!ELEMENT email (#PCDATA)&gt;
+    &lt;!ELEMENT address (street,number,number_extension?,zipcode,city,state?,country)&gt;
+      &lt;!ELEMENT street (#PCDATA)&gt;
+      &lt;!ELEMENT number (#PCDATA)&gt;
+      &lt;!ELEMENT number_extension (#PCDATA)&gt;
+      &lt;!ELEMENT zipcode (#PCDATA)&gt;
+      &lt;!ELEMENT city (#PCDATA)&gt;
+      &lt;!ELEMENT state (#PCDATA)&gt;
+      &lt;!ELEMENT country (#PCDATA)&gt;
+    &lt;!ELEMENT phone (voice|mobile|fax)+&gt;
+      &lt;!ELEMENT voice (#PCDATA)&gt;
+      &lt;!ELEMENT mobile (#PCDATA)&gt;
+      &lt;!ELEMENT fax (#PCDATA)&gt;
+    &lt;!ELEMENT chat (msn|irc|icq|skype|googletalk|yahoochat|other)+&gt;
+      &lt;!ELEMENT msn (#PCDATA)&gt;
+      &lt;!ELEMENT irc (#PCDATA)&gt;
+      &lt;!ELEMENT icq (#PCDATA)&gt;
+      &lt;!ELEMENT skype (#PCDATA)&gt;
+      &lt;!ELEMENT googletalk (#PCDATA)&gt;
+      &lt;!ELEMENT yahoochat (#PCDATA)&gt;
+      &lt;!ELEMENT other (#PCDATA)&gt;
+  &lt;!ELEMENT homepage (#PCDATA)&gt;
+  &lt;!ELEMENT public_key (#PCDATA)&gt;
+</div>
+
+</div> <!-- End of "body" -->
+
+</body>
+</html>
+

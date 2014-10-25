@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$Move_8h.html" title="This file contains the definition of class Move." alt="" coords="59,237,125,267"/>
+<area shape="rect" id="node17" href="$BitBoard_8h.html" title="This file contains the declaration of class BitBoard." alt="" coords="141,315,229,344"/>
+<area shape="rect" id="node21" href="$Piece_8h.html" title="This file contains the declaration of class Piece." alt="" coords="320,83,387,112"/>
+<area shape="rect" id="node7" href="$Index_8h.html" title="This file contains the declaration of class Index." alt="" coords="133,392,200,421"/>
+<area shape="rect" id="node11" href="$Type_8h.html" title="This file contains the declaration of class Type." alt="" coords="257,315,319,344"/>
+<area shape="rect" id="node14" href="$Color_8h.html" title="This file contains the declaration of class Color." alt="" coords="325,392,392,421"/>
+<area shape="rect" id="node23" href="$Code_8h.html" title="This file contains the declaration of class Code." alt="" coords="320,160,387,189"/>
+<area shape="rect" id="node32" href="$Flags_8h.html" title="This file contains the declaration of class Flags." alt="" coords="467,315,533,344"/>
+<area shape="rect" id="node28" href="$Direction_8h.html" title="This file contains the declaration of class Direction." alt="" coords="200,237,291,267"/>
+</map>

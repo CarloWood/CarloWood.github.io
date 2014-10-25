@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$MetaData_8h.html" title="This file contains the declaration of class MetaData." alt="" coords="91,83,187,112"/>
+<area shape="rect" id="node7" href="$GameNode_8h.html" title="This file contains the declaration of class GameNode." alt="" coords="211,83,317,112"/>
+<area shape="rect" id="node9" href="$PgnGame_8h.html" title="This file contains the declaration of class PgnGame." alt="" coords="341,83,437,112"/>
+<area shape="rect" id="node13" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database." alt="" coords="388,160,508,189"/>
+<area shape="rect" id="node23" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable." alt="" coords="717,315,843,344"/>
+<area shape="rect" id="node27" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList." alt="" coords="432,237,573,267"/>
+</map>

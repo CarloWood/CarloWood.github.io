@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database." alt="" coords="315,160,435,189"/>
+<area shape="rect" id="node20" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList." alt="" coords="461,83,603,112"/>
+<area shape="rect" id="node25" href="$Promotion_8h.html" title="This file contains the declaration of class Promotion." alt="" coords="644,83,743,112"/>
+<area shape="rect" id="node35" href="$Referenceable_8cc.html" title="This file contains the implementation of class Referenceable." alt="" coords="767,83,897,112"/>
+<area shape="rect" id="node5" href="$PgnGame_8h.html" title="This file contains the declaration of class PgnGame." alt="" coords="147,237,243,267"/>
+<area shape="rect" id="node11" href="$tstpgn_8cc.html" title="A test application to test reading PGN files." alt="" coords="195,392,275,421"/>
+<area shape="rect" id="node15" href="$PgnDatabase_8cc.html" title="This file contains the implementation of class pgn::Database." alt="" coords="320,237,445,267"/>
+<area shape="rect" id="node18" href="$tstpgnread_8cc_source.html" title="tstpgnread.cc" alt="" coords="469,237,579,267"/>
+<area shape="rect" id="node7" href="$ChessGame_8h.html" title="This file contains the declaration of class ChessGame." alt="" coords="8,315,120,344"/>
+<area shape="rect" id="node13" href="$PgnGame_8cc.html" title="This file contains the implementation of class PgnGame." alt="" coords="144,315,245,344"/>
+<area shape="rect" id="node9" href="$ChessGame_8cc.html" title="This file contains the implementation of class ChessGame." alt="" coords="5,392,123,421"/>
+<area shape="rect" id="node23" href="$MemoryBlockList_8cc.html" title="This file contains the implementation of class MemoryBlockList." alt="" coords="459,160,605,189"/>
+<area shape="rect" id="node27" href="$ChessPositionWidget_8h.html" title="This file contains the declaration of class ChessPositionWidget." alt="" coords="629,160,795,189"/>
+<area shape="rect" id="node33" href="$Promotion_8cc.html" title="This file contains the implementation of class Promotion." alt="" coords="819,160,925,189"/>
+<area shape="rect" id="node29" href="$ChessPositionWidget_8cc.html" title="This file contains the implementation of class ChessPositionWidget." alt="" coords="619,237,789,267"/>
+<area shape="rect" id="node31" href="$tstcpp_8cc.html" title="A full&#45;blown test application used for debugging cwchess::ChessPosition." alt="" coords="813,237,893,267"/>
+</map>

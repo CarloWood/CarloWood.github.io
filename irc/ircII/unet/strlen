@@ -1,0 +1,17 @@
+if (0) {
+     Script: unet/strlen
+        URL: http://www.xs4all.nl/~carlo17/irc/ircII/unet/strlen
+Description: ircII script to calculate the length of a string.
+Also needed: -
+    Version: $Id: strlen 317 2000-05-04 22:53:47Z carlo $
+  First Ver: 02/05/1998
+     Author: ircii @t alinoe.com, Run @t IRC
+}
+
+alias strlen {
+  ^assign dummy $*M
+  @function_return=rindex(M $dummy)
+}
+
+@version=101
+@loaded=[unet.strlen]

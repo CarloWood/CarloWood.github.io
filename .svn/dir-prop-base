@@ -1,0 +1,10 @@
+K 10
+svn:ignore
+V 58
+env.source
+xmlwrapp-*.tar.gz
+cwchessboard
+ircproxy
+libecc
+
+END

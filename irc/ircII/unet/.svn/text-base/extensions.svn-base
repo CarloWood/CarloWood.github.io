@@ -1,0 +1,48 @@
+if (0) {
+     Script: unet/extensions
+        URL: http://www.xs4all.nl/~carlo17/irc/ircII/unet/extensions
+Description: The official Undernet Extentions Script.
+             This ircII script extends the client with all extra
+             features of the Undernet.
+Also needed: http://www.xs4all.nl/~carlo17/irc/ircII/unet/commands
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/layout
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/numerics
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/opercommands
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/stripu
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/strlen
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/getname
+    Version: $Id$
+  First Ver: 02/05/1998
+     Author: ircii @t alinoe.com, Run @t IRC
+} 
+
+# Undernet command extensions
+
+load unet/commands
+if (loaded != [unet.commands] || version < 101) {
+  echo *** unet/extensions  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/commands
+}
+
+# Undernet IRC Operator extensions
+
+on -381 * {
+  load unet/opercommands
+  if (loaded != [unet.opercommands] || version < 101) {
+    echo *** unet/extensions  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/opercommands
+  }
+}
+
+# Undernet server reply decoding
+
+load unet/numerics
+if (loaded != [unet.numerics] || version < 101) {
+  echo *** unet/extensions  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/numerics
+}
+
+load unet/layout
+if (loaded != [unet.layout] || version < 101) {
+  echo *** unet/extensions  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/layout
+}
+
+@version=101
+@loaded=[unet.extensions]

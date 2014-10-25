@@ -1,0 +1,686 @@
+<HTML>
+
+<HEAD>
+  <TITLE>IRC now and future</TITLE>
+  <STYLE>
+  <!--
+    BODY { background: #F8FCF8; font-family: helvetica; font-size: 14pt; margin-top: 10 }
+    H1 { font-family: helvetica; font-size: 24pt }
+    H2 { font-family: helvetica; font-size: 18pt }
+    H3 { font-family: helvetica; font-size: 16pt }
+    PRE.example-code { font-family: courier; font-size: 14pt; margin-left: 10px }
+  -->
+  </STYLE>
+</HEAD>
+
+<BODY BGCOLOR=#F8FCF8 text="#000000" link="#700000" vlink="#404040" alink="#FF0000" background="grayro~1.jpg">
+
+<H1>IRC: What next?</H1>
+
+<P><FONT SIZE=-1><I>By Carlo Wood</I></FONT></P>
+
+<H2>Introduction</H2>
+
+<P>In this article I will try to explain improvements of IRC that require
+a change of the client-server protocol. I've tried to come to an
+agreement on a client-server protocol negotiation protocol in the past
+with the major client coders and server networks - but have failed.
+There seems to be hardly any interest (or understanding?) and certainly
+no willingness to come to such a standard.</P>
+
+<P>Perhaps I can convince you, the reader, and perhaps this will lead to
+improvements of IRC, some day.</P>
+
+<H2>What is causing Lag?</H2>
+
+<P>The word <I>lag</I> has a clear meaning in the IRC world: It's the delay between
+sending a message and that message arriving at a target user.</P>
+
+<P>There are many reasons why a message could get delayed a bit, but the
+only one that is significant (larger than a few seconds) is the time that
+the message is stored in the <I>send queue</I> of the IRC servers in between you
+and the target.</P>
+
+<P>Each connection, whether it is the client-server connection or the
+server-server connection, is a TCP/IP connection. Messages are sent in
+packets each of which has a sequence number that allows the receiving
+side to reorder these packets again, creating a virtually continuous stream
+of data.</P>
+
+<P>Sometimes the traffic on the route that these packets take is so
+large that internet routers in between can't handle them and simply throw
+away packets. This is detected by the receiving side when a sequence number
+is missing. It will send a special packet back to the sender requesting
+to send the missing packet again. When this happens too often, then the
+TCP/IP protocol automatically slows down sending packets in order not to
+overload the routers with duplicated- and new- packets while they
+(apparently) are overloaded already. Roughly speaking this results in
+a total dysfunction of TCP/IP when more than 10% of the packets are lost:
+the number of messages per second that can actually be sent through such
+a connection will always be lower than what an average IRC server needs.
+Below we will simply assume a bandwidth, per TCP/IP connection, expressed
+in messages per second.</P>
+
+</P>Consider the following hypothetical server map:</P>
+
+<PRE>
+you --&gt; serverA --&gt; serverB --&gt; serverC --&gt; friend
+</PRE>
+
+<P>When you send a message to your friend on server C, it might happen that
+the amount of messages that server B receives per second with as target
+server C (or a target behind server C of course), is larger than the
+number of message it can send to server C. IRC servers do not throw away
+messages immediately; they queue messages until they run out of memory (and
+they got a LOT of memory). This is where the <I>lag</I> occurs that you know
+by experience: it is the time that the messages are stored in these buffers.
+The size of buffers will grow and grow, as long as more messages are
+received than can be sent. The <I>lag</I> can be expressed as follows:
+the number of messages in the buffer divided by the number of messages per
+second that can be sent out. When the buffer has grown to an enormous size,
+this lag can increase till even a few <EM>minutes</EM> delay time!</P>
+
+<P>There are currently three ways to halt this process:</P>
+
+<OL>
+<LI>The lag gets so huge that a server-server link <I>pings out</I>, meaning
+that its response to a PING request from the receiving server takes too
+long. This is the most common reason for a net-break.</LI>
+
+<LI>The buffer grows too large and the server finally decides to throw
+away all messages. This also leads to a net-break.</LI>
+
+<LI>Because of the terrible and frustrating delay, people stop communicating
+and hence the number of messages that arrive in the <I>send queue</I> becomes
+more or less equal to the number of message that is sent, so that the
+size of the buffer stabilizes to a constant value (until an IRC Oper
+breaks that link in order to re-route the servers).</LI>
+</OL>
+
+<H2>An alternative to PING</H2>
+
+<P>When you suffer from <I>lag</I>, it might help against the frustration to
+find out what is exactly causing it. In many cases there is just one
+particular server-server link that is lagging heavily.</P>
+
+<P>A way to measure lag is by sending a CTCP PING message to your target
+that will cause the target to send back a PONG message immediately.
+The time in between sending the message and receiving the response is
+the sum of the lag in both directions.</P>
+
+<P>Apart from the fact that many people have turned off this feature
+(because it allows abusers to let their client generate a flood of
+messages) it doesn't tell you <EM>where</EM> the lag is occurring.</P>
+
+<P>A neat way to investigate lag therefore is by mean of the TRACE message.
+The TRACE message causes every server in between you and the target
+to respond with their version. By simply looking for the first server
+that doesn't respond (or at least not before a long time), you have
+detected the problem link. In some cases this might help to solve the
+lag by connecting to another server, or you can message an IRC Oper
+asking if it is possible to reroute because link A-B is lagging so and so
+much.</P>
+
+<H2>Routing messages: channel map versus server map</H2>
+
+<P>IRC messages know two types of targets: nicks and channels. While messages
+on different channels are hardly related - and thus the order in which
+they arrive is not important - messages that are sent in private could
+definitely be confusing when they were not received in synchronization
+with the channel messages. But which channel? The original "solution"
+for this question has survived till this very moment on all IRC networks:
+All messages between source S and target T are routed via the exact
+same route (via the same servers).</P>
+
+<P>But, having read about Lag in the first paragraph, you might realize that
+it could be beneficial <B>not</B> to route all messages over the same
+server-server links! Instead of having a fixed <I>server map</I>, we could
+have a <I>channel map</I>: a routing map <EM>per</EM> channel - routing could
+even be diverted to the channel ops in that case, allowing you as channel op
+to reroute around lagged links!</P>
+
+<P>A major consequence of a change like this is that <EM>all</EM> messages
+should be <I>Channel Based</I>, meaning that every message must belong to a
+channel, including <EM>private</EM> messages. The main problem is that this
+demands the client-server protocol to be changed, and thus all clients...</P>
+
+<P>Undernet has already a channel based private message, do you know what it is?
+Did you ever use it? If people started to use this at large, and when
+client coders started to support it, then we could switch to a channel map
+in the future.</P>
+
+<P>The channel based message is <TT>CPRIVMSG</TT>, I leave it to you to find out its
+syntax (of course, you need to use <TT>/QUOTE CPRIVMSG ...</TT>. On some clients
+you might need to use <TT>/RAW</TT> instead of <TT>/QUOTE</TT>).</P>
+
+<H2>Dynamic routing versus static routing</H2>
+
+<P>All IRC networks use static routing: The path between any two servers
+is constant and a message from A to B passes the same servers in the same
+order every time. There is a server command that shows you this routing map:
+<TT>/QUOTE MAP</TT>. The server map that you will see shows the current TCP/IP
+connections between the servers. This map is static until a <I>net-break</I>
+occurs. Net-breaks are Bad<FONT face="courier" size=-1>(tm)</FONT>,
+because on reconnection of the resulting
+two isolated net parts a total resynchronization net-burst is needed between
+the two parts, using a lot of bandwidth on all server links and hence
+causing a lot of temporal lag.</P>
+
+<P>You will not see any loop in the server map; the servers are connected in
+a <I>spanning tree</I>. The effect of having no loops is that a message that
+wants to go from point A to point B, always has to follow the same path.</P>
+
+<P>Dynamic routing means that the path of messages would be determined
+while the message is being transferred and that the path isn't fixed.
+If dynamic routing could be achieved we would get rid of net-breaks
+and resynchronization. It would also be possible to automatically route
+around lagged links.</P>
+
+<H2>Message targets and routing</H2>
+
+<P>From a routing point of view, a channel target can be seen as a set of
+server targets: the message must go to all servers that have one or more
+clients that are on that channel.</P>
+
+<P>For the order of the messages it is important that messages from the
+same source arrive in the same order as they have been sent, something
+that is not guaranteed when using dynamic routing. It is also important
+not to receive a response (an answer) on a query (a question) before that
+query is received, when the source of the query differs from the source of
+the response. Not enforcing that would lead to confusing conversations like:</P>
+
+<PRE>
+&lt;Mmmm&gt; Ice creams.                      [ answer ]
+&lt;Run&gt; Mmmm: What do you like most?      [ question ]
+</PRE>
+
+<P>For the same reason private messages must be channel based (linked to
+a channel to keep in context):</P>
+
+<PRE>
+&gt;I think that the universe is curved back into itself
+*Aristo* What a stupid remark!          [ response to query ]
+-&gt; *Aristo* Huh?!
+&lt;Weenie&gt; I don't like ice creams        [ query ]
+</PRE>
+
+<P>Using a static spanning tree for the routing of channel messages enforces
+this, but there are other possibilities. I designed once a method that
+enforces this ordering even with dynamic routing, using sequence numbers
+for each server/channel pair, which doesn't use bandwidth for sequence
+numbers as long as the routing map is static.
+See <A HREF="http://www.imc.org/ietf-ircup-dev/mail-archive/msg00665.html">http://www.imc.org/ietf-ircup-dev/mail-archive/msg00665.html</A>.</P>
+
+<P>One important requirement to allow dynamic routing is that the identifiers
+that are used for targets in the server-server protocol must be static
+and unique. Channel names always have been static, but nick names are
+clearly not. Fortunately I already changed this on undernet by using
+<I>numeric nicks</I> in the server-server protocol rather than
+the nick names themselves.</P>
+
+<H2>Numeric nicks</H2>
+
+<P>A numeric nick is a unique ID that is assigned to you when you connect
+to Undernet. It is assigned by your local server. The uniqueness is
+guaranteed because a numeric nick exists of two parts: The ID of your
+local server plus a local-ID that is unique on your local server.
+Each server has its own unique ID (assigned by a committee).</P>
+
+<P>This numeric ID is never changed - and hence no confusion can occur
+when you change your NICK name suddenly while for instance a friend
+on a remote server was just opping you (or kicking you for that matter).</P>
+
+<H2>Nick uniqueness</H2>
+
+<P>The smart readers among you might already have felt the adrenaline rush
+when realizing what this mechanism could mean for us when it was also
+used for the client-server protocol. But rest assured: I already am
+aware of that. Indeed, one of the most irritating things on IRC is that
+nicks have to be Globally unique. In fact that is a historical heritage
+from the time that the nicks themselves were used in the server-server
+protocol to refer to users. However, now undernet is using numeric nicks
+there is absolutely no reason anymore to keep nicks globally unique.
+There are however two things that have stopped this important change:</P>
+<OL>
+<LI>Also the client-server protocol needs to be changed.</LI>
+<LI>Nicks still have to be unique per channel, because otherwise it still
+is too confusing when two people use the same nick (and your client
+wouldn't be able to understand who to message).</LI>
+</OL>
+
+<P>This is again a reason why also private messages must be channel-based:
+a private message would be sent to the <TT>nick</TT> of someone on a PARTICULAR
+channel; someone else could have the same nick on another channel.</P>
+
+<H2>Appearances</H2>
+
+<P>A way to implement the above is by introducing <I>Channel Appearances</I>.
+This would be the (nick) name that you want others to see when you
+talk to a channel (or send private messages within that channels' context).</P>
+
+<P>A new client-server command would be necessary, for instance:</P>
+
+<PRE>
+APPEARANCE &lt;#channel&gt; &lt;numeric-nick&gt; :Jedi Master Obi-wan
+</PRE>
+
+<P>There would be <EM>no</EM> reason anymore to restrict nick lengths to 9 characters:
+It would not be using much bandwidth anymore (although it is likely that
+clients will cut off lengthy appearances; I predict even that you will get
+kicked for it on some channels ;).</P>
+
+<H2>Uniqueness in general</H2>
+
+<P>The generation of <EM>unique</EM> IDs is quite interesting by itself.
+And quite a few unique IDs are needed in a good IRC protocol. [ As an example,
+consider channel names: Channel names are static (you can't change them
+on the fly) and unique, no? Wrong. Channel names are not unique because
+there is absolutely no checking being done when a new channel is being
+created. This very fact has led to all the channel-take-over business by
+means of net-riding. I've tried to solve this problem by labeling channels
+with a TimeStamp, also known as the <I>creation time</I> of the channel
+(although it is nothing more than a label to increase the chance-to-be-unique
+per creation occurrence). Nevertheless - all these problems wouldn't have
+existed when a <EM>truly</EM> unique ID would have been used for channels. ]</P>
+
+<P>A unique ID must be <EM>generated</EM> by the AUTHORITY of an ID. One important
+impact of that is that no ID can ever be chosen by a user (or client)
+and then be used in the server-server protocol: we will need to use
+<I>appearances</I> for channel names too, just as was discussed in the previous
+paragraph for nicks.</P>
+
+<P>An AUTHORITY would be a server in this case; channel IDs could be generated
+in the same way as numeric nicks are generated already: by using the
+unique server ID and linking that to a locally-unique number. The question
+of course is: <EM>when</EM> to generate a new ID?</P>
+
+<P>That question isn't so hard, you either search for a channel (using
+<TT>/LIST</TT> currently) or you want to create a <EM>new</EM> channel.
+In the last case you can just do that: create a new channel and have your
+local server generate its (unique) ID. This way channel
+authorities will be distributed over the net: each server will take its share.
+Things like checking if someone is authorized to kick (if he's a channel op)
+needs to be checked with the authority. This is one of the reasons why there
+is opposition against this implementation: what if the authority of a channel
+is down or unreachable? Keeping copies of the authority would introduce
+net-bursts again, and net-riding (abuse of temporal desynchs)<TT>...</TT>&nbsp;
+Not an easy problem.</P>
+
+<H2>Scalability</H2>
+
+<P>Nevertheless, I think that this is the way IRC has to go:</P>
+<UL>
+<LI>100% channel based</LI>
+<LI>Using static, unique IDs for everything (and thus generated
+by their authority)</LI>
+<LI>Dynamic, channel based routing</LI>
+</UL>
+<P>because those are the ingredients that are needed for a SCALABLE network:
+the <B>only</B> escape from lag. If lag is solved in any other way, than the
+network will grow and grow until there is lag again. [ I'll bluntly make
+public here that I limited the _protocol_ to a maximum of 64 server IDs
+and thus the number of servers to a maximum of 64; to <EM>force</EM> the admins
+to keep the undernet network <EM>small</EM>. Indeed this has lead to the rejection
+of servers already. Otherwise undernet would have been even bigger already
+with even <EM>more</EM> lag thus. I've told the admins this at an earlier time
+already and I can say that not all agree. Some claim that the bandwidth
+of internet has grown so much that now it is possible to have more than
+64 servers. Lag would be caused by cpu usage: the servers can't process
+the messages fast enough because they are not fast enough. ]</P>
+
+<H2>Client-server flow control</H2>
+
+<P>The way the client-server flow control works at the moment is pretty
+stupid: messages are accepted at all times and queued on the server
+when the client is sending too many messages. It would be a lot better
+to simply stop accepting messages from clients when they send too many.</P>
+
+<P>Of course the messages are not sent one by one, but in packets. So the
+current message queuing is still needed to recreate messages from message
+parts. It would be a big advantage however if somehow we could tell the
+clients that they should stop sending more messages: that would be the
+first step in a client-to-client flow control which doesn't need to queue
+(a lot of) messages anymore on the servers - and as such greatly reducing
+lag (see the first paragraph).</P>
+
+<H2>Server-server flow control and client-client flow control</H2>
+
+<P>Instead of buffering everything in this big-lag-causing-buffer, it would
+be better to tell an upstream source to STOP sending messages. For
+private messages this would directly lead to a client-client flow control
+(again needing a client-server protocol change). For channel messages
+things aren't as simple: you can't tell a client to stop talking when
+there is one person on the channel on a lagged server; instead, this must
+be integrated with the dynamic routing. However, it <EM>is</EM> possible to
+charge clients for the bandwidth they use; and tell _those_ clients to stop
+sending messages that use more bandwidth than others, when needed.
+In the ideal situation it would not be necessary anymore to only allow
+one message every two seconds, like is the case now, but one could be
+allowed to send more when bandwidth is available and only throttle when
+the bandwidth isn't available anymore. Because the clients that use most
+bandwidth would be throttled first, this would automatically work as
+a motivating factor for users to upgrade to clients that support
+compression (for instance) - or to _leave_ channels that they are not
+looking at etc. (receiving messages also uses bandwidth).</H2>
+
+<H2>Designing a new IRC protocol: user requirements</H2>
+
+<P>When designing a new IRC protocol, one has to carefully take into
+account who we're all doing it for: the users. Making a list with
+wishes is the first thing to do. Commercial companies would
+probably put wishes in this list like: being able to moderate the
+content of channels; being able to send clients advertisements; etc.
+From Undernet however we may expect that the only list to work with
+are the user requirements. The following list of user requirements
+is the result of a discussion group that tried to develop a new IRC
+protocol under the flag of the IETF.</P>
+
+<H3>User requirements</H3>
+
+<OL>
+<LI>I want to be able to find my friends.</LI>
+<P>You made friends the other day, and today you want to talk with them
+again. Are they online? Or you E-mail someone and agreed to talk
+on IRC: Where is he?</P>
+<LI>I want to have an identity, so that I can be recognized and found.</LI>
+<P>You think you made an impression on that cute guy yesterday and you
+hope he will contact you again.</P>
+<LI>I want to prevent other people from pretending to be me.</LI>
+<P>You have a reputation to protect: it would be nice if nobody could
+forge your identity.</P>
+<LI>I want to be able to hide from all except those who know me.</LI>
+<P>You <B>don't</B> want to be bothered at this moment, except by this special
+friend of course: the reason that you are waiting online...</P>
+<LI>I want to be able to hide from everyone.</LI>
+<P>Depressed? Bad temper? Just no time to explain why you don't want to
+talk right now? Just hide from <EM>everyone</EM>. And no, you don't want to
+disconnect - you're having an anonymous chat in #depressed.</P>
+<LI>I don't want to reveal my true identity to people I don't trust.</LI>
+<P>Lots of bad people out there. One of the coolest things of IRC is the
+fact that you can chat anonymously, not even your IP number is known
+with others.</P>
+<LI>I want to reveal my true identity to people I trust.</LI>
+<P>It should <EM>possible</EM> however to show your true identity, without
+breaking rule 3.!</P>
+<LI>I want to be able to be multiple personalities without the possibility
+to be recognized as being one while being the other.</LI>
+<P>That's like having multiple girl-friends (or boy-friends) without the
+risk being caught ;). Or you mostly chat with your fellow highschool
+friends, but what about those moments that you want to hang out in #gayteen
+to find out about those feelings?</P>
+<LI>I don't want to have to reveal any information to peers I chat with
+that allows them to DoS attack me.</LI>
+<P>DoS attacks are extremely annoying. Every information (like your IP-number)
+that allows others to DoS attack you should be hidden (unless you really
+want to show it).</P>
+<LI>I want people to be able to find me (and talk to me) who may only know me
+by some other means such as E-mail.</LI>
+<P>You have become a famous programmer and you advertise in your E-mail
+signature (or at the bottom of articles you write) how people can find
+you on IRC.</P>
+<LI>I want people to be able to recognize me instantly on IRC, no matter
+where I am.</LI>
+<P>Huh - well, if you want that - then it must be possible :)</P>
+</OL>
+
+<P>`Wow', you might think. `Is it really possible to write a protocol that
+allows ALL that?!'. I think yes, it is. The main problem is that it
+would require server-client protocol changes though. Big changes.</P>
+
+<H2>Identities</H2>
+
+<P>For a start, we can define a series of IDs (internal and external handles)
+that are needed in the protocol. The uniqueness, discussed in the paragraph
+<I>Uniqueness in general</I> above, is an important part of these IDs.</P>
+
+<P>I developed the following list while in the same pre-IETF group as mentioned
+earlier (note that this effort failed, like all other efforts. I left the
+group once it got clear to me that it was a waste of time).</P>
+
+<H3>Overview Identities, V1.1</H3>
+
+<PRE>
+<H3>Glossary</H3>
+
+IRC             = Internet Relay Chat, not necessarily refering to the
+                  current chat networks.
+IRC network     = All servers and clients that are connected, or can be
+                  connected.  These should also belong all to one and
+                  the same implementation.
+Total unique    = Unique in all times and IRC networks.
+Network unique  = Unique in all times on a specific IRC network.
+Globally unique = Unique at any given time on a specific IRC network.
+Channel unique  = Unique at any given time on a specific channel.
+Session         = A chat session, either being a specific private conversation
+                  or a forum on a channel.
+
+<H3>Identities</H3>
+
+AID
+
+Full name    : Authentication ID
+Description  : A number
+Uniqueness   : Per IRC network
+Use          : Hidden from other users, not admins.
+               Allows an admin to find related registration info.
+               Is used in ban-, silence- and ignore lists on servers.
+Understanding: Think of this a a phone number of someone, including
+               country code etc, to make it globally unique.
+
+RID
+
+Full name    : Real ID
+Description  : AID + implementation dependent data
+Uniqueness   : Not relevant (Although it will be as unique as the AID since
+               it contains the AID).
+Use          : Hidden from other users.
+               Information for admins when battling abusers.
+               Might also be used for access restrictions (compare I:,K: lines)
+Understanding: Since this data is implementation dependent, it can be anything.
+               Most likely however, practical examples are that it will at
+               least contain an E-mail address of the user and/or the host he
+               is connecting from, possibly extended with an identd lookup.
+
+EAID
+
+Full name    : Encoded AID
+Description  : A code
+Uniqueness   : Not relevant (Will be globally unique through its size)
+Use          : Given to friends of the AID; possibly, if there are different
+               types, one type can be given to everyone.
+               Generated by a server using the AID - on command of the owner
+               of the AID - and given to a <I>friend</I>.
+               Can be used to send someone a query.
+               Can be used to check if an Appearance is the same person as
+               last time (when you got the EAID).
+Understanding: There isn't much difference with the AID. The only reason that
+               an EAID exists is:
+               1) Users can use different EAIDs for each personality
+                  they want to be.
+               2) EAIDs come in different types, which different authority
+                  levels to do something (query, invite, msg, page, find).
+
+CID
+
+Full name    : Channel ID
+Description  : A number
+Uniqueness   : Globally
+Use          : To refer to an existing channel, by both, servers and clients.
+Understanding: While channel names can be huge and arbitry, using lots of
+               bandwidth when used all the time, and making it hard to check
+               the global uniqueness, this number can be relative short and
+               contain a routing element to the Channels' Authority.
+
+PID
+
+Full name    : Private ID
+Description  : A number
+Uniqueness   : Globally
+Use          : To refer to an existing user in the server-server protocol.
+Understanding: While Appearances can be huge and arbitry, using lots of
+               bandwidth when used all the time, and making it hard to find
+               the authority for that user, this number can be relative short
+               and contain a routing element to the users Authority.
+               At least as important is that we can't make Appearances
+               globally unique because that is annoying (namespace argument)
+               and hard to implement scalable, while the PID can be easily
+               globally unique because it is generated by the network itself.
+
+Appearance
+
+Description  : A text string
+Uniqueness   : Channel unique
+Use          : As text, by clients, to present other users to the user.
+Understanding: The only reason that servers need to be aware of an Appearance
+               is the reason that they must check the channel uniqueness.
+               All other <I>appearance</I> stuff, like Avatar information is CTCP
+               and is not necesarilly unique per channel.
+
+SID
+
+Full name    : Session ID
+Description  : A number
+Uniqueness   : Per client
+Use          : To refer to an existing session in the server-client protocol.
+Understanding: While Appearances can be huge and arbitry, using lots of
+               bandwidth when used all the time, this number can be relative
+               short. It also has chasing advantages, in that a message
+               targetted to a SID instead of an Appearance doesn't need a
+               chasing mechanism at all.
+</PRE>
+
+<H3>How do these ID help?</H3>
+
+<OL>
+<LI>I want to be able to find my friends</LI>
+
+<P>Use the EAID you got from them.</P>
+
+<LI>I want to have an identity, so that I can be recognized and found.</LI>
+
+<P>You can have the server generate any number of EAIDs for you.</P>
+
+<LI>I want to prevent other people from pretending to be me.</LI>
+
+<P>Nobody else but you has your AID (you got it sent to you by E-mail,
+for instance).</P>
+
+<LI>I want to be able to hide from all except those who know me.</LI>
+
+<P>Just tell the server to make you `invisible' except for those that
+have your EAID, possibly EAIDs with a certain level of authority
+(for example EAIDs that allow to find you when you're `partly invisible').</P>
+
+<LI>I want to be able to hide from everyone.</LI>
+
+<P>Just tell the server (this makes you `totally invisible').</P>
+
+<LI>I don't want to reveal my true identity to people I don't trust.</LI>
+
+<P>You don't have to. All you need to give away are EAID, a funny looking code.</P>
+
+<LI>I want to reveal my true identity to people I trust.</LI>
+
+<P>You can explicitly order the server to reveal information of you
+to others. Because the servers mediate, there is no way to forge that.</P>
+
+<LI>I want to be able to be multiple personalities without the possibility
+to be recognized as being one while being the other.</LI>
+
+<P>Just keep your EAIDs separate. Only use certainly on channel x and others
+on channel y (also using different appearances of course). You can NOT
+use different personalities on the SAME channel however: if you are banned
+then your AID will be matched: it might show that a single ban suddenly
+effects two <EM>different</EM> people, see also point 11.!</P>
+
+<LI>I don't want to have to reveal any information to peers I chat with
+that allows them to DoS attack me.</LI>
+
+<P>See 6.</P>
+
+<LI>I want people to be able to find me (and talk to me) who may only know
+me by some other means such as E-mail.</LI>
+
+<P>You can put an EAID in your E-mail for instance, the EAID should be printable
+text therefore.</P>
+
+<LI>I want people to be able to recognize me instantly on IRC, no matter
+where I am.</LI>
+
+<P>Once people <EM>see</EM> you (i.e. on a channel), then they can ask
+the server: Is this the owner of this EAID? And the server will tell them.</P>
+
+</OL>
+
+<P>Note the incompatibility between rule 8) and 11) and fighting abuse (the
+need for a ban). Fighting abuse is more important of course. Being multiple
+personalities will only be possible if you really keep them separated,
+hiding between a million other users is pretty safe then.</P>
+
+<H2>Encryption/compression: client-client, client-channel, CTCP and payload</H2>
+
+<P>What clients send over IRC should be completely free (although, as stated
+above - using a large bandwidth should only be tolerated when available).
+As an example, setting up an encrypted, private session should be
+almost standard (built into the clients). As far as the servers is
+concerned this means that the payload of messages is binary. The payload
+is everything that a server does NOT look at: it does not (have to) know
+what it means. Routing information is not part of the payload for instance.</P>
+
+<P>Actually, everything in the payload is CTCP (Client To Client Protocol).
+I think there should be no compression of server-server links; the
+aim should be that clients do the compression and de-compression. An
+important rule of the design of a new IRC protocol is: when it is possible
+to move something to the clients (cpu-wise), then do so!</P>
+
+<H2>Binary versus text</H2>
+
+<P>Everything that is not payload could still be text. Some people claim that
+it should be text because of debugging purposes and because that makes it
+easier for people to write clients. The latter only holds for the
+client-server protocol of course. I can only give my personal opinion here
+it seems: I see no reason not to use a binary protocol, it uses less bandwidth
+and is easier to decode (uses less cpu). Pieces of code (in C and C++ for
+instance) could be provided along with the protocol, giving examples of how
+to decode the binary protocol: then nobody should have problems to start
+playing with the protocol.</P>
+
+<H2>Conclusion</H2>
+
+<P>There is still an incredible amount of improvement possible in the chat
+world called IRC. However, when we want to introduce these changes
+gradually then we need some form of client-server protocol negotiation.
+A negotiation that will allow to change the client-server protocol
+<B><I>drastically</I></B> on the long run - allowing long periods of backwards
+compatibility, but without the need for an ever increasing list of (added
+and changed) features.</P>
+
+<P>I designed such a client-server protocol negotiation protocol, see
+<A HREF="http://www.xs4all.nl/~carlo17/irc/prot.html">http://www.xs4all.nl/~carlo17/irc/prot.html</A>.
+This method allows for a gradual shift of the &laquo;origin&raquo; of the protocol: First you make changes,
+making them negotiable and later you make them mandatory and part
+of a new <I>base</I>. Because the base can be shifted without loosing any
+backwards compatibility (as far as the negotiation protocol <EM>itself</EM> is
+concerned), the IRC protocol can be changed indefinitely, without that
+the negotiation messages need to grow. For instance: if you want to
+stay backwards compatible with all clients that are less than two years
+old, then after two years the negotiation bandwidth (and complexity)
+won't grow anymore; while once the protocol stabilizes and remains constant
+for two years, then the negotiation will be as simple as if there is no
+negotiation at all: &laquo;Use the base protocol&raquo; it would say (where the base
+is what was defined two years ago, and wasn't changed all that time).</P>
+
+<P>A last sad note. I have retreated from undernet because of the development
+stagnation, the difficulty to get cooperation from some of the admins
+(who refuse to upgrade for instance) and in general the feeling that I
+could be more productive elsewhere. As a result, if you are interested in
+getting this client-server protocol negotiation in any form into the
+servers (of ALL IRC networks, not only undernet) - then don't talk to me.</P>
+
+<P>Carlo Wood (Run @ IRC)</P>
+
+<HR SIZE=1 NOSHADE>
+Copyright &copy; 1999 Carlo Wood.  All rights reserved.
+
+</BODY>
+</HTML>

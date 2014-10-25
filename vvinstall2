@@ -1,0 +1,627 @@
+#! /bin/bash
+
+# ViaVoice environment installation script
+VERSION=2.0
+# Copyright 2003, Carlo Wood <carlo@alinoe.com>
+
+# You can edit this section.
+
+# The directory where we can read the ViaVoice RPMs from.
+VIAVOICERPMDIR=`pwd`/mandrake
+# A Mandrake mirror.
+MANDRAKEMIRROR="ftp://ftp.chello.se/pub/Linux/Mandrake-old"
+# Installation prefix.
+INSTALLDIR="/usr/local/viavoice/mandrake-8.0"
+# Volker Kuhlmann's patch for SuSE 8.2
+VOLKERPATCH="viavoice-3.1-SuSE8.2.patch"
+# Where to download it from if it doesn't exist already in
+# the current directory:
+VOLKERURL="http://volker.dnsalias.net/linux/vvfiles/viavoice-3.1-SuSE8.2.patch"
+
+#------------------------------------------------------------------------------
+# Nothing below this line should need editting.
+
+# The shell commands used in this script.
+COMMANDS="bash sh rpm mv rm cp chmod cat grep egrep which sed id"
+COMMANDS="$COMMANDS pwd sudo md5sum wc tee tar ncftpget wget cpio xxd"
+
+# Rpms needed by this script.
+RPMS="rpm bash grep which sed tar sudo ncftp wget cpio vim-common"
+
+# Location of a temporary file.
+TMPOUT=/tmp/vvinstall.out
+
+# If '/etc/sudoers' doesn't contain "NOPASSWD:" then
+# sudo will ask for a password using this prompt:
+SUDO_PROMPT="The password for sudo has timed out."
+SUDO_PROMPT="$SUDO_PROMPT  Please reentered the password for %u: "
+export SUDO_PROMPT
+
+# These are the rpms that need to be installed in the INSTALLDIR directory.
+VVRPMS="glibc-2.2.2-4mdk.i586.rpm"
+VVRPMS="$VVRPMS libtermcap2-2.0.8-28mdk.i586.rpm"
+VVRPMS="$VVRPMS XFree86-libs-4.0.3-7mdk.i586.rpm"
+VVRPMS="$VVRPMS libstdc++2.10-2.96-0.48mdk.i586.rpm"
+VVRPMS="$VVRPMS sh-utils-2.0-13mdk.i586.rpm"
+VVRPMS="$VVRPMS bash-2.04-18mdk.i586.rpm"
+VVRPMS="$VVRPMS readline-4.1-15mdk.i586.rpm"
+VVRPMS="$VVRPMS fileutils-4.0-18mdk.i586.rpm"
+VVRPMS="$VVRPMS pam-0.74-6mdk.i586.rpm"
+NUMRPMS=9
+if test -n "$VVINSTALLMAINTAINER"; then
+# The glibc-devel is really only needed to compile libasound.
+VVRPMS="$VVRPMS glibc-devel-2.2.2-4mdk.i586.rpm"
+VVRPMS="$VVRPMS strace-4.2-7mdk.i586.rpm"
+NUMRPMS=11
+COMMANDS="$COMMANDS find"
+RPMS="$RPMS findutils"
+fi
+
+# Get rid of any aliases and functions.
+unalias -a
+COMMANDSRE=`echo $COMMANDS | sed -e 's/ /|/g'`
+unset `declare -fF | egrep ' ('$COMMANDSRE'|cd|echo|test)$' | sed -e 's/.* //'`
+
+function failure() {
+  echo "FAILURE";
+  if test "x$1" != "x"; then
+    echo "$1";
+  fi
+  echo "$2  Aborting.";
+  exit 1;
+}
+
+#------------------------------------------------------------------------------
+# Test if the commands that are used in this script are available.
+
+echo -n "Checking if the rpms needed by this script are installed... "
+
+# Check if 'rpm' is available.
+(rpm --version | grep 'RPM version') >/dev/null 2>/dev/null ||
+  failure "" "This script only works on a machine with 'rpm' installed."
+
+# Check if each needed rpm is installed.
+echo -n > $TMPOUT
+for cmd in $RPMS; do
+  rpm -q $cmd >> $TMPOUT || failure \
+    "`rpm -q $cmd`" "Please install the '"$cmd"' rpm before continuing."
+done
+echo "OK"
+# At the end, print the installed versions.
+cat $TMPOUT | sed -e 's/^/    /'
+
+echo -n "Checking if the commands needed by this script are in your PATH... "
+(which --version | grep GNU) >/dev/null 2>/dev/null ||
+  failure "" "The 'which' command doesn't work!"
+which $COMMANDS >/dev/null 2>/dev/null || failure \
+  "`which $COMMANDS 2>&1 >/dev/null`" \
+  "$? commands are not in your PATH!"
+
+echo -ne "OK\nChecking if the commands needed by this script execute... "
+for cmd in $COMMANDS; do
+  if test "$cmd" = "ncftpget"; then
+    (ncftpget --version | grep NcFTPGet) >/dev/null 2>/dev/null ||
+      failure "" "Command 'ncftpget' failed to execute!"
+  else
+    (if test "$cmd" = "sudo"; then
+       $cmd -V
+     elif test "$cmd" = "pwd"; then
+       pwd
+     else
+       $cmd --version
+     fi) > $TMPOUT 2>&1 ||
+       failure "`cat $TMPOUT`" "Command '$cmd' failed to execute!"
+  fi
+done
+
+#------------------------------------------------------------------------------
+# Sanity checks.
+
+echo -ne "OK\nDoing some sanity checks... "
+test `id -u` = 0 && failure "" "Don't run this script as root!"
+(cd ~ && test `pwd` = $HOME) 2>/dev/null ||
+  failure "" "Problem determining HOME directory!"
+rm -f $TMPOUT; test -e $TMPOUT &&
+  failure "" "Temporary file '$TMPOUT' exists and cannot be removed!"
+(echo "Jesus loves you" > $TMPOUT &&
+    test "`cat $TMPOUT`" = "Jesus loves you") ||
+  failure "" "Temporary file '$TMPOUT' cannot be created!"
+rm -f troep 2>/dev/null ||
+  failure "" "File 'troep' exists and cannot be removed!"
+(echo "Hugs and kisses" > troep &&
+    test "`cat troep`" = "Hugs and kisses") 2>/dev/null ||
+  failure "" "Current directory is not writable!"
+rm troep
+test -z "$INSTALLDIR" && failure "INSTALLDIR is not set?!"
+SPACE=`echo "$INSTALLDIR" | grep '[[:space:]]' 2>/dev/null`
+test -z "$SPACE" || failure "" "INSTALLDIR may not contain spaces!"
+INSTALLDIRMD5=`echo $INSTALLDIR | md5sum`
+if test -e $INSTALLDIR; then
+  if test ! -e .installdir || test -z "$INSTALLDIRMD5" ||
+    test "$INSTALLDIRMD5" != "`cat .installdir`"; then
+      ERRMSG="Directory $INSTALLDIR already exists!  "
+      ERRMSG="$ERRMSG Cowardly refusing to remove it.  Please remove it first."
+      failure "" "$ERRMSG"
+  fi
+else
+  echo "$INSTALLDIRMD5" > .installdir
+fi
+if test -z "$LANG"; then
+  failure "`rpm -q initscripts | grep -v 'initscripts-'`" \
+    "You should have the environment variable LANG set (to \"en_US\")."
+fi
+
+#------------------------------------------------------------------------------
+# Check if we have all ViaVoice rpms.
+
+echo -ne "OK\nChecking contents of VIAVOICERPMDIR "
+echo -ne "($VIAVOICERPMDIR), please wait... "
+# This script uninstalls the ViaVoice rpms, make sure we (still) have
+# these rpms so they can be reinstalled.
+VVRPMS2="\
+ViaVoice_runtime_US_LangPack-3.1-0.0.i386.rpm \
+ViaVoice_Dictation-1.1-0.0.i386.rpm  \
+ViaVoice_runtime-3.1-0.0.i386.rpm  \
+ViaVoice_TTS_rtk-5.1-1.2.i386.rpm"
+for f in $VVRPMS2; do
+  test -f $VIAVOICERPMDIR/$f ||
+    failure "" "Expected file \"$VIAVOICERPMDIR/$f\" not found!"
+done
+(cd $VIAVOICERPMDIR; rpm --checksig $VVRPMS2 | sed -e 's/^/    /' |
+    tee $TMPOUT | grep 'md5' | wc --lines | grep '4$' >/dev/null) ||
+  failure "`grep 'NOT OK' $TMPOUT`" "Checksum of rpms in $VIAVOICERPMDIR failed!"
+
+# This is the install prefix that is used inside IBMJava2-JRE-1.3-2.0.i386.rpm.
+# rpm2cpio IBMJava2-JRE-1.3-2.0.i386.rpm | cpio -t
+JAVAINSTALLPREFIX="jdk1.2.2"
+
+#------------------------------------------------------------------------------
+# Remove previous installation.
+
+echo -ne "OK\nChecking usability of sudo... "
+ERRMSG="There is a problem with the configuration of sudo: read 'man sudo' "
+ERRMSG="$ERRMSG and give yourself full permissions."
+(sudo -p 'Give password of %u: ' -l |grep '[^A-Z]ALL[^A-Z]') >/dev/null 2>&1 ||
+  failure "" "$ERRMSG"
+(sudo id -u > sudo.test && test `cat sudo.test` = "0") ||
+  failure "" "Failed to execute sudo!"
+sudo rm sudo.test
+sudo -v
+
+# We can't be too cautious here.
+# Note that normally this is impossible anyway: we only get here when
+# INSTALLDIR is equal to a previously non-existing directory (see test
+# with INSTALLDIRMD5 above).
+if test "$INSTALLDIR" = "/" -o "$INSTALLDIR" = "/usr" \
+    -o "$INSTALLDIR" = "/usr/local"; then
+  echo -e "ARGH!"
+  echo -n "Helllo??? Are you crazy to set INSTALLDIR to \"$INSTALLDIR\"?  "
+  echo "We will REMOVE that directory!"
+  exit 1
+fi
+if test -e $INSTALLDIR; then
+  echo -ne "OK\nDeleting installation directory ($INSTALLDIR)... "
+  sudo rm -rf "$INSTALLDIR" ||
+    failure "" "Failed to remove old installation directory ($INSTALLDIR)."
+fi
+
+# Remove the ViaVoice rpms if they are installed.
+echo -ne "OK\nRemoving old ViaVoice rpms... "
+OLDRPMS=`rpm -q ViaVoice_Dictation ViaVoice_TTS_rtk \
+ViaVoice_runtime_US_LangPack ViaVoice_runtime | \
+egrep -v '(not installed|ViaVoice_runtime_US_LangPack-3.1-0.0|\
+ViaVoice_TTS_rtk-5.1-1.2)'`
+if test -z "$OLDRPMS"; then
+  echo "None installed"
+else
+  for i in $OLDRPMS; do
+    echo -n $i" ";
+    sudo rpm -e --nodeps --noscripts $i ||
+      failure "" "Failed to erase old installation."
+    echo -n "OK, "
+  done
+  echo "done."
+fi
+if test -f /usr/lib/ViaVoiceTTS/eci.ini; then
+  echo -n "Removing references to eci.ini... "
+  grep -v ECIINI /etc/profile | sudo tee /etc/profile.new > /dev/null ||
+    failure "" "Couldn't create /etc/profile.new"
+  sudo chmod 644 /etc/profile.new || failure "" "chmod failed"
+  sudo mv /etc/profile.new /etc/profile ||
+    failure "" "Couldn't create /etc/profile"
+  sudo rm /usr/lib/ViaVoiceTTS/eci.ini ||
+    failure "" "Couldn't remove /usr/lib/ViaVoiceTTS/eci.ini"
+  echo "OK"
+fi
+if test -f /etc/viavoiceps.conf; then
+  echo -n "Removing /etc/viavoiceps.conf... "
+  sudo rm /etc/viavoiceps.conf ||
+    failure "" "Couldn't remove /etc/viavoiceps.conf"
+  echo "OK"
+fi
+
+#------------------------------------------------------------------------------
+# Do we have ALSA?
+
+sudo modprobe snd >/dev/null 2>/dev/null
+if test -e /proc/asound; then
+  echo "You are using the ALSA drivers."
+sudo rm -f alsatest.$$.c alsatest.$$
+cat > alsatest.$$.c << EOF
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <sys/soundcard.h>
+#include <time.h>
+
+int main(void)
+{
+  int fd;
+  int res = 0x7fff0009;
+  audio_buf_info info;
+  int prev_size = 0;
+  do
+  {
+    ++res;
+    close(fd);
+    fd = open("/dev/dsp", O_RDONLY);
+    if (fd == -1) { perror("open"); exit(127); }
+    if (ioctl(fd, SNDCTL_DSP_SETFRAGMENT, &res) == -1) {
+      perror("ioctl"); exit(127); }
+    if (ioctl(fd, SNDCTL_DSP_GETISPACE, &info) == -1) {
+      perror("read"); exit(127); }
+    printf("    Allocated %d buffers of %d bytes.\n", info.fragstotal, info.fragsize);
+    if (prev_size == info.fragsize * info.fragstotal)
+    {
+      if (info.fragsize * info.fragstotal < 8192)
+	printf("    It seems impossible to set a recording buffer with a\n"
+	       "    total size of at least 8192 bytes.  This is not going\n"
+	       "    to work with ViaVoice.  Sorry.\n");
+      else
+      {
+        printf("    It seems impossible to set a recording buffer with a\n"
+	       "    that is sufficiently large.  It is very likely that you\n"
+	       "    will run into problems with viavoice (buffer overruns)\n");
+        exit(0);
+      }
+      exit(126);
+    }
+    prev_size = info.fragsize * info.fragstotal;
+  }
+  while (info.fragsize * (info.fragstotal - 1) < 8192);
+  printf("    Successfully allocated a buffer that is large enough.\n");
+  fprintf(stderr, "%02x\n", res & 0xff);
+  res = AFMT_S16_LE;
+  if (ioctl(fd, SNDCTL_DSP_SETFMT, &res) == -1) {
+    perror("ioctl"); exit(127); }
+  res = 0;
+  if (ioctl(fd, SNDCTL_DSP_STEREO, &res) == -1) {
+    perror("ioctl"); exit(127); }
+  res = 22050;
+  if (ioctl(fd, SOUND_PCM_READ_RATE, 0xbfffdcfc) == -1) {
+    perror("ioctl"); exit(127); }
+  char buf[1024];
+  if (read(fd, buf, sizeof(buf)) < 0) { perror("read"); exit(127); }
+  static struct timespec naptime = { 0, 100000000 };
+  int count = 0;
+  do {
+    if (ioctl(fd, SNDCTL_DSP_GETISPACE, &info) == -1) {
+      perror("read"); exit(127); }
+    nanosleep(&naptime, 0);
+    if (++count == 20) { printf("Failed to cause an xrun.\n"); exit(0); }
+  } while(info.bytes < info.fragsize * info.fragstotal);
+  printf("    Successfully caused an xrun.\n");
+  printf("    non-blocking fragments: %d\n", info.fragments);
+  printf("    non-blocking bytes: %d\n", info.bytes);
+  ssize_t bufsize = info.bytes;
+  ssize_t trlen = 0;
+  int nf = 0;
+  for (;;)
+  {
+    if (info.fragments > 0) {
+      ssize_t rlen;
+      if ((rlen = read(fd, buf, sizeof(buf))) < 0)
+      { perror("read"); exit(127); }
+      trlen += rlen;
+      if (trlen > bufsize) {
+        printf("    Read %d bytes: stream successfully restarted.\n", trlen);
+	break;
+      }
+      nf = 0;
+    }
+    else if (++nf > 10) {
+      printf("    Stream is not restarted after xrun.\n");
+      exit(1);
+    }
+    if (ioctl(fd, SNDCTL_DSP_GETISPACE, &info) == -1) {
+      perror("read"); exit(127); }
+  }
+  close(fd);
+  return 0;
+}
+EOF
+gcc alsatest.$$.c -o alsatest.$$ ||
+  failure "" "Failed to compile ALSA test program."
+alsatest.$$ 2> $TMPOUT; RESULT="$?"
+ALSASIZECODE=`cat $TMPOUT`
+rm alsatest.$$ alsatest.$$.c
+test $RESULT -eq 126 && failure "" "Incompatible hardware, use OSS instead of ALSA."
+test $RESULT -eq 127 && failure "" "Failed to run ALSA test program."
+if test $RESULT -eq 1; then
+  echo "Your ALSA kernel modules are buggy."
+#  echo -n "You need to apply the patch from "
+#  echo "http://www.xs4all.nl/~carlo17/alsa/ossfix.diff "
+#  echo "to your kernel and recompile/install/reload the kernel modules."
+fi
+fi
+
+#------------------------------------------------------------------------------
+# Download missing files.
+
+echo "Downloading files that need to be installed..."
+for f in $VVRPMS; do
+  if ! test -f $f; then
+    ncftpget $MANDRAKEMIRROR/8.0/i586/Mandrake/RPMS/$f ||
+      failure "" "Failure to download $FILE."
+  else
+    echo "    Already have $f"
+  fi
+done
+if test -f "$VOLKERPATCH"; then
+  test -r "$VOLKERPATCH" ||
+    failure "" "$VOLKERPATCH exists but is not readable."
+  echo "    Already have $VOLKERPATCH"
+else
+  wget $VOLKERURL ||
+    failure "" "Failure to download $VOLKERURL."
+fi
+echo -n "Checking integrity of these files... "
+(rpm --checksig $VVRPMS | sed -e 's/^/    /' | tee $TMPOUT | grep 'md5' |
+    wc --lines | grep "$NUMRPMS"'$' >/dev/null) ||
+  failure "`grep 'NOT OK' $TMPOUT`" "Checksum of Mandrake 8.0 rpms failed!"
+(echo "417138b26b115540f298052c2ea34150  $VOLKERPATCH" |
+    md5sum -c 2>/dev/null | grep 'OK' >/dev/null) ||
+    failure "" "Checksum of $VOLKERPATCH failed."
+echo OK
+
+#------------------------------------------------------------------------------
+# (Re)install everything.
+
+echo -n "Installing glibc-2.2.2-4mdk lib/* libraries... "
+sudo mkdir -p $INSTALLDIR
+rpm2cpio glibc-2.2.2-4mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id './lib/*') >/dev/null 2>/dev/null ||
+  failure "" "Installation of glibc failed."
+if test -n "$VVINSTALLMAINTAINER"; then
+echo -ne "OK\nInstalling glibc-devel-2.2.2... "
+rpm2cpio glibc-devel-2.2.2-4mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id './usr/lib/*' './usr/include/*') >/dev/null 2>/dev/null ||
+  failure "" "Installation of glibc-devel failed."
+fi
+echo -ne "OK\nInstalling libreadline libraries... "
+rpm2cpio readline-4.1-15mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id) >/dev/null 2>/dev/null ||
+  failure "" "Installation of libreadline failed."
+echo -ne "OK\nInstalling libtermcap2 libraries... "
+rpm2cpio libtermcap2-2.0.8-28mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id) >/dev/null 2>/dev/null ||
+  failure "" "Installation of libtermcap2 failed."
+echo -ne "OK\nInstalling XFree86 libraries... "
+rpm2cpio XFree86-libs-4.0.3-7mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id) >/dev/null 2>/dev/null ||
+  failure "" "Installation of XFree86-libs failed."
+echo -ne "OK\nInstalling libstdc++... "
+rpm2cpio libstdc++2.10-2.96-0.48mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id) >/dev/null 2>/dev/null ||
+  failure "" "Installation of libstdc++ failed."
+echo -ne "OK\nInstalling libpam..."
+rpm2cpio pam-0.74-6mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id) >/dev/null 2>/dev/null ||
+  failure "" "Installation of libpam failed."
+echo -ne "OK\nInstalling bash, sleep, cp and nice... "
+rpm2cpio bash-2.04-18mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id) >/dev/null 2>/dev/null ||
+  failure "" "Installation of bash failed."
+rpm2cpio sh-utils-2.0-13mdk.i586.rpm | (cd $INSTALLDIR &&
+    sudo cpio -id ./bin/sleep ./bin/nice) >/dev/null 2>/dev/null ||
+  failure "" "Installation of sh-utils failed."
+rpm2cpio fileutils-4.0-18mdk.i586.rpm |
+    (cd $INSTALLDIR && sudo cpio -id ./bin/cp) >/dev/null 2>/dev/null ||
+  failure "" "Installation of fileutils failed."
+# Install blackdown java.
+sudo tar -C $INSTALLDIR -xjf jdk-1.2.2-RC4-linux-i386-glibc-2.1.2.tar.bz2 ||
+  failure "" "Installation of jdk failed."
+if test -n "$VVINSTALLMAINTAINER"; then
+echo -ne "OK\nInstalling strace... "
+rpm2cpio strace-4.2-7mdk.i586.rpm |
+    (cd $INSTALLDIR; sudo cpio -id ./usr/bin/strace) >/dev/null 2>/dev/null ||
+  failure "" "Installation of strace failed."
+sudo mv $INSTALLDIR/usr/bin/strace $INSTALLDIR/bin/strace
+echo "00000f5: 746d702f6c642d76766c6e78" | sudo xxd -r - $INSTALLDIR/bin/strace
+fi
+
+echo -ne "OK\nFixing directory access modes... "
+sudo find $INSTALLDIR -type d -exec chmod 755 {} \; ||
+  failure "" "Couldn't correct access mode of directories."
+
+# These are needed to compile libasound.so:
+if test -n "$VVINSTALLMAINTAINER"; then
+  echo -ne "OK\nAdding symbolic links... "
+  DIRNOW=`pwd`
+  cd $INSTALLDIR/lib
+  (for f in `find . -type l ! -name '*.so'`; do \
+    DEST=`echo $f | sed -e 's%\./%%'`; \
+    SRC=`echo $DEST | sed -e 's%\.so\.[0-9]*$%.so%'`; \
+    test -L $SRC || sudo ln -s $DEST $SRC || exit 1; \
+  done) || failure "" "Couldn't create symbolic links."
+  cd $DIRNOW
+fi
+echo OK
+
+# Fix the jre to use these libraries.
+sudo ln -sf $INSTALLDIR/$JAVAINSTALLPREFIX $INSTALLDIR/jre
+# Fix the jdk to use these libraries.
+echo "Fixing $INSTALLDIR/jre/bin/.java_wrapper"
+ID="$INSTALLDIR"
+JI="$JAVAINSTALLPREFIX"
+cat $INSTALLDIR/$JAVAINSTALLPREFIX/bin/.java_wrapper | \
+  sed -e 's%ld="[^$]*\$%ld="'$ID'/lib:'$ID'/usr/lib:'$ID'/usr/X11R6/lib:$%' \
+  -e 's%.*exec [^$]*\$%    export PATH="'$ID'/bin:'$ID'/'$JI'/bin"; \
+  exec '$INSTALLDIR'/lib/ld-linux.so.2 $%' > /tmp/.java_wrapper.new.$$
+sudo install --mode=755 --owner=root --group=0 \
+  /tmp/.java_wrapper.new.$$ $INSTALLDIR/jdk1.2.2/bin/.java_wrapper
+rm /tmp/.java_wrapper.new.$$
+
+
+# Fix the dynamic linker of the executables
+echo "Replacing dynamic linker in executables with /tmp/ld-vvlnx.so.2."
+for f in `file $INSTALLDIR/bin/* $INSTALLDIR/usr/bin/* |
+    grep 'ELF.*dynamically linked' | cut -d: -f1`; do
+  echo "00000f5: 746d702f6c642d76766c6e78" | sudo xxd -r - $f
+done
+# /tmp/ld-vvlnx.so.2 -> $INSTALLDIR/lib/ld-linux.so.2
+(cd /tmp; ln -sf $INSTALLDIR/lib/ld-linux.so.2 ld-vvlnx.so.2) ||
+  failure "" "Could not add symbolic link /tmp/ld-vvlnx.so.2."
+# Fix all occurances of '/bin/sh' in the libraries.
+echo "Replacing all references to '/bin/sh' in library with '/tmp/vv'."
+echo "011b1ca: 746d702f7676" | sudo xxd -r - $INSTALLDIR/lib/libc-2.2.2.so
+echo "011e2ec: 746d702f7676" | sudo xxd -r - $INSTALLDIR/lib/libc-2.2.2.so
+echo "011e387: 746d702f7676" | sudo xxd -r - $INSTALLDIR/lib/libc-2.2.2.so
+echo "011f17e: 746d702f7676" | sudo xxd -r - $INSTALLDIR/lib/libc-2.2.2.so
+echo "011f88b: 746d702f7676" | sudo xxd -r - $INSTALLDIR/lib/libc-2.2.2.so
+echo "011f8ee: 746d702f7676" | sudo xxd -r - $INSTALLDIR/lib/libc-2.2.2.so
+echo "011fbb5: 746d702f7676" | sudo xxd -r - $INSTALLDIR/lib/libc-2.2.2.so
+# /tmp/vv -> $INSTALLDIR/bin/sh
+(cd /tmp; ln -sf $INSTALLDIR/bin/sh vv) ||
+  (echo "Could not add symbolic link /tmp/vv.  Aborting."; exit 1) || exit 1
+
+echo "(Re)installing ViaVoice rpms..."
+# Using sudo here, just in case it changes HOME (it shouldn't, normally).
+sudo echo  "vvinstalling" >> $HOME/vvisinstalling ||
+  failure "" "Cannot create $HOME/vvisinstalling."
+sudo rpm -ivh --nodeps --noscripts $VIAVOICERPMDIR/ViaVoice_runtime-3.1-0.0.i386.rpm ||
+  failure "" "Problem with (re)installation of ViaVoice_runtime."
+rpm -q ViaVoice_TTS_rtk-5.1-1.2 > $TMPOUT
+if grep 'not installed' $TMPOUT; then
+  sudo rpm -ivh --noscripts $VIAVOICERPMDIR/ViaVoice_TTS_rtk-5.1-1.2.i386.rpm ||
+    failure "" "Problem with (re)installation of ViaVoice_TTS_rtk."
+else
+  echo "Package `cat $TMPOUT` is already installed."
+fi
+sudo rpm -ivh --noscripts $VIAVOICERPMDIR/ViaVoice_Dictation-1.1-0.0.i386.rpm ||
+  failure "" "Problem with (re)installation of ViaVoice_Dictation."
+echo -n "Recreating /usr/lib/ViaVoiceTTS/eci.ini... "
+rm -f eci.ini || failure "" "./eci.ini is in the way, please remove it."
+echo -n > eci.ini || failure "" "Cannot create ./eci.ini"
+/usr/lib/ViaVoiceTTS/bin/inigen /usr/lib/enu50.so eci.ini ||
+  failure "" "Execution of 'inigen /usr/lib/enu50.so eci.ini' failed."
+/usr/lib/ViaVoiceTTS/bin/inigen /usr/lib/ViaVoice/javaspeakpad/bin/eng50.so eci.ini ||
+  failure "" "Execution of 'inigen /usr/lib/ViaVoice/javaspeakpad/bin/eng50.so eci.ini' failed."
+/usr/lib/ViaVoiceTTS/bin/inigen /usr/lib/ViaVoice/javaspeakpad/bin/fra50.so eci.ini ||
+  failure "" "Execution of 'inigen /usr/lib/ViaVoice/javaspeakpad/bin/fra50.so eci.ini' failed."
+/usr/lib/ViaVoiceTTS/bin/inigen /usr/lib/ViaVoice/javaspeakpad/bin/deu50.so eci.ini ||
+  failure "" "Execution of 'inigen /usr/lib/ViaVoice/javaspeakpad/bin/deu50.so eci.ini' failed."
+sudo cp eci.ini /usr/lib/ViaVoiceTTS/eci.ini ||
+  failure "" "Couldn't create /usr/lib/ViaVoiceTTS/eci.ini"
+rm eci.ini
+echo "OK"
+rpm -q ViaVoice_runtime_US_LangPack-3.1-0.0 > $TMPOUT
+if grep 'not installed' $TMPOUT; then
+  sudo rpm -ivh $VIAVOICERPMDIR/ViaVoice_runtime_US_LangPack-3.1-0.0.i386.rpm ||
+    failure "" "Problem with (re)installation of ViaVoice_runtime_US_LangPack."
+else
+  echo "Package `cat $TMPOUT` is already installed."
+fi
+sudo rm -f $HOME/vvisinstalling
+echo -n "Recreating /etc/viavoiceps.conf... "
+sudo /usr/lib/ViaVoice/bin/rtinstconfig En_US rtd install "/usr/lib/ViaVoice" 2> $TMPOUT
+if test -n "`cat $TMPOUT`"; then
+sudo /usr/lib/ViaVoice/bin/rtinstconfig En_US rtd uninstall "/usr/lib/ViaVoice"
+sudo /usr/lib/ViaVoice/bin/rtinstconfig En_US rtd install "/usr/lib/ViaVoice" 2> $TMPOUT
+test -z "`cat $TMPOUT`" || failure "" "Unknown problems while creating /etc/viavoiceps.conf"
+fi
+echo "OK"
+
+if test -e /proc/asound; then
+  echo "Changing the default recording buffer size in audlinux.so."
+  echo "000156a: "$ALSASIZECODE"00 ff7f" | sudo xxd -r - /usr/lib/ViaVoice/bin/audoss.so
+  echo "0001660: "$ALSASIZECODE"00 ff7f" | sudo xxd -r - /usr/lib/ViaVoice/bin/audoss.so
+fi
+
+# Binary patch the ViaVoice binaries to use the dynamic linker of glibc-2.1.3.
+echo "Replacing dynamic linker in ViaVoice executables with /tmp/ld-vvlnx.so.2."
+for f in `file /usr/lib/ViaVoice/bin/* |
+          grep 'ELF.*dynamically linked' | cut -d: -f1`; do
+  if test "$f" != "/usr/lib/ViaVoice/bin/rtinstconfig"; then
+    echo "00000f5: 746d702f6c642d76766c6e78" | sudo xxd -r - $f
+  fi
+done
+
+# Change '/bin/sh' into '/tmp/vv'
+echo -n "Replacing all references to '/bin/sh' "
+echo "in ViaVoice executables with '/tmp/vv'."
+echo "00d86bd: 746d702f7676" | sudo xxd -r - /usr/lib/ViaVoice/bin/engine
+echo "0010254: 746d702f7676" | sudo xxd -r - /usr/lib/ViaVoice/bin/trnscr11
+echo "0010254: 746d702f7676" | sudo xxd -r - /usr/lib/ViaVoice/bin/trnscrnq
+
+echo -n "Applying Volker Kuhlmann's patch... "
+if test -e /usr/bin/vvuser; then
+  (echo "38b42013c5f91e12602aa4de2d79a49d  /usr/bin/vvuser" |
+    md5sum -c 2>/dev/null | grep 'OK' >/dev/null) ||
+    failure "" "A different /usr/bin/vvuser already exists, remove it first."
+  sudo rm /usr/bin/vvuser
+fi
+if test -e /usr/bin/viavoice; then
+  (echo "5942e72de8050adfe4b1e77e52f25356  /usr/bin/viavoice" |
+    md5sum -c 2>/dev/null | grep 'OK' >/dev/null) ||
+    failure "" "A different /usr/bin/viavoice already exists, remove it first."
+  sudo rm /usr/bin/viavoice
+fi
+sudo patch -p0 < $VOLKERPATCH > $TMPOUT ||
+  failure "`cat $TMPOUT`" "Failed to apply patch."
+sudo chmod 755 /usr/bin/vvuser /usr/bin/viavoice
+echo "OK"
+
+if test -n "$VVINSTALLMAINTAINER"; then
+for f in \
+  /usr/lib/ViaVoice/bin/vvsetuser \
+  /usr/bin/vvsetenv \
+  /usr/bin/vvstartdictation \
+  /usr/bin/vvstartuserguru \
+  /usr/bin/viavoice \
+  /usr/bin/vvstartaudiosetup \
+  /usr/bin/vvstartenrollment \
+  /usr/bin/vvuser; do
+  sudo cp $f $f.orig
+done
+fi
+
+echo -n "Patching viavoice scripts... "
+  sudo patch -p0 < vvi2.patch >/dev/null || failure "" "patch failed."
+  cat /usr/bin/vvsetenv |
+    sed -e 's%@VVINSTALLDIR@%export VVINSTALLDIR="'$INSTALLDIR'"%' \
+    > /tmp/vvsetenv.$$ || failure "" "sed failed."
+  sudo cp /tmp/vvsetenv.$$ /usr/bin/vvsetenv || failure "" "cp failed."
+  sudo chmod 755 /usr/bin/vvsetenv || failure "" "chmod failed."
+  rm /tmp/vvsetenv.$$
+echo OK
+
+#------------------------------------------------------------------------------
+# Finish.
+
+echo
+echo "Installation in \"$INSTALLDIR\" successful."
+echo
+echo -n ">>> Now run "
+if test -d ~/viavoice; then
+  echo "'vvstartaudiosetup' or 'vvstartenrollment' (vvstartuserguru)"
+  echo ">>> or 'viavoice' as usual."
+  echo ">>> See /usr/doc/ViaVoice/en_us.rt.readme.txt for more info."
+else
+  echo "'vvstartuserguru'."
+  echo ">>> Don't forget to read /usr/doc/ViaVoice/en_us.rt.readme.txt!"
+fi
+

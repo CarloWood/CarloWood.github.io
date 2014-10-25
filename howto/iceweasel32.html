@@ -1,0 +1,878 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html LANG="en_US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="author" content="Carlo Wood">
+<meta name="keywords" content="debian, firefox, iceweasel, amd64, 32bit, 32 bit, without chroot, outside chroot, flash, HOWTO, chroot">
+<title>HOWTO Install iceweasel on amd64 with 32 bit plugins without chroot</title>
+<link href="../css/common.css" rel="stylesheet" type="text/css">
+<link href="howto.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<div id="content">
+
+<h1>Debian amd64: iceweasel with i386 plugins, outside a chroot</h1>
+
+<div id="date">Carlo Wood, Feb/Mar 2008</div>
+
+<h2>Introduction</h2>
+
+<p>If you weren't already convinced that closed source sucked before, then surely
+the experience of trying to browse the net with an amd64 machine will have won you over;
+I could ponder on how much Microsoft is paying Adobe not to release a 64-bit version of
+their flash plugin&mdash; but why Sun is categorically refusing to address our cry for
+a 64-bit java plugin for mozilla based browsers for this many <em>years</em> is beyond me.</p>
+
+<p>There are three approaches to work around this conspiracy:</p>
+
+<ol>
+<li>Install everything in a 32-bit chroot and run the browser there.
+<li>Use the 64-bit version of the browser and use a wrapper for the 32-bit plugins.</li>
+<li>Use a 32-bit version of the browser without chroot (a bi-arch approach).
+</ol>
+
+<p>I used option 1 (the chroot) for a while, but that approach has
+several annoying disadvantages:</p>
+
+<ul>
+<li>Every external application started by iceweasel necessarily also runs inside
+the 32-bit chroot. It is neat that you can assign programs to handle files
+with certain extensions, but in most cases you want to run those applications
+in your normal 64-bit environment of course (ie xmms, azureus, mplayer).
+<li>If you download a file, you can only download it to the 32-bit
+chroot. Of course you can bind mount several directories like your
+home directory - but not every directory can be shared like that,
+and all too often I found myself downloading to my home directory
+just to make the file accessible, having to manually copy it in
+to it's final destination from a 64-bit shell.
+</ul>
+
+<p>I tried option 2, but it was a <em>horror</em>. Maybe some day
+that option will mature, but right now it's just not working for me.</p>
+
+<p>That leaves option 3. However, the main disadvantage of that option
+is that you simply can't install i386 debian packages on an amd64 system.
+Therefore you have to fall-back to tar-balls and install everything
+manually. I tried this too, with as result that anti-aliasing didn't
+work anymore and java simply froze iceweasel.</p>
+
+<h2>The Best Of Both Worlds</h2>
+
+<p>The approach that I chose in the end is as follows:
+I installed everything that has to be of i386 architecture
+in a 32-bit chroot (as in option 1), using apt-get (or aptitude or whatever you like)
+and used a small wrapper and environment variables to run the browser
+in the 64-bit environment with a linux32 personality (as in option 3).</p>
+
+<p>This turns out to a simple and painless procedure.</p>
+
+<p>First, create an i386 chroot inside of which we will later install iceweasel.
+This chroot will be much smaller than that of option 1 above, because
+we won't need to install libraries that are already available from ia32
+packages for the amd64 architecture.</p>
+
+<p>You'll need some packages:</p>
+
+<div class="command"><pre>
+sudo apt-get install debootstrap
+</pre></div>
+
+<h3>Creating the chroot</h3>
+
+<p>Choose the root of the chroot and it's handle:</p>
+
+<div class="command"><pre>
+CHROOT="/opt/firefox-chroot";   # The directory of the chroot.
+CHROOTNAME="firefox";           # The name as listed by schroot -l.
+</pre></div>
+
+<p>We need these too. You can set them to whatever works for you
+but the following should set them automatically (as usually, in my HOWTO's,
+just copy&amp;paste the whole block to your (non-root) shell prompt):</p>
+
+<div class="command"><pre>
+HELPVAR=$(apt-cache policy coreutils | egrep '^[[:space:][:digit:]]*http:' | \
+    sed -r 's/^[[:space:]]*//;s/[[:space:]]+/,/g' | sort -rn | head -n 1)
+SUITE=$(echo "$HELPVAR" | cut -d, -f 3 | sed -e 's%/.*%%')
+DEBIANMIRROR=$(grep "^deb $(echo "$HELPVAR" | cut -d, -f 2).*$SUITE" /etc/apt/sources.list | \
+    sed -r 's/^[[:space:]]*//;s/[[:space:]]+/,/g;s%/,%,%g;s%,%/,%g' | cut -d, -f 2)
+echo -e "SUITE = \"$SUITE\"\nDEBIANMIRROR = \"$DEBIANMIRROR\""
+</pre></div>
+
+<p>This should set $SUITE to something like 'lenny' and $DEBIANMIRROR to something like 'http://ftp.debian.org/debian/'.</p>
+
+<p>If SUITE is 'unstable', 'testing' or 'stable' then debootstrap won't work
+without providing the current codename. Therefore, try to extract that:</p>
+
+<div class="command"><pre>
+CODENAME=$SUITE
+if test ! -e /usr/share/debootstrap/scripts/$SUITE; then
+  CODENAME=$(sed -ne 's/^Codename: \([a-z]*\)$/\1/p' /var/lib/apt/lists/$(echo "$DEBIANMIRROR" | sed -e "s%http://*%%;s%/%_%g")dists_"$SUITE"_Release)
+fi
+echo "CODENAME = $CODENAME"
+</pre></div>
+
+<p>Create the new directory and install the base system into it:</p>
+
+<div class="command"><pre>
+sudo mkdir "$CHROOT"
+sudo debootstrap --arch i386 $SUITE "$CHROOT" $DEBIANMIRROR /usr/share/debootstrap/scripts/$CODENAME
+</pre></div>
+
+<p>This installs about 180 MB in $CHROOT.</p>
+
+<p>Since we won't run iceweasel inside the chroot, there is no need to
+do (bind) mounts, or install home directories or whatever&mdash;
+but we still need a few more packages to be installed.</p>
+
+<p>Enter the chroot as root:</p>
+
+<div class="command"><pre>
+sudo chroot "$CHROOT"
+</pre></div>
+
+<p>Before running apt-get, you might want to fix a few things:</p>
+
+<p>In order to get rid of the message
+&quot;<code>WARNING: The following packages cannot be authenticated!</code>&quot;,
+run the following command:</p>
+
+<div class="command"><pre>
+apt-get update
+</pre></div>
+
+<p>This will retrieve the missing <code>Release.gpg</code>.</p>
+
+<p>If you want to get rid of the warnings:</p>
+<pre>
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+</pre>
+
+<p>then run the following commands (this installs an additional 18 MB)
+(on etch <code>/etc/locale.gen</code> doesn't exist at this point. Assuming
+you are using UTF-8 encoding (<code>$LC_CTYPE</code> contains the string UTF-8),
+use instead of the sed command below:
+<code>echo "$LC_CTYPE UTF-8" &gt; /etc/locale.gen</code>):</p>
+
+<div class="command"><pre>
+LANG= apt-get install locales
+eval `locale 2&gt; /dev/null`
+sed -ri 's/^([^#].*)/# \1/;s/^# ('$LC_CTYPE'($| .*))/\1/' /etc/locale.gen
+locale-gen
+</pre></div>
+
+<p>[ If you don't want that, then you can temporarily suppress these messages by doing <em>instead</em>:</p>
+
+<pre>
+eval `LANG= locale`
+</pre>
+
+<p>but you'd need to do that every time you enter the chroot for maintenance. ]</p>
+
+<p>Next, edit <code>/etc/apt/sources.list</code> and add a line
+for security updates (as usual, just copy&amp;paste the whole block to
+the shell prompt (outside the chroot)):</p>
+
+<div class="command"><pre>
+exit # Leave the chroot
+if ! grep 'security\.debian\.org' $CHROOT/etc/apt/sources.list; then
+  sudo sh -c 'echo "# Security updates." &gt;&gt; '"$CHROOT"'/etc/apt/sources.list; \
+  echo "deb http://security.debian.org/ '"$SUITE"'/updates main contrib" &gt;&gt; '"$CHROOT"'/etc/apt/sources.list'
+fi
+</pre></div>
+
+<p>Also add <code>contrib</code> and <code>non-free</code>, as we'll need that for
+the plugins later on:</p>
+
+<div class="command"><pre>
+sudo sed -ri 's/^(deb '$(echo $DEBIANMIRROR | sed 's/\/$//;s/\([$/.]\)/\\\1/g')' '$SUITE' main)$/\1 contrib non-free/' $CHROOT/etc/apt/sources.list
+</pre></div>
+
+<p>and update the chroot</p>
+
+<div class="command"><pre>
+sudo chroot $CHROOT apt-get update
+sudo chroot $CHROOT apt-get dist-upgrade
+</pre></div>
+
+<h3>A More General chroot</h3>
+
+<p>If you are just creating the chroot for running iceweasel, then
+you can skip this paragraph. However, I can imagine that some people
+are using this page to set up a more general chroot, for other
+purposes; therefore I decided to add this paragraph that describes
+how to finish the chroot so it can be used in general, just to have
+all information in one place.</p>
+
+<p>First you'll want to bind mount a few directories. Add the (output of)
+the following to your /etc/fstab (the real one, not the one in the chroot!).</p>
+
+<div class="command"><pre>
+exit # Leave the chroot
+cat &lt;&lt; EOF
+# $CHROOTNAME chroot
+/proc    $CHROOT/proc    none    bind     0 0
+/dev     $CHROOT/dev     none    rbind    0 0
+/tmp     $CHROOT/tmp     none    bind     0 0
+/home    $CHROOT/home    none    bind     0 0
+EOF
+</pre></div>
+
+<p>and possibly other directories. Try to avoid any directories
+that debian installs files in however, or the chroot will overwrite
+your system files (and vica versa) of course.</p>
+
+<p class=warning>
+<em>WARNING: If you '<code>rm -rf</code>' the </em><code>$CHROOT</code><em>
+directory then everything (still) bind mounted will be deleted as well!
+A 'bind mount' is not normally visible with '<code>df</code>', you
+will need to do '<code>df -a</code>' to see it</em>
+(I lost my home directory this way, while doing tests in order to write this howto)!</p>
+
+<p>After adding those lines, they are still not mounted until you
+reboot; so mount them manually this time:</p>
+
+<div class="command"><pre>
+sudo mount $CHROOT/proc
+sudo mount $CHROOT/dev
+sudo mount $CHROOT/tmp
+sudo mount $CHROOT/home
+</pre></div>
+
+<p>Note that you can also bind mount from the command line without
+adding the extra configuration lines to <code>/etc/fstab</code>.
+You'll need <code>--rbind</code> for <code>/dev</code>,
+because otherwise <code>/dev/pts</code> isn't included. For example,</p>
+
+<pre>
+sudo mount --bind /proc $CHROOT/proc
+sudo mount --rbind /dev $CHROOT/dev
+sudo mount --bind /tmp $CHROOT/tmp
+</pre>
+
+<p>You'll want to use <code>schroot</code> to switch to the
+chroot as a normal user:</p>
+
+<div class="command"><pre>
+sudo apt-get install schroot
+</pre></div>
+
+<p>Finally, fix your <code>/etc/schroot/schroot.conf</code> and possibly
+setup a little wrapper and symlinks as is described in
+<a href="http://alioth.debian.org/docman/view.php/30192/21/debian-amd64-howto.html#id292486">Running applications inside a chroot using schroot</a>.</p>
+
+<p>Okay, back to installing iceweasel.</p>
+
+<h3>Installing Iceweasel</h3>
+
+<p>Enter the chroot and install iceweasel (this drags in another 130 MB)
+and fix <code>/usr/lib/iceweasel/iceweasel</code> not to be anal about
+where it's installed:</p>
+
+<div class="command"><pre>
+sudo chroot $CHROOT
+apt-get --yes install libgconf2-4
+apt-get --yes install iceweasel
+sed -i 's/^MOZ_DIST_BIN=.*/MOZ_DIST_BIN="$(dirname $0)"/' /usr/lib/iceweasel/iceweasel
+</pre></div>
+
+<h3>Setting Up A Wrapper</h3>
+
+<p>Leave the chroot and install some needed libraries:</p>
+
+<div class="command"><pre>
+exit              # Leave the chroot
+sudo apt-get install ia32-libs-gtk
+</pre></div>
+
+<p>Installing iceweasel already dragged in so many libraries into
+the chroot, that <code>ia32-libs-gtk</code> is only really need for
+<code>/usr/lib/gtk-2.0/2.10.0/engines/libclearlooks.so</code>.
+I can imagine that it's possible to remove (a lot of) libraries
+from the chroot because they are already installed as some ia32
+package in your amd64 environment, but at this moment I'm too
+lazy to look into that (for the few cents worth of diskspace).</p>
+
+<p>Next, create the wrapper to start iceweasel;
+for example, create a file <code>/usr/local/bin/firefox</code> as follows:</p>
+
+<div class="command"><pre>
+sudo sh -c 'cat &gt; /usr/local/bin/firefox &lt;&lt; EOF
+#!/bin/sh
+export GTK_PATH="/usr/lib32/gtk-2.0"
+CHROOT="'$CHROOT'"
+export LD_LIBRARY_PATH="/lib32:/usr/lib32:\$CHROOT/lib:\$CHROOT/usr/lib"
+linux32 "\$CHROOT/usr/lib/iceweasel/iceweasel" "\$@"
+EOF'
+sudo chmod +x /usr/local/bin/firefox
+</pre></div>
+
+<p>This should create a file with content like the following:</p>
+
+<pre>
+#!/bin/sh
+export GTK_PATH="/usr/lib32/gtk-2.0"
+CHROOT="/opt2/firefox-chroot"
+export LD_LIBRARY_PATH="/lib32:/usr/lib32:$CHROOT/lib:$CHROOT/usr/lib"
+linux32 "$CHROOT/usr/lib/iceweasel/iceweasel" "$@"
+</pre>
+
+<p>At this point everything should work except plugins: It's using your
+normal home directory, and thus <code>~/.mozilla</code> and thus your
+bookmarks, preferences, cookies, passwords etc. Also anti-aliasing should
+work fine already at this point, as well as "File Type / Download Actions"
+(Preferences -&gt; Content -&gt; File Types, Manage...), which will run
+your external applications as 64-bit applications now.</p>
+
+<p>Note that the wrapper sets <code>LD_LIBRARY_PATH</code> to both,
+<code>[/usr]/lib32</code> as well as <code>$CHROOT[/usr]/lib</code>,
+both containing 32-bit libraries. The latter are needed because
+not all needed 32-bit libraries are provided by <code>ia32-libs</code>
+and <code>ia32-libs-gtk</code>. But why prepend the path with
+the lib32 ones? Surely every needed 32-bit library could be installed
+in the chroot? The reason for this is that some of the libraries
+contain hardcoded paths, or should I say, one library contains
+a hardcoded path... <code>$CHROOT/usr/lib/libgdk_pixbuf-2.0.so.0</code>
+contains the hardcoded path <code>/usr/lib/gtk-2.0/2.10.0/loaders</code>.
+This causes it to read the files in <code>/usr/lib/gtk-2.0/2.10.0/loader-files.d</code>,
+which contain libraries paths in <code>/usr/lib</code>, 64-bit libraries.
+Therefore it is needed to load libraries from <code>/usr/lib32</code>
+before <code>$CHROOT/usr/lib</code>.</p>
+
+<h2>Installing Plugins</h2>
+
+<p>Installing plugins, which are loaded when the browser is already running,
+should be easy. The only remaining problem might be hard-coded paths for
+externally run programs (like java_vm). Flash should not give any problems,
+so lets start with that.</p>
+
+<h3>Installing The Flash Plugin</h3>
+
+<p><b>Fonts</b></p>
+
+<p>Flash applications often use Microsoft core fonts, and simply don't
+display any text if you don't have them (which can be very confusing).
+Therefore, you better install them as well (in the amd64 root):</p>
+
+<div class="command"><pre>
+sudo apt-get install msttcorefonts
+</pre></div>
+
+<p>After you installed the plugin, you can test if that worked
+<a href="msttcorefonts.swf">here</a>. Besides <code>TEXT1</code>,
+<code>TEXT2</code> and <code>TEXT3</code>, you should see a
+<code>TEXT4</code>.</p>
+
+<p>The whole point of the chroot is to make it easy to install and
+update the plugins. So, just enter the chroot and install the plugin
+the debian way:</p>
+
+<div class="command"><pre>
+sudo chroot $CHROOT apt-get install flashplugin-nonfree
+</pre></div>
+
+<p>Unfortunately the debian "maintainers" decided to <em>remove</em>
+this plugin from debian as of lenny. The plugin is now only
+available if you're using etch or when you're using unstable.
+See <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=457291">http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=457291</a>
+for their reasons.</p>
+
+<p>If the above didn't work then you'll have to use the
+package from unstable (codename: sid). Once lenny has
+become stable, and you are using stable you should use
+the backport (see below).</p>
+
+<p>If you're using testing&mdash; then you might want to create
+the backport yourself, because backports.org is for 'stable',
+following the instructions below (adapted from
+<a href="http://www.debian.org/doc/manuals/reference/ch-package.en.html#s-port">6.4.10 Port a package to the stable system</a>
+from the debian reference manual). However, you might want
+to try to just use the 'stable' backport (hoping your libs are
+compatible; what they usually should be because 'testing' is newer
+than 'stable').</p>
+
+<p><b>In order to compile the backport yourself</b> do the following:</p>
+
+<div class="command"><pre>
+exit # Leave chroot
+if ! grep '^deb-src.*unstable' $CHROOT/etc/apt/sources.list; then
+  sudo sh -c 'echo "# Sources from unstable." &gt;&gt; '"$CHROOT"'/etc/apt/sources.list; \
+  echo "deb-src '"$DEBIANMIRROR"' unstable main contrib non-free" &gt;&gt; '"$CHROOT"'/etc/apt/sources.list'
+fi
+sudo chroot $CHROOT
+apt-get update
+apt-get --yes install build-essential fakeroot devscripts debhelper;  # Installs 65 MB.
+cd /usr/src
+mkdir flashplugin-nonfree
+cd flashplugin-nonfree
+apt-get source flashplugin-nonfree
+cd flashplugin-nonfree-*
+apt-get --yes build-dep flashplugin-nonfree
+dpkg-buildpackage -rfakeroot -us -uc
+dpkg -i ../flashplugin-nonfree_*_i386.deb
+apt-get purge build-essential fakeroot devscripts debhelper
+apt-get autoremove;                                             # Free 65 MB again.
+cd /usr/src
+rm -rf flashplugin-nonfree
+</pre></div>
+
+<p>A disadvantage of this method is that it won't upgrade
+flash when a new release is available.</p>
+
+<p><b>In order to use backports.org</b> do the following (adapted from
+<a href="http://backports.org/dokuwiki/doku.php?id=instructions">here</a>).
+I'd urge you to use pinning so that upgrading later on will be automatic.</p>
+
+<div class="command"><pre>
+exit # Leave chroot
+STABLECODENAME=etch;  # Change this if needed!
+if ! grep '^deb http://www\.backports\.org' $CHROOT/etc/apt/sources.list; then
+  sudo sh -c 'echo "# Stable backports." &gt;&gt; '"$CHROOT"'/etc/apt/sources.list; \
+  echo "deb http://www.backports.org/debian '"$STABLECODENAME"'-backports main contrib non-free" &gt;&gt; '"$CHROOT"'/etc/apt/sources.list'
+fi
+sudo chroot $CHROOT
+apt-get update
+wget -O - http://backports.org/debian/archive.key | apt-key add -
+exit
+sudo chroot $CHROOT apt-get --yes --force-yes -t '"$STABLECODENAME"'-backports install flashplugin-nonfree
+</pre></div>
+
+<p><b>In order to use www.adobe.com</b> do the following.</p>
+
+<p>Since the support from debian is basically gone,
+you might also opt for the alternative to download
+the flashplayer from Adobe yourself and simply drop
+it in <code>~/.mozilla/plugins/libflashplayer.so</code>.</p>
+
+<p><b>Note that flash player 9.0 r115 (which you will get if
+you download it now) and later have stricter policy files
+which can cause your client to not be able to connect anymore to
+certain servers.</b> See for example <a href="http://www.gotoandlearnforum.com/viewtopic.php?f=5&t=14967">here</a> and
+<a href="http://www.adobe.com/devnet/flashplayer/articles/fplayer9_security.html">Adobes article</a> on the matter.
+Version 9.0 r48 and r31 work fine for me. You can obtain the version of your
+current <code>libflashplayer.so</code> with:</p>
+
+<pre>
+strings $CHROOT/usr/lib/iceweasel/plugins/libflashplayer.so | grep -e "^Shockwave Flash [.\d+]*" | sed -e "s/Shockwave Flash //g"
+</pre>
+
+<p>The version is also visible in <code>about:plugins</code></p>
+
+<p>Download <code>install_flash_player_9_linux.tar.gz</code>
+from http://www.adobe.com/ and save and extract the tar-ball,
+change directory to the extracted content and run as <em>non-root</em>:</p>
+
+<pre>
+linux32 ./flashplayer-installer
+</pre>
+
+<p>to install the plugin in ~/.mozilla/plugins, or run as root
+to install system wide (the wrapper must be system wide too then, of course).
+In the latter case enter <code>&lt;CHROOT&gt;/usr/lib/iceweasel</code> as
+browser directory, where you should replace <code>&lt;CHROOT&gt;</code>
+with the value of your <code>$CHROOT</code>.</p>
+
+<p>Finally, you want to test it of course.
+Try this <a href="http://www.nonoba.com/ballerbryan4/age-of-war">cool site</a>.</p>
+
+<h3>Installing An Embedded PDF Viewer Plugin</h3>
+
+<p>I wasted two days trying to get acroread to work, but it's broken.
+Seriously, this is not incompetence; Adobe's acrobat reader really sucks.</p>
+
+<p>Fortunately, there is an open source alternative and that means
+that if <em>that</em> doesn't work, we can fix it!</p>
+
+<p>Firstly install <code>mozplugger</code> in the firefox chroot,
+and evince on your amd64:</p>
+
+<div class="command"><pre>
+sudo chroot $CHROOT apt-get --yes install mozplugger
+sudo apt-get install evince
+</div></pre>
+
+<p>This should immediately allow you to watch movies inside the browser
+(provided you have mplayer installed in your amd64 environment); try
+to open some .avi from your harddisk with the browser. Also have a look
+at <code>about:plugins</code> again. Wait, ... watching PDF and postscript
+works too. It just all works! I love open source.</p>
+
+<h3>Installing The Java Plugin</h3>
+
+<p>More closed source... Yes, java is open source these days, but the
+plugin isn't: Sun refuses to release a 64-bit plugin for java, and when
+that was really open source, it would have been ported long ago.</p>
+
+<p>The following commands will make java work:</p>
+
+<div class="command"><pre>
+sudo chroot $CHROOT
+apt-get --yes install libnss-mdns
+export LD_LIBRARY_PATH=/usr/lib/jvm/java-6-sun/jre/lib/i386/jli
+apt-get --yes --force-yes install sun-java6-bin
+</div>
+
+<p>The <code>export</code> is needed as work around for bug #435293
+in the Debian bug tracking system. The package <code>libnss-mdns</code>
+is needed because otherwise java just hangs firefox with 100% cpu
+usage. You don't want to know what I all needed to do to find that
+THAT was needed! Unfortunately, I still don't know WHY it is needed,
+rather unsatisfactory.</p>
+
+<p>Finally, we need:</p>
+
+<div class="command"><pre>
+exit # Leave chroot
+sudo update-alternatives --install /usr/lib/mozilla-firefox/plugins/libjavaplugin.so firefox-javaplugin.so $CHROOT/usr/lib/jvm/java-6-sun/jre/plugin/i386/ns7/libjavaplugin_oji.so 100
+sudo update-alternatives --set firefox-javaplugin.so $CHROOT/usr/lib/jvm/java-6-sun/jre/plugin/i386/ns7/libjavaplugin_oji.so
+</pre></div>
+
+<p>The first <code>update-alternatives</code> command (see <code>man update-alternatives</code>) creates (or appends to)
+a group <code>firefox-javaplugin.so</code> with generic name <code>/usr/lib/mozilla-firefox/plugins/libjavaplugin.so</code>
+and possible value <code>$CHROOT/usr/lib/jvm/java-6-sun/jre/plugin/i386/ns7/libjavaplugin_oji.so</code>.
+The group is created in automatic mode, using the (arbitrarily chosen) priority 100. The second
+<code>update-alternatives</code> command sets the group in manual mode and permanently links it to
+the given value. In effect, the result is that a symbolic link <code>/usr/lib/mozilla-firefox/plugins/libjavaplugin.so</code>
+points to <code>/etc/alternatives/firefox-javaplugin.so</code> which in turn points to
+<code>$CHROOT/usr/lib/jvm/java-6-sun/jre/plugin/i386/ns7/libjavaplugin_oji.so</code>.</p>
+
+<p>So why is this needed? Well, when run, <code>iceweasel</code> tries to load
+all shared libraries in <code>$CHROOT/usr/lib/mozilla-firefox/plugins</code>,
+the installation of <code>sun-java6-bin</code> in the chroot created an alternative
+with the name <code>/usr/lib/mozilla-firefox/plugins</code> in the chroot that points to
+<code>/etc/alternatives/firefox-javaplugin.so</code>, exactly as we just did thus (and
+even if it didn't do that; firefox simply loads everything from <code>/usr/lib/mozilla-firefox/plugins</code>
+in the amd64 root!).
+Therefore, either by reading the link <code>$CHROOT/usr/lib/mozilla-firefox/plugins</code> or
+by reading a hardcoded path <code>/usr/lib/mozilla-firefox/plugins</code>, it
+is refered to <code>/etc/alternatives/firefox-javaplugin.so</code> <em>in the amd64 root</em>!
+Hence, we need to add this alternative/symlink and point it back to the correct shared library
+in the chroot. There is a minor problem with this however. Suppose one day you run 'apt-get update &amp; apt-get upgrade'
+in the chroot, and it changes the symbolic link&mdash; then <em>our</em> manually added link will
+not change along and java will simply not work anymore. In that case you will have to update
+this alternative manually. It is unlikely that it will change however: the name of the package
+is sun-java6-bin, containing the '6', so at most the 'ns7' part might change one day
+to 'ns8'? Or is it? In fact, even during the few days that I was testing this
+these values have been changed! In the beginning, I needed:</p>
+
+<pre>
+sudo update-alternatives --install /usr/lib/iceweasel/plugins/libjavaplugin.so iceweasel-javaplugin.so $CHROOT/usr/lib/jvm/java-6-sun/jre/plugin/i386/ns7/libjavaplugin_oji.so 100
+sudo update-alternatives --set iceweasel-javaplugin.so $CHROOT/usr/lib/jvm/java-6-sun/jre/plugin/i386/ns7/libjavaplugin_oji.so
+</pre>
+
+<p>If this link is wrong then the effect will be that no plugin for java is visible in <code>about:plugins</code>.
+In that case the correct link can be found with the <code>strace</code> trick described below and looking for
+a directory that firefox searches for plugins.</p>
+
+<h3>Trouble Shooting</h3>
+
+<p>I don't know why&mdash; but I decided to add this paragraph; maybe I don't
+feel too sure about that it will work for everyone, or I just want to show
+people how cool hacking is (the real meaning of the word, not 'breaking
+into computers' which is just sad, boring and immature and done by non-hackers).
+Actually, this is more a do-it-yourself recipe than a trooble-shoot section...</p>
+
+<p>First of all, we realize that knowing the PID of a running process we can see
+what libraries it loaded by looking at <code>/proc/PID/maps</code>.
+For example; I kill my xmms and then click on a some .pls file inside the
+browser (I have iceweasel configured to start .pls files with xmms).
+As this works, I already know that the 64-bit version of xmms is started
+because I never installed xmms in the chroot, but suppose we want to check
+this. First we find the PID of the running xmms and how it was started:</p>
+
+<div class="output"><pre>
+hikaru:~&gt;ps --forest aux | grep -A3 '[f]irefox'
+carlo    31887  0.0  0.0  10656  1548 ?        S    00:30   0:00 /bin/sh /home/carlo/bin/firefox
+carlo    31888  0.6  0.9 116536 36884 ?        Sl   00:30   0:02  \_ /opt2/firefox-chroot/usr/lib/iceweasel/firefox-bin -a firefox
+carlo    32066  0.0  0.2 239012 11544 ?        Sl   00:34   0:00      \_ /usr/bin/xmms /tmp/goapsy.pls
+</pre></div>
+
+<p>This shows that the PID of <code>xmms</code> is 32066 and that is was indeed started by firefox-bin.</p>
+
+<p>Of course, we can use <code>file</code> to see the type of each of
+the two executables involved:</p>
+
+<div class="output"><pre>
+hikaru:~&gt;file /opt2/firefox-chroot/usr/lib/iceweasel/firefox-bin
+/opt2/firefox-chroot/usr/lib/iceweasel/firefox-bin: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), for GNU/Linux 2.6.8, dynamically linked (uses shared libs), stripped
+hikaru:~&gt;file /usr/bin/xmms
+/usr/bin/xmms: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), for GNU/Linux 2.6.8, dynamically linked (uses shared libs), stripped
+</pre></div>
+
+<p>which shows that firefox-bin is 32-bit and xmms is 64-bit. Of course we could have known
+by just looking at the path, too.
+Finally, we can explicitely look at the libraries loaded by xmms (applying a filter to reduce the output a bit):</p>
+
+<div class="output"><pre>
+hikaru:~&gt;cat /proc/32066/maps | grep lib | sed -e 's/.* //' | sort -u
+/lib/ld-2.7.so
+/lib/libc-2.7.so
+/lib/libdl-2.7.so
+/lib/libm-2.7.so
+/lib/libnsl-2.7.so
+/lib/libnss_compat-2.7.so
+/lib/libnss_dns-2.7.so
+/lib/libnss_files-2.7.so
+/lib/libnss_mdns4_minimal.so.2
+/lib/libnss_nis-2.7.so
+/lib/libpthread-2.7.so
+/lib/libresolv-2.7.so
+/usr/lib/gconv/gconv-modules.cache
+/usr/lib/libasound.so.2.0.0
+/usr/lib/libaudiofile.so.0.0.2
+/usr/lib/libesd.so.0.2.36
+/usr/lib/libgdk-1.2.so.0.9.1
+/usr/lib/libGLcore.so.100.14.19
+/usr/lib/libglib-1.2.so.0.0.10
+/usr/lib/libGL.so.100.14.19
+/usr/lib/libgmodule-1.2.so.0.0.10
+/usr/lib/libgthread-1.2.so.0.0.10
+/usr/lib/libgtk-1.2.so.0.9.1
+/usr/lib/libICE.so.6.3.0
+/usr/lib/libmikmod.so.2.0.4
+/usr/lib/libogg.so.0.5.3
+/usr/lib/libSM.so.6.0.0
+/usr/lib/libvorbisfile.so.3.2.0
+/usr/lib/libvorbis.so.0.4.0
+/usr/lib/libX11.so.6.2.0
+/usr/lib/libXau.so.6.0.0
+/usr/lib/libXcursor.so.1.0.2
+/usr/lib/libXdmcp.so.6.0.0
+/usr/lib/libXext.so.6.4.0
+/usr/lib/libXfixes.so.3.1.0
+/usr/lib/libXi.so.6.0.0
+/usr/lib/libxmms.so.1.3.1
+/usr/lib/libXrender.so.1.3.0
+/usr/lib/libXxf86vm.so.1.0.0
+/usr/lib/libz.so.1.2.3.3
+/usr/lib/locale/locale-archive
+/usr/lib/nvidia/libnvidia-tls.so.100.14.19
+/usr/lib/xmms/Effect/libecho.so
+/usr/lib/xmms/Effect/libstereo.so
+/usr/lib/xmms/Effect/libvoice.so
+/usr/lib/xmms/General/libir.so
+/usr/lib/xmms/General/libjoy.so
+/usr/lib/xmms/General/libsong_change.so
+/usr/lib/xmms/Input/libcdaudio.so
+/usr/lib/xmms/Input/libmikmod.so
+/usr/lib/xmms/Input/libmpg123.so
+/usr/lib/xmms/Input/libtonegen.so
+/usr/lib/xmms/Input/libvorbis.so
+/usr/lib/xmms/Input/libwav.so
+/usr/lib/xmms/Output/libALSA.so
+/usr/lib/xmms/Output/libdisk_writer.so
+/usr/lib/xmms/Output/libesdout.so
+/usr/lib/xmms/Output/libOSS.so
+/usr/lib/xmms/Visualization/libbscope.so
+/usr/lib/xmms/Visualization/libogl_spectrum.so
+/usr/lib/xmms/Visualization/libsanalyzer.so
+</pre></div>
+
+<p>as well as of the running firefox-bin:</p>
+
+<div class="output"><pre>
+hikaru:~&gt;cat /proc/31888/maps | grep lib | sed -e 's/.* //' | sort -u
+/emul/ia32-linux/lib/ld-2.7.so
+/emul/ia32-linux/lib/libc-2.7.so
+/emul/ia32-linux/lib/libdl-2.7.so
+/emul/ia32-linux/lib/libm-2.7.so
+/emul/ia32-linux/lib/libnsl-2.7.so
+/emul/ia32-linux/lib/libnss_compat-2.7.so
+/emul/ia32-linux/lib/libnss_dns-2.7.so
+/emul/ia32-linux/lib/libnss_files-2.7.so
+/emul/ia32-linux/lib/libnss_nis-2.7.so
+/emul/ia32-linux/lib/libpopt.so.0.0.0
+/emul/ia32-linux/lib/libpthread-2.7.so
+/emul/ia32-linux/lib/libresolv-2.7.so
+/emul/ia32-linux/lib/librt-2.7.so
+/emul/ia32-linux/lib/libutil-2.7.so
+/emul/ia32-linux/usr/lib/gconv/ISO8859-1.so
+/emul/ia32-linux/usr/lib/gconv/UTF-16.so
+/emul/ia32-linux/usr/lib/gtk-2.0/2.10.0/engines/libclearlooks.so
+/emul/ia32-linux/usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-xpm.so
+/emul/ia32-linux/usr/lib/libatk-1.0.so.0.2009.1
+/emul/ia32-linux/usr/lib/libaudiofile.so.0.0.2
+/emul/ia32-linux/usr/lib/libbonobo-2.so.0.0.0
+/emul/ia32-linux/usr/lib/libbonobo-activation.so.4.0.0
+/emul/ia32-linux/usr/lib/libcairo.so.2.11.5
+/emul/ia32-linux/usr/lib/libdbus-1.so.3.3.0
+/emul/ia32-linux/usr/lib/libesd.so.0.2.36
+/emul/ia32-linux/usr/lib/libexpat.so.1.0.0
+/emul/ia32-linux/usr/lib/libfontconfig.so.1.2.0
+/emul/ia32-linux/usr/lib/libfreetype.so.6.3.16
+/emul/ia32-linux/usr/lib/libgcc_s.so.1
+/emul/ia32-linux/usr/lib/libgconf-2.so.4.1.2
+/emul/ia32-linux/usr/lib/libgcrypt.so.11.2.3
+/emul/ia32-linux/usr/lib/libgdk_pixbuf-2.0.so.0.1000.13
+/emul/ia32-linux/usr/lib/libgdk-x11-2.0.so.0.1000.13
+/emul/ia32-linux/usr/lib/libglib-2.0.so.0.1400.1
+/emul/ia32-linux/usr/lib/libgmodule-2.0.so.0.1400.1
+/emul/ia32-linux/usr/lib/libgnutls.so.13.8.4
+/emul/ia32-linux/usr/lib/libgobject-2.0.so.0.1400.1
+/emul/ia32-linux/usr/lib/libgpg-error.so.0.3.0
+/emul/ia32-linux/usr/lib/libgthread-2.0.so.0.1400.1
+/emul/ia32-linux/usr/lib/libgtk-x11-2.0.so.0.1000.13
+/emul/ia32-linux/usr/lib/libICE.so.6.3.0
+/emul/ia32-linux/usr/lib/libjpeg.so.62.0.0
+/emul/ia32-linux/usr/lib/libORBit-2.so.0.1.0
+/emul/ia32-linux/usr/lib/libORBitCosNaming-2.so.0.1.0
+/emul/ia32-linux/usr/lib/libpango-1.0.so.0.1800.2
+/emul/ia32-linux/usr/lib/libpangocairo-1.0.so.0.1800.2
+/emul/ia32-linux/usr/lib/libpangoft2-1.0.so.0.1800.2
+/emul/ia32-linux/usr/lib/libpcre.so.3.12.0
+/emul/ia32-linux/usr/lib/libpng12.so.0.15.0
+/emul/ia32-linux/usr/lib/libSM.so.6.0.0
+/emul/ia32-linux/usr/lib/libstdc++.so.6.0.10
+/emul/ia32-linux/usr/lib/libtasn1.so.3.0.10
+/emul/ia32-linux/usr/lib/libX11.so.6.2.0
+/emul/ia32-linux/usr/lib/libXau.so.6.0.0
+/emul/ia32-linux/usr/lib/libXcursor.so.1.0.2
+/emul/ia32-linux/usr/lib/libXdmcp.so.6.0.0
+/emul/ia32-linux/usr/lib/libXext.so.6.4.0
+/emul/ia32-linux/usr/lib/libXfixes.so.3.1.0
+/emul/ia32-linux/usr/lib/libXft.so.2.1.2
+/emul/ia32-linux/usr/lib/libXinerama.so.1.0.0
+/emul/ia32-linux/usr/lib/libXi.so.6.0.0
+/emul/ia32-linux/usr/lib/libxml2.so.2.6.30
+/emul/ia32-linux/usr/lib/libXp.so.6.2.0
+/emul/ia32-linux/usr/lib/libXrandr.so.2.1.0
+/emul/ia32-linux/usr/lib/libXrender.so.1.3.0
+/emul/ia32-linux/usr/lib/libXt.so.6.0.0
+/emul/ia32-linux/usr/lib/libz.so.1.2.3.3
+/emul/ia32-linux/usr/lib/pango/1.6.0/modules/pango-basic-fc.so
+/opt2/firefox-chroot/lib/libnss_mdns4_minimal.so.2
+/opt2/firefox-chroot/usr/lib/iceweasel/components/libmyspell.so
+/opt2/firefox-chroot/usr/lib/iceweasel/components/libspellchecker.so
+/opt2/firefox-chroot/usr/lib/iceweasel/firefox-bin
+/opt2/firefox-chroot/usr/lib/iceweasel/libmozjs.so
+/opt2/firefox-chroot/usr/lib/iceweasel/libxpcom_compat.so
+/opt2/firefox-chroot/usr/lib/iceweasel/libxpcom_core.so
+/opt2/firefox-chroot/usr/lib/iceweasel/libxpcom.so
+/opt2/firefox-chroot/usr/lib/iceweasel/plugins/libunixprintplugin.so
+/opt2/firefox-chroot/usr/lib/libavahi-client.so.3.2.4
+/opt2/firefox-chroot/usr/lib/libavahi-common.so.3.5.0
+/opt2/firefox-chroot/usr/lib/libavahi-glib.so.1.0.1
+/opt2/firefox-chroot/usr/lib/libdbus-glib-1.so.2.1.0
+/opt2/firefox-chroot/usr/lib/libgnome-2.so.0.1999.2
+/opt2/firefox-chroot/usr/lib/libgnomevfs-2.so.0.2000.1
+/opt2/firefox-chroot/usr/lib/libhunspell-1.1.so.0.0.0
+/opt2/firefox-chroot/usr/lib/libnspr4.so.0d
+/opt2/firefox-chroot/usr/lib/libnss3.so.1d
+/opt2/firefox-chroot/usr/lib/libplc4.so.0d
+/opt2/firefox-chroot/usr/lib/libplds4.so.0d
+/opt2/firefox-chroot/usr/lib/libsmime3.so.1d
+/opt2/firefox-chroot/usr/lib/libsqlite3.so.0.8.6
+/opt2/firefox-chroot/usr/lib/libssl3.so.1d
+/opt2/firefox-chroot/usr/lib/nss/libfreebl3.so
+/opt2/firefox-chroot/usr/lib/nss/libnssckbi.so
+/opt2/firefox-chroot/usr/lib/nss/libnssdbm3.so
+/opt2/firefox-chroot/usr/lib/nss/libsoftokn3.so
+/usr/lib/locale/locale-archive
+</pre></div>
+
+<p>Each of the libraries should be either in <code>/emul/ia32-linux</code>
+or in <code>/opt2/firefox-chroot</code>, of course. We see one mapped
+file that is from the 64-bit install: <code>/usr/lib/locale/locale-archive</code>.
+But that file is neither 32-bit nor 64-bit architecture. Nevertheless, since it
+resides in <code>/usr/lib</code> it is probably related to some
+library. I used the following rather brute force way to find out which:</p>
+
+<div class="output"><pre>
+hikaru:~&gt;for f in $(cat /proc/985/maps | grep lib | sed -e 's/.* //' | sort -u); do if strings $f | grep 'locale-archive'; then echo $f; fi; done
+/usr/lib/locale/locale-archive
+/opt2/firefox-chroot/lib/libc-2.7.so
+</pre></div>
+
+<p>This shows that <code>/opt2/firefox-chroot/lib/libc-2.7.so</code>
+is the library that has this filename hard-coded. That's a good
+thing because libc won't suddenly drastically change; as long as
+we are using the same suite in the chroot as well as in the normal
+file system, the version of the library should be the same enough
+to be able to use each others files. In fact, although not installed
+by the libc6 package but rather generated, the file has the exact
+same size in each of the roots:</p>
+
+<div class="output"><pre>
+hikaru:~&gt;ls -l /usr/lib/locale/locale-archive $CHROOT/usr/lib/locale/locale-archive
+-rw-r--r-- 1 root root 1282816 2008-02-03 20:25 /opt2/firefox-chroot/usr/lib/locale/locale-archive
+-rw-r--r-- 1 root root 1282816 2008-01-28 00:49 /usr/lib/locale/locale-archive
+</pre></div>
+
+<p>I made a diff of the hexdump-- and I don't think this is something
+we have to worry about.</p>
+
+<p>Another issue is the mixture of libraries from <code>/emul/ia32-linux</code>
+and <code>/opt2/firefox-chroot</code> respectively. Again, although both
+are the same suite, it might happen that libraries the i386 architecture
+get out of sync with those in the ia32 libs of the amd64 suite, especially
+if you don't run 'apt-get update/upgrade' in both roots at the same time.
+The question is therefore: can this cause problems? I don't think so,
+but if you HAVE problems and you suspect that this might be the cause,
+then you might want to try to get rid of the libraries loaded from
+<code>/emul/ia32-linux</code>. You would have to remove the <code>[/usr]/lib32</code>
+paths from <code>LD_LIBRARY_PATH</code> and install packages
+in the chroot for any remaining library that is missing. You'd also need
+to find a solution for the hardcoded path in <code>libgdk_pixbuf-2.0.so.0</code>.
+Those extra packages would be (I tried that):
+<code>gtk2-engines</code> (<code>libclearlooks.so</code>), <code>libgconf2-4</code> (<code>libgconf-2.so.4.1.2</code>),
+<code>liborbit2</code> (<code>libORBit-2.so.0.1.0</code>) and <code>libpango1.0-0<code> (</code>pango-basic-fc.so<code>).</p>
+
+<p>Now that is weird: <code>libpango1.0-0</code> <em>is</em> already installed in the chroot!
+Apparently we should tell pango where to look for it's modules. This would be possible
+by setting the environment variable PANGO_RC_FILE and have it point to a file
+with a section <code>[Pango]</code> containing <code>ModuleFiles=/path/to/libpango1.0-0.modules</code>,
+where the paths in that libpango1.0-0.modules files are fixed to incorporate the
+chroot offset. Neither, <code>/emul/ia32-linux/usr/lib/pango/1.6.0/module-files.d/libpango1.0-0.modules</code>
+nor <code>$CHROOT/usr/lib/pango/1.6.0/module-files.d/libpango1.0-0.modules</code> could be used,
+because they contain absolute paths. Anyway, so far I have not seen this to cause
+any problems so I see no need to do this.</p>
+
+<p>With all these hard-coded paths, it would be a wild guess how and where
+iceweasel looks for plugin files, or how it tries to start the java virtual machine.
+Therefore I'll conclude this paragraph with a way to strace iceweasel.</p>
+
+<p>Iceweasel has provisions to run it inside a debugger. We can hijack that and start it through strace. 
+First, install <code>strace</code> in the chroot:</p>
+
+<pre>
+sudo chroot $CHROOT
+apt-get install strace
+exit
+</pre>
+
+<p>Please make sure you use at least version 4.5.15 of strace (also on your amd64), or
+you'll likely to run into the <a href="https://bugzilla.redhat.com/show_bug.cgi?id=218043">umovestr I/O errors on 32-binaries</a> bug.
+Version 4.5.15 is at the moment of writing only in unstable, hence, if you still have 4.5.14 or earlier, use:
+<code>apt-get -t unstable install strace</code>, which worked fine for me on lenny (actually,
+I still get 'umovestr I/O errors' when running (32-bit) firefox inside (64-bit) strace
+which subsequently starts a 64-bit external application again. In the case that you
+need to strace an external application, you'll have to run firefox without strace
+and insert the strace at the right place in some script).</p>
+
+<p>Then run</p>
+
+<pre>
+firefox --debugger "$CHROOT/usr/bin/strace -f -o output -e trace=file" "about:plugins"
+</pre>
+
+<p>where <code>firefox</code> is our little wrapper.
+This will write every system call involving a file- or directory name to the file <code>output</code>.</p>
+
+</div> <!-- content -->
+
+<div id="footer">Copyright &copy; 2008 Carlo Wood</div>
+
+</body>
+</html>
+

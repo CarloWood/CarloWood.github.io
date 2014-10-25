@@ -1,0 +1,21 @@
+<html>
+<title>CVS</title>
+<BODY BGCOLOR="#AAAAAA">
+<hr><center><h1>--- /aclocal ---</h1></center><hr>
+<A NAME="UTIMBUF.m4">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: UTIMBUF.m4</font></B><br></td><tr>
+<tr><td><b>Revision 1.1</b><td>carlo
+<td>2000/03/03 18:15:51<td>None
+<TR><TD COLSPAN=4>
+<code>NeXT seems to need -posix for struct utimbuf</code><br>
+
+</TABLE><br>
+<hr width=100%>
+<font size=2>
+<p>File made using version 1.52 of <a href="http://www.sslug.dk/cvs2html" target="_top">cvs2html</a> by carlo at 100-11-17 14:42   and only showing data between revisions V2_2_5:HEAD.</font></p>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$Code_8h.html" title="This file contains the declaration of class Code." alt="" coords="103,83,169,112"/>
+<area shape="rect" id="node28" href="$CwChessboardCodes_8h.html" title="This file contains the definitions of the CwChessboardCode constants." alt="" coords="316,160,484,189"/>
+<area shape="rect" id="node9" href="$Color_8h.html" title="This file contains the declaration of class Color." alt="" coords="33,315,100,344"/>
+<area shape="rect" id="node12" href="$Type_8h.html" title="This file contains the declaration of class Type." alt="" coords="105,237,167,267"/>
+<area shape="rect" id="node16" href="$Direction_8h.html" title="This file contains the declaration of class Direction." alt="" coords="181,160,272,189"/>
+<area shape="rect" id="node18" href="$BitBoard_8h.html" title="This file contains the declaration of class BitBoard." alt="" coords="191,237,279,267"/>
+<area shape="rect" id="node25" href="$Flags_8h.html" title="This file contains the declaration of class Flags." alt="" coords="316,315,383,344"/>
+<area shape="rect" id="node21" href="$Index_8h.html" title="This file contains the declaration of class Index." alt="" coords="225,315,292,344"/>
+</map>

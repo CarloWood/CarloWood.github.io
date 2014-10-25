@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node9" href="$classMyChessboardWidget.html" title="MyChessboardWidget" alt="" coords="113,237,271,267"/>
+<area shape="rect" id="node2" href="$classcwchess_1_1ChessPosition.html" title="A chess position." alt="" coords="5,83,176,112"/>
+<area shape="rect" id="node4" href="$classcwmm_1_1ChessboardWidget.html" title="A gtkmm chessboard widget." alt="" coords="200,83,389,112"/>
+<area shape="rect" id="node6" href="$classcwmm_1_1CwChessboardPtr.html" title="cwmm::CwChessboardPtr" alt="" coords="203,5,387,35"/>
+</map>

@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html LANG="en_US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="author" content="Carlo Wood">
+<meta name="keywords" content="subversion, cvs2svn, conversion, controlled, manual, svn:eol-style, svn:keywords, auto-props, mime-types, cvs, svn, HOWTO">
+<title>HOWTO convert a CVS repository to a subversion repository</title>
+<link href="../css/common.css" rel="stylesheet" type="text/css">
+<link href="svn.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<h1>Converting CVS to subversion</h1>
+
+<div id="content">
+
+<p>This mini-HOWTO describes how to convert a <a href="http://www.nongnu.org/cvs/">CVS</a>
+repository to a <a href="http://subversion.tigris.org/">subversion</a> repository.</p>
+
+<p>The base of this conversion is performed with <a href="http://cvs2svn.tigris.org/cvs2svn.html">cvs2svn</a>.
+This tool isn't very accurate however when it comes to MIME types and EOL conversions.
+This mini-HOWTO describes a method to perform this conversion <b><u>in a much more controlled way</u></b>.</p>
+
+<p>First you need direct access to your CVS repository (this is the directory containing
+the CVSROOT directory.) If your CVS repository resides on <a href="http://sourceforge.net/">Source Forge</a>, then you
+can download it to your local harddisk as described <a href="http://sourceforge.net/docs/E04#rsync">here</a>.</p>
+
+<p>Set the CVSREPOS environment variable to the <em>full path</em> of the directory that now
+contains the CVSROOT directory. For example, if you used rsync to download the CVS repository to
+a directory <code>cvsrepos</code> in the current directory, you'd set:</p>
+<pre>
+$ CVSREPOS=&quot;$(pwd)/cvsrepos&quot;
+</pre>
+<p>This should allow you to do,
+<pre>
+$ (cd /; test -f $CVSREPOS/CVSROOT/rcsinfo,v &amp;&amp; echo 'Ok!')
+Ok!
+</pre></p>
+<p>Set the environment variable PROJECTNAME to the name of the directory (not CVSROOT) in $CVSREPOS containing
+the CVS module that you want to convert. If you downloaded the CVS repository from SourceForge, then this
+would be the project UNIX name.</p>
+<p>Consider the example output of the following command:
+<pre>
+$ ls $CVSREPOS
+CVSROOT/  libcwd/
+</pre>
+Then you'd set
+<pre>
+$ PROJECTNAME=libcwd
+</pre></p>
+<p>The following makes a list of all file extensions in your repository, and all files without extension.
+This assumes you have a file <code>/etc/mime.types</code> with a format like
+<pre>
+# Comment
+text/x-c++hdr         h++ hpp hxx hh
+text/x-c++src         c++ cpp cxx cc
+</pre>
+<p>In other words, with the format <code>MIMETYPE EXTENSION-LIST</code>,
+where the EXTENSION-LIST has no dots and is space separated.</p>
+<p>For the conversion to successfully work, you need <em>at least</em>
+mime-types for each <em>binary</em> file in your repository.
+<p>Also note that these commands create temporary files in the current directory.
+The backslash means that the next line is really part of the same command (you should still be able
+to just paste the whole command to a shell in one go.)
+I added comments to prevent this from turning into black magic.</p>
+<pre>
+# Find all extensions. Also include filenames without extension.
+# The E (extension) and S (slash) trick is to get GNU sort to separate
+# them, although this is not really necessary. But note that at the
+# same time it removes the leading slash from filenames without extension.
+find $CVSREPOS/$PROJECTNAME -type f -name '*,v' ! -name '.cvsignore,v' | \
+    sed -e 's%.*\([./][^.]*\),v$%\1%' -e 's/\./E/' -e 's/\//S/' | \
+    sort -u | sed -e 's/^S//' -e 's/^E/./' &gt; step1
+
+# Compose an extended regular expression that matches any "extension"
+# as found by the previous step.
+EXT1="($(grep '^\.' step1 | xargs echo | sed -e 's/^\.//' -e 's/\+/\\+/g' -e 's/ \./|/g'))"
+
+# Find all mime-types and related extensions that really exist.
+egrep -i '^[[:alnum:]][^[:space:]]*[[:space:]]+([^[:space:]]+ )*'"$EXT1"'($| )' /etc/mime.types &gt; step2
+
+# Extract the list of extensions from the previous step,
+# filtering out the extensions that we don't have.
+for ext in $(sed -re 's/^[^[:space:]]*[[:space:]]+//' step2); do echo $ext; done | \
+    egrep -i '^'"$EXT1"'$' | sort -u &gt; step3
+</pre>
+<p>The file <code>step3</code> now contains a list of all extensions
+found in your repository for which we know one or more MIME types.</p>
+<pre>
+# Compose an extended regular expression from the previous step.
+EXT2=&quot;($(cat step3 | xargs echo | sed -e 's/ /|/g'))&quot;
+
+# Find all &quot;extensions&quot; that weren't really extensions
+# (or for which we don't know a MIME type).
+grep '^\.' step1 | egrep -iv '^\.'"$EXT2"'$' &gt; step4
+
+# And turn it into an extended regular expression.
+EXT3=&quot;($(sed -e 's/\./\\\\./' step4 | xargs echo | sed -e 's/ /|/g'))&quot;
+
+# Create a list of files for which no MIME type is known.
+find $CVSREPOS/$PROJECTNAME -type f -name '*,v' ! -name '.cvsignore,v' | \
+    sed -e 's%.*/\([^/]*\),v$%\1%' | egrep -i "$EXT3"'$' | sort -u &gt; step5
+</pre>
+<p>At this point, the file <code>step5</code> contains a list of filenames
+in your repository for which no MIME types match their extension.
+If you see any <em>binary</em> files in there then you <em>must</em> add their extension
+to the mimes.types file and repeat the steps above. For text files, this is not
+necessary; files without MIME type are treated as text by SVN.</p>
+<pre>
+# Create a map from extension to MIME type. If a MIME type that starts
+# with 'text' exist, use that - otherwise use application/octet-stream
+# when there is more than one MIME type, or use the single known MIME type.
+for f in $(cat step3); do \
+    MIMETYPES=$(egrep -i '[[:space:]]'$f'( |$)' step2 | sed -e 's/[[:space:]].*//'); \
+    echo $f: $MIMETYPES; done | \
+    sed -e 's%:.* \(text/[^ ]*\).*%: \1%' -e 's%: [^ ].* .*%: application/octet-stream%' &gt; step6
+</pre>
+<p>Edit the file <code>step6</code> if it contains MIME types that you do not agree with.
+For example, if you have any .doc files and you used a standard mime.types file,
+it will contain <code>doc: application/msword</code>. This would be treated as a binary
+file. When those files aren't msword files then you would need to change this
+into <code>doc: text/plain</code>. Likewise, you might have .js files that are correctly
+mapped to a MIME type application/x-javascript but you still need to change that into
+<code>js: text/plain</code> because you don't want svn to treat those files as binary!
+Every MIME type that doesn't start with <code>text/</code> will be treated as binary.</p>
+<pre>
+# This could be used to turn the (editted) file 'step6' into a mime.types file
+# for use with cvs2svn's '--mime-types=FILE' option, but we WON'T use this.
+sed -e 's/\([^:]*\): \(.*\)/\2 \1/' step6 &gt; mime.types
+
+# Instead, build a props file for use with the '--auto-props=FILE' option.
+echo &quot;[auto-props]&quot; &gt; propsfile
+sed -e 's%: \(text/.*\)% = svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:mime-type=\1%' \
+    -e 's/^/*./' -e 's/: / = svn:mime-type=/' step6 &gt;&gt; propsfile
+</pre>
+<p>Also this file you might want to edit at this point, in particular the keywords that will
+be substituted. In the SVN Book you can find more information on
+<a href="http://svnbook.red-bean.com/nightly/en/svn.advanced.props.html#svn.advanced.props.special.keywords">svn:keywords</a>.
+If you want the result to be as much as possible as it would be when you had
+just added each file with <code>svn add</code> over time, then in fact - you should remove
+the <code>svn:mime-type</code> properties for <code>text/*</code> MIME types, because
+those are normally not set.</p>
+<p>The next command adds the properties for all other files (for which no MIME type could be found).
+Note that also here the svn:keywords property is set. You might want to change it. We <em>don't</em>
+set the <code>svn:mime-type</code> property for the other files, this has the same effect as
+them being text/plain anyway - and usually svn doesn't set a mime-type unless it detects a
+binary file (in which case it sets the mine-type to application/octet-stream).</p>
+<pre>
+# Finish the generation of propsfile
+sed -re 's/(.*\.([^.]*$))/\2 \1/' -e 's/^([^.]*)$/\1 \1/' step5 | sort | \
+    sed -e 's/^[^ ]* //' -e 's%$% = svn:eol-style=native;svn:keywords=Author Date Id Revision%' &gt;&gt; propsfile
+</pre>
+<p>At this point all results are collected in one file: <code>propsfile</code>.
+Edit it and make any changes you think are appropriate. For example, you can delete lines
+for files that have the same extension and replace them by one that uses a wildcard.</p>
+<p>What is important here is that text files have the appropriate <code>svn:eol-style</code>
+property and no mime-type, or have a <code>svn:mime-type</code> that starts with
+<code>text/*</code>, and binary files have have no <code>svn:eol-style</code> and have
+a <code>svn:mime-type</code> that does <em>not</em> start with <code>text/*</code>.
+For example,</p>
+<pre>
+*.png = svn:mime-type=image/png
+*.cpp = svn:eol-style=native;svn:keywords=Author Date Id Revision
+</pre>
+<p>Now we are ready to create the SVN dumpfile with cvs2svn.</p>
+<pre>
+cvs2svn --dumpfile=svndump-$PROJECTNAME --keywords-off --no-default-eol \
+    --auto-props-ignore-case --auto-props=propsfile $CVSREPOS/$PROJECTNAME
+</pre>
+<p>Next you can use <a href="http://svnbook.red-bean.com/en/1.0/ch05s03.html#svn-ch-5-sect-3.1.3">svndumpfilter</a>
+to clean up your dumpfile a bit. For example, here is how I dropped several tags and a branches:
+<pre>
+cat svndump-$PROJECTNAME | svndumpfilter exclude tags/stable_head tags/gdbbug00 tags/gdbbug01 \
+    tags/gdbbug02 branches/branch-threading &gt; svndump
+</pre>
+<p>you can get a list of all tags and branches by grepping the dumpfile:</p>
+<pre>
+egrep -a '^Node-path: /?(tags|branches)/' svndump-$PROJECTNAME | \
+    sed -re 's%^Node-path: ((tags|branches)/[^/]*).*%\1%' | sort -u
+</pre>
+<p>Uploading the dumpfile to sourceforge is described <a href="http://sourceforge.net/docs/E09/#import">here</a>
+(don't forget to rename it to <code>svndump</code> before compressing and uploading it).</p>
+<p>Creating a new repository on your local harddisk from a dumpfile is
+described <a href="http://svnbook.red-bean.com/en/1.0/re36.html">here</a>.</p>
+
+</div> <!-- content -->
+
+<div id="footer">Copyright &copy; 2006 2007 Carlo Wood</div>
+
+</body>
+</html>
+

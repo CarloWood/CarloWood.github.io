@@ -1,0 +1,24 @@
+<html>
+<title>CVS</title>
+<BODY BGCOLOR="#AAAAAA">
+<h3 align=center>Log history</h3>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%"><TR ALIGN="left" VALIGN="top">
+</TABLE><br>
+No file revisions.<br>
+<br><hr><h3 align=center>Unchanged</h3>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%"><TR ALIGN="left" VALIGN="top">
+<tr><td><FONT SIZE="-1">.cvsignore</font></font></td></tr>
+<tr><td><FONT SIZE="-1">ChangeLog</font></font></td></tr>
+<tr><td><FONT SIZE="-1">Makefile.am</font></font></td></tr>
+<tr><td><FONT SIZE="-1">README</font></font></td></tr>
+<tr><td><FONT SIZE="-1">acconfig.h</font></font></td></tr>
+<tr><td><FONT SIZE="-1">acinclude.m4</font></font></td></tr>
+<tr><td><FONT SIZE="-1">ansi_stdlib.h</font></font></td></tr>
+<tr><td><FONT SIZE="-1">configure.in</font></font></td></tr>
+<tr><td><FONT SIZE="-1">shell.c</font></font></td></tr>
+<tr><td><FONT SIZE="-1">tilde.c</font></font></td></tr>
+<tr><td><FONT SIZE="-1">tilde.h</font></font></td></tr>
+</TABLE><br>
+</font>
+</body>
+</html>

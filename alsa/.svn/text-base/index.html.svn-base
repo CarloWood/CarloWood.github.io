@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en">
+<HEAD>
+	<META name="Author" content="Carlo Wood">
+	<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+	<TITLE>A patch for the ALSA kernel modules fixing the OSS layer to restart a stream after an xrun</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#c8ccc8">
+
+<H1>Patch for ALSA</H1>
+
+<P>This patch changes the file <TT>sound/core/oss/pcm_oss.c</TT> in the
+<A HREF="http://www.alsa-project.org/">ALSA</A> kernel modules.&nbsp;
+This patch needs to be applied against the <EM>kernel</EM> sources,
+not the sources that can be downloaded from www.alsa-project.org.&nbsp;</P>
+
+<P>This patch causes the older OSS (Open Sound System) layer, that was
+added to ALSA for backwards compatibility, to restart a recording audio
+stream after it was stopped due to an overrun of the recording buffer.&nbsp;
+An overrun (also called xrun) occurs when the application doesn't read
+the opened audio device (i.e. "/dev/dsp") for a short time, causing the
+input buffer of the driver to run full.&nbsp;
+After a stream is stopped, subsequential data from the soundcard is ignored.&nbsp;
+When the application starts reading again however, the stream should be
+restarted; but this is not the case at the moment (the patch is offered to
+the ALSA development team at 13 July 2003).</P>
+
+<P>You can test if your drivers are fixed by running the following test code:</P>
+
+<P>testcode.c (<A HREF="testcode.c">download</A>):</P>
+
+<PRE>
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/ioctl.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/soundcard.h&gt;
+#include &lt;time.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void)
+{
+  int fd;
+  int res = 0x7fff0009;
+  audio_buf_info info;
+  int prev_size = 0;
+  do
+  {
+    ++res;
+    close(fd);
+    fd = open("/dev/dsp", O_RDONLY);
+    if (fd == -1) { perror("open"); exit(127); }
+    if (ioctl(fd, SNDCTL_DSP_SETFRAGMENT, &amp;res) == -1) {
+      perror("ioctl"); exit(127); }
+    if (ioctl(fd, SNDCTL_DSP_GETISPACE, &amp;info) == -1) {
+      perror("read"); exit(127); }
+    printf("    Allocated %d buffers of %d bytes.\n", info.fragstotal, info.fragsize);
+    if (prev_size == info.fragsize * info.fragstotal)
+    {
+      printf("    It seems impossible to set a recording buffer with a\n"
+             "    total size of at least 8192 bytes.  This is not going\n"
+             "    to work with ViaVoice.  Sorry.\n");
+      exit(126);
+    }
+    prev_size = info.fragsize * info.fragstotal;
+  }
+  while (prev_size &lt; 8192);
+  printf("    Successfully allocated a buffer that is large enough.\n");
+  res = AFMT_S16_LE;
+  if (ioctl(fd, SNDCTL_DSP_SETFMT, &amp;res) == -1) {
+    perror("ioctl"); exit(127); }
+  res = 0;
+  if (ioctl(fd, SNDCTL_DSP_STEREO, &amp;res) == -1) {
+    perror("ioctl"); exit(127); }
+  res = 22050;
+  if (ioctl(fd, SOUND_PCM_READ_RATE, &amp;res) == -1) {
+    perror("ioctl"); exit(127); }
+  char buf[1024];
+  if (read(fd, buf, sizeof(buf)) &lt; 0) { perror("read"); exit(127); }
+  static struct timespec naptime = { 0, 100000000 };
+  int count = 0;
+  do {
+    if (ioctl(fd, SNDCTL_DSP_GETISPACE, &amp;info) == -1) {
+      perror("read"); exit(127); }
+    printf("    Available bytes: %d\n", info.bytes);
+    nanosleep(&amp;naptime, 0);
+    if (++count == 200) { printf("    Success: No overrun occurs.\n"); exit(0); }
+  } while(info.bytes &lt; info.fragsize * info.fragstotal);
+  printf("    Successfully caused an xrun.\n");
+  printf("    non-blocking fragments: %d\n", info.fragments);
+  printf("    non-blocking bytes: %d\n", info.bytes);
+  ssize_t bufsize = info.bytes;
+  if (ioctl(fd, SNDCTL_DSP_GETISPACE, &amp;info) == -1) {
+    perror("read"); exit(127); }
+  printf("    Available bytes in buffer: %d\n", info.bytes);
+  ssize_t trlen = 0;
+  int nf = 0;
+  for (;;)
+  {
+    if (info.fragments &gt; 0) {
+      ssize_t rlen;
+      if ((rlen = read(fd, buf, sizeof(buf))) &lt; 0)
+      { perror("read"); exit(127); }
+      printf("    Additionally read %d bytes.\n", rlen);
+      trlen += rlen;
+      if (trlen &gt; bufsize) {
+        printf("    Read %d bytes: stream successfully restarted.\n", trlen);
+        break;
+      }
+      nf = 0;
+    }
+    else if (++nf &gt; 10) {
+      printf("    Stream is not restarted after xrun.\n");
+      exit(1);
+    }
+    if (ioctl(fd, SNDCTL_DSP_GETISPACE, &amp;info) == -1) {
+      perror("read"); exit(127); }
+  }
+  close(fd);
+  return 0;
+}
+</PRE>
+
+<H2>Running the test code</H2>
+
+<P>To run this test download testcode.c and execute it.&nbsp;
+For example:</P>
+
+<PRE>
+$ gcc testcode.c
+$ ./a.out
+    Allocated 2 buffers of 1024 bytes.
+    Allocated 2 buffers of 2048 bytes.
+    Allocated 2 buffers of 4096 bytes.
+    Successfully allocated a buffer that is large enough.
+    Available bytes: 3072
+    Available bytes: 4704
+    Available bytes: 6336
+    Available bytes: 8000
+    Available bytes: 9664
+    Successfully caused an xrun.
+    non-blocking fragments: 2
+    non-blocking bytes: 9664
+    Available bytes in buffer: 7232
+    Additionally read 1024 bytes.
+    Additionally read 1024 bytes.
+    Additionally read 1024 bytes.
+    Additionally read 1024 bytes.
+    Stream is not restarted after xrun.
+</PRE>
+
+<H2>Applying the patch</H2>
+
+<P>Here is an example of how to apply the patch to your kernel.&nbsp;
+Please note that this only works if you use kernel <em>modules</em>
+for your sound.&nbsp;  You also need at recent 2.5 development kernel
+of course (otherwise just use the OSS drivers, not ALSA).</P>
+
+<P>This assumes you are already running the kernel 2.5.74 which
+you configured and compiled yourself:</P>
+
+<PRE>
+$ su
+$ rmmod `lsmod | grep '^snd' | cut -d \  -f 1`
+$ cd /usr/src/linux-2.5.74
+$ patch -p0 &lt; /path/to/patch/ossfix.patch
+$ make modules
+$ RELEASE=`grep UTS_RELEASE include/linux/version.h | sed -e 's/[^"]*"\([^"]*\)"/\1/'`
+$ for f in `find sound -name '*.ko'`; do cp $f /lib/modules/$RELEASE/kernel/$f; done
+$ modprobe snd
+</PRE>
+
+<P><B>Notes:</B></P>
+
+<P>If you don't have any customized modules, then you can also
+just run <CODE>make modules_install</CODE>.&nbsp; Just keep in
+mind that it will remove every modules that is not part of the
+kernel.</P>
+
+<P>The trick with the <CODE>RELEASE</CODE> only works if you
+actually <EM>compiled</EM> the kernel before (ie, did a
+<CODE>make bzImage</CODE>.</P>
+
+<P>Make sure you don't run any sound applications that will
+reload the sound modules before you can reload them.&nbsp;
+If the last <CODE>modprobe snd</CODE> says something like
+"FATAL: Module snd already in kernel." then it's time to
+kill sound applications and re-run the <CODE>rmmod</CODE>
+line.</P>
+
+<P>Now running the test program again will yield:</P>
+
+<H2>Download</H2>
+
+<UL>
+<LI><A HREF="testcode.c">testcode.c</A></LI>
+<LI><A HREF="ossfix.patch">ossfix.patch</A></LI>
+</UL>
+
+</BODY>
+</HTML>

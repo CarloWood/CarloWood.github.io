@@ -1,0 +1,20 @@
+COMPILER_VERSION=`echo $0 | sed -e 's%^[^-]*-\(.*\)%\1%'`
+COMPILER=`echo $0 | sed -e 's%^\(g..\)[^/]*%\1%' -e 's%^.*/\(...\)[^/]*%\1%'`
+if [ $# = 1 ]; then if [ $1 = '-v' ]; then
+  /usr/local/gcc-$COMPILER_VERSION/bin/$COMPILER -v
+  exit 0
+fi fi
+(
+  (
+    CCACHE=
+    test -n "$CCACHE_DIR" -a -d "$CCACHE_DIR/$COMPILER_VERSION" && CCACHE=ccache && CCACHE_DIR="$CCACHE_DIR/$COMPILER_VERSION"
+    args=
+    while test $# -gt 0; do
+      args="$args `printf "%s\n" "$1" | sed -e 's/"/\\\\"/g' -e 's/ /\\\\ /g' -e 's/(/\\\\(/g' -e 's/)/\\\\)/g'`"
+      shift
+    done
+    if eval $CCACHE /usr/local/gcc-$COMPILER_VERSION/bin/$COMPILER \"-Wl,-rpath,/usr/local/gcc-$COMPILER_VERSION/lib:$LD_RUN_PATH\" $args; then
+      echo 'compilation successful' >&4
+    fi 2>&1 1>&3 | grep -v ' linking not done' 1>&2
+  ) 4>/dev/null 4>&1 | grep 'compilation successful' >/dev/null
+) 3>/dev/null 3>&1

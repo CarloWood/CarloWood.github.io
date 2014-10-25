@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$PgnGame_8h.html" title="This file contains the declaration of class PgnGame." alt="" coords="147,83,243,112"/>
+<area shape="rect" id="node9" href="$tstpgn_8cc.html" title="A test application to test reading PGN files." alt="" coords="195,237,275,267"/>
+<area shape="rect" id="node13" href="$PgnDatabase_8cc.html" title="This file contains the implementation of class pgn::Database." alt="" coords="320,83,445,112"/>
+<area shape="rect" id="node16" href="$tstpgnread_8cc_source.html" title="tstpgnread.cc" alt="" coords="469,83,579,112"/>
+<area shape="rect" id="node5" href="$ChessGame_8h.html" title="This file contains the declaration of class ChessGame." alt="" coords="8,160,120,189"/>
+<area shape="rect" id="node11" href="$PgnGame_8cc.html" title="This file contains the implementation of class PgnGame." alt="" coords="144,160,245,189"/>
+<area shape="rect" id="node7" href="$ChessGame_8cc.html" title="This file contains the implementation of class ChessGame." alt="" coords="5,237,123,267"/>
+</map>

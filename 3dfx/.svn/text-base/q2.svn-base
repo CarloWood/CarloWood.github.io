@@ -1,0 +1,172 @@
+#! /bin/bash
+#
+# By Carlo Wood, 24 Oct 1998
+#
+# Revised for RedHat 9 with kernel 2.6 at 13 Aug 2003
+# Only quake 2.30 is now supported.
+#
+# READ THE HOWTO at: http://www.xs4all.nl/~carlo17/3dfx/
+#
+
+if [ -f /usr/sbin/gpm ]; then
+  GPM=/usr/sbin/gpm
+else
+  GPM=`which gpm`
+fi
+
+if [ -f /etc/redhat-release ]; then
+  . /etc/sysconfig/mouse
+fi
+
+# Mount cd in case we want audio
+#sudo /bin/mount -r -t iso9660 /dev/cdrom /cdrom 2> /dev/null
+
+# This MUST be the *real* path name, not a symlink.
+# If it was a symlink, then it won't work until you
+# remove /etc/ld.so.cache and rerun ldconfig.
+#
+# Example: If this reads "cd /usr/local/games/quake2" and
+# /usr/local/games is a symbolic link to /opt/games, then it won't
+# work, not even after changing this to cd /opt/games/quake2,
+# until you remove /etc/ld.so.cache and rerun ldconfig.
+#
+# This MUST be the same as /usr/local/games/quake2,
+# although it is allowed to make that a symbolic link.
+# (ie let /usr/local/games point to /opt/games).
+#
+cd /usr/local/games/quake2
+
+# Detect if we have an NVidia graphics card
+if [ ! -e /proc/driver/nvidia/cards/0 ]; then
+  HAVE_NVIDIA=no
+else
+  HAVE_NVIDIA=yes
+  # Do a few sanity checks
+  if [ ! -f /usr/X11R6/lib/modules/drivers/nvidia_drv.o ]; then
+    echo "nVidia graphics card detected, but no nvidia driver!"
+    echo "Please go and check http://www.nvidia.com/ for the linux drivers!"
+    exit
+  fi
+  if [ -z "$DISPLAY" ]; then
+    echo "The nVidia driver does not support running from the console."
+    echo "Start q2 from the X windowing system."
+    exit
+  fi
+  if [ -f /usr/X11R6/lib/modules/extensions/libglx.a ]; then
+    echo "Old libglx still present!  Please remove/rename it!"
+    exit
+  fi
+  if [ -f /usr/X11R6/lib/modules/extensions/libGLcore.a ]; then
+    echo "Dangerous (old) libGLcore module still present!  Please remove/rename it!"
+    echo "You might also choose to remove the 'Load \"GLcore\"' from the Module"
+    echo "section of your /etc/X11/XF86Config-4 file (I'd say, comment it out anyway)."
+    exit
+  fi
+  OTHERLIBSPATTERN=`ls /usr/X11R6/lib/libGL.so* /usr/X11R6/lib/libGLcore.so* 2>/dev/null`
+  if [ ! -z "$OTHERLIBSPATTERN" ]; then
+    echo "Please rid of colliding libraries in /usr/X11R6/lib,"
+    echo "(libGL.so* and libGLcore.so*)."
+    exit
+  fi
+  if [ ! -e /usr/X11R6/lib/modules/extensions/libglx.so ]; then
+    echo "Missing symlink to /usr/X11R6/lib/modules/extensions/libglx.so.X.Y.Z"
+    exit
+  fi
+  if [ ! -f /usr/lib/libGL.so ]; then
+    echo "Missing symlink to /usr/lib/libGL.so.X.Y.Z"
+    exit
+  fi
+  LIBGLXVERSION=`ls /usr/X11R6/lib/modules/extensions/libglx.so.*.*.* | sed -e 's/.*libglx\.so\.//'`
+  LIBGLVERSION=`ls /usr/lib/libGL.so.*.*.* | sed -e 's/.*libGL\.so\.//'`
+  echo "LIBGLXVERSION = $LIBGLXVERSION"
+  echo "LIBGLVERSION = $LIBGLVERSION"
+  if [ "$LIBGLXVERSION" != "$LIBGLVERSION" ]; then
+    echo "Wrong version of /usr/lib/libGL.so.X.Y.Z present!  Please remove/rename it!"
+    echo "Make sure that the symlink /usr/lib/libGL.so to the library provided by nVidia."
+    exit
+  fi
+  NVDRIVERPATTERN=`cat /proc/modules | grep '^nvidia'`
+  if [ -z "$NVDRIVERPATTERN" ]; then
+    echo "No nVidia kernel module loaded!"
+    echo "Did you add a line \"alias char-major-195 nvidia\" to /etc/modprobe.conf?"
+    echo "Please check http://www.nvidia.com/ for the linux kernel module."
+  fi
+fi
+
+if [ -z "$DISPLAY" ]; then
+  # Release mouse, the gl driver won't get it otherwise.
+  sudo $GPM -k
+  echo "Running from console";
+else
+  echo "X windowing system detected";
+  if [ "$HAVE_NVIDIA" = no ]; then
+    export MESA_GLX_FX=fullscreen
+  fi
+fi
+
+# Multiplier
+GAMMA_MULTIPLIER=3
+if [ -z "$DISPLAY" ]; then
+  # Increase gamma for Voodoo2
+  export SSTV2_GAMMA=$GAMMA_MULTIPLIER
+  export SSTV2_RGAMMA=$GAMMA_MULTIPLIER
+  export SSTV2_GGAMMA=$GAMMA_MULTIPLIER
+  export SSTV2_BGAMMA=$GAMMA_MULTIPLIER
+else
+  # Increase gamma for X
+  # Get the current gamma values
+  XGAMMA_VALUES=`xgamma 2>&1`
+  RGAMMA=`echo "$XGAMMA_VALUES" | sed -e 's/.*Red *\([0-9]*\.[0-9]*\).*/\1/'`
+  GGAMMA=`echo "$XGAMMA_VALUES" | sed -e 's/.*Green *\([0-9]*\.[0-9]*\).*/\1/'`
+  BGAMMA=`echo "$XGAMMA_VALUES" | sed -e 's/.*Blue *\([0-9]*\.[0-9]*\).*/\1/'`
+  # Calculate new values
+  NRGAMMA=`echo $RGAMMA $GAMMA_MULTIPLIER | awk '{ printf("%.3f\n", $1 * $2); }'`
+  NGGAMMA=`echo $GGAMMA $GAMMA_MULTIPLIER | awk '{ printf("%.3f\n", $1 * $2); }'`
+  NBGAMMA=`echo $BGAMMA $GAMMA_MULTIPLIER | awk '{ printf("%.3f\n", $1 * $2); }'`
+  # Set it
+  echo "Changing gamma settings:"
+  xgamma -rgamma $NRGAMMA -ggamma $NGGAMMA -bgamma $NBGAMMA
+fi
+
+# Quake 3.20beta
+if [ -z "$DISPLAY" ]; then
+  # Started from console
+  # glibc version
+  LD_PRELOAD="/usr/lib/libglide2x.so" \
+  ./quake2 +set vid_ref gl +set gl_driver lib3dfxgl.so $*
+else
+  # Started from X windowing system
+  if [ "$HAVE_NVIDIA" = no ]; then
+    LD_PRELOAD="/usr/lib/libglide2x.so" \
+    ./quake2 +set vid_ref glx +set gl_driver lib3dfxgl.so +set _windowed_mouse 1 $*
+  else
+    # Using nVidia driver!
+    echo "nVidia driver"
+    ./quake2 +set vid_ref glx +set gl_driver libGL.so +set _windowed_mouse 1 $*
+  fi
+fi
+
+export LD_LIBRARY_PATH=
+
+# Turn off 3dfx card
+if [ "$HAVE_NVIDIA" = no ]; then
+  sudo /usr/local/glide/bin/pass
+fi
+if [ -z "$DISPLAY" ]; then
+  # Try to recover keyboard in case of a crash
+  sudo /usr/bin/kbd_mode -a
+  # Reset VT
+  sleep 8
+  reset
+  # Restart mouse
+  if [ -z "$XMOUSETYPE" ]; then
+    # Fix this if you haven't RedHat
+    XMOUSETYPE="PS/2"
+  fi
+  sudo $GPM -t $XMOUSETYPE
+  # Change back to X windowing system
+  #chvt 7
+else
+  # Restore gamma settings
+  xgamma -rgamma $RGAMMA -ggamma $GGAMMA -bgamma $BGAMMA
+fi

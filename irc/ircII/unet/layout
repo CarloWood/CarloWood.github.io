@@ -1,0 +1,103 @@
+if (0) {
+     Script: unet/layout
+        URL: http://www.xs4all.nl/~carlo17/irc/ircII/unet/layout
+Description: Beautifies the representation of lots of server numerics
+Also needed: http://www.xs4all.nl/~carlo17/irc/ircII/unet/stripu
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/strlen
+             http://www.xs4all.nl/~carlo17/irc/ircII/unet/getname
+    Version: $Id: layout 317 2000-05-04 22:53:47Z carlo $
+  First Ver: 03/05/1998
+     Author: ircii @t alinoe.com, Run @t IRC
+}
+
+load unet/stripu
+if (loaded != [unet.stripu]) {
+  echo *** unet/layout  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/stripu
+}
+load unet/strlen
+if (loaded != [unet.strlen]) {
+  echo *** unet/layout  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/strlen
+}
+load unet/getname
+if (loaded != [unet.getname]) {
+  echo *** unet/layout  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/getname
+}
+
+alias wrd {
+  assign function_return $*
+}
+
+on ^364 * {
+	echo $[16]stripu($1) $[8]left($index(. $2) $2) $[52]3-
+}
+
+on ^200 * {
+	echo $n.o($H ***) $[53]wrd($stripu($0) \($2\)) ==> $stripu($4)
+}
+
+on ^201 * {
+	echo $n.o($H ***) $[16]stripu($0) ==> $1\[$2\] $3-
+}
+
+on ^202 * {
+	echo $n.o($H ***) $[16]stripu($0) ==> $1\[$2\] $3-
+}
+
+on ^203 * {
+	echo $n.o($H ***) $[16]stripu($0) ==> $1\[$2\] $3-
+}
+
+on ^204 * {
+	echo $n.o($H ***) $[16]stripu($0) ==> $1\[$2\] $3-
+}
+
+on ^205 * {
+	echo $n.o($H ***) $[16]stripu($0) ==> $1\[$2\] $3-
+}
+
+on ^206 * {
+	@nros=left(${strlen($3)-1} $3)
+	echo $n.o($H ***) $[16]stripu($0) ==> $[10]wrd($1\[$2]) $[16]stripu($getname($5)) ==> ${nros-1}S $4 $7-
+}
+
+on ^207 * {
+	echo $n.o($H ***) $[16]stripu($0) ==> $1\[$2\] $3-
+}
+
+on ^208 * {
+	echo $n.o($H ***) $[16]stripu($0) ==> $1\[$2\] $3-
+}
+
+on ^209 * {
+	echo $n.o($H ***) $[16]stripu($0) $3 of $1\[$2\] $4-
+}
+
+on ^216 * {
+  @tmp=[$*]
+  eval echo $n.o($H ***) $1:$2:$$${[3-]##(#tmp-4)}:$$${#tmp-3}:$$${#tmp-2}:$$${#tmp-1}
+}
+
+on ^211 * {
+  if ([$1] == [SendQ]) {
+      echo $n.o($H ***) Connection                                Avg Send		Avg Recvd
+      echo     $[10]1 $[10]2 $[10]3 $[10]4 $[12]5 $6-
+  } {
+    if ([$1] == [Connection]) {
+      echo $n.o($H ***) $[40]1  Avg Send		Avg Recvd
+      echo     $[10]2 $[10]3 $[10]4 $[10]5 $[12]6 $7-
+    } {
+      ^assign SKB $4
+      ^assign RKB $6
+      ^assign SINCE $7
+      echo $n.o($H ***) $[40]1\; ${SKB * 86400 / SINCE} Kb/day	${RKB * 86400 / SINCE} Kb/day
+      echo     $[10]2 $[10]3 $[10]4 $[10]5 $[12]6 $7-
+    }
+  }
+}
+
+on ^SERVER_NOTICE "% %%% Notice -- *" {
+  echo *N* $4-
+}
+
+@version=101
+@loaded=[unet.layout]

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$ChessNotation_8cc.html" title="This file contains the implementation of class ChessNotation." alt="" coords="5,83,139,112"/>
+<area shape="rect" id="node5" href="$ChessPosition_8cc.html" title="This file contains the implementation of class ChessPosition." alt="" coords="163,83,291,112"/>
+<area shape="rect" id="node7" href="$tstbenchmark_8cc.html" title="A program to measure the move generation speed." alt="" coords="315,83,443,112"/>
+<area shape="rect" id="node9" href="$tstchessposition_8cc.html" title="A test application that prints all legal moves of a given position." alt="" coords="467,83,611,112"/>
+<area shape="rect" id="node11" href="$tstcpp_8cc.html" title="A full&#45;blown test application used for debugging cwchess::ChessPosition." alt="" coords="635,83,715,112"/>
+</map>

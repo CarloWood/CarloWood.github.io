@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<TITLE>Quake II 3dfx HOWTO version 1.1</TITLE>
+	<META NAME="GENERATOR" CONTENT="StarOffice/5.0 (Unix)">
+	<META NAME="CREATED" CONTENT="19981117;19215100">
+	<META NAME="CHANGEDBY" CONTENT="Carlo Wood">
+	<META NAME="CHANGED" CONTENT="19981207;20032400">
+	<!-- Typed in RAW, by Carlo Wood -->
+	<!-- 24 Oct 199 -->
+	<STYLE>
+	<!--
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD>
+			<H1><FONT FACE="Arial,Helvetica"><B><FONT SIZE=6>The</FONT>
+			<FONT SIZE=2>(unofficial)</FONT> <FONT SIZE=6>Quake II <FONT COLOR="#ff0000">3dfx</FONT>
+			HOWTO</FONT></B></FONT></H1>
+		</TD>
+		<TD>
+			<P ALIGN=RIGHT><FONT SIZE=3>&copy;1998,&nbsp;&nbsp;Carlo&nbsp;Wood</FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+
+<H1>IMPORTANT NOTE: This page is no longer maintained,
+linux.3dfx.com used to take over maintenance - but has now vanished.
+I don't think anyone is maintaining Device3Dfx anymore.</H1>
+
+<P>The latest version of this document can be obtained from
+<A HREF="http://www.xs4all.nl/~carlo17/3dfx/">http://www.xs4all.nl/~carlo17/3dfx/</A></P>
+
+<H3>Requirements</H3>
+<DL>
+	<DD>
+	<TABLE CELLPADDING=2 CELLSPACING=2>
+		<TR>
+			<TD>
+				<P><IMG SRC="../images/ball_blue_icon.gif" NAME="Graphic1" ALIGN=TOP WIDTH=14 HEIGHT=14 BORDER=0></P>
+			</TD>
+			<TD>
+				<P>Voodoo 2 
+				</P>
+			</TD>
+			<TD>
+				<P>(for Voodoo Graphics, correct the GAMMA environment variables
+				and use a different Glide*rpm). 
+				</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD VALIGN=TOP>
+				<P><IMG SRC="../images/ball_blue_icon.gif" NAME="Graphic2" ALIGN=TOP WIDTH=14 HEIGHT=14 BORDER=0></P>
+			</TD>
+			<TD>
+				<P>RedHat 5.x 
+				</P>
+			</TD>
+			<TD>
+				<P>(At least, you need `rpm' or otherwise be able to install
+				rpms, including their install scripts). 
+				</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD VALIGN=TOP>
+				<P><IMG SRC="../images/ball_blue_icon.gif" NAME="Graphic3" ALIGN=TOP WIDTH=14 HEIGHT=14 BORDER=0></P>
+			</TD>
+			<TD>
+				<P>Optional the binary `su0' 
+				</P>
+			</TD>
+			<TD>
+				<P>(Which you can get <A HREF="http://www.xs4all.nl/~carlo17/su0/">here</A>)
+				
+				</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD VALIGN=TOP>
+				<P><IMG SRC="../images/ball_blue_icon.gif" NAME="Graphic4" ALIGN=TOP WIDTH=14 HEIGHT=14 BORDER=0></P>
+			</TD>
+			<TD>
+				<P>Reading through the <A HREF="q2">quake2 initialization script</A>
+				and editting it, using common sense. 
+				</P>
+			</TD>
+			<TD>
+				<P>(the script assumes you have Voodoo 2, a PS/2 mouse and
+				installed quake2 in /opt/games/quake2). 
+				</P>
+			</TD>
+		</TR>
+	</TABLE>
+</DL>
+<H3>Things you need to download</H3>
+<P>Start with installing the 3dfx.o kernel module by installing <TT><A HREF="Device3Dfx-2.3-5.src.rpm">Device3Dfx-2.3-5.src.rpm</A></TT>.</P>
+
+<P>Then have the following rpms installed, either the libc5 versions:
+
+<H1>[Latest update: I don't use Glide anymore.  Instead I use the drivers
+from <A HREF="http://www.nvidia.com/Products/Drivers.nsf/Linux.html">NVIDIA</A>.]</H1>
+
+</P>
+<PRE STYLE="margin-bottom: 0.50cm"><A HREF="http://glide.xxedgexx.com/oldsite/3DfxRPMS_old.html">Glide_V2-2.53-1.i386.rpm</A> and quake2-3.19a-2.i386.rpm or quake2-3.20beta-5.i386.rpm</PRE>
+<P>
+*or* the glibc versions: 
+</P>
+<PRE STYLE="margin-bottom: 0.50cm"><A HREF="http://glide.xxedgexx.com/oldsite/3DfxRPMS_old.html">Glide_V2-2.53-1.i386.glibc.rpm</A> and quake2-3.19a-glibc-2.i386.rpm or quake2-3.20beta-glibc-5.i386.rpm</PRE>
+<P>
+Note that the quake2-*.i386.rpm's install in /usr/local/games/quake2,
+you might want to add a symbolic link _before_ installing the rpms. 
+</P>
+<P>After installing the quake2*rpm change directory to
+/usr/local/games/quake2 and type: 
+</P>
+<PRE>tar cf - lib*GL* | (cd /usr/lib; tar xf -)
+chmod 755 quake2</PRE>
+<P>
+The latter is needed because otherwise something goes wrong with the
+loading of the needed shared libraries. When an executable is suid
+root, all LD_* environment variables are ignored. You don't need it
+to be suid anyway because we'll use /dev/3dfx. Of course, the
+software renderer won't work anymore now, unless you run it as root.
+The <TT>tar</TT> will put the Mesa lib in /usr/lib, it needs to be
+there because it won't load otherwise. Don't worry about using
+Mesa-3.0, because we won't use the Mesa lib for anything else but
+prohibiting unresolved variables anyway: We use the 3DFX OpenGL
+Miniport. 
+</P>
+<P>If you use quake2-3.19a-2.i386.rpm then you need a symbolic link
+from /usr/lib/libMesaGL.so.2 to lib3dfxgl.so. For instance, if you
+have installed quake2 in /usr/bulk/games/quake2/ then do: 
+</P>
+<PRE>     cd /usr/lib
+     rm libMesaGL.so.2
+     ln -s ../bulk/games/quake2/lib3dfxgl.so libMesaGL.so.2</PRE>
+<P>
+Don't do this if you don't use quake2-3.19a-2.i386.rpm (but one of
+the other three mentioned quake2*rpm's). 
+</P>
+<H3>Connecting to a game server</H3>
+<P>Quake2 has problems to connect to a game server with a different
+mod. There is a work around for this however: In order to connect to
+a game server, you need to specify the mod of that server on the
+commandline. 
+</P>
+<P>For instance, if you want to connect to a <I>lithium</I> server,
+then use: 
+</P>
+<P>q2 +set game lithium +connect &lt;quake2.server.addr&gt; 
+</P>
+<H3>Kernel 2.1.131 and sound</H3>
+<P>There is a bug in quake that makes sound not work on some PCI
+machines (maybe others?) and the way sound was changed in the newer
+kernels. If you hear a terrible noise when starting quake then try
+out Alan Cox's <A HREF="ftp://ftp.linux.org.uk/pub/linux/alan/2.1/patch-2.1.131-ac4.gz">patch-2.1.131-ac4.gz</A>.
+You might also want to uncomment the &quot;SMP = 1&quot; in
+/usr/src/linux/Makefile, it might be related. (Note: It is known that
+sound is broken in at least 2.1.126, and not in 2.1.115. Alan's patch
+works for me however, I am running 2.1.131.ac4 as I type (and Quake +
+sound works ;)).</P>
+<H3>Other important issues</H3>
+<P>Make sure that: 
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0.00cm">If you run a 2.1 kernel and you
+	have a Pentium Pro or Pentium II system, and you don't already see a
+	/proc/mtrr, then recompile your kernel to support it (answer Yes to
+	`Prompt for incomplete drivers' and then Yes to CONFIG_MTRR). The
+	Dev3Dfx contains code to set the MTRR on a system with a 2.0 kernel
+	too, but you won't be able to check if it worked (with `cat
+	/proc/mtrr', after loading the 3dfx.o module) 
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">You have /dev/3dfx installed
+	and functional. 
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">You do <B>not</B> have a
+	chipset defined in /etc/vga/libvga.config; use autodetection
+	if possible: it is known that when specifying the wrong chipset,
+	/dev/3dfx won't be used. (Contribution by jszabo@eden.rutgers.edu).
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">./quake2 is <I>not</I> suid
+	root (chmod 755 ./quake2). 
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">You do <I>not</I> have a line
+	&quot;set vid_ref ...&quot; in ANY of your *.cfg files except
+	baseq2/config.cfg. 
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">You do <I>not</I> have a line
+	&quot;set vid_fullscreen ...&quot; in ANY *.cfg file except
+	baseq2/config.cfg. 
+	</P>
+	<LI><P>You <I>do</I> have the following line in baseq2/autoexec.cfg:
+	
+	</P>
+	<PRE STYLE="margin-bottom: 0.50cm">     set _windowed_mouse 0</PRE>
+	<P>You might want to add the following lines too, in order to
+	increase the frames per second: 
+	</P>
+	<PRE STYLE="margin-bottom: 0.50cm">     set gl_shadows 0</PRE>
+	<PRE STYLE="margin-bottom: 0.50cm">     set gl_dynamic 0</PRE>
+	<PRE STYLE="margin-bottom: 0.50cm">     set gl_cull 1</PRE>
+	<PRE STYLE="margin-bottom: 0.50cm">     set gl_round_down 1</PRE>
+	<P STYLE="margin-bottom: 0.00cm">Setting the GAMMA environment
+	variables doesn't work with lib3dfxgl.so, add a line `set vid_gamma
+	&quot;0.400000&quot;' to baseq2/config.cfg for more brightness
+	instead. Note: Later I found this to be vica versa(!?!). Setting
+	the vid_gamma has no effect, while the GAMMA environment variables
+	used in the <A HREF="q2">q2</A> script <B>do</B> work.
+	</P>
+	<LI><P>If you want to run in 800x600 mode, it might work to set in
+	baseq2/config.cfg: 
+	</P>
+	<PRE STYLE="margin-bottom: 0.50cm">     set gl_mode 4</PRE>
+	<P STYLE="margin-bottom: 0.00cm">Or use that on the command line
+	once (using +set ...). I advice to first try everything with `set
+	gl_mode 3' however. 
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">If you play on a lithium
+	server, then make sure that directory exists next to baseq2 and make
+	a symbolic link from config.cfg to ../baseq2/config.cfg. I advise to
+	only have a different autoexec.cfg per game directory, if needed. 
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">In order to get your mouse
+	working, you need to edit /etc/vga/libvga.config and set the correct
+	'mouse ...' line. When starting from the console, you need to kill
+	gpm. The <A HREF="q2">script</A> does that for you, but only if you
+	have the binary <A HREF="http://www.xs4all.nl/~carlo17/su0/">su0</A>.
+	
+	</P>
+	<LI><P STYLE="margin-bottom: 0.00cm">When you upgrade your kernel:
+	recompile and re-install Dev3Dfx, otherwise quake won't start
+	anymore ;)</P>
+</UL>
+</BODY>
+</HTML>

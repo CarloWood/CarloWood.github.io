@@ -1,0 +1,226 @@
+if (0) {
+     Script: unet/commands
+        URL: http://www.xs4all.nl/~carlo17/irc/ircII/unet/commands
+Description: UnderNet specific command aliases
+Also needed: http://www.xs4all.nl/~carlo17/irc/ircII/unet/numerics
+    Version: $Id$
+  First Ver: 02/05/1998
+     Author: ircii @t alinoe.com, Run @t IRC
+}    
+
+load unet/numerics
+if (loaded != [unet.numerics] || version < 101) {
+  echo *** unet/commands  needs: http://www.xs4all.nl/~carlo17/irc/ircII/unet/numerics
+}
+
+##############################################################################
+#
+# SILENCE command
+#
+# Usage:
+#
+# /SILENCE [<nick>]	or	/SILE [<nick>]
+# Shows the silence list of <nick> (default, your nick) as known by
+# your server.  (This list is only known/visible on the servers that needed it).
+# 
+# Or:
+#
+# /SILENCE +<nick!user@host.mask>	or	/SILE +<nick!user@host.mask>
+# /SILENCE -<nick!user@host.mask>	or	/SILE -<nick!user@host.mask>
+#
+# To add or remove masks, works much like the channel ban list.
+#
+# After adding a mask to your list, *EVERY* private message from someone
+# matching that mask will be stopped at the server LOCAL to THAT person.
+# This includes: /MSG, /NOTICE, /CMSG, /CNOTICE, /CTCP and /INVITE
+#
+alias SILENCE quote SILENCE
+alias SILE quote SILENCE
+on ^raw_irc "% SILENCE +%" echo *** Added to silence list: $mid(1 256 $2-)
+on ^raw_irc "% SILENCE -%" echo *** Removed from silence list: $mid(1 256 $2-)
+
+##############################################################################
+#
+# PART command
+#
+# Usage:
+#
+# /PART [<channel-list>|*] [<comment>]
+#
+# Leaves all channels in the comma seperated list <channel-list>, or the
+# current channel when none is given or a '*' is given as channel.
+# The optional <comment> is passed to the other channel members as the
+# reason for leaving.
+# Received PART messages that use a <comment> are displayed as
+#
+# *** Nick has left channel #foobar (comment here)
+#
+alias PART {
+  IF ([$0]==[*]) {
+    quote PART $C :$1-
+  } {
+    IF (index(#+& $left(1 $0)) != -1) {
+      quote PART $0 :$1-
+    } {
+      quote PART $C :$0-
+    }
+  }
+}
+on -raw_irc "% PART *" {
+  IF ([$3]==[]) {
+    assign -part_comment
+  } {
+    assign part_comment \($mid(1 256 $3-)\)
+  }
+}
+on ^leave * {
+  echo *** $0 has left channel $1 $part_comment
+}
+
+##############################################################################
+#
+# WHO command
+#
+# Usage:
+#
+# /WHO	or  /WHO *
+#
+# Lists users on current channel.
+#
+# /WHO "masklist" ["flaglist"[,"quertype"]] ["masklist"]
+#
+
+# Default /WHO format, "nick user@host":
+assign whoformat uhn
+
+alias who {
+  IF ([$0] == [] || [$0] == [*]) {
+    IF ([$C] != [0]) {
+      echo *** /WHO $C :
+      quote WHO $C %${whoformat}tf,2
+    } {
+      echo *** WHO: You're not on any channel now.
+    }
+  } {
+    IF ([$1] == []) {
+      echo *** /WHO $0 :
+      quote WHO $0 %${whoformat}t,1
+    } {
+      echo *** /WHO $0 $1 :
+      quote WHO $0 $1t,0
+    }
+  }
+}
+
+##############################################################################
+#
+# MAP command
+#
+# Usage: 
+# 
+# /MAP [<server.mask>]
+#
+# Shows a map of the servers and how they are linked, as seen from your local
+# server. The optional <server.mask> can be used to filter out some servers.
+#
+alias MAP quote MAP
+
+##############################################################################
+#
+# USERIP command
+#
+# Usage: 
+# 
+# /USERIP <nick1> [<nick2> ... <nick5>]
+#
+# Works exactly as the USERHOST command, except that it returns the IP-number
+# of the user instead of the hostname (and returns numeric 307 instead of 302).
+# You can extend this alias to allow more then 5 nicks (which then need to
+# by spread over multiple USERIP commands, just like your client does for
+# USERHOST).
+#
+alias USERIP quote USERIP :$*
+
+#############################################################################
+#
+# WALLCHOPS command
+#
+# Usage:
+#
+# /WALLCHOPS <#channel> <message text>
+#
+# Sends the message to all channel operators of channel `#channel'
+# The reason for this command is to avoid 'Too many targets'.
+#
+# As chan op you receive WALLCHOPS as:
+# -nick:@#channel- Text here
+#
+alias WALLCHOPS {
+  quote WALLCHOPS $C :$*
+  echo @> $*
+}
+on ^raw_irc "% NOTICE @#% :*" echo -$left($index(! $0) $0):$2\- $mid(1 512 $3-)
+
+#############################################################################
+#
+# CNOTICE/CMSG command
+#
+# Usage:
+#
+# /CNOTICE <nick> <message text>
+# /CMSG <nick> <message text>
+#
+# Sends a notice / private message to <nick> who must be a member of the
+# current channel.  Can only be used by channel operators.
+#
+# Note that clients that keep an internal lists of who is on which channel
+# should automatically use this command when the user issues a /NOTICE or
+# /MSG <nick>, whenever possible.  This alias is only given for educational
+# purposes.
+# The reason for this command is to avoid 'Too many targets'.
+#
+alias CNOTICE {
+  quote CNOTICE $0 $C :$1-
+  echo -> -$0- $1-
+}
+alias CMSG {
+  quote CPRIVMSG $0 $C :$1-
+  echo -> *$0* $1-
+}
+
+#############################################################################
+#
+# GLINE command
+#
+# Usage:
+#
+# /GLINE [+|-]<G-line-mask> [period in seconds] [Local G-line comment]
+#
+# This either :
+# checks for the existance of a G-line for a particular user:
+# /gline <user@host.name>
+#
+# lists all G-lines:
+# /gline
+#
+# Oper only:
+#
+# disables (temporally) a Global G-line:
+# /gline -<G-line-mask>
+#
+# re-enables a Global G-line:
+# /gline +<G-line-mask>
+#
+# resets the expiration time:
+# /gline [+]<G-line-mask> <new period in seconds>
+#
+# sets a new Local G-line:
+# /gline [+]<local-G-line-mask> <period in seconds> <comment>
+#
+# removes a Local G-line:
+# /gline -<local-G-line-mask>
+#
+alias GLINE quote GLINE $0 $1 :$2-
+
+@version=101
+@loaded=[unet.commands]

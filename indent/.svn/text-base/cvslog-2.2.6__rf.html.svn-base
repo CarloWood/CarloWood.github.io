@@ -1,0 +1,1133 @@
+<html>
+<title>CVS</title>
+<BODY BGCOLOR="#AAAAAA">
+<hr><center><h1>---  ---</h1></center><hr>
+
+
+
+
+
+
+
+<A NAME="Makefile.am">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: Makefile.am</font></B><br></td><tr>
+<tr><td><b>Revision 1.24</b><td>carlo
+<td>2000/11/17 03:21:57<td>+2 -1
+<TR><TD COLSPAN=4>
+<code>Add new (and a few old, forgotten) files to the tar.</code><br>
+
+<tr><td><b>Revision 1.23</b><td>carlo
+<td>2000/05/30 14:51:47<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Needed for upgrade to new version of texi2html 1.62.</code><br>
+
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>2000/03/03 18:15:49<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>NeXT seems to need -posix for struct utimbuf</code><br>
+
+
+</TABLE><br>
+<A NAME="Makefile.mingw32">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: Makefile.mingw32</font></B><br></td><tr>
+<tr><td><b>Revision 1.2</b><td>carlo
+<td>2000/11/10 13:14:19<td>+2 -1
+<TR><TD COLSPAN=4>
+<code>Wild card expansion for win32 by &quot;John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+<tr><td><b>Revision 1.1</b><td>carlo
+<td>2000/11/08 23:37:13<td>None
+<TR><TD COLSPAN=4>
+<code>Support for mingw32 by Sudhi Herle &lt;sherle@sta.samsung.com&gt;</code><br>
+
+</TABLE><br>
+<A NAME="NEWS">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: NEWS</font></B><br></td><tr>
+<tr><td><b>Revision 1.44</b><td>carlo
+<td>2000/11/17 02:13:50<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Bumped version number to 2.2.6.</code><br>
+
+<tr><td><b>Revision 1.43</b><td>carlo
+<td>2000/11/17 00:04:56<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Add note that nested functions are a GNU extension.</code><br>
+
+<tr><td><b>Revision 1.42</b><td>carlo
+<td>2000/11/16 02:09:52<td>+12 -0
+<TR><TD COLSPAN=4>
+<code>Added new option --break-function-decl-args (-bfda).</code><br>
+<code>Initial patch provided by Robert Lipe &lt;robertl@sco.com&gt;.</code><br>
+
+<tr><td><b>Revision 1.41</b><td>carlo
+<td>2000/11/16 00:05:58<td>+3 -0
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 22 Mar 2000 16:00:18 -0500 (EST)</code><br>
+<code>From: Jim Rogers &lt;jimrogers@writeme.com&gt;</code><br>
+<code></code><br>
+<code>I don't expect the -di option to apply to function declartions when -npsl is</code><br>
+<code>used. for example, if -npsl and -di16 is used:</code><br>
+<code></code><br>
+<code>void            main()</code><br>
+<code>{</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>--</code><br>
+<code></code><br>
+<code>I think he is right and I changed this behaviour.  However, it does not</code><br>
+<code>work for nested functions: those are still indented.</code><br>
+
+<tr><td><b>Revision 1.40</b><td>carlo
+<td>2000/11/15 20:57:40<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>New options to suppress spaces after if, for and while respectively.</code><br>
+
+<tr><td><b>Revision 1.39</b><td>carlo
+<td>2000/11/15 19:36:12<td>+2 -0
+<TR><TD COLSPAN=4>
+<code>Fixed indentation of nested function.  Bug report by Michael Deutsch.</code><br>
+
+<tr><td><b>Revision 1.38</b><td>carlo
+<td>2000/11/15 02:10:52<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Don't add blank lines after declarations when we're in the middle of</code><br>
+<code>a C-style comment that continues on the next line.  Reported by David Hui.</code><br>
+
+<tr><td><b>Revision 1.37</b><td>carlo
+<td>2000/11/12 14:09:47<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Fixed the -nlp bug (finally)</code><br>
+
+<tr><td><b>Revision 1.36</b><td>carlo
+<td>2000/10/10 20:38:05<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Eat backslashes of backslash-newline when occuring outside a macro</code><br>
+<code>definition or literal string.  Bug report by Alex Cherepanov:</code><br>
+<code>Indent cannot handle trailing '\' outside of the macro</code><br>
+<code>or string. Don't ask me why some programs use it there.</code><br>
+
+<tr><td><b>Revision 1.35</b><td>carlo
+<td>2000/09/11 14:19:14<td>+7 -3
+<TR><TD COLSPAN=4>
+<code>Update.</code><br>
+
+<tr><td><b>Revision 1.34</b><td>carlo
+<td>2000/09/08 19:11:49<td>+7 -0
+<TR><TD COLSPAN=4>
+<code>Bug fixes for -fca, reported by John C. Oppenheimer.</code><br>
+
+<tr><td><b>Revision 1.33</b><td>carlo
+<td>2000/07/17 22:08:06<td>+5 -0
+<TR><TD COLSPAN=4>
+<code>Renamed --blank-lines-after-block-comments to --blank-lines-before-block-comments.</code><br>
+
+<tr><td><b>Revision 1.32</b><td>carlo
+<td>2000/07/06 11:57:18<td>+8 -0
+<TR><TD COLSPAN=4>
+<code>New option --cuddle-do-while.  Sorry, I forgot who wrote this patch...</code><br>
+
+<tr><td><b>Revision 1.31</b><td>carlo
+<td>2000/04/02 10:04:13<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>New options -ut and -nut (--use-tabs, --no-tabs).</code><br>
+<code></code><br>
+<code>Fixed a few bugs and added documentation for these options, starting</code><br>
+<code>of with a patch from Sean Cavanaugh.</code><br>
+<code></code><br>
+<code>From: &quot;Sean Cavanaugh&quot; &lt;sean@dimensionalrift.com&gt;</code><br>
+<code>To: &lt;indent@alinoe.com&gt;</code><br>
+<code>Subject: indent 2.2.5 patch</code><br>
+<code>Date: Sat, 1 Apr 2000 15:31:21 -0800</code><br>
+<code></code><br>
+<code>I recently pulled down indent 2.2.5 and was surprised to find it didn't have</code><br>
+<code>an option to convert tabs to spaces.  I've added a command line switch</code><br>
+<code>'-no-tabs' or '-nt' which lets you alter the default behavior.</code><br>
+<code>It is a pretty simple change, and handy for those of us who hate tabs :)</code><br>
+<code></code><br>
+<code>- Sean</code><br>
+
+<tr><td><b>Revision 1.30</b><td>carlo
+<td>2000/03/23 15:34:29<td>+2 -0
+<TR><TD COLSPAN=4>
+<code>Fixed -dN again (bug report by Marc Herbert)</code><br>
+
+<tr><td><b>Revision 1.29</b><td>carlo
+<td>2000/03/01 22:36:08<td>+6 -1
+<TR><TD COLSPAN=4>
+<code>Fixed a bug reported by David Hull &lt;hull@paracel.com&gt;.</code><br>
+
+<tr><td><b>Revision 1.28</b><td>carlo
+<td>2000/02/25 19:59:32<td>+12 -0
+<TR><TD COLSPAN=4>
+<code>Bug fix per suggestion by Igor Lyubashevskiy</code><br>
+
+
+</TABLE><br>
+
+
+
+
+<A NAME="acconfig.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: acconfig.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.3</b><td>carlo
+<td>2000/11/17 03:01:04<td>+1 -0
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+
+</TABLE><br>
+<A NAME="args.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: args.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.28</b><td>carlo
+<td>2000/11/17 03:01:04<td>+12 -22
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.27</b><td>carlo
+<td>2000/11/16 02:09:52<td>+12 -4
+<TR><TD COLSPAN=4>
+<code>Added new option --break-function-decl-args (-bfda).</code><br>
+<code>Initial patch provided by Robert Lipe &lt;robertl@sco.com&gt;.</code><br>
+
+<tr><td><b>Revision 1.26</b><td>carlo
+<td>2000/11/15 21:16:17<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 12 Apr 2000 15:07:58 +0200</code><br>
+<code>From: &quot;Borkhuis, Johan&quot; &lt;Johan.Borkhuis@peektraffic.nl&gt;</code><br>
+<code></code><br>
+<code>The defaults are read from the struct pro. For boolean types there are 2</code><br>
+<code>entries in this table, the positive and the negative (with an n in front).</code><br>
+<code>One of the items in the struct is p_special. This items is used to indicate</code><br>
+<code>if a the value of a boolean should be inserted as a default or not. But this</code><br>
+<code>does not work. The code as it is now (in the current 2.2.5 release) in the</code><br>
+<code>function set_defaults:</code><br>
+<code></code><br>
+<code>  for (p = pro; p-&gt;p_name; p++)</code><br>
+<code>    if (p-&gt;p_type == PRO_BOOL || p-&gt;p_type == PRO_INT)</code><br>
+<code>      *p-&gt;p_obj = p-&gt;p_default;</code><br>
+<code></code><br>
+<code>To get this to work the code should be changed to:</code><br>
+<code></code><br>
+<code>  for (p = pro; p-&gt;p_name; p++)</code><br>
+<code>    if ((p-&gt;p_type == PRO_BOOL) &amp;&amp; (p-&gt;p_special == ON) || p-&gt;p_type == PRO_INT)</code><br>
+<code>      *p-&gt;p_obj = p-&gt;p_default;</code><br>
+<code></code><br>
+<code>Here a check if p_special is set to ON is inserted to check if this value</code><br>
+<code>may be used as a default.</code><br>
+
+<tr><td><b>Revision 1.25</b><td>carlo
+<td>2000/11/15 20:57:40<td>+42 -18
+<TR><TD COLSPAN=4>
+<code>New options to suppress spaces after if, for and while respectively.</code><br>
+
+<tr><td><b>Revision 1.24</b><td>carlo
+<td>2000/10/06 12:10:16<td>+9 -1
+<TR><TD COLSPAN=4>
+<code>Set the max. comment column to the max. code column if no -lc option</code><br>
+<code>was given.  Fixes a compiler warning in io.c.</code><br>
+<code>Patch by John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+<tr><td><b>Revision 1.23</b><td>carlo
+<td>2000/07/17 22:08:06<td>+3 -3
+<TR><TD COLSPAN=4>
+<code>Renamed --blank-lines-after-block-comments to --blank-lines-before-block-comments.</code><br>
+
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>2000/07/06 11:57:18<td>+9 -1
+<TR><TD COLSPAN=4>
+<code>New option --cuddle-do-while.  Sorry, I forgot who wrote this patch...</code><br>
+
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>2000/04/02 10:04:13<td>+9 -1
+<TR><TD COLSPAN=4>
+<code>New options -ut and -nut (--use-tabs, --no-tabs).</code><br>
+<code></code><br>
+<code>Fixed a few bugs and added documentation for these options, starting</code><br>
+<code>of with a patch from Sean Cavanaugh.</code><br>
+<code></code><br>
+<code>From: &quot;Sean Cavanaugh&quot; &lt;sean@dimensionalrift.com&gt;</code><br>
+<code>To: &lt;indent@alinoe.com&gt;</code><br>
+<code>Subject: indent 2.2.5 patch</code><br>
+<code>Date: Sat, 1 Apr 2000 15:31:21 -0800</code><br>
+<code></code><br>
+<code>I recently pulled down indent 2.2.5 and was surprised to find it didn't have</code><br>
+<code>an option to convert tabs to spaces.  I've added a command line switch</code><br>
+<code>'-no-tabs' or '-nt' which lets you alter the default behavior.</code><br>
+<code>It is a pretty simple change, and handy for those of us who hate tabs :)</code><br>
+<code></code><br>
+<code>- Sean</code><br>
+
+
+</TABLE><br>
+<A NAME="args.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: args.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.4</b><td>carlo
+<td>2000/10/06 12:10:16<td>+2 -1
+<TR><TD COLSPAN=4>
+<code>Set the max. comment column to the max. code column if no -lc option</code><br>
+<code>was given.  Fixes a compiler warning in io.c.</code><br>
+<code>Patch by John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+
+</TABLE><br>
+<A NAME="backup.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: backup.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.12</b><td>carlo
+<td>2000/11/17 03:01:04<td>+12 -14
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.11</b><td>carlo
+<td>2000/11/08 23:37:13<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Support for mingw32 by Sudhi Herle &lt;sherle@sta.samsung.com&gt;</code><br>
+
+<tr><td><b>Revision 1.10</b><td>carlo
+<td>2000/02/25 20:07:09<td>+7 -7
+<TR><TD COLSPAN=4>
+<code>Date: Fri, 17 Dec 1999 17:52:32 -0500 (EST)</code><br>
+<code>From: Pavel Roskin &lt;pavel_roskin@geocities.com&gt;</code><br>
+<code>Subject: Yet two patches</code><br>
+<code>To: indent@runaway.xs4all.nl</code><br>
+<code></code><br>
+<code>Hello!</code><br>
+<code></code><br>
+<code>Since I'm hacking GNU Indent anyway...</code><br>
+<code></code><br>
+<code>1) Using low-level I/O for backup files is not justified, decreases</code><br>
+<code>portability (especially create() and 0666) and may affect execution speed</code><br>
+<code>(since it's not buffered).</code><br>
+<code>backup.diff fixes it.</code><br>
+<code></code><br>
+<code>2) Since GNU Indent has good chances to be portable across all platforms</code><br>
+<code>(especially after the above fix), it is a good idea to use AC_EXEEXT and</code><br>
+<code>AC_OBJEXT. Those macros are not very robust now, but they still simplify</code><br>
+<code>the life on DOS-derived OS'es.</code><br>
+<code>configure.diff adds them.</code><br>
+<code></code><br>
+<code>Best wishes,</code><br>
+<code>Pavel Roskin</code><br>
+
+
+</TABLE><br>
+<A NAME="backup.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: backup.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.7</b><td>carlo
+<td>2000/11/17 03:01:04<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+
+</TABLE><br>
+<A NAME="comments.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: comments.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.26</b><td>carlo
+<td>2000/11/17 03:01:04<td>+22 -37
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.25</b><td>carlo
+<td>2000/11/17 02:11:34<td>+2 -3
+<TR><TD COLSPAN=4>
+<code>Date: Thu, 16 Nov 2000 10:28:34 +0100</code><br>
+<code>From: Robert Laufer &lt;rlaufer1@lucent.com&gt;</code><br>
+<code></code><br>
+<code>I get a memory fault for the attached file foobar.c, if i execute the</code><br>
+<code>command indent -st --dont-break-procedure-type foobar.c</code><br>
+<code>If i write void bar (void) the error does not occur. Also the identing</code><br>
+<code>does not work correct for comments between the procedure declaration</code><br>
+<code>and the opening bracket, see procedure foo. This does only happen with</code><br>
+<code>the option --dont-break-procedure-type.</code><br>
+
+<tr><td><b>Revision 1.24</b><td>carlo
+<td>2000/11/17 00:51:28<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 15 Nov 2000 23:12:24 -0800 (PST)</code><br>
+<code>From: Michael Deutschmann &lt;michael@talamasca.ocis.net&gt;</code><br>
+<code></code><br>
+<code>BTW, I have one other problem to report.  This one I've actually known</code><br>
+<code>about for awhile, but hadn't thought to report it as the workaround is</code><br>
+<code>easy:</code><br>
+<code></code><br>
+<code>int</code><br>
+<code>main (int argc, char **argv)</code><br>
+<code>{</code><br>
+<code>  /* The mostly-blank line following:</code><br>
+<code>   *</code><br>
+<code>   * Can cause trouble with indent if -sc is not used.</code><br>
+<code>   */</code><br>
+<code>  return 0;</code><br>
+<code>}</code><br>
+<code></code><br>
+<code></code><br>
+<code>If &quot;indent -sc&quot; is used, this file is not changed.  But indent without</code><br>
+<code>&quot;-sc&quot; removes the star on the blank line.  Worse, if indent -sc is used on</code><br>
+<code>the damaged file, the star is restored but then extra stars are added to</code><br>
+<code>the remaining lines. (So a cycle of &quot;indent foo.c; indent -sc foo.c;</code><br>
+<code>indent foo.c; indent -sc foo.c&quot; and on does progressively worse damage to</code><br>
+<code>the file.</code><br>
+<code></code><br>
+<code>---</code><br>
+<code></code><br>
+<code>Actually, it only removed a star on a blank line when it was the second</code><br>
+<code>line of the comment (this line is used to determine if something is a</code><br>
+<code>block comment or not). --Carlo</code><br>
+
+<tr><td><b>Revision 1.23</b><td>carlo
+<td>2000/11/15 02:10:52<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Don't add blank lines after declarations when we're in the middle of</code><br>
+<code>a C-style comment that continues on the next line.  Reported by David Hui.</code><br>
+
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>2000/09/11 14:09:21<td>+23 -4
+<TR><TD COLSPAN=4>
+<code>Bug fix: do NOT collapse spaces in comments unless actually formatting them!</code><br>
+
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>2000/09/11 13:53:51<td>+3 -2
+<TR><TD COLSPAN=4>
+<code>Don't eat spaces that follow a '.'.  &lt;-- Like those (allow two spaces).</code><br>
+
+<tr><td><b>Revision 1.20</b><td>carlo
+<td>2000/09/09 14:56:41<td>+12 -26
+<TR><TD COLSPAN=4>
+<code>Ok... collapse all adjacent spaces in comments into one when formatting</code><br>
+<code>comments.</code><br>
+
+<tr><td><b>Revision 1.19</b><td>carlo
+<td>2000/09/09 09:33:34<td>+9 -5
+<TR><TD COLSPAN=4>
+<code>Bug fix for previous change.</code><br>
+
+<tr><td><b>Revision 1.18</b><td>carlo
+<td>2000/09/08 21:03:08<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>bug fix for previous change</code><br>
+
+<tr><td><b>Revision 1.17</b><td>carlo
+<td>2000/09/08 19:11:49<td>+14 -2
+<TR><TD COLSPAN=4>
+<code>Bug fixes for -fca, reported by John C. Oppenheimer.</code><br>
+
+<tr><td><b>Revision 1.16</b><td>carlo
+<td>2000/03/23 15:34:29<td>+7 -2
+<TR><TD COLSPAN=4>
+<code>Fixed -dN again (bug report by Marc Herbert)</code><br>
+
+<tr><td><b>Revision 1.15</b><td>carlo
+<td>2000/02/25 19:46:26<td>+2 -1
+<TR><TD COLSPAN=4>
+<code>Bug reported by Wayne Green (-npls switch and c++ style comments)</code><br>
+
+<tr><td><b>Revision 1.14</b><td>carlo
+<td>2000/02/14 11:44:28<td>+6 -3
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 9 Feb 2000 17:55:55 -0600</code><br>
+<code>From: Robert Lipe &lt;robertl@sco.com&gt;</code><br>
+<code>Subject: patch for --cdb</code><br>
+<code>To: indent@alinoe.com</code><br>
+<code></code><br>
+<code>Here is a patch to &quot;fix&quot; -cdb.   According to comments.c</code><br>
+<code></code><br>
+<code>   `comment_delimiter_on_blankline' (&quot;cdb&quot;):  If set, place the comment</code><br>
+<code>       delimiters on lines by themselves.  This only affects comments</code><br>
+<code>       which are not to the right of code.</code><br>
+<code></code><br>
+<code>Unfortunately, the code doesn't seem to successfully take the presence</code><br>
+<code>or absence of preceeding code into account.</code><br>
+<code>$ cat /tmp/x.c</code><br>
+<code>int foo; /* This is a single line comment */</code><br>
+<code>/* this is a column zero real single line comment */</code><br>
+<code>   /* this is elgible for cdb.  */</code><br>
+<code>$  ./indent -st -cdb /tmp/x.c</code><br>
+<code>int foo;                        /*</code><br>
+<code>                                   This is a single line comment</code><br>
+<code>                                 */</code><br>
+<code>/* this is a column zero real single line comment */</code><br>
+<code>   /*</code><br>
+<code>      this is elgible for cdb.</code><br>
+<code>    */</code><br>
+<code></code><br>
+<code></code><br>
+<code>With this patch installed, it returns:</code><br>
+<code></code><br>
+<code>$  ./indent -st -cdb /tmp/x.c</code><br>
+<code>int foo;                        /* This is a single line comment */</code><br>
+<code>/* this is a column zero real single line comment */</code><br>
+<code>   /*</code><br>
+<code>      this is elgible for cdb.</code><br>
+<code>    */</code><br>
+<code></code><br>
+<code>Though this specific example might look silly, it's very useful for</code><br>
+<code>cases where you're closing up a chain of loops and have</code><br>
+<code></code><br>
+<code>                                        } /* loop of l */</code><br>
+<code>                                } /* loop of k */</code><br>
+<code>                        } /* loop of j */</code><br>
+<code>                } /* loop of i */</code><br>
+
+
+</TABLE><br>
+
+<A NAME="config.h.vc++.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: config.h.vc++.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.2</b><td>carlo
+<td>2000/11/08 23:37:13<td>+4 -1
+<TR><TD COLSPAN=4>
+<code>Support for mingw32 by Sudhi Herle &lt;sherle@sta.samsung.com&gt;</code><br>
+
+
+</TABLE><br>
+
+<A NAME="configure.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: configure.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.28</b><td>carlo
+<td>2000/11/17 02:13:50<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Bumped version number to 2.2.6.</code><br>
+
+<tr><td><b>Revision 1.27</b><td>carlo
+<td>2000/11/08 23:37:13<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Support for mingw32 by Sudhi Herle &lt;sherle@sta.samsung.com&gt;</code><br>
+
+<tr><td><b>Revision 1.26</b><td>carlo
+<td>2000/03/03 18:15:49<td>+6 -0
+<TR><TD COLSPAN=4>
+<code>NeXT seems to need -posix for struct utimbuf</code><br>
+
+<tr><td><b>Revision 1.25</b><td>carlo
+<td>2000/02/25 20:07:09<td>+2 -0
+<TR><TD COLSPAN=4>
+<code>Date: Fri, 17 Dec 1999 17:52:32 -0500 (EST)</code><br>
+<code>From: Pavel Roskin &lt;pavel_roskin@geocities.com&gt;</code><br>
+<code>Subject: Yet two patches</code><br>
+<code>To: indent@runaway.xs4all.nl</code><br>
+<code></code><br>
+<code>Hello!</code><br>
+<code></code><br>
+<code>Since I'm hacking GNU Indent anyway...</code><br>
+<code></code><br>
+<code>1) Using low-level I/O for backup files is not justified, decreases</code><br>
+<code>portability (especially create() and 0666) and may affect execution speed</code><br>
+<code>(since it's not buffered).</code><br>
+<code>backup.diff fixes it.</code><br>
+<code></code><br>
+<code>2) Since GNU Indent has good chances to be portable across all platforms</code><br>
+<code>(especially after the above fix), it is a good idea to use AC_EXEEXT and</code><br>
+<code>AC_OBJEXT. Those macros are not very robust now, but they still simplify</code><br>
+<code>the life on DOS-derived OS'es.</code><br>
+<code>configure.diff adds them.</code><br>
+<code></code><br>
+<code>Best wishes,</code><br>
+<code>Pavel Roskin</code><br>
+
+
+</TABLE><br>
+<A NAME="globs.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: globs.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.8</b><td>carlo
+<td>2000/11/17 03:01:04<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+
+</TABLE><br>
+<A NAME="globs.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: globs.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.4</b><td>carlo
+<td>2000/11/17 03:01:04<td>+2 -3
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+
+</TABLE><br>
+
+
+
+
+<A NAME="indent.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: indent.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.60</b><td>carlo
+<td>2000/11/17 03:01:04<td>+426 -555
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.59</b><td>carlo
+<td>2000/11/17 02:11:35<td>+5 -6
+<TR><TD COLSPAN=4>
+<code>Date: Thu, 16 Nov 2000 10:28:34 +0100</code><br>
+<code>From: Robert Laufer &lt;rlaufer1@lucent.com&gt;</code><br>
+<code></code><br>
+<code>I get a memory fault for the attached file foobar.c, if i execute the</code><br>
+<code>command indent -st --dont-break-procedure-type foobar.c</code><br>
+<code>If i write void bar (void) the error does not occur. Also the identing</code><br>
+<code>does not work correct for comments between the procedure declaration</code><br>
+<code>and the opening bracket, see procedure foo. This does only happen with</code><br>
+<code>the option --dont-break-procedure-type.</code><br>
+
+<tr><td><b>Revision 1.58</b><td>carlo
+<td>2000/11/17 00:01:26<td>+5 -16
+<TR><TD COLSPAN=4>
+<code>Give force_nl the meaning it really has.  Then actually force a newline</code><br>
+<code>when it is set at the last place where we didn't.  This fixes the bug</code><br>
+<code>that under certain cicumstances a line wasn't broken where it should.</code><br>
+
+<tr><td><b>Revision 1.57</b><td>carlo
+<td>2000/11/16 17:04:47<td>+5 -2
+<TR><TD COLSPAN=4>
+<code>This fixes an old bug, reported by &lt;igorlord@alum.mit.edu&gt; at the</code><br>
+<code>beginning of 2000.  Possible break points were skipped under</code><br>
+<code>circumstances that did dependant on where a line was broken, resulting</code><br>
+<code>in an alternating output (after subsequent runs of indent).</code><br>
+<code>This was a hard one to find :/</code><br>
+
+<tr><td><b>Revision 1.56</b><td>carlo
+<td>2000/11/16 02:09:52<td>+8 -1
+<TR><TD COLSPAN=4>
+<code>Added new option --break-function-decl-args (-bfda).</code><br>
+<code>Initial patch provided by Robert Lipe &lt;robertl@sco.com&gt;.</code><br>
+
+<tr><td><b>Revision 1.55</b><td>carlo
+<td>2000/11/16 00:05:58<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Date: Wed, 22 Mar 2000 16:00:18 -0500 (EST)</code><br>
+<code>From: Jim Rogers &lt;jimrogers@writeme.com&gt;</code><br>
+<code></code><br>
+<code>I don't expect the -di option to apply to function declartions when -npsl is</code><br>
+<code>used. for example, if -npsl and -di16 is used:</code><br>
+<code></code><br>
+<code>void            main()</code><br>
+<code>{</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>--</code><br>
+<code></code><br>
+<code>I think he is right and I changed this behaviour.  However, it does not</code><br>
+<code>work for nested functions: those are still indented.</code><br>
+
+<tr><td><b>Revision 1.54</b><td>carlo
+<td>2000/11/15 20:57:40<td>+8 -1
+<TR><TD COLSPAN=4>
+<code>New options to suppress spaces after if, for and while respectively.</code><br>
+
+<tr><td><b>Revision 1.53</b><td>carlo
+<td>2000/11/15 19:36:12<td>+2 -3
+<TR><TD COLSPAN=4>
+<code>Fixed indentation of nested function.  Bug report by Michael Deutsch.</code><br>
+
+<tr><td><b>Revision 1.52</b><td>carlo
+<td>2000/11/15 16:03:33<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Treat return types of functions correctly even when they are not</code><br>
+<code>explicitely given with the -T option.</code><br>
+
+<tr><td><b>Revision 1.51</b><td>carlo
+<td>2000/11/10 13:14:19<td>+7 -1
+<TR><TD COLSPAN=4>
+<code>Wild card expansion for win32 by &quot;John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+<tr><td><b>Revision 1.50</b><td>carlo
+<td>2000/11/10 00:00:42<td>+6 -1
+<TR><TD COLSPAN=4>
+<code>Stop indent from core dumping on C++ code (it still won't indent correctly).</code><br>
+
+<tr><td><b>Revision 1.49</b><td>carlo
+<td>2000/11/08 23:37:13<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Support for mingw32 by Sudhi Herle &lt;sherle@sta.samsung.com&gt;</code><br>
+
+<tr><td><b>Revision 1.48</b><td>carlo
+<td>2000/10/06 12:10:16<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Set the max. comment column to the max. code column if no -lc option</code><br>
+<code>was given.  Fixes a compiler warning in io.c.</code><br>
+<code>Patch by John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+<tr><td><b>Revision 1.47</b><td>carlo
+<td>2000/09/11 14:14:02<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Fix a type that caused types inside sizeof() as to be treated declarations.</code><br>
+<code>Bug reported by Daniel Diaz.</code><br>
+
+<tr><td><b>Revision 1.46</b><td>carlo
+<td>2000/07/06 11:57:18<td>+5 -3
+<TR><TD COLSPAN=4>
+<code>New option --cuddle-do-while.  Sorry, I forgot who wrote this patch...</code><br>
+
+<tr><td><b>Revision 1.45</b><td>carlo
+<td>2000/03/03 15:25:42<td>+3 -3
+<TR><TD COLSPAN=4>
+<code>Compiler warning bug fix for 64-bit machines.</code><br>
+
+<tr><td><b>Revision 1.44</b><td>carlo
+<td>2000/02/25 19:59:32<td>+2 -1
+<TR><TD COLSPAN=4>
+<code>Bug fix per suggestion by Igor Lyubashevskiy</code><br>
+
+<tr><td><b>Revision 1.43</b><td>carlo
+<td>2000/02/14 11:14:08<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Hm, the DEBUG code should probably be removed, but until then: I fixed it.</code><br>
+
+
+</TABLE><br>
+<A NAME="indent.dsp">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: indent.dsp</font></B><br></td><tr>
+<tr><td><b>Revision 1.2</b><td>carlo
+<td>2000/11/10 13:14:19<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Wild card expansion for win32 by &quot;John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+
+</TABLE><br>
+
+<A NAME="indent.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: indent.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.24</b><td>carlo
+<td>2000/11/17 03:01:04<td>+8 -3
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.23</b><td>carlo
+<td>2000/11/16 02:09:52<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Added new option --break-function-decl-args (-bfda).</code><br>
+<code>Initial patch provided by Robert Lipe &lt;robertl@sco.com&gt;.</code><br>
+
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>2000/11/15 20:57:40<td>+4 -1
+<TR><TD COLSPAN=4>
+<code>New options to suppress spaces after if, for and while respectively.</code><br>
+
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>2000/07/06 11:57:18<td>+2 -1
+<TR><TD COLSPAN=4>
+<code>New option --cuddle-do-while.  Sorry, I forgot who wrote this patch...</code><br>
+
+<tr><td><b>Revision 1.20</b><td>carlo
+<td>2000/04/02 10:04:13<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>New options -ut and -nut (--use-tabs, --no-tabs).</code><br>
+<code></code><br>
+<code>Fixed a few bugs and added documentation for these options, starting</code><br>
+<code>of with a patch from Sean Cavanaugh.</code><br>
+<code></code><br>
+<code>From: &quot;Sean Cavanaugh&quot; &lt;sean@dimensionalrift.com&gt;</code><br>
+<code>To: &lt;indent@alinoe.com&gt;</code><br>
+<code>Subject: indent 2.2.5 patch</code><br>
+<code>Date: Sat, 1 Apr 2000 15:31:21 -0800</code><br>
+<code></code><br>
+<code>I recently pulled down indent 2.2.5 and was surprised to find it didn't have</code><br>
+<code>an option to convert tabs to spaces.  I've added a command line switch</code><br>
+<code>'-no-tabs' or '-nt' which lets you alter the default behavior.</code><br>
+<code>It is a pretty simple change, and handy for those of us who hate tabs :)</code><br>
+<code></code><br>
+<code>- Sean</code><br>
+
+
+</TABLE><br>
+<A NAME="indent.lsm.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: indent.lsm.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.4</b><td>carlo
+<td>2000/05/05 08:12:05<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Mangle email address a bit, anti spam bots.</code><br>
+
+
+</TABLE><br>
+
+<A NAME="indent.texinfo">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: indent.texinfo</font></B><br></td><tr>
+<tr><td><b>Revision 1.25</b><td>carlo
+<td>2000/11/16 02:09:52<td>+40 -0
+<TR><TD COLSPAN=4>
+<code>Added new option --break-function-decl-args (-bfda).</code><br>
+<code>Initial patch provided by Robert Lipe &lt;robertl@sco.com&gt;.</code><br>
+
+<tr><td><b>Revision 1.24</b><td>carlo
+<td>2000/11/15 20:57:40<td>+68 -4
+<TR><TD COLSPAN=4>
+<code>New options to suppress spaces after if, for and while respectively.</code><br>
+
+<tr><td><b>Revision 1.23</b><td>carlo
+<td>2000/07/17 22:08:06<td>+10 -16
+<TR><TD COLSPAN=4>
+<code>Renamed --blank-lines-after-block-comments to --blank-lines-before-block-comments.</code><br>
+
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>2000/07/06 11:57:18<td>+42 -0
+<TR><TD COLSPAN=4>
+<code>New option --cuddle-do-while.  Sorry, I forgot who wrote this patch...</code><br>
+
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>2000/04/02 10:04:13<td>+14 -0
+<TR><TD COLSPAN=4>
+<code>New options -ut and -nut (--use-tabs, --no-tabs).</code><br>
+<code></code><br>
+<code>Fixed a few bugs and added documentation for these options, starting</code><br>
+<code>of with a patch from Sean Cavanaugh.</code><br>
+<code></code><br>
+<code>From: &quot;Sean Cavanaugh&quot; &lt;sean@dimensionalrift.com&gt;</code><br>
+<code>To: &lt;indent@alinoe.com&gt;</code><br>
+<code>Subject: indent 2.2.5 patch</code><br>
+<code>Date: Sat, 1 Apr 2000 15:31:21 -0800</code><br>
+<code></code><br>
+<code>I recently pulled down indent 2.2.5 and was surprised to find it didn't have</code><br>
+<code>an option to convert tabs to spaces.  I've added a command line switch</code><br>
+<code>'-no-tabs' or '-nt' which lets you alter the default behavior.</code><br>
+<code>It is a pretty simple change, and handy for those of us who hate tabs :)</code><br>
+<code></code><br>
+<code>- Sean</code><br>
+
+
+</TABLE><br>
+
+
+<A NAME="io.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: io.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.38</b><td>carlo
+<td>2000/11/17 03:01:04<td>+68 -95
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.37</b><td>carlo
+<td>2000/11/16 17:04:48<td>+3 -2
+<TR><TD COLSPAN=4>
+<code>This fixes an old bug, reported by &lt;igorlord@alum.mit.edu&gt; at the</code><br>
+<code>beginning of 2000.  Possible break points were skipped under</code><br>
+<code>circumstances that did dependant on where a line was broken, resulting</code><br>
+<code>in an alternating output (after subsequent runs of indent).</code><br>
+<code>This was a hard one to find :/</code><br>
+
+<tr><td><b>Revision 1.36</b><td>carlo
+<td>2000/11/12 14:09:47<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Fixed the -nlp bug (finally)</code><br>
+
+<tr><td><b>Revision 1.35</b><td>carlo
+<td>2000/10/06 12:10:16<td>+3 -3
+<TR><TD COLSPAN=4>
+<code>Set the max. comment column to the max. code column if no -lc option</code><br>
+<code>was given.  Fixes a compiler warning in io.c.</code><br>
+<code>Patch by John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+<tr><td><b>Revision 1.34</b><td>carlo
+<td>2000/04/02 10:04:13<td>+17 -9
+<TR><TD COLSPAN=4>
+<code>New options -ut and -nut (--use-tabs, --no-tabs).</code><br>
+<code></code><br>
+<code>Fixed a few bugs and added documentation for these options, starting</code><br>
+<code>of with a patch from Sean Cavanaugh.</code><br>
+<code></code><br>
+<code>From: &quot;Sean Cavanaugh&quot; &lt;sean@dimensionalrift.com&gt;</code><br>
+<code>To: &lt;indent@alinoe.com&gt;</code><br>
+<code>Subject: indent 2.2.5 patch</code><br>
+<code>Date: Sat, 1 Apr 2000 15:31:21 -0800</code><br>
+<code></code><br>
+<code>I recently pulled down indent 2.2.5 and was surprised to find it didn't have</code><br>
+<code>an option to convert tabs to spaces.  I've added a command line switch</code><br>
+<code>'-no-tabs' or '-nt' which lets you alter the default behavior.</code><br>
+<code>It is a pretty simple change, and handy for those of us who hate tabs :)</code><br>
+<code></code><br>
+<code>- Sean</code><br>
+
+<tr><td><b>Revision 1.33</b><td>carlo
+<td>2000/03/01 22:36:08<td>+4 -1
+<TR><TD COLSPAN=4>
+<code>Fixed a bug reported by David Hull &lt;hull@paracel.com&gt;.</code><br>
+
+<tr><td><b>Revision 1.32</b><td>carlo
+<td>2000/02/25 20:37:10<td>+11 -11
+<TR><TD COLSPAN=4>
+<code>From: &quot;Sayre, Alan N&quot; &lt;Alan.N.Sayre@mcdermott.com&gt;</code><br>
+<code>Subject: indent mods</code><br>
+<code>Date: Tue, 25 Jan 2000 07:36:00 -0600</code><br>
+<code></code><br>
+<code>...</code><br>
+<code>I believe that the tests originated in MSDOS living in a 16-bit world.</code><br>
+<code>Ints are now 32-bit. (The code ran fine with this conditional</code><br>
+<code>removed). A more portable check would be to test the sizeof ints.</code><br>
+<code>...</code><br>
+
+<tr><td><b>Revision 1.31</b><td>carlo
+<td>2000/02/25 19:59:32<td>+5 -3
+<TR><TD COLSPAN=4>
+<code>Bug fix per suggestion by Igor Lyubashevskiy</code><br>
+
+<tr><td><b>Revision 1.30</b><td>carlo
+<td>2000/02/14 11:14:08<td>+1 -10
+<TR><TD COLSPAN=4>
+<code>Hm, the DEBUG code should probably be removed, but until then: I fixed it.</code><br>
+
+
+</TABLE><br>
+
+<A NAME="lexi.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: lexi.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.26</b><td>carlo
+<td>2000/11/17 03:01:04<td>+91 -116
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.25</b><td>carlo
+<td>2000/11/15 16:03:33<td>+10 -1
+<TR><TD COLSPAN=4>
+<code>Treat return types of functions correctly even when they are not</code><br>
+<code>explicitely given with the -T option.</code><br>
+
+<tr><td><b>Revision 1.24</b><td>carlo
+<td>2000/10/10 20:38:05<td>+9 -1
+<TR><TD COLSPAN=4>
+<code>Eat backslashes of backslash-newline when occuring outside a macro</code><br>
+<code>definition or literal string.  Bug report by Alex Cherepanov:</code><br>
+<code>Indent cannot handle trailing '\' outside of the macro</code><br>
+<code>or string. Don't ask me why some programs use it there.</code><br>
+
+<tr><td><b>Revision 1.23</b><td>carlo
+<td>2000/10/06 11:43:50<td>+33 -31
+<TR><TD COLSPAN=4>
+<code>Move a piece of example code outside a table, otherwise indent gets</code><br>
+<code>confused (when running it on itself).</code><br>
+
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>2000/03/03 15:25:42<td>+3 -3
+<TR><TD COLSPAN=4>
+<code>Compiler warning bug fix for 64-bit machines.</code><br>
+
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>2000/03/01 23:48:38<td>+2 -6
+<TR><TD COLSPAN=4>
+<code>Date: Sat, 19 Feb 2000 10:30:17 -0700 (MST)</code><br>
+<code>From: &quot;Nelson H. F. Beebe&quot; &lt;beebe@math.utah.edu&gt;</code><br>
+<code>Subject: indent-2.2.5: a bug, and some compiler warnings</code><br>
+<code>To: indent@alinoe.com</code><br>
+<code></code><br>
+<code>indent-2.2.5 and earlier incorrectly converts</code><br>
+<code></code><br>
+<code>        int x = 2LU;</code><br>
+<code></code><br>
+<code>to</code><br>
+<code>        int n = 2L U;</code><br>
+<code></code><br>
+<code>causing subsequent compilation failures.  Curiously, the equivalent</code><br>
+<code>form 2UL is handled correctly.  However, Section 3.1.3.2 of ANSI</code><br>
+<code>X3.159-1989 clearly permits either order of the modifier letters.</code><br>
+
+
+</TABLE><br>
+<A NAME="lexi.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: lexi.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.4</b><td>carlo
+<td>2000/02/14 11:14:08<td>+3 -2
+<TR><TD COLSPAN=4>
+<code>Hm, the DEBUG code should probably be removed, but until then: I fixed it.</code><br>
+
+
+</TABLE><br>
+<A NAME="maintMakefile.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: maintMakefile.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.9</b><td>carlo
+<td>2000/05/30 14:51:47<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Needed for upgrade to new version of texi2html 1.62.</code><br>
+
+
+</TABLE><br>
+
+
+
+
+<A NAME="parse.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: parse.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>2000/11/17 03:01:04<td>+34 -67
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.20</b><td>carlo
+<td>2000/02/14 11:14:08<td>+11 -4
+<TR><TD COLSPAN=4>
+<code>Hm, the DEBUG code should probably be removed, but until then: I fixed it.</code><br>
+
+
+</TABLE><br>
+
+<A NAME="sys.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: sys.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.15</b><td>carlo
+<td>2000/11/17 03:01:04<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.14</b><td>carlo
+<td>2000/11/08 23:37:13<td>+2 -2
+<TR><TD COLSPAN=4>
+<code>Support for mingw32 by Sudhi Herle &lt;sherle@sta.samsung.com&gt;</code><br>
+
+
+</TABLE><br>
+<A NAME="texinfo2man.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: texinfo2man.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.8</b><td>carlo
+<td>2000/11/17 03:01:04<td>+47 -71
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.7</b><td>carlo
+<td>2000/07/06 11:42:31<td>+4 -8
+<TR><TD COLSPAN=4>
+<code>A @* always means 'break line'.</code><br>
+
+<tr><td><b>Revision 1.6</b><td>carlo
+<td>2000/04/19 14:57:55<td>+47 -52
+<TR><TD COLSPAN=4>
+<code>Added @email{} and fix for not recognizing @commands at the beginning</code><br>
+<code>of a line if they are also allowed in the middle of a line.</code><br>
+
+
+</TABLE><br>
+
+<A NAME="wildexp.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: wildexp.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.3</b><td>carlo
+<td>2000/11/17 03:01:04<td>+19 -6
+<TR><TD COLSPAN=4>
+<code>Ran indent through indent, using -gnu -nhnl -l120.</code><br>
+<code>Updated copyright info.</code><br>
+
+<tr><td><b>Revision 1.2</b><td>carlo
+<td>2000/11/17 02:33:27<td>+284 -284
+<TR><TD COLSPAN=4>
+<code>Removed the carriage returns.</code><br>
+
+<tr><td><b>Revision 1.1</b><td>carlo
+<td>2000/11/10 13:14:19<td>None
+<TR><TD COLSPAN=4>
+<code>Wild card expansion for win32 by &quot;John Bridges&quot; &lt;jbridges@netcom.com&gt;</code><br>
+
+</TABLE><br>
+<hr width=100%>
+<font size=2>
+<p>File made using version 1.52 of <a href="http://www.sslug.dk/cvs2html" target="_top">cvs2html</a> by carlo at 100-11-17 14:42   and only showing data between revisions V2_2_5:HEAD.</font></p>
+</body>
+</html>

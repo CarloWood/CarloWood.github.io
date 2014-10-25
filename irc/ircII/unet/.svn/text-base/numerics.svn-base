@@ -1,0 +1,122 @@
+if (0) {
+     Script: unet/numerics
+        URL: http://www.xs4all.nl/~carlo17/irc/ircII/unet/numerics
+Description: Handling of Undernet numerics extensions.
+Also needed: http://www.xs4all.nl/~carlo17/irc/ircII/unet/stripu
+    Version: $Id$
+  First Ver: 02/05/1998
+     Author: ircii @t alinoe.com, Run @t IRC
+}
+
+load unet/stripu
+if (loaded != [unet.stripu] || version < 101) {
+  echo *** unet/numerics  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/stripu
+}
+
+#############################################################################
+#
+# Ban info
+#
+on ^367 * {
+  if ([$4] != []) {
+    echo $n.o($H ***) $1 \($3 - $stime($4)) $2
+  } {
+    echo $n.o($H ***) $1-
+  }
+}
+
+#############################################################################
+#
+# Topic info
+#
+on ^333 * {
+  echo $n.o($H ***) Topic for $1 set by $2 on $stime($3)
+}
+
+#############################################################################
+#
+# Signon info
+#
+on ^317 * {
+  if (index(0123456789 $3) != -1) {
+    echo $n.o($H ***) $1 has been idle for $2 seconds. Signon at $stime($3)
+  } {
+    echo $n.o($H ***) $1 has been idle for $2 seconds.
+  }
+}
+
+#############################################################################
+#
+# Show channel creation times
+#
+on ^329 * {
+  echo $n.o($H ***) $1 : created $stime($2) \($2\)
+}
+
+#############################################################################
+#
+# No such channel
+#
+on ^403 * {
+  echo $n.o($H ***) $1: $2-
+}
+
+#############################################################################
+#
+# Memory leaks statistics
+#
+on ^009 * {
+  echo $n.o($H ***) Total allocated memory: $1 bytes in $2 blocks.
+  ^assign need_memstat_header yes
+}
+on ^010 * {
+  if ([$need_memstat_header] == [yes]) {
+    if ([$4] != []) {
+      echo *** Blocks     Bytes      Location
+    } {
+      echo *** Blocks     Location
+    }
+    ^assign need_memstat_header no
+  }
+  if ([$4] != []) {
+    echo $n.o($H ***) $[10]1 $[10]4 $3:$2
+  } {
+    echo $n.o($H ***) $[10]1 $3:$2
+  }
+}
+on ^109 * echo $n.o($H ***) Total allocated memory: $1 bytes in $2 blocks. \(from $0\)
+on ^110 * {
+  if ([$4] != []) {
+    echo $n.o($H ***) $[10]1 $[10]4 $3:$2 \(from $0\)
+  } {
+    echo $n.o($H ***) $[10]1 $3:$2 \(from $0\)
+  }
+}
+
+#############################################################################
+#
+# WHO formats
+#
+
+# 0   : Free format
+on ^354 "0 *" {
+  echo $n.o($H ***) $1-
+}
+
+# 1   : Format uhn
+on ^354 "1 *" {
+  echo $n.o($H ***) $[9]3   $1@$2
+}
+
+# 2   : Format uhnf
+on ^354 "2 *" {
+  echo $n.o($H ***) $[9]3 $[7]4 $1@$2
+}
+
+# 101 : Format uihsnf
+on ^354 "101 *" {
+  echo $n.o($H ***) $[9]5 $[7]6 $1@$3 [$2] $stripu($4)
+}
+
+@version=102
+@loaded=[unet.numerics]

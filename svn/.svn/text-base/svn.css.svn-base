@@ -1,0 +1,47 @@
+h1 {
+  text-align: center;
+}
+
+#content {
+  margin: 50px;
+}
+
+h2 {
+  margin-left: -10px;
+}
+
+#footer {
+  border-top: 1px solid black;
+  font-size: smaller;
+}
+
+.sshconfig em {
+  color: #ff0044;
+}
+
+em.projectname {
+  color: #ff0044;
+}
+
+em.svnuser {
+  color: green;
+}
+
+em.underline {
+  text-decoration: underline;
+  font-style: normal;
+}
+
+pre b, b.pre {
+  color: #0000f4;
+  font-weight: normal;
+}
+
+li {
+  margin-top: 1em;
+}
+
+p.salut {
+  margin-top: 3em;
+}
+

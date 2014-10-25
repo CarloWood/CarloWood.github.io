@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node21" href="$ChessPosition_8h.html" title="This file contains the declaration of class ChessPosition." alt="" coords="1005,160,1128,189"/>
+<area shape="rect" id="node50" href="$PieceIterator_8h.html" title="This file contains the definition of class PieceIterator." alt="" coords="679,237,793,267"/>
+<area shape="rect" id="node55" href="$MoveIterator_8h.html" title="This file contains the declaration of class MoveIterator." alt="" coords="817,237,932,267"/>
+<area shape="rect" id="node82" href="$ChessNotation_8h.html" title="This file contains the declaration of class ChessNotation." alt="" coords="1315,83,1443,112"/>
+<area shape="rect" id="node23" href="$BitBoard_8h.html" title="This file contains the declaration of class BitBoard." alt="" coords="992,547,1080,576"/>
+<area shape="rect" id="node30" href="$Piece_8h.html" title="This file contains the declaration of class Piece." alt="" coords="1057,315,1124,344"/>
+<area shape="rect" id="node64" href="$Array_8h.html" title="This file contains the definition of class Array." alt="" coords="1396,547,1463,576"/>
+<area shape="rect" id="node68" href="$CastleFlags_8h.html" title="This file contains the declaration of class CastleFlags." alt="" coords="1367,237,1473,267"/>
+<area shape="rect" id="node73" href="$EnPassant_8h.html" title="This file contains the declaration of class EnPassant." alt="" coords="1057,237,1159,267"/>
+<area shape="rect" id="node75" href="$CountBoard_8h.html" title="This file contains the declaration of class CountBoard." alt="" coords="1233,237,1343,267"/>
+<area shape="rect" id="node27" href="$Index_8h.html" title="This file contains the declaration of class Index." alt="" coords="1431,624,1497,653"/>
+<area shape="rect" id="node32" href="$Code_8h.html" title="This file contains the declaration of class Code." alt="" coords="1239,392,1305,421"/>
+<area shape="rect" id="node46" href="$Flags_8h.html" title="This file contains the declaration of class Flags." alt="" coords="1108,547,1175,576"/>
+<area shape="rect" id="node35" href="$Color_8h.html" title="This file contains the declaration of class Color." alt="" coords="1244,624,1311,653"/>
+<area shape="rect" id="node38" href="$Type_8h.html" title="This file contains the declaration of class Type." alt="" coords="1199,547,1260,576"/>
+<area shape="rect" id="node42" href="$Direction_8h.html" title="This file contains the declaration of class Direction." alt="" coords="1119,469,1209,499"/>
+<area shape="rect" id="node58" href="$Move_8h.html" title="This file contains the definition of class Move." alt="" coords="1369,392,1436,421"/>
+</map>

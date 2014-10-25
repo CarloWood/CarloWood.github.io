@@ -1,0 +1,302 @@
+<html>
+<title>CVS</title>
+<BODY BGCOLOR="#AAAAAA">
+<hr><center><h1>---  ---</h1></center><hr>
+<A NAME=".cvsignore">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: .cvsignore</font></B><br></td><tr>
+<tr><td><b>Revision 1.17</b><td>carlo
+<td>2002/07/25 23:52:40<td>+3 -1
+<TR><TD COLSPAN=4>
+<code>Added support for bash 2.0.5b.</code><br>
+<code></code><br>
+<code>Date: Thu, 25 Jul 2002 11:41:23 +0300</code><br>
+<code>From: Antti Sykari &lt;jsykari@cc.hut.fi&gt;</code><br>
+<code>Subject: Bug: 'which --read-functions' (version v2.13) is broken on bash 2.05b</code><br>
+<code>To: Carlo Wood &lt;carlo@gnu.org&gt;</code><br>
+<code></code><br>
+<code>FYI,</code><br>
+<code></code><br>
+<code>Bash 2.05b breaks the --read-functions switch 'which'.</code><br>
+<code>This happens because 'declare' gives output like:</code><br>
+<code></code><br>
+<code>[bash 2.05b behavior]</code><br>
+<code>fun ()</code><br>
+<code>{</code><br>
+<code>    echo blah</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>instead of</code><br>
+<code></code><br>
+<code>[bash 2.05a behavior]</code><br>
+<code>declare -f fun ()</code><br>
+<code>{·</code><br>
+<code>    echo blah</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>So I'd guess that the function process_function in which.c should be</code><br>
+<code>changed to recognize the newer syntax.</code><br>
+
+<tr><td><b>Revision 1.16</b><td>carlo
+<td>2002/07/25 17:04:30<td>+6 -0
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+
+</TABLE><br>
+
+
+
+
+<A NAME="LICENSE">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: LICENSE</font></B><br></td><tr>
+<tr><td><b>Revision 1.1</b><td>carlo
+<td>2002/07/25 17:04:30<td>None
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+</TABLE><br>
+<A NAME="Makefile.am">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: Makefile.am</font></B><br></td><tr>
+<tr><td><b>Revision 1.13</b><td>carlo
+<td>2002/07/25 17:04:30<td>+24 -23
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+
+</TABLE><br>
+<A NAME="NEWS">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: NEWS</font></B><br></td><tr>
+<tr><td><b>Revision 1.13</b><td>carlo
+<td>2002/07/25 23:52:40<td>+1 -0
+<TR><TD COLSPAN=4>
+<code>Added support for bash 2.0.5b.</code><br>
+<code></code><br>
+<code>Date: Thu, 25 Jul 2002 11:41:23 +0300</code><br>
+<code>From: Antti Sykari &lt;jsykari@cc.hut.fi&gt;</code><br>
+<code>Subject: Bug: 'which --read-functions' (version v2.13) is broken on bash 2.05b</code><br>
+<code>To: Carlo Wood &lt;carlo@gnu.org&gt;</code><br>
+<code></code><br>
+<code>FYI,</code><br>
+<code></code><br>
+<code>Bash 2.05b breaks the --read-functions switch 'which'.</code><br>
+<code>This happens because 'declare' gives output like:</code><br>
+<code></code><br>
+<code>[bash 2.05b behavior]</code><br>
+<code>fun ()</code><br>
+<code>{</code><br>
+<code>    echo blah</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>instead of</code><br>
+<code></code><br>
+<code>[bash 2.05a behavior]</code><br>
+<code>declare -f fun ()</code><br>
+<code>{·</code><br>
+<code>    echo blah</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>So I'd guess that the function process_function in which.c should be</code><br>
+<code>changed to recognize the newer syntax.</code><br>
+
+<tr><td><b>Revision 1.12</b><td>carlo
+<td>2002/07/25 17:04:30<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+
+</TABLE><br>
+
+<A NAME="README.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: README.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.3</b><td>carlo
+<td>2002/07/25 17:04:30<td>+1 -2
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+
+</TABLE><br>
+<A NAME="acconfig.h">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: acconfig.h</font></B><br></td><tr>
+<tr><td><b>Revision 1.3</b><td>carlo
+<td>2002/07/25 17:04:30<td>+4 -0
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+
+</TABLE><br>
+<A NAME="acinclude.m4">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: acinclude.m4</font></B><br></td><tr>
+<tr><td><b>Revision 1.4</b><td>carlo
+<td>2002/07/25 17:04:30<td>+18 -6
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+
+</TABLE><br>
+
+
+<A NAME="bootstrap">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: bootstrap</font></B><br></td><tr>
+<tr><td><b>Revision 1.1</b><td>carlo
+<td>2002/07/25 17:04:30<td>None
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+</TABLE><br>
+<A NAME="configure.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: configure.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.22</b><td>carlo
+<td>2002/07/25 17:04:30<td>+9 -2
+<TR><TD COLSPAN=4>
+<code>Upgraded build system for automake 1.5 and autoconf 2.53.</code><br>
+
+<tr><td><b>Revision 1.21</b><td>carlo
+<td>2001/08/17 14:23:11<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Bumped version number.</code><br>
+
+
+</TABLE><br>
+
+
+
+<A NAME="index.html.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: index.html.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.15</b><td>carlo
+<td>2001/08/17 02:34:46<td>+5 -1
+<TR><TD COLSPAN=4>
+<code>Forgot to add a link to the NEWS file.</code><br>
+
+
+</TABLE><br>
+<A NAME="maintMakefile.in">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: maintMakefile.in</font></B><br></td><tr>
+<tr><td><b>Revision 1.15</b><td>carlo
+<td>2002/07/26 00:17:27<td>+1 -0
+<TR><TD COLSPAN=4>
+<code>make release fixes</code><br>
+
+<tr><td><b>Revision 1.14</b><td>carlo
+<td>2002/07/26 00:07:11<td>+17 -12
+<TR><TD COLSPAN=4>
+<code>Updated targets to latest version (from libcwd)</code><br>
+
+<tr><td><b>Revision 1.13</b><td>carlo
+<td>2001/08/17 14:22:29<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Generation of index.html missed a blank line.</code><br>
+
+
+</TABLE><br>
+<A NAME="mdate-sh">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: mdate-sh</font></B><br></td><tr>
+<tr><td><b>Revision 1.1</b><td>carlo
+<td>2001/12/04 18:38:38<td>None
+<TR><TD COLSPAN=4>
+<code>Required file for automake 1.4.</code><br>
+
+</TABLE><br>
+
+
+
+
+<A NAME="which.c">
+</a>
+<TABLE BORDER=3 CELLSPACING=1 CELLPADDING=3 BGCOLOR="#c7c7c7" width="100%">
+<TR ALIGN="left" VALIGN="top">
+<TD COLSPAN=4 BGCOLOR="#7777FF"><b><FONT SIZE="+2">
+Filename: which.c</font></B><br></td><tr>
+<tr><td><b>Revision 1.31</b><td>carlo
+<td>2002/07/25 23:52:40<td>+39 -46
+<TR><TD COLSPAN=4>
+<code>Added support for bash 2.0.5b.</code><br>
+<code></code><br>
+<code>Date: Thu, 25 Jul 2002 11:41:23 +0300</code><br>
+<code>From: Antti Sykari &lt;jsykari@cc.hut.fi&gt;</code><br>
+<code>Subject: Bug: 'which --read-functions' (version v2.13) is broken on bash 2.05b</code><br>
+<code>To: Carlo Wood &lt;carlo@gnu.org&gt;</code><br>
+<code></code><br>
+<code>FYI,</code><br>
+<code></code><br>
+<code>Bash 2.05b breaks the --read-functions switch 'which'.</code><br>
+<code>This happens because 'declare' gives output like:</code><br>
+<code></code><br>
+<code>[bash 2.05b behavior]</code><br>
+<code>fun ()</code><br>
+<code>{</code><br>
+<code>    echo blah</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>instead of</code><br>
+<code></code><br>
+<code>[bash 2.05a behavior]</code><br>
+<code>declare -f fun ()</code><br>
+<code>{·</code><br>
+<code>    echo blah</code><br>
+<code>}</code><br>
+<code></code><br>
+<code>So I'd guess that the function process_function in which.c should be</code><br>
+<code>changed to recognize the newer syntax.</code><br>
+
+<tr><td><b>Revision 1.30</b><td>carlo
+<td>2001/08/17 14:22:51<td>+1 -1
+<TR><TD COLSPAN=4>
+<code>Corrected year in copyright notice.</code><br>
+
+
+</TABLE><br>
+
+
+<hr width=100%>
+<font size=2>
+<p>File made using version 1.52 of <a href="http://www.sslug.dk/cvs2html" target="_top">cvs2html</a> by carlo at 102-07-26  2:27   and only showing data between revisions V2_13:HEAD.</font></p>
+</body>
+</html>

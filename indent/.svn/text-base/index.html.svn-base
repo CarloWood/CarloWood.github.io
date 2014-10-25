@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en">
+<HEAD>
+	<META name="Author" content="Carlo Wood">
+	<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+	<TITLE>indent</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#c8ccc8">
+<CENTER>
+<IMG SRC="../images/indent.jpg"><BR CLEAR=ALL>
+</CENTER>
+
+<H2>New maintainer</H2>
+
+<P>GNU indent has a new maintainer and therefore also a new home:<BR>
+<A HREF="http://home.hccnet.nl/d.ingamells/beautify.html">http://home.hccnet.nl/d.ingamells/beautify.html</A></P>
+
+<H2>Downloading</H2>
+
+<P>
+<LI><A HREF="indent-2.2.6.tar.gz">indent-2.2.6.tar.gz</A>
+</P>
+
+<P><LI><A HREF="indent.lsm">indent.lsm</A></P>
+
+<H2>ChangeLog</H2>
+
+<LI><A HREF=cvslog-2.2.6.html>Version 2.2.6</A>
+<LI><A HREF=cvslog-2.2.5.html>Version 2.2.5</A>
+<LI><A HREF=cvslog-2.2.4.html>Version 2.2.4</A>
+<LI><A HREF=cvslog-2.2.3.html>Version 2.2.3</A>
+<LI><A HREF=cvslog-2.2.2.html>Version 2.2.2</A>
+<LI><A HREF=cvslog-2.2.1.html>Version 2.2.1</A>
+<LI><A HREF=cvslog-2.2.0.html>Version 2.2.0</A>
+
+<H2>Documentation</H2>
+
+<A HREF="indent.html">Manual page</A>
+
+</BODY>
+</HTML>

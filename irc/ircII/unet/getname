@@ -1,0 +1,46 @@
+if (0) {
+     Script: unet/getname
+        URL: http://www.xs4all.nl/~carlo17/irc/ircII/unet/getname
+Description: Extract the name of a server in `client name' representation
+             (For example: server.name[user@IP]).
+Also needed: http://www.xs4all.nl/~carlo17/irc/ircII/unet/strlen
+    Version: $Id: getname 317 2000-05-04 22:53:47Z carlo $
+  First Ver: 03/05/1998
+     Author: ircii @t alinoe.com, Run @t IRC
+}
+
+load unet/strlen
+if (loaded != [unet.strlen] || version < 101) {
+  echo *** unet/getname  needs http://www.xs4all.nl/~carlo17/irc/ircII/unet/strlen
+}
+
+alias getname {
+  if (right(1 $0)==[.] || right(1 $0)==[,]) {
+    ^assign clnme $left(${strlen($0)-1} $0);
+  } {
+    assign clnme $0
+  }
+  if (index([ $0)>0) {
+    ^assign dummy $left($index([ $0) $0)
+    ^assign clnme $mid(${index([ $0)+1} ${rindex(] $0)-(index([ $0)+1)} $0);
+    if (index(@ $clnme)) {
+      assign function_return $dummy
+    } {
+      if (index(@ $dummy)) {
+        assign function_return $clnme
+      } {
+        if (strip(.0123456789 $dummy)==[])
+        {
+	  assign function_return $clnme
+        } {
+	  assign function_return $dummy
+        }
+      }
+    }
+  } {
+    assign function_return $clnme
+  }
+}
+	
+@version=101
+@loaded=[unet.getname]

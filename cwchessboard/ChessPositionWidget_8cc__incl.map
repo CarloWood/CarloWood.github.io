@@ -1,0 +1,24 @@
+<map id="G" name="G">
+<area shape="rect" id="node9" href="$ChessPositionWidget_8h.html" title="This file contains the declaration of class ChessPositionWidget." alt="" coords="668,83,833,112"/>
+<area shape="rect" id="node35" href="$CwChessboardCodes_8h.html" title="This file contains the definitions of the CwChessboardCode constants." alt="" coords="869,315,1037,344"/>
+<area shape="rect" id="node21" href="$ChessboardWidget_8h.html" title="This file contains the declaration of the gtkmm class ChessboardWidget." alt="" coords="333,160,485,189"/>
+<area shape="rect" id="node39" href="$ChessPosition_8h.html" title="This file contains the declaration of class ChessPosition." alt="" coords="1367,160,1489,189"/>
+<area shape="rect" id="node97" href="$Promotion_8h.html" title="This file contains the declaration of class Promotion." alt="" coords="1893,160,1992,189"/>
+<area shape="rect" id="node27" href="$CwChessboard_8h.html" title="This file contains the declaration of the GTK+ widget CwChessboard." alt="" coords="560,237,688,267"/>
+<area shape="rect" id="node41" href="$BitBoard_8h.html" title="This file contains the declaration of class BitBoard." alt="" coords="1305,547,1393,576"/>
+<area shape="rect" id="node47" href="$Piece_8h.html" title="This file contains the declaration of class Piece." alt="" coords="1569,315,1636,344"/>
+<area shape="rect" id="node67" href="$PieceIterator_8h.html" title="This file contains the definition of class PieceIterator." alt="" coords="1509,237,1624,267"/>
+<area shape="rect" id="node72" href="$MoveIterator_8h.html" title="This file contains the declaration of class MoveIterator." alt="" coords="1371,237,1485,267"/>
+<area shape="rect" id="node81" href="$Array_8h.html" title="This file contains the definition of class Array." alt="" coords="1791,547,1857,576"/>
+<area shape="rect" id="node85" href="$CastleFlags_8h.html" title="This file contains the declaration of class CastleFlags." alt="" coords="1699,237,1805,267"/>
+<area shape="rect" id="node90" href="$EnPassant_8h.html" title="This file contains the declaration of class EnPassant." alt="" coords="1245,237,1347,267"/>
+<area shape="rect" id="node92" href="$CountBoard_8h.html" title="This file contains the declaration of class CountBoard." alt="" coords="1112,237,1221,267"/>
+<area shape="rect" id="node44" href="$Index_8h.html" title="This file contains the declaration of class Index." alt="" coords="1540,624,1607,653"/>
+<area shape="rect" id="node49" href="$Code_8h.html" title="This file contains the declaration of class Code." alt="" coords="1672,392,1739,421"/>
+<area shape="rect" id="node63" href="$Flags_8h.html" title="This file contains the declaration of class Flags." alt="" coords="1433,547,1500,576"/>
+<area shape="rect" id="node52" href="$Color_8h.html" title="This file contains the declaration of class Color." alt="" coords="1777,624,1844,653"/>
+<area shape="rect" id="node55" href="$Type_8h.html" title="This file contains the declaration of class Type." alt="" coords="1705,547,1767,576"/>
+<area shape="rect" id="node59" href="$Direction_8h.html" title="This file contains the declaration of class Direction." alt="" coords="1421,469,1512,499"/>
+<area shape="rect" id="node75" href="$Move_8h.html" title="This file contains the definition of class Move." alt="" coords="1587,469,1653,499"/>
+<area shape="rect" id="node100" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable." alt="" coords="1880,237,2005,267"/>
+</map>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+
+<HEAD>
+	<TITLE>IRC client-server protocol negotiation</TITLE>
+	<STYLE>
+	<!--
+	-->
+	</STYLE>
+</HEAD>
+
+<BODY>
+
+<CENTER>
+<H1>IRC client-server protocol negotiation: unet1</H1>
+</CENTER>
+
+<H2>versions</H2>
+
+<CENTER>
+<TABLE WIDTH=381 BORDER=1 BORDERCOLOR="#4c1900" CELLPADDING=4 CELLSPACING=0>
+  <TR VALIGN=TOP>
+	  <TH WIDTH=79 BGCOLOR="#804c19" ALIGN=CENTER>
+	    <I>&lt;version&gt;</I>
+	  </TH>
+	  <TH WIDTH=136 BGCOLOR="#663300">
+	    <I>Mandatory features</I>
+	  </TH>
+	  <TH WIDTH=140 BGCOLOR="#663300">
+	    <I>Optional features</I>
+	  </TH>
+  </TR>
+  <TR>
+	  <TD WIDTH=79 BGCOLOR="#996633">
+	    <I>1</I>
+	  </TD>
+	  <TD WIDTH=136 VALIGN=TOP BGCOLOR="#ffcc99">
+	  </TD>
+	  <TD WIDTH=140 VALIGN=TOP BGCOLOR="#ffcc99">
+	    <A HREF="http://www.break.net/auth2.html">auth</A>
+	  </TD>
+  </TR>
+</TABLE>
+</CENTER>
+
+</BODY>
+</HTML>

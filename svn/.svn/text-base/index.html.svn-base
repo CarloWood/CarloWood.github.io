@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html LANG="en_US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="author" content="Carlo Wood">
+<meta name="keywords" content="subversion, SVN repository, jail root, chroot, svn, secure, HOWTO, security, ssh, POSIX, linux">
+<title>HOWTO setup a jail rooted SVN repository</title>
+<link href="../css/common.css" rel="stylesheet" type="text/css">
+<link href="svn.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<h1>mini-HOWTO:<br>Setting up a jail rooted SVN repository</h1>
+
+<div id="content">
+
+<table>
+<tr><td><a href="#intro">Introduction</a></td></tr>
+<tr><td><a href="#prep">Preparing The Machine</a></td></tr>
+<tr><td><a href="#addproject">Adding A New Project</a></td></tr>
+<tr><td><a href="#adddeveloper">Adding A New Developer</a></td></tr>
+</table>
+
+<a name="intro"></a>
+<h2>Introduction</h2>
+
+<p>This mini-HOWTO decribes how to set up a jail rooted <a href="http://subversion.tigris.org/">SVN repository</a>
+on a POSIX system like GNU/Linux.</p>
+
+<p>Access to the repository is done solely through <a href="http://en.wikipedia.org/wiki/Secure_Shell">ssh</a>.
+The ssh login results in a jail rooted shell <em>per project</em> that allows exactly one command.
+This provides a high degree of security:
+<ol>
+<li>Project developers need to be able to login using normal ssh authentication
+[It is possible to provide anonymous access for which no password is required, see below.]
+<li>After logging in through ssh one can only execute a <em>single</em> command, namely <code>svnserve -t</code>,
+which is needed to access the SVN repository. There is absolutely no room to exploit anything (else) here.
+<li><code>svnserve</code> runs in a jail root with only access to the SVN repository, effectively
+disabling the possibility to exploit a possible bug in svn.
+Anonymous users do not have significant write access to this file system.
+</ol>
+
+<a name="prep"></a>
+<h2>Preparing the machine</h2>
+
+<p>This paragraph describes things that need to be done once per machine.</p>
+
+<ul>
+<li>Install and configure sshd the normal way.</li>
+<li>Set the environment variable SVNBASE. This is the root under which everything will be installed.
+For example <code>SVNBASE="/opt/svn"</code>. This is not the jail root; the jail roots will reside
+somewhere inside this directory.
+<pre>
+$ export SVNBASE="/opt/svn"
+</pre>
+<li>Download <a href="svnbase.tar.gz">svnbase.tar.gz</a>. Check the md5 checksum.
+<pre>
+$ md5sum svnbase.tar.gz
+200fd135f165c39bf0d6cd996d573ebd  svnbase.tar.gz
+</pre>
+<li>Install it by unpacking it in SVNBASE:
+<pre>
+$ cd "$SVNBASE"
+$ sudo <b>tar xzf svnbase.tar.gz</b>
+</pre>
+You might want to change the ownership of the unpacked <code>src</code> directory:
+<pre>
+$ sudo <b>chown -R YOU src</b>
+</pre>
+<li>Add the group <code>svn-rw</code> to your system.
+<pre>
+$ sudo <b>groupadd svn-rw</b>
+</pre>
+</ul>
+
+<a name="addproject"></a>
+<h2>Adding a new project</h2>
+
+<p>We use a new svn repository (and jail root) per project.
+To add a new project/repository execute the following commands.
+The prompt <code>$</code> is omitted for your copy&amp;paste pleasure.
+<b class="pre">Bold</b> commands should be executed as
+<em class="underline">root</em>.</p>
+
+<p><em>Make sure that the environment variables are ALSO set
+while being root if you use <code>su</code> instead of <code>sudo</code></em>!</p>
+
+<ul>
+<li>Set the environment variable SVNBASE <em>as above</em>.
+<pre>
+SVNBASE=/opt/svn
+</pre>
+<li>Set the environment variable PROJECT to the name of the new project. Only use alphanumeric characters.
+<pre>
+PROJECT=projectname
+</pre>
+<li>Create project group, jail root and developers' home directory base.
+<pre>
+sudo <b>groupadd svn-$PROJECT</b>
+sudo <b>install -m 755 -g svn-$PROJECT -d $SVNBASE/$PROJECT/root/home</b>
+</pre>
+<li>If you want to allow anonymous (read) access, add an anonymous user account for this project.
+The backslash means this is really just one line.
+<pre>
+sudo <b>useradd -p &quot;anonsvn&quot; -d $SVNBASE/$PROJECT/root/home/svn-$PROJECT-anon \
+             -s $SVNBASE/$PROJECT/bin/chrootsh -c 'Anonymous SVN user' \
+             -m -k $SVNBASE/skel svn-$PROJECT-anon</b>
+</pre>
+<p>You can also use <code>-p &quot;&quot;</code> so that no password has to be
+given at all (otherwise the password <code>anonsvn</code> has to be
+provided the first time when checking out (svn caches it after that)).
+For empty passwords to work, change <code>/etc/pam.d/sshd</code> and replace
+'<code>@include common-auth</code>' with '<code>auth required pam_unix.so nullok</code>',
+and change <code>/etc/ssh/sshd_config</code> and set
+'<code>PermitEmptyPasswords yes</code>'.</p>
+<li>Compile and install chrootsh.
+<pre>
+cd $SVNBASE/src
+gcc -O2 -DSVNBASE=\"$SVNBASE\" -DPROJECT=\"$PROJECT\" chrootsh.c -o chrootsh
+sudo <b>install -m 755 -d $SVNBASE/$PROJECT/bin</b>
+sudo <b>install -m 4755 chrootsh $SVNBASE/$PROJECT/bin</b>
+</pre>
+<li>Create the chrooted environment.
+<pre>
+sudo <b>install -m 755 -d $SVNBASE/$PROJECT/root/lib</b>
+sudo <b>install -m 755 -d $SVNBASE/$PROJECT/root/bin</b>
+sudo <b>cp /sbin/ldconfig $SVNBASE/$PROJECT/root/bin</b>
+sudo <b>cp /bin/sh $SVNBASE/$PROJECT/root/bin</b>
+sudo <b>cp /usr/bin/svnlook $SVNBASE/$PROJECT/root/bin</b>
+sudo <b>cp /usr/bin/svnserve $SVNBASE/$PROJECT/root/bin</b>
+sudo <b>install -m 1777 -d $SVNBASE/$PROJECT/root/tmp</b>
+sudo <b>install -m 755 -d $SVNBASE/$PROJECT/root/etc</b>
+sudo <b>touch $SVNBASE/$PROJECT/root/etc/ld.so.conf</b>
+sudo <b>sh -c &quot;echo 'passwd: files' &gt; $SVNBASE/$PROJECT/root/etc/nsswitch.conf&quot;</b>
+sudo <b>sh -c &quot;echo 'group: files' &gt;&gt; $SVNBASE/$PROJECT/root/etc/nsswitch.conf&quot;</b>
+sudo <b>install -m 755 -d $SVNBASE/$PROJECT/root/dev</b>
+sudo <b>mknod -m 666 $SVNBASE/$PROJECT/root/dev/null c 1 3</b>
+sudo <b>sh -c &quot;grep '^svn-$PROJECT[-:]' /etc/group &gt; $SVNBASE/$PROJECT/root/etc/group&quot;</b>
+sudo <b>sh -c &quot;grep ^svn-$PROJECT- /etc/passwd &gt; $SVNBASE/$PROJECT/root/etc/passwd&quot;</b>
+cd $SVNBASE/src; sudo <b>./createlib $SVNBASE $PROJECT</b>
+</pre>
+<li>Create the repository.
+<pre>
+sudo <b>svnadmin --fs-type fsfs create $SVNBASE/$PROJECT/root/repos</b>
+cd $SVNBASE/$PROJECT/root/repos
+sudo <b>chmod 2770 db</b>
+sudo <b>chmod 750 hooks</b>
+sudo <b>chmod 770 locks</b>
+sudo <b>chgrp -R svn-rw db hooks locks</b>
+sudo <b>chmod -R g+w db</b>
+sudo <b>chmod o+rx db db/revs db/revprops locks</b>
+</pre>
+<li>Add yourself as developer, see <a href="#adddeveloper">Adding a new developer</a> below.
+<li>Test the installation a bit by running,
+<pre>
+$ ssh $PROJECT test
+</pre>
+This should print: This worked. Now try svn.
+</ul>
+
+<p>After adding yourself as developer, you can now go ahead and add the initial directories.</p>
+<p>For example,</p>
+<pre>
+$ cd $HOME/projects/$PROJECT
+$ mkdir tmp
+$ cd tmp
+$ mkdir branches tags trunk
+$ svn import -m 'Initial directory structure' "svn+ssh://$PROJECT/repos"
+$ cd ..
+$ rm -rf tmp
+</pre>
+
+<p>Or, if you have a dumpfile, for example one that you created from your CVS repository
+as described <a href="cvs2svn.html">here</a>, you could do instead:</p>
+<pre>
+$ sudo <b>svnadmin load $SVNBASE/$PROJECT/root/repos</b> < svndump
+</pre>
+
+<p>Finally, check-out your new repository!</p>
+<pre>
+$ svn checkout "svn+ssh://$PROJECT/repos/trunk" "$PROJECT"
+$ cd "$PROJECT"
+</pre>
+
+<p>From there it should all be known, or go read the <a href="http://svnbook.red-bean.com/">svn book</a>.</p>
+
+<a name="adddeveloper"></a>
+<h2>Adding a new developer</h2>
+
+<p>The only thing needed for new developers is to add a (project specific) account
+for them and add them to the right groups to get write access to the repository.</p>
+
+<ul>
+<li>Set the SVNBASE, PROJECT and SVNUSER environment variables.
+<pre>
+SVNBASE=/opt/svn
+PROJECT=projectname
+SVNUSER=carlo
+</pre>
+Obviously, use values suitable for you.
+<li>Also set these helper environment variables (as an example).
+<pre>
+REALNAME='John Doe'
+NICK='nickname'
+</pre>
+<li>Then add the new account. The backslash means that it's really all just one line.
+<pre>
+sudo <b>useradd -G svn-$PROJECT-anon,svn-$PROJECT,svn-rw -d $SVNBASE/$PROJECT/root/home/svn-$PROJECT-$SVNUSER \
+             -s $SVNBASE/$PROJECT/bin/chrootsh -c &quot;SVN $PROJECT developer, $REALNAME ($NICK)&quot; \
+             -m -k $SVNBASE/skel svn-$PROJECT-$SVNUSER</b>
+</pre>
+Leave out the <code>svn-$PROJECT-anon</code> group if you didn't create an anonymous user for this project.
+<li>Have your developer generate a new key pair by executing the following commands on his own machine:
+<pre>
+developer$ cd ~/.ssh
+developer$ ssh-keygen -t dsa -f <em class="projectname">projectname</em>_dsa
+</pre>
+And let him add the following lines to his <code>~/.ssh/config</code> file:
+<pre class="sshconfig">
+Host <em class="projectname">projectname</em>
+Hostname localhost
+ForwardX11 no
+Protocol 2
+IdentityFile ~/.ssh/<em class="projectname">projectname</em>_dsa
+User svn-<em class="projectname">projectname</em>-<em class="svnuser">svnuser</em>
+</pre>
+<p>Where <em class="projectname">projectname</em> should be replaced with PROJECT and
+<em class="svnuser">svnuser</em> should be replaced with the value that you used for SVNUSER above.
+Also, change <em>localhost</em> into the name or IP of the machine running the repository.</p>
+<p>Finally, have him sent you his projectname_dsa.pub file.</p>
+<li>Using the thus retrieved public key file, give the developer access by adding his
+key to the <code>authorized_keys</code> file:
+<pre>
+sudo <b>sh -c &quot;cat thekey.pub &gt;&gt; $SVNBASE/$PROJECT/root/home/svn-$PROJECT-$SVNUSER/.ssh/authorized_keys&quot;</b>
+</pre>
+This uses <code>sh -c</code> with double quotes because otherwise the environment variables
+wouldn't be expanded before starting sudo, or we wouldn't have write access to the output file.
+<li>Also copy the password and group lines to the chrooted environment.
+<pre>
+sudo <b>sh -c &quot;grep ^svn-$PROJECT-$SVNUSER /etc/passwd &gt;&gt; $SVNBASE/$PROJECT/root/etc/passwd&quot;</b>
+sudo <b>sh -c &quot;grep ^svn-$PROJECT-$SVNUSER /etc/group &gt;&gt; $SVNBASE/$PROJECT/root/etc/group&quot;</b>
+</pre>
+</ul>
+
+<p class="salut">That's all!</p>
+
+</div> <!-- content -->
+
+<div id="footer">Copyright &copy; 2006 2007 Carlo Wood</div>
+
+</body>
+</html>
+

@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+  <TITLE>Channel Recovery Project Overview</TITLE>
+  <STYLE>
+    BODY {
+      margin-left: 2cm;
+      margin-right: 2cm;
+   }
+   </STYLE>
+</HEAD>
+
+<BODY>
+
+<CENTER>
+<H1>Channel Recovery For All Project (Apass/Upass)</H1>
+</CENTER>
+<H4>Last updated: 7 March 2005</H4>
+
+<BR>
+<H2>Technical Details</H2>
+
+<OL TYPE="1">
+<LI><P>First multi-level ops are introduced.&nbsp;
+The most powerful level is level 0.&nbsp;
+There should be at least extra level (level 1; higher numeric values means less power).&nbsp;
+An op will not be able to de-op or kick someone with a lower or equal&sup1; level.<P>
+<P STYLE="font-size: smaller">
+&sup1;This is to prevent op-less channels as a result of stupid bots that de-op people.
+</P>
+</LI>
+
+<LI><P>When someone creates a channel, either with JOIN locally or with
+CREATE, then he gets level 0 ops.&nbsp;
+This person is also marked as 'channel manager'.</P></LI>
+
+<LI><P>Two passwords per channel are introduced: Upass and Apass.&nbsp;
+A new channel has neither set.</P></LI>
+
+<LI><P>If on a channel with Upass set, someone with level x gives ops to
+someone else, then that person gets level x+1.&nbsp;
+On other channels, where Upass is not set, the level stays the same.</P></LI>
+
+<LI><P>When the Apass is not set then the channel manager&sup1; can set it.&nbsp;
+It cannot be set when the Apass already exists.&nbsp;
+When set, the following message is sent to the user:
+<pre>
+   *** Channel Admin password (+A) set to 'secret'. Are you SURE you want
+       to use this as Admin password? You will NOT be able to change this
+       password anymore once the channel is more than 48 hours old!
+   *** Use "/MODE #channel -A secret" to remove the password and then
+       immediatly set a new one. IMPORTANT: YOU CANNOT RECOVER THIS
+       PASSWORD, EVER; WRITE THE PASSWORD DOWN (don't store this rescue
+       password on disk)! Now set the channel user password (+U).
+</pre>
+</P></LI>
+
+<P STYLE="font-size: smaller">
+&sup1;This will be the channel creator.<BR>
+</P>
+
+<LI><P>A channel stays alive and remembers the Apass (and Upass if set and all
+other modes) for 60 seconds&sup1; after it is emptied.&nbsp;
+Channels that are older than 48 hours will stay alive for 48 hours though.<P>
+<P STYLE="font-size: smaller">
+&sup1;For accidently closing windows and for 'playing' with the system to
+get to know it.
+</P>
+</P></LI>
+
+<LI><P>The Apass can only be removed in the first 48 hours by the channel manager.
+Adding it is always possible, provided there is no Apass set, as long as the user
+is still marked as channel manager (either by creating the channel or by joining
+with the Apass; for example, a user that joined using the Apass of a channel can
+set a new Apass even when the channel is more than 48 hours old, if an IRC Operator
+removes the old Apass after he joined.)</P></LI>
+
+<LI><P>Recovery in case of Apass compromises:
+If the Apass is forgotten, then the only way to reset the password is
+by leaving the channel for 48 hours (or 60 seconds when the channel is
+younger than 48 hours).&nbsp;
+A special 'recovery' mode might be introduced later so that users who know the
+Upass can do this.&nbsp;
+During this time, in case of a channel takeover, others will have the
+time to contact the real channel manager who can restore the channel to
+its real owners by using the Apass.<BR>
+An IRC Operator is allowed to remove the Apass, provided he knows it,
+independent of the age of the channel.
+Also the IRC operator will need to use the Apass (the channel manager will
+have to tell him what it is).&nbsp;
+This is only to speed up the recovery process in case someone 'leaked'
+the Apass (ie, he dumped it on the channel), in that case people can ask
+an IRC operator to mediate and find out who is the real, original channel
+manager and restore the channel to him by setting a different Apass.</P></LI>
+
+<LI><P>If someone joins an existing channel that has Apass set, using
+<pre>
+   JOIN #channel Apass
+</pre>
+then this person can join through +bikl and gets level-0 ops.&nbsp;
+He will be marked as 'channel manager'.&nbsp;
+The 'channel manager' can not talk to the channel
+(to discourage people from using the Apass by default, which
+would increase the chance that it is 'leaked').</P></LI>
+
+<LI><P>The channel manager can set or remove the Upass at any time by using:
+<pre>
+   MODE #channel +U Upass
+   MODE #channel -U Upass
+</pre>
+
+<LI><P>If someone joins an existing channel that has Upass set, using
+<pre>
+   JOIN #channel Upass
+</pre>
+then this person can join through +bikl and gets level-1 ops
+(so that a trusted op will be able to recover from
+a channel takeover in the case all other ops where nuked or
+disconnected accidently for other reasons).</P></LI>
+
+<LI><P>Level 0 and 1 ops can do
+<pre>
+   MODE #channel
+</pre>
+and will be sent the current Upass (along with all other modes as usual).&nbsp;
+(This is because when the channel manager sets the Upass, it is NOT
+visible to the channel members; it is also to recover the Upass
+when the channel manager forgot the Upass and nobody else is around
+to tell him what it was (you need the Upass to remove the Upass)).</P></LI>
+</OL>
+
+
+<P>Please note the following:</P>
+
+<P>Channels that are older than 48 hours and use services are not affected.
+Services will be able to hack modes on channels that use Upass/Apass,
+although I advise strongly against the implementation of a command
+that allows an IRC operator to get the Apass of a channel in order to
+avoid social engineering and making IRC operators have <em>less</em> power
+than channel managers (this in order to remove the reason to DOS IRC
+operators); from the very start the word has to be: sorry, but you will
+have to contact the channel manager&nbsp;-&nbsp;I&nbsp;CANNOT help (for the
+second level help -- only the channel manager CAN get help from IRC operators,
+when they give them their Apass).</P>
+
+<HR>
+
+<H2>Required server-server Protocol Changes</H2>
+
+<dl compact>
+<dt>MODE</dt>
+
+<p><dd>An extension to the server-server protocol has been added that
+introduces oplevels to MODEs: MODE #channel +o nick:oplevel
+This is possible because a colon is not a possible character in a nick.</p>
+
+<dt>BURST</dt>
+
+<p><dd>Net.junctions need to synchronize the op-levels.&nbsp;
+This is done by including the op-levels in the BURST message.</p>
+<p>The nick/mode string in the BURST message will be changed as
+follows:</p>
+<ol type="1">
+<li>First all members without ops or voice are listed.</li>
+<li>Then all members with only voice are listed.</li>
+<li>Then all members with ops but without voice are listed.</li>
+<li>Finally all members with ops <em>and</em> voice are listed.</li>
+</ol>
+<p>The nick/mode string exist of comma seperated tokens of
+the form <tt>&lt;numnick&gt;[:[v][&lt;digits&gt;]]</tt>.</p>
+<p>A field of the form <tt>&lt;numnick&gt;</tt> that is not followed
+by a colon represents a channel member with the same mode and op-level
+as the previous member (starting with no ops/voice).</p>
+<p>A field that includes a <tt>v</tt> means that this member (and the
+following members) will have voice, optionally following digits
+will be the absolute value of the op-level of the current member, without
+those digits it means that this member (and the following members) do
+not have ops.</p>
+<p>A field of the form <tt>&lt;numnick&gt;:&lt;digits&gt;</tt> means that
+this member (and the following members) have the <em>same</em> mode as
+the previous one (starting with +o and level 0) and the digits represent
+a decrement in the op-level.</p>
+<p>For backwards compatibility, a field that includes an 'o' (not a zero)
+means that this member (and the following members) have ops with op-level
+<code>MAXOPLEVEL</code> so that everyone can de-op or kick these ops.</p>
+
+<p>Example:</p>
+
+<pre>
+  xxx,sss:v,ttt,aaa:123,bbb,ccc:2,ddd,kkk:v2,lll:2,mmm
+</pre>
+
+<p>means:</p>
+
+<pre>
+  xxx
+  sss +v
+  ttt +v
+  aaa -123
+  bbb -123
+  ccc -125
+  ddd -125
+  kkk -2 +v
+  lll -4 +v
+  mmm -4 +v
+</pre>
+
+<h4>Summary for service coders</h4>
+
+<pre>
+                  ----------------------------------------
+                  |  Current state :| +ov | +o | +v |  - |
+----------------------------------------------------------
+seen after a ':'  \                 \___ New State________
+          :ov     |                 |  ov | ov | ov | ov |
+	  :v456   |                 |  ov | ov | ov | ov |
+	  :o      |                 |  o  | o  | o  | o  |
+	  :456    |                 |  ov | o  | ov | o  |
+	  :v      |                 |  v  | v  | v  | v  |
+	  :       |                 |  -  | -  | -  | -  |
+</pre>
+
+<p>Finally, the modes 'A' and 'U' will be added in the same manner as
+currently 'k' and 'l': with a parameter.  A BURST can only <em>set</em>
+a password, when there no password in the BURST - it is not
+wiped out (unless the timestamps mismatch).&nbsp;
+Synchronization as a result of changing a Upass during a net-break
+is done by decrementing the creation time of the channel with one.&nbsp;
+It is possible for the channel manager to connect to two sides of
+a net.break and change the Upass on both sides but to different
+values - there will be a desync then - it is his channel.</p>
+
+<p>Normally the channel manager can not change the Apass, but in
+the case that the channel is younger than 48 hours and the Apass
+was changed during a net.break - then the Apass will be desynced.&nbsp;
+In order to restore this, the Apass is resent every time a
+channel manager uses it (which should be seldom), see bottom
+of page.</p>
+
+<dt>JOIN</dt>
+
+<p><dd>The password is tested locally.  There is no change in the server-server
+protocol.&nbsp;
+When the Upass is used and a MODE is needed, then the MODE
+will be sent as a MODE +o with respectively level 0 or 1 by the local server
+(The HACK detection was turned off for this.)</p>
+
+<dt>DESTRUCT</dt>
+
+<p><dd>A new message is introduced to destruct (empty) channels.&nbsp;
+A DESTRUCT message has the format &quot;&lt;prefix&gt; DE &lt;channel&gt; &lt;timestamp&gt;&quot;,
+for example &quot;A8 DE #channel 1015908373&quot;.</P>
+
+<p><dd>If the channel does not exist or when the creationtime of the
+channel is older than the timestamp on the DESTRUCT message then the
+message must be ignored.&nbsp;
+Otherwise, when the channel is not empty, a BURST message must be
+bounced back.&nbsp; Or when the channel is empty a DESTRUCT message
+(with the prefix of the local server) must be send in all directions,
+also in the direction the message was received from (services don't
+have to do that if it is certain that there was never sent a JOIN or
+CREATE in that direction).</p>
+
+<dt>Passwords</dt>
+
+<p><dd>The passwords are propagated in the same way as the channel key
+(MODE +k) by means of MODE and BURST. The passwords are *never* send
+to clients (except for the Upass in the case of a /MODE #channel, but
+a level 0 or 1 op), instead a '*' is used as parameter.&nbsp;
+A BURST that wipes out modes because of a timestamp mismatch will also wipe
+out any passwords set. Services should not store the passwords and
+<em>certainly</em> not send them in a BURST (the channel manager is
+always on the other side of the net.break so we're not interested in
+what the service thinks the password is).</p>
+

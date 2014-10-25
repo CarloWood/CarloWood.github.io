@@ -1,0 +1,1 @@
+/encrypted/cdeh/env.bashrc

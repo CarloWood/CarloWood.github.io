@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML lang="en">
+<!-- $Id$ -->
+
+<HEAD>
+  <META name="Author" content="Carlo Wood">
+  <META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <TITLE>C++ : the const qualifier</TITLE>
+  <LINK rel="stylesheet" href="../style.css" type="text/css">
+  <STYLE>
+    .notes { font-size: smaller; }
+  </STYLE>
+</HEAD>
+
+<BODY bgcolor="#F8FCF8">
+
+<CENTER>
+<DIV><A HREF="http://libcwd.sourceforge.net/" class="image-link">
+<IMG src="../images/debugging.png" border=0></IMG>
+</A></DIV>
+</CENTER>
+<HR>
+
+<H2>Understanding the <SPAN class="H2code">const</SPAN> qualifier</H2>
+
+<TABLE><TR>
+<TD>By Carlo Wood </TD>
+<TD><A href="../anti/spam/bots/dont/like/deep/dirs/mail2.html?carlo"><IMG src="../images/carloatali.gif" alt="carlo at alinoe dot com"></A></TD>
+</TR></TABLE>
+
+<H3>The general case</H3>
+
+<P>Consider an arbitrary type <SPAN class="code"><I>TYPE</I></SPAN>.</P>
+
+<PRE class="code">
+<I>TYPE</I> x;
+</PRE>
+
+<P>The variable <SPAN class="code">x</SPAN> is <EM>not</EM> <SPAN class="code">const</SPAN> when it is possible
+to change its value, for instance by assignment:</P>
+
+<PRE class="code">
+x = ...;
+</PRE>
+
+<P>When the string represented above by <SPAN class="code"><I>TYPE</I></SPAN> does
+not contain a reference or pointer, then you can make it a constant by putting
+a <SPAN class="code">const</SPAN> <B>in front</B> of it:</P>
+
+<PRE class="code">
+const <I>TYPE</I> x = ...;
+</PRE>
+
+<P>You can declare a constant of <B>any type</B>, by putting <SPAN class="code">const</SPAN>
+<B>behind</B> it:</P>
+
+<PRE class="code">
+<I>TYPE</I> const x = ...;
+</PRE>
+
+<DIV class="notes">
+<P>Notes</P>
+<UL>
+<LI>A constant <EM>must</EM> be initialized, it is not possible
+to give it a value anywhere else.</LI>
+
+<LI>When <SPAN class="code"><I>TYPE</I></SPAN> is a reference, putting
+a <SPAN class="code">const</SPAN> qualifier behind it
+(as in:<SPAN class="code"> TYPE&amp;&nbsp;const&nbsp;x&nbsp;=&nbsp;...;</SPAN>)
+has no effect.&nbsp;
+The hidden &laquo;internal pointer&raquo; of a reference,
+is constant by definition, this is why a reference <EM>always</EM> must be initialized.&nbsp;
+See also the <A href="http://www.parashift.com/c++-faq-lite/const-correctness.html#faq-18.7">C++-FAQ</A>.</LI>
+
+<LI><DIV>If <SPAN class="code">TYPE</SPAN> is a <EM>template</EM> parameter,
+putting the <SPAN class="code">const</SPAN> to the left of it has the same
+effect as putting it to right of it, exactly as for non-pointers/non-references.&nbsp;
+For example:</DIV>
+
+<PRE class="code">
+template&lt;typename TYPE&gt;
+  void
+  foobar(const TYPE&amp;);
+</PRE>
+
+<P>is equivalent with</P>
+
+<PRE class="code">
+template&lt;typename TYPE&gt;
+  void
+  foobar(TYPE const&amp;);
+</PRE></LI>
+
+<P>even when <SPAN class="code">TYPE</SPAN> is a pointer.</P>
+</UL>
+</DIV>
+
+<H3>Passing by <SPAN class="H3code">const</SPAN> reference</H3>
+
+<P>Another way of getting (to do with) <SPAN class="code">const</SPAN> types is when
+you pass a reference or pointer type to a function.&nbsp; Consider:</P>
+
+<PRE class="code">
+<I>TYPE</I> x;
+</PRE>
+
+<P>(We know that x is <EM>not</EM> const (and thus also not a reference): it isn't initialized)</P>
+
+<PRE class="code">
+foobar(x);	// Call function foobar with parameter x.
+</PRE>
+
+<P>The prototype for foobar can have any of the following footprints:</P>
+
+<PRE class="code">
+void foobar(<I>TYPE</I>);		// Pass by value
+void foobar(<I>TYPE</I>&amp;);		// Pass by reference
+void foobar(<I>TYPE</I> const&amp;);	// Pass by const reference
+</PRE>
+
+<P>Note that I put the <SPAN class="code">const</SPAN> to the right of <SPAN class="code"><I>TYPE</I></SPAN>
+because we don't know if <SPAN class="code"><I>TYPE</I></SPAN> (this is not a template parameter, but rather for instance a literal
+<SPAN class="code">char*</SPAN>) is a pointer or not!</P>
+
+<P>The last prototype promises not to change <SPAN class="code">x</SPAN>, and hence it
+would be ok to pass a constant <U>by reference</U> to this
+function:</P>
+
+<PRE class="code">
+<I>TYPE</I> const x = { ... };
+foobar(x);			// Ok for prototype 1 and 3.
+</PRE>
+
+<P>When <SPAN class="code">sizeof(<I>TYPE</I>)</SPAN> is larger than the builtin types, people
+often prefer to pass the object as a const reference (<SPAN class="code">const&amp;</SPAN>),
+instead of making a copy of the whole object (as prototype 1 would do).</P>
+
+<P>When dealing with pointers, things are similar:</P>
+
+<PRE class="code">
+void foobar(<I>TYPE</I>);              // Pass by value
+void foobar(<I>TYPE</I>*);             // Pass by pointer
+void foobar(<I>TYPE</I> const*);       // Pass by pointer-to-const
+</PRE>
+
+<DIV class="notes">
+<P>A peculiar result of using a reference instead of pointer is
+(apart from having to type less <SPAN class="code">*</SPAN> and
+<SPAN class="code">&amp;</SPAN> characters in your source code)
+that you are allowed to pass temporaries to functions without copying
+them (as a 'pass by value' would do).&nbsp;
+After all, you are not allowed to take the pointer to a temporary
+and therefore can not use the third prototype (Pass by pointer-to-const)
+even while the prototype itself promises not to change the temporary.&nbsp;
+It is possible to pass a temporary to a function as a <EM>reference</EM>-to-const
+though:
+<PRE class="code">
+void foobar(<I>TYPE</I> const&amp;);
+foobar(TYPE());		// Allowed.
+</PRE>
+</DIV>
+
+<H3>Avoiding confusion by using a good programming style</H3>
+
+<P>The confusion starts when <SPAN class="code"><I>TYPE</I></SPAN> itself is a pointer or
+reference and in particular when it already contains <SPAN class="code">const</SPAN>
+qualifiers.</P>
+
+<P>For instance:</P>
+
+<PRE class="code">
+int x1;			// <I>TYPE</I> is "int"
+const int x2 = 3;	// x2 is a constant
+
+int* p1;		// <I>TYPE</I> is "int*"
+const int* p2;		// p2 is NOT a constant
+</PRE>
+
+<P>Huh? No initialisation needed?  No, because the <EM>variable</EM>
+<SPAN class="code">p2</SPAN> is <EM>not</EM> a constant: It only <EM>points</EM> to
+constant data!</P>
+
+<P>If you want to make <SPAN class="code">p2</SPAN> <EM>itself</EM> constant then
+you'll have to write:</P>
+
+<PRE class="code">
+int* const p2 = ...;
+</PRE>
+
+<P>This is the reason that it is better to put qualifiers <EM>always</EM> to
+the right of the <I>TYPE</I>, to avoid confusion:</P>
+
+<PRE class="code">
+int x1;
+int const x2 = 3;
+
+int* p1;
+int* const p2 = &amp;x1;
+</PRE>
+
+<P>Note that now we have to initialize p2.</P>
+
+<P>But how to declare a pointer constant that is initialized
+with <SPAN class="code">&amp;x2</SPAN>
+(a pointer to an <SPAN class="code">int const</SPAN>)?</P>
+
+<PRE class="code">
+int const* p3;			// pointer to `the type of x2'
+int const* const p4 = &amp;x2;	// pointer constant to `the type of x2'
+</PRE>
+
+<P>This is very logical, when you realize that the qualifiers work on
+everything on the <EM>left</EM> of them, as do <SPAN class="code">*</SPAN> and
+<SPAN class="code">&amp;</SPAN> in types.</P>
+
+<P>Therefore, put the <SPAN class="code">*</SPAN> for a pointer and the <SPAN class="code">&amp;</SPAN>
+for a reference, directly against the type on the left of it.&nbsp; That is better
+because it makes clear that it isn't an <SPAN class="code">operator*</SPAN>
+(or <SPAN class="code">operator&amp;</SPAN>), but that it is part of the type.</P>
+
+<P>For instance,<SPAN class="code"> int</SPAN> <SPAN class="code">const&amp;*</SPAN>
+<SPAN class="code">const** </SPAN>means &laquo;A pointer
+to<SPAN class="code"> int</SPAN> <SPAN class="code">const&amp;*</SPAN>
+<SPAN class="code">const*</SPAN>&raquo;;
+&nbsp;the<SPAN class="code"> * </SPAN>in types operates on everything on the
+left of it.</P>
+
+<P>Important: When you look at a type that contains a
+<SPAN class="code">*</SPAN> (or a <SPAN class="code">&amp;</SPAN>)
+always realize that the <SPAN class="code">*</SPAN>
+(<SPAN class="code">&amp;</SPAN>) works on everything on the left.&nbsp;
+This will avoid confusion when people write:</P>
+
+<PRE class="code">
+const Foo&amp;
+</PRE>
+
+<P>Instead of</P>
+
+<PRE class="code">
+Foo const&amp;
+</PRE>
+
+<P>In fact, many gurus use the first version: they put a const to the
+<EM>left</EM> of types that are not a reference or pointer.&nbsp;
+This has a historical reason, the style was born in a very early stage.&nbsp;
+Bjarne Stroustrup wrote me:</P>
+
+<DIV class="notes" style="margin-left: 1cm">
+<P>I don't remember any deep thoughts or involved discussions about
+the order at the time. A few of the early users - notably me - simply
+liked the look of<BR>
+<SPAN class="code">&nbsp;&nbsp;&nbsp;&nbsp;const int c = 10;</SPAN><BR>
+better than<BR><SPAN class="code">&nbsp;&nbsp;&nbsp;&nbsp;int const c = 10;</SPAN><BR>
+at the time.&nbsp;
+I may have been influenced by the fact that my earliest examples
+were written using "readonly" and<BR>
+<SPAN class="code">&nbsp;&nbsp;&nbsp;&nbsp;readonly int c = 10;</SPAN><BR>
+does read better than<BR>
+<SPAN class="code">&nbsp;&nbsp;&nbsp;&nbsp;int readonly c = 10;</SPAN><BR>
+The earliest (C or C++) code using "const" appears to have been
+created (by me) by a global substitution of "const" for "readonly"&nbsp;).<P>
+</DIV>
+
+<H2><SPAN class="H3code">const</SPAN> member functions</H2>
+
+<P>The <SPAN class="code">const</SPAN> qualifiers of class member functions
+mean that you are allowed to call that member function even when the object
+of that class is const.<BR>
+Thus:</P>
+
+<PRE class="code">
+struct A { void m(void) const; };
+
+A const x;
+
+x.m();		// Only ok when `m()' is marked `const'.
+</PRE>
+
+<P>Member functions should be marked <SPAN class="code">const</SPAN> if and
+only if it is garanteed that by calling them the object is not changed.</P>
+
+<P>For example:</P>
+
+<PRE class="code">
+class A {
+  private:
+    A* M_a;
+  public:
+    A(void) : M_a(this) { }
+    A&amp; get_a(void) const { return *M_a; }
+    // ...
+};
+</PRE>
+
+<P>This example shows that even if we return a <B>non-</B><SPAN class="code">const</SPAN>
+reference to the very same object (<SPAN class="code">M_a</SPAN> was initialized with
+<SPAN class="code">this</SPAN> on creation), the function <SPAN class="code">get_a</SPAN> is still
+constant: It doesn't change the object at all, it just returns the value of
+<SPAN class="code">M_a</SPAN> (<SPAN class="code">get_a()</SPAN> is an <I>accessor</I>).</P>
+
+<P>Trying to use <SPAN class="code">const</SPAN> for class member functions for
+other reasons is <EM>wrong</EM>.&nbsp;
+Because the given class allows to change a constant object <SPAN class="code">A</SPAN>
+we can conclude that the design of the class is wrong.</P>
+
+<P>The following example is correct and shows how to use <SPAN class="code">const</SPAN>
+for member functions for <EM>overloading</EM> purposes.</P>
+
+<PRE class="code">
+class B { };
+
+class A {
+  private:
+    B M_b;
+  public:
+    A(B const&amp; b) : M_b(b) { }
+    B&amp; b(void)			// Non-const member function
+        { return M_b; }		// because we return directly
+				// a non-const reference to
+				// to a member.
+    B const&amp; b(void) const	// Overloaded for constant object.
+        { return M_b; }
+};
+</PRE>
+
+<P>These two examples are very closely related.&nbsp;
+The difference is that in the second case we <EM>know first hand</EM> that
+the returned reference is a reference to a member of the class, while
+in the first example <SPAN class="code">M_a</SPAN> can in principle
+point to any instance.&nbsp;
+Technically there is no difference between <SPAN class="code">get_a</SPAN>
+and the first <SPAN class="code">b(void)</SPAN>, the only difference is
+the design of the two classes (bad design versus good design).</P>
+
+<P>You can use the following rule of thumbs to decide what to do:</P>
+<UL type=circle>
+<LI>Treat all compiler warnings about qualifiers as errors and correct them.
+<LI>When in doubt, remove the <SPAN class="code">const</SPAN> qualifier
+on member functions and keep it that way when it compiles.
+<LI>If it doesn't compile without <SPAN class="code">const</SPAN> qualifier
+and you are returning a reference or pointer to something that <EM>might</EM>
+be part of the object, then you have a bad design.
+<LI>If it doesn't compile without <SPAN class="code">const</SPAN> qualifier
+and you are returning a reference or pointer to something that <EM>is</EM>
+a member of your object, then return a <SPAN class="code">const</SPAN>
+reference or pointer to that member and add the <SPAN class="code">const</SPAN>
+qualifier to the method.
+</UL>
+
+<DIV class="notes">
+<P>Note that one method to correct the bad design of the first example is
+to remove the <SPAN class="code">get_a(void)</SPAN> method and add one or more member
+functions to take over the operations on <SPAN class="code">A</SPAN>
+that are now apparently performed by the functions that call <SPAN class="code">get_a()</SPAN>.&nbsp;
+Another method would be to try making <SPAN class="code">M_a</SPAN> a const-pointer
+(<SPAN class="code">A const*</SPAN>); perhaps the program never uses non-const access.</P>
+</DIV>
+
+<ADDRESS>
+<A href="http://jigsaw.w3.org/css-validator/">
+<IMG height=31 width=88 src="../images/vcss.png" alt="Valid CSS!">
+</A>
+<A href="http://validator.w3.org/check/referer">
+<IMG height=31 width=88 src="../images/valid-html40.png" alt="Valid HTML 4.0!" height="31" width="88">
+</A>
+Copyright &copy; 1999 - 2002 Carlo Wood.&nbsp; All rights reserved.
+</ADDRESS>
+
+</BODY>
+</HTML>

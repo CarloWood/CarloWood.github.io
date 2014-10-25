@@ -1,0 +1,180 @@
+10
+
+dir
+594
+svn+ssh://www/repos/trunk
+svn+ssh://www/repos
+
+
+
+2008-05-25T16:07:36.864709Z
+594
+svn-www-carlo
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+8cafeea8-4920-0410-b799-c547fcf82c21
+
+alsa
+dir
+
+indent
+dir
+
+vvinstall
+file
+
+
+
+
+2007-05-25T21:13:24.000000Z
+3a759e914bcfa9d3b02d43c2ddfacad6
+2003-11-19T18:59:45.000000Z
+445
+carlo
+has-props
+
+cpp
+dir
+
+personal
+dir
+
+env.source
+file
+605
+
+
+
+2011-02-16T17:58:35.000000Z
+e1817bb4e340490f94fe51801abfda33
+2011-04-04T16:37:20.929270Z
+605
+svn-www-carlo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+268
+
+css
+dir
+
+pwc
+dir
+
+cvs
+dir
+
+howto
+dir
+
+xcw
+dir
+
+which
+dir
+
+vvinstall2
+file
+
+
+
+
+2007-05-25T21:13:24.000000Z
+07f3492997d2de9a1663e5cb517ffaa3
+2003-11-19T18:59:45.000000Z
+445
+carlo
+has-props
+
+3dfx
+dir
+
+images
+dir
+
+prototype
+dir
+
+svn
+dir
+
+index.html
+file
+608
+
+
+
+2011-04-04T16:46:50.000000Z
+1a8c615dea1fdafdb0d69cef6617d107
+2011-04-04T16:50:27.395331Z
+608
+svn-www-carlo
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5929
+
+.stats
+file
+
+
+
+
+2007-05-25T21:13:24.000000Z
+077cbef6f0317d14c6aaad919cd2cb6e
+1999-09-11T00:19:37.000000Z
+231
+carlo
+has-props
+
+irc
+dir
+

@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$CwChessboard_8h.html" title="This file contains the declaration of the GTK+ widget CwChessboard." alt="" coords="168,83,296,112"/>
+<area shape="rect" id="node7" href="$ChessboardWidget_8cc.html" title="This file contains the implementation of the gtkmm class ChessboardWidget." alt="" coords="263,237,420,267"/>
+<area shape="rect" id="node11" href="$ChessPositionWidget_8cc.html" title="This file contains the implementation of class ChessPositionWidget." alt="" coords="284,315,455,344"/>
+<area shape="rect" id="node15" href="$CwChessboard_8cc.html" title="This file contains the implementation of the GTK+ widget CwChessboard." alt="" coords="261,160,395,189"/>
+<area shape="rect" id="node21" href="$Code_8cc.html" title="This file contains the implementation of class Code." alt="" coords="520,83,592,112"/>
+<area shape="rect" id="node5" href="$ChessboardWidget_8h.html" title="This file contains the declaration of the gtkmm class ChessboardWidget." alt="" coords="5,160,157,189"/>
+<area shape="rect" id="node17" href="$tstc_8c.html" title="An example of how to use the GTK+ widget with C code." alt="" coords="181,160,237,189"/>
+<area shape="rect" id="node9" href="$ChessPositionWidget_8h.html" title="This file contains the declaration of class ChessPositionWidget." alt="" coords="24,237,189,267"/>
+<area shape="rect" id="node13" href="$tstcpp_8cc.html" title="A full&#45;blown test application used for debugging cwchess::ChessPosition." alt="" coords="67,315,147,344"/>
+</map>

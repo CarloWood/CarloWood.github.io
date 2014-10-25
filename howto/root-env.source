@@ -1,1 +1,103 @@
-/env.source
+unset CC
+unset CXX
+unset CPP
+unset CXXCPP
+unset CPPFLAGS
+unset LDFLAGS
+unset CFLAGS
+unset CXXFLAGS
+unset CCACHE_DIR
+unset CCACHE_PREFIX
+unset AS
+unset AR
+unset DLLTOOL
+unset LD
+unset NM
+unset RANLIB
+unset STRIP
+unset C_INCLUDE_PATH
+unset CPLUS_INCLUDE_PATH
+unset AS_FOR_BUILD
+unset AR_FOR_BUILD
+unset CC_FOR_BUILD
+unset CFLAGS_FOR_BUILD
+unset CPP_FOR_BUILD
+unset CXXCPP_FOR_BUILD
+unset CXX_FOR_BUILD
+unset CXXFLAGS_FOR_BUILD
+unset DLLTOOL_FOR_BUILD
+unset LD_FOR_BUILD
+unset NM_FOR_BUILD
+unset RANLIB_FOR_BUILD
+unset STRIP_FOR_BUILD
+unset CMAKE_INCLUDE_PATH
+unset CMAKE_LIBRARY_PATH
+unset CMAKE_PREFIX_PATH
+unset CMAKE_INSTALL_ALWAYS
+unset HGUSER
+unset GST_PLUGIN_PATH
+unset DYLD_LIBRARY_PATH
+unset PYTHONPATH
+unset GST_REGISTRY
+unset GST_PLUGIN_SYSTEM_PATH
+unset AUTOBUILD_CONFIG_FILE
+unset AUTOBUILD_PLATFORM_OVERRIDE
+unset GIT_SCRIPTS_REPO
+
+unset GCCVER
+unset INSTALL_PREFIX
+export DISTCC_HOSTS="localhost hikaru"
+
+unset PKG_CONFIG_PATH
+PATH="$DEFAULTPATH"
+unset LD_LIBRARY_PATH
+unset LD_RUN_PATH
+unset LIBRARY_PATH
+unset GXX
+unset GCC
+unset PYTHON_ROOT
+unset TOOLS
+unset BOOST_SITE_CONFIG
+PS1="$DEFAULTPS1"
+unset DEB_BUILD_OPTIONS
+DEB_BUILD_OPTIONS="parallel=8"
+
+unset CVSROOT
+
+unalias patch 2>/dev/null
+unalias diff 2>/dev/null
+unalias s 2>/dev/null
+unalias c 2>/dev/null
+unalias configure 2>/dev/null
+alias vi='vim'
+alias resource='source $CDEHENVFILE'
+unset make
+unset svn
+unset git
+
+export PATH DEB_BUILD_OPTIONS
+
+function no_path()
+{
+  eval "case :\$${2-PATH}: in *:$1:*) return 1;; *) return 0;; esac"
+}
+function add_path ()
+{
+  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="\$${2:-PATH}:$1"
+}
+function pre_path ()
+{
+  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="$1:\$${2:-PATH}"
+}
+function del_path ()
+{
+  no_path $* || eval ${2:-PATH}=`eval echo :'$'${2:-PATH}: | sed -e "s;:$1:;:;g" -e "s;^:;;" -e "s;:\$;;"`
+}
+
+export TOPPROJECT=${TOPPROJECT=TOPPROJECT_IS_NOT_SET}
+
+if [ "$TOPPROJECT" = "TOPPROJECT_IS_NOT_SET" -a ! -z "$DEFAULT_TOPPROJECT" ]; then
+  echo "Setting TOPPROJECT to \"$DEFAULT_TOPPROJECT\"!"
+  export TOPPROJECT=$DEFAULT_TOPPROJECT
+fi
+

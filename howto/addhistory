@@ -1,1 +1,3 @@
-/encrypted/cdeh/addhistory
+mkdir -p "$CDEHHISTROOT`pwd`"
+touch "$CDEHHISTROOT`pwd`"/history
+echo -n > "$CDEHTMP/prevwd"

@@ -1,1 +1,99 @@
-/encrypted/cdeh/do_prompt
+# cdeh -- an automatic history and environment switch system.
+#
+# Copyright (C) 2007, Carlo Wood <carlo@alinoe.com>
+
+CDEHTMP="/tmp/cdeh.$CDEHUSER/$1"
+if ! test -d "$CDEHTMP"; then
+  echo "Recreating $CDEHTMP" 2>&1
+  mkdir -p "$CDEHTMP"
+fi
+if ! expr "$2" : "$CDEHHISTROOT/" >/dev/null; then
+  # In case this is the very first time we run this, do some initialization.
+  if ! test -f "$CDEHHISTROOT/history"; then
+    if ! test -d "$CDEHHISTROOT"; then
+      echo "$0: WARNING: \"$CDEHHISTROOT\": No such directory."
+    fi
+    touch "$CDEHHISTROOT/history"
+  fi
+  echo "Reloading history for $HOME"
+  HISTSIZE=$CDEHHISTSIZE
+  history -r "$CDEHHISTROOT/history"
+  PREVIOUS_DIR="nothing"
+else
+  if test -e "$CDEHTMP/prevwd"; then
+    source "$CDEHTMP/prevwd"
+  fi
+fi
+EXITCODE=1
+if [ "$PREVIOUS_DIR" != "$PWD" ]; then
+  echo "PREVIOUS_DIR=\"$PWD\"" > "$CDEHTMP/prevwd"
+  rm -f "$CDEHTMP/histfile" "$CDEHTMP/envfile"
+  CURRENT_DIR="$PWD"
+  until [ "$CURRENT_DIR" = "" ]; do
+    if [ -f "$CDEHHISTROOT/$CURRENT_DIR/history" ]; then
+      NEW_DIR="$CURRENT_DIR"
+      break
+    fi
+    CURRENT_DIR="${CURRENT_DIR%/*}"
+  done
+  if [ "$CURRENT_DIR" = "" ]; then
+    CURRENT_DIR="/"
+  fi
+  TITLE="`echo "[$CURRENT_DIR]$PWD" | sed -e 's%\[[^]]*/%[%' -e 's%\(\[[^]]*\]\)'"$CURRENT_DIR"'%\1 %' -e 's%\[\]%[/]%' -e 's% $%%' -e 's%^\[/\]$%'"$PWD"'%'`"
+  xtermset -title "$TITLE"
+  if [ "$CURRENT_DIR" = "/" -a -f "$CDEHHISTROOT/history" ]; then
+    NEW_DIR="/"
+  fi
+  if [ "$NEW_DIR" = "" ]; then
+    NEW_DIR="/"
+  fi
+  INODE='"'`stat "$NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
+  if [ -f "$CDEHTMP/prevhd" ]; then
+    source "$CDEHTMP/prevhd"
+  else
+    PREVIOUS_INODE=
+  fi
+  if [ "$PREVIOUS_INODE" != "$INODE" ]; then
+    echo "PREVIOUS_INODE=$INODE" > "$CDEHTMP/prevhd"
+    echo "PREVIOUS_DIR=\"$NEW_DIR\"" >> "$CDEHTMP/prevhd"
+    if [ "$2" != "$CDEHHISTROOT/$CURRENT_DIR/history" ]; then
+      history -w "$CDEHHISTROOT/$PREVIOUS_DIR/history"
+      echo "$CDEHHISTROOT/$CURRENT_DIR/history" > "$CDEHTMP/histfile"
+      echo "History changed from \"$PREVIOUS_DIR\" to \"$CURRENT_DIR\""
+      EXITCODE=0
+    fi
+  fi
+  CURRENT_DIR="$PWD"
+  until [ "$CURRENT_DIR" = "" ]; do
+    if [ -f "$CURRENT_DIR/env.source" ]; then
+      NEW_DIR="$CURRENT_DIR"
+      break
+    fi
+    CURRENT_DIR="${CURRENT_DIR%/*}"
+  done
+  if [ "$CURRENT_DIR" = "" ]; then
+    CURRENT_DIR="/"
+  fi
+  if [ "$CURRENT_DIR" = "/" -a -f "/env.source" ]; then
+    NEW_DIR="/"
+  fi
+  if [ "$NEW_DIR" = "" ]; then
+    NEW_DIR="/"
+  fi
+  INODE='"'`stat "$NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
+  if [ -f "$CDEHTMP/preved" ]; then
+    source "$CDEHTMP/preved"
+  else
+    PREVIOUS_INODE=
+  fi
+  if [ "$PREVIOUS_INODE" != "$INODE" ]; then
+    echo "PREVIOUS_INODE=$INODE" > "$CDEHTMP/preved"
+    echo "PREVIOUS_DIR=\"$NEW_DIR\"" >> "$CDEHTMP/preved"
+    if [ "$CDEHENVFILE" != "$CURRENT_DIR/env.source" ]; then
+      echo "$CURRENT_DIR/env.source" > "$CDEHTMP/envfile"
+      echo "Environment changed from \"$PREVIOUS_DIR\" to \"$CURRENT_DIR\""
+      EXITCODE=0
+    fi
+  fi
+fi
+exit $EXITCODE

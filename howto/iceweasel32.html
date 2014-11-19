@@ -96,8 +96,8 @@ just copy&amp;paste the whole block to your (non-root) shell prompt):</p>
 HELPVAR=$(apt-cache policy coreutils | egrep '^[[:space:][:digit:]]*http:' | \
     sed -r 's/^[[:space:]]*//;s/[[:space:]]+/,/g' | sort -rn | head -n 1)
 SUITE=$(echo "$HELPVAR" | cut -d, -f 3 | sed -e 's%/.*%%')
-DEBIANMIRROR=$(grep "^deb $(echo "$HELPVAR" | cut -d, -f 2).*$SUITE" /etc/apt/sources.list | \
-    sed -r 's/^[[:space:]]*//;s/[[:space:]]+/,/g;s%/,%,%g;s%,%/,%g' | cut -d, -f 2)
+DEBIANMIRROR=$(egrep "^deb (\[.*\] )?$(echo "$HELPVAR" | cut -d, -f 2).*$SUITE" /etc/apt/sources.list | \
+    sed -r 's/^[[:space:]]*//;s/\[.*\]//;s/[[:space:]]+/,/g;s%/,%,%g;s%,%/,%g' | cut -d, -f 2)
 echo -e "SUITE = \"$SUITE\"\nDEBIANMIRROR = \"$DEBIANMIRROR\""
 </pre></div>
 

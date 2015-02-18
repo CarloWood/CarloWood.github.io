@@ -321,7 +321,7 @@ which is actually a self-executing Makefile, to do parallel builds, or use <code
 <p>If you want to debug this code, you should first set the following environment variable:</p>
 
 <pre>
-export DEB_BUILD_OPTIONS="nostrip noopt"
+export DEB_BUILD_OPTIONS="nostrip noopt debug parallel=8"
 </pre>
 
 <p>Which is a space separated list of compile options.

@@ -1,5 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$ChessboardWidget_8h.html" title="This file contains the declaration of the gtkmm class ChessboardWidget." alt="" coords="193,83,345,112"/>
-<area shape="rect" id="node19" href="$CwChessboardCodes_8h.html" title="This file contains the definitions of the CwChessboardCode constants." alt="" coords="456,237,624,267"/>
-<area shape="rect" id="node11" href="$CwChessboard_8h.html" title="This file contains the declaration of the GTK+ widget CwChessboard." alt="" coords="291,160,419,189"/>
+<map id="ChessboardWidget.cc" name="ChessboardWidget.cc">
+<area shape="rect" id="node3" href="$ChessboardWidget_8h.html" title="This file contains the declaration of the gtkmm class ChessboardWidget. " alt="" coords="178,80,322,107"/>
+<area shape="rect" id="node10" href="$CwChessboardCodes_8h.html" title="This file contains the definitions of the CwChessboardCode constants. " alt="" coords="425,229,587,256"/>
+<area shape="rect" id="node6" href="$CwChessboard_8h.html" title="This file contains the declaration of the GTK+ widget CwChessboard. " alt="" coords="269,155,391,181"/>
 </map>

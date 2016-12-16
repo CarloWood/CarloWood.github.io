@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classcwmm_1_1ChessPositionWidget.html" title="A chessboard widget that is synchronized with a ChessPosition ." alt="" coords="91,160,293,189"/>
-<area shape="rect" id="node4" href="$classcwchess_1_1ChessPosition.html" title="A chess position." alt="" coords="5,83,176,112"/>
-<area shape="rect" id="node6" href="$classcwmm_1_1ChessboardWidget.html" title="A gtkmm chessboard widget." alt="" coords="200,83,389,112"/>
-<area shape="rect" id="node8" href="$classcwmm_1_1CwChessboardPtr.html" title="cwmm::CwChessboardPtr" alt="" coords="203,5,387,35"/>
+<map id="MyChessboardWidget" name="MyChessboardWidget">
+<area shape="rect" id="node2" href="$classcwmm_1_1ChessPositionWidget.html" title="A chessboard widget that is synchronized with a ChessPosition . " alt="" coords="90,155,285,181"/>
+<area shape="rect" id="node3" href="$classcwchess_1_1ChessPosition.html" title="A chess position. " alt="" coords="5,80,172,107"/>
+<area shape="rect" id="node4" href="$classcwmm_1_1ChessboardWidget.html" title="A gtkmm chessboard widget. " alt="" coords="196,80,376,107"/>
+<area shape="rect" id="node5" href="$classcwmm_1_1CwChessboardPtr.html" title="cwmm::CwChessboardPtr" alt="" coords="110,5,286,32"/>
 </map>

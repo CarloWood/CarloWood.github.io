@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classcwchess_1_1pgn_1_1Database.html" title="cwchess::pgn::Database" alt="" coords="35,83,211,112"/>
-<area shape="rect" id="node4" href="$classutil_1_1Referenceable.html" title="util::Referenceable" alt="" coords="53,5,192,35"/>
+<map id="cwchess::pgn::DatabaseSeekable" name="cwchess::pgn::DatabaseSeekable">
+<area shape="rect" id="node2" href="$classcwchess_1_1pgn_1_1Database.html" title="cwchess::pgn::Database" alt="" coords="33,80,199,107"/>
+<area shape="rect" id="node3" href="$classutil_1_1Referenceable.html" title="util::Referenceable" alt="" coords="51,5,181,32"/>
 </map>

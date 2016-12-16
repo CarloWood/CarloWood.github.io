@@ -1,8 +1,8 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$Color_8h.html" title="This file contains the declaration of class Color." alt="" coords="34,237,101,267"/>
-<area shape="rect" id="node8" href="$Type_8h.html" title="This file contains the declaration of class Type." alt="" coords="105,160,166,189"/>
-<area shape="rect" id="node12" href="$Direction_8h.html" title="This file contains the declaration of class Direction." alt="" coords="175,83,266,112"/>
-<area shape="rect" id="node14" href="$BitBoard_8h.html" title="This file contains the declaration of class BitBoard." alt="" coords="190,160,278,189"/>
-<area shape="rect" id="node21" href="$Flags_8h.html" title="This file contains the declaration of class Flags." alt="" coords="317,237,383,267"/>
-<area shape="rect" id="node17" href="$Index_8h.html" title="This file contains the declaration of class Index." alt="" coords="226,237,293,267"/>
+<map id="Code.h" name="Code.h">
+<area shape="rect" id="node3" href="$Color_8h.html" title="This file contains the declaration of class Color. " alt="" coords="32,229,96,256"/>
+<area shape="rect" id="node4" href="$Type_8h.html" title="This file contains the declaration of class Type. " alt="" coords="102,155,165,181"/>
+<area shape="rect" id="node5" href="$Direction_8h.html" title="This file contains the declaration of class Direction. " alt="" coords="175,80,260,107"/>
+<area shape="rect" id="node6" href="$BitBoard_8h.html" title="This file contains the declaration of class BitBoard. " alt="" coords="189,155,272,181"/>
+<area shape="rect" id="node9" href="$Flags_8h.html" title="This file contains the declaration of class Flags. " alt="" coords="311,155,377,181"/>
+<area shape="rect" id="node8" href="$Index_8h.html" title="This file contains the declaration of class Index. " alt="" coords="257,229,322,256"/>
 </map>

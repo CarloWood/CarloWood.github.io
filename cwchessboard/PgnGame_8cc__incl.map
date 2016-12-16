@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$PgnGame_8h.html" title="This file contains the declaration of class PgnGame." alt="" coords="200,83,296,112"/>
-<area shape="rect" id="node9" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database." alt="" coords="247,160,367,189"/>
-<area shape="rect" id="node19" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable." alt="" coords="576,315,701,344"/>
-<area shape="rect" id="node23" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList." alt="" coords="291,237,432,267"/>
+<map id="PgnGame.cc" name="PgnGame.cc">
+<area shape="rect" id="node3" href="$PgnGame_8h.html" title="This file contains the declaration of class PgnGame. " alt="" coords="183,80,273,107"/>
+<area shape="rect" id="node5" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database. " alt="" coords="228,155,340,181"/>
+<area shape="rect" id="node10" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable. " alt="" coords="532,304,649,331"/>
+<area shape="rect" id="node12" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList. " alt="" coords="269,229,403,256"/>
 </map>

@@ -1,5 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database." alt="" coords="247,83,367,112"/>
-<area shape="rect" id="node15" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable." alt="" coords="576,237,701,267"/>
-<area shape="rect" id="node19" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList." alt="" coords="291,160,432,189"/>
+<map id="PgnGame.h" name="PgnGame.h">
+<area shape="rect" id="node3" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database. " alt="" coords="228,80,340,107"/>
+<area shape="rect" id="node8" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable. " alt="" coords="532,229,649,256"/>
+<area shape="rect" id="node10" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList. " alt="" coords="269,155,403,181"/>
 </map>

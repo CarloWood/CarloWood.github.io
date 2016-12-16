@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classcwchess_1_1ChessPosition.html" title="A chess position. " alt="" coords="236,5,403,32"/>
+<area shape="rect" id="node2" href="$classcwmm_1_1ChessPositionWidget.html" title="A chessboard widget that is synchronized with a ChessPosition . " alt="" coords="457,31,652,57"/>
+<area shape="rect" id="node3" href="$classMyChessboardWidget.html" title="MyChessboardWidget" alt="" coords="700,31,851,57"/>
+<area shape="rect" id="node4" href="$classcwmm_1_1CwChessboardPtr.html" title="cwmm::CwChessboardPtr" alt="" coords="5,31,181,57"/>
+<area shape="rect" id="node5" href="$classcwmm_1_1ChessboardWidget.html" title="A gtkmm chessboard widget. " alt="" coords="229,56,409,83"/>
+</map>

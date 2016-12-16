@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$ChessPositionWidget_8h.html" title="This file contains the declaration of class ChessPositionWidget." alt="" coords="83,83,248,112"/>
-<area shape="rect" id="node9" href="$Promotion_8cc.html" title="This file contains the implementation of class Promotion." alt="" coords="272,83,379,112"/>
-<area shape="rect" id="node5" href="$ChessPositionWidget_8cc.html" title="This file contains the implementation of class ChessPositionWidget." alt="" coords="5,160,176,189"/>
-<area shape="rect" id="node7" href="$tstcpp_8cc.html" title="A full&#45;blown test application used for debugging cwchess::ChessPosition." alt="" coords="200,160,280,189"/>
+<map id="Promotion.h" name="Promotion.h">
+<area shape="rect" id="node2" href="$ChessPositionWidget_8h.html" title="This file contains the declaration of class ChessPositionWidget. " alt="" coords="81,80,240,107"/>
+<area shape="rect" id="node5" href="$Promotion_8cc.html" title="This file contains the implementation of class Promotion. " alt="" coords="265,80,363,107"/>
+<area shape="rect" id="node3" href="$ChessPositionWidget_8cc.html" title="This file contains the implementation of class ChessPositionWidget. " alt="" coords="5,155,172,181"/>
+<area shape="rect" id="node4" href="$tstcpp_8cc.html" title="A full&#45;blown test application used for debugging cwchess::ChessPosition. " alt="" coords="196,155,272,181"/>
 </map>

@@ -1,9 +1,9 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$PgnGame_8h.html" title="This file contains the declaration of class PgnGame." alt="" coords="147,83,243,112"/>
-<area shape="rect" id="node9" href="$tstpgn_8cc.html" title="A test application to test reading PGN files." alt="" coords="195,237,275,267"/>
-<area shape="rect" id="node13" href="$PgnDatabase_8cc.html" title="This file contains the implementation of class pgn::Database." alt="" coords="320,83,445,112"/>
-<area shape="rect" id="node16" href="$tstpgnread_8cc_source.html" title="tstpgnread.cc" alt="" coords="469,83,579,112"/>
-<area shape="rect" id="node5" href="$ChessGame_8h.html" title="This file contains the declaration of class ChessGame." alt="" coords="8,160,120,189"/>
-<area shape="rect" id="node11" href="$PgnGame_8cc.html" title="This file contains the implementation of class PgnGame." alt="" coords="144,160,245,189"/>
-<area shape="rect" id="node7" href="$ChessGame_8cc.html" title="This file contains the implementation of class ChessGame." alt="" coords="5,237,123,267"/>
+<map id="PgnDatabase.h" name="PgnDatabase.h">
+<area shape="rect" id="node2" href="$PgnGame_8h.html" title="This file contains the declaration of class PgnGame. " alt="" coords="143,80,234,107"/>
+<area shape="rect" id="node5" href="$tstpgn_8cc.html" title="A test application to test reading PGN files. " alt="" coords="189,229,265,256"/>
+<area shape="rect" id="node7" href="$PgnDatabase_8cc.html" title="This file contains the implementation of class pgn::Database. " alt="" coords="313,80,432,107"/>
+<area shape="rect" id="node8" href="$tstpgnread_8cc_source.html" title="tstpgnread.cc" alt="" coords="457,80,558,107"/>
+<area shape="rect" id="node3" href="$ChessGame_8h.html" title="This file contains the declaration of class ChessGame. " alt="" coords="9,155,115,181"/>
+<area shape="rect" id="node6" href="$PgnGame_8cc.html" title="This file contains the implementation of class PgnGame. " alt="" coords="139,155,238,181"/>
+<area shape="rect" id="node4" href="$ChessGame_8cc.html" title="This file contains the implementation of class ChessGame. " alt="" coords="5,229,119,256"/>
 </map>

@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$classcwchess_1_1ChessPosition.html" title="A chess position." alt="" coords="248,5,419,35"/>
-<area shape="rect" id="node3" href="$classcwmm_1_1ChessPositionWidget.html" title="A chessboard widget that is synchronized with a ChessPosition ." alt="" coords="479,32,681,61"/>
-<area shape="rect" id="node5" href="$classMyChessboardWidget.html" title="MyChessboardWidget" alt="" coords="732,32,889,61"/>
-<area shape="rect" id="node6" href="$classcwmm_1_1CwChessboardPtr.html" title="cwmm::CwChessboardPtr" alt="" coords="5,59,189,88"/>
-<area shape="rect" id="node8" href="$classcwmm_1_1ChessboardWidget.html" title="A gtkmm chessboard widget." alt="" coords="239,59,428,88"/>
-</map>

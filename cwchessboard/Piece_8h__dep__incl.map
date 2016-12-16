@@ -1,16 +1,16 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$CastleFlags_8h.html" title="This file contains the declaration of class CastleFlags." alt="" coords="367,83,473,112"/>
-<area shape="rect" id="node7" href="$ChessPosition_8h.html" title="This file contains the declaration of class ChessPosition." alt="" coords="475,160,597,189"/>
-<area shape="rect" id="node9" href="$ChessNotation_8h.html" title="This file contains the declaration of class ChessNotation." alt="" coords="272,237,400,267"/>
-<area shape="rect" id="node30" href="$PieceIterator_8h.html" title="This file contains the definition of class PieceIterator." alt="" coords="548,83,663,112"/>
-<area shape="rect" id="node34" href="$MoveIterator_8h.html" title="This file contains the declaration of class MoveIterator." alt="" coords="687,83,801,112"/>
-<area shape="rect" id="node5" href="$CastleFlags_8cc.html" title="This file contains the implementation of class CastleFlags." alt="" coords="339,160,451,189"/>
-<area shape="rect" id="node13" href="$ChessPosition_8cc.html" title="This file contains the implementation of class ChessPosition." alt="" coords="5,315,133,344"/>
-<area shape="rect" id="node15" href="$tstbenchmark_8cc.html" title="A program to measure the move generation speed." alt="" coords="781,315,909,344"/>
-<area shape="rect" id="node17" href="$tstchessposition_8cc.html" title="A test application that prints all legal moves of a given position." alt="" coords="613,315,757,344"/>
-<area shape="rect" id="node22" href="$ChessPositionWidget_8h.html" title="This file contains the declaration of class ChessPositionWidget." alt="" coords="424,237,589,267"/>
-<area shape="rect" id="node11" href="$ChessNotation_8cc.html" title="This file contains the implementation of class ChessNotation." alt="" coords="157,315,291,344"/>
-<area shape="rect" id="node19" href="$tstcpp_8cc.html" title="A full&#45;blown test application used for debugging cwchess::ChessPosition." alt="" coords="315,315,395,344"/>
-<area shape="rect" id="node24" href="$ChessPositionWidget_8cc.html" title="This file contains the implementation of class ChessPositionWidget." alt="" coords="419,315,589,344"/>
-<area shape="rect" id="node37" href="$MoveIterator_8cc.html" title="This file contains the implementation of class MoveIterator." alt="" coords="723,160,843,189"/>
+<map id="Piece.h" name="Piece.h">
+<area shape="rect" id="node2" href="$CastleFlags_8h.html" title="This file contains the declaration of class CastleFlags. " alt="" coords="350,80,453,107"/>
+<area shape="rect" id="node4" href="$ChessPosition_8h.html" title="This file contains the declaration of class ChessPosition. " alt="" coords="457,155,575,181"/>
+<area shape="rect" id="node5" href="$ChessNotation_8h.html" title="This file contains the declaration of class ChessNotation. " alt="" coords="267,229,387,256"/>
+<area shape="rect" id="node13" href="$PieceIterator_8h.html" title="This file contains the definition of class PieceIterator. " alt="" coords="528,80,635,107"/>
+<area shape="rect" id="node14" href="$MoveIterator_8h.html" title="This file contains the declaration of class MoveIterator. " alt="" coords="659,80,765,107"/>
+<area shape="rect" id="node3" href="$CastleFlags_8cc.html" title="This file contains the implementation of class CastleFlags. " alt="" coords="322,155,433,181"/>
+<area shape="rect" id="node7" href="$ChessPosition_8cc.html" title="This file contains the implementation of class ChessPosition. " alt="" coords="5,304,131,331"/>
+<area shape="rect" id="node8" href="$tstbenchmark_8cc.html" title="A program to measure the move generation speed. " alt="" coords="755,304,874,331"/>
+<area shape="rect" id="node9" href="$tstchessposition_8cc.html" title="A test application that prints all legal moves of a given position. " alt="" coords="597,304,731,331"/>
+<area shape="rect" id="node11" href="$ChessPositionWidget_8h.html" title="This file contains the declaration of class ChessPositionWidget. " alt="" coords="411,229,570,256"/>
+<area shape="rect" id="node6" href="$ChessNotation_8cc.html" title="This file contains the implementation of class ChessNotation. " alt="" coords="155,304,282,331"/>
+<area shape="rect" id="node10" href="$tstcpp_8cc.html" title="A full&#45;blown test application used for debugging cwchess::ChessPosition. " alt="" coords="306,304,382,331"/>
+<area shape="rect" id="node12" href="$ChessPositionWidget_8cc.html" title="This file contains the implementation of class ChessPositionWidget. " alt="" coords="406,304,573,331"/>
+<area shape="rect" id="node15" href="$MoveIterator_8cc.html" title="This file contains the implementation of class MoveIterator. " alt="" coords="702,155,815,181"/>
 </map>

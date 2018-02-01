@@ -120,7 +120,7 @@ Protected Attributes</h2></td></tr>
 <p>This iterator generates the <a class="el" href="classcwchess_1_1Move.html" title="A chess move in a particular chess position. ">Move</a> objects while advancing to the next move, storing the result in a member variable. The lifetime of the reference or pointer to the <a class="el" href="classcwchess_1_1Move.html" title="A chess move in a particular chess position. ">Move</a> is therefore equal to the lifetime of the iterator: calling the increment or decrement operators overwrites the previous move.</p>
 <p>Usage example:</p>
 <div class="fragment"><div class="line"><span class="keywordflow">for</span> (<a class="code" href="classcwchess_1_1MoveIterator.html#a677bdad10b610cd25ff70d29d58d6e51">MoveIterator</a> move_iter = chess_position.move_begin(index); move_iter != chess_position.move_end(); ++move_iter)</div><div class="line">{</div><div class="line">  Move <span class="keyword">const</span>&amp; move(*move_iter);</div><div class="line">  <span class="comment">// Use &#39;move&#39;.</span></div><div class="line">}</div></div><!-- fragment --> 
-<p>Definition at line <a class="el" href="MoveIterator_8h_source.html#l00063">63</a> of file <a class="el" href="MoveIterator_8h_source.html">MoveIterator.h</a>.</p>
+<p>Definition at line <a class="el" href="MoveIterator_8h_source.html#l00058">58</a> of file <a class="el" href="MoveIterator_8h_source.html">MoveIterator.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a677bdad10b610cd25ff70d29d58d6e51"></a>
 <div class="memitem">
@@ -147,9 +147,9 @@ Protected Attributes</h2></td></tr>
 <p>Construct a one-past-the-end <a class="el" href="classcwchess_1_1MoveIterator.html" title="Non-mutable iterator over all moves of a given chess piece. ">MoveIterator</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classcwchess_1_1ChessPosition.html#ad057c048c06b2ada940e1e1cb4ea9580" title="Return an iterator one beyond the last move. ">ChessPosition::move_end()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="MoveIterator_8h_source.html#l00078">78</a> of file <a class="el" href="MoveIterator_8h_source.html">MoveIterator.h</a>.</p>
+<p>Definition at line <a class="el" href="MoveIterator_8h_source.html#l00073">73</a> of file <a class="el" href="MoveIterator_8h_source.html">MoveIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MoveIterator_8h_source.html#l00082">MoveIterator()</a>.</p>
+<p>Referenced by <a class="el" href="MoveIterator_8h_source.html#l00077">MoveIterator()</a>.</p>
 
 </div>
 </div>

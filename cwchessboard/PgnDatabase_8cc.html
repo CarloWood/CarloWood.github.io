@@ -33,7 +33,8 @@
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">PgnDatabase.cc File Reference</div>  </div>
 </div><!--header-->
@@ -47,6 +48,7 @@
 <code>#include &lt;iomanip&gt;</code><br />
 <code>#include &quot;debug.h&quot;</code><br />
 <code>#include &lt;glib.h&gt;</code><br />
+<code>#include &lt;libcwd/buf2str.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="PgnDatabase_8h_source.html">PgnDatabase.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="PgnGrammar_8h_source.html">PgnGrammar.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="chattr_8h_source.html">chattr.h</a>&quot;</code><br />
@@ -56,12 +58,12 @@ Include dependency graph for PgnDatabase.cc:</div>
 <div class="dyncontent">
 <div class="center"><img src="PgnDatabase_8cc__incl.png" border="0" usemap="#PgnDatabase_8cc" alt=""/></div>
 <map name="PgnDatabase_8cc" id="PgnDatabase_8cc">
-<area shape="rect" id="node8" href="PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database. " alt="" coords="682,80,794,107"/>
-<area shape="rect" id="node16" href="PgnGrammar_8h.html" title="This file contains the declaration of class PgnGrammar. " alt="" coords="96,80,207,107"/>
-<area shape="rect" id="node19" href="chattr_8h.html" title="Character attribute definitions and arrays. " alt="" coords="1162,80,1229,107"/>
-<area shape="rect" id="node22" href="Color_8h.html" title="This file contains the declaration of class Color. " alt="" coords="1074,80,1138,107"/>
-<area shape="rect" id="node13" href="Referenceable_8h.html" title="This file contains the declaration of class Referenceable. " alt="" coords="719,244,837,271"/>
-<area shape="rect" id="node14" href="MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList. " alt="" coords="671,162,805,189"/>
+<area shape="rect" id="node9" href="PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database. " alt="" coords="646,80,758,107"/>
+<area shape="rect" id="node17" href="PgnGrammar_8h.html" title="This file contains the declaration of class PgnGrammar. " alt="" coords="105,80,216,107"/>
+<area shape="rect" id="node20" href="chattr_8h.html" title="Character attribute definitions and arrays. " alt="" coords="1183,80,1250,107"/>
+<area shape="rect" id="node23" href="Color_8h.html" title="This file contains the declaration of class Color. " alt="" coords="1095,80,1159,107"/>
+<area shape="rect" id="node14" href="Referenceable_8h.html" title="This file contains the declaration of class Referenceable. " alt="" coords="671,244,789,271"/>
+<area shape="rect" id="node15" href="MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList. " alt="" coords="635,162,769,189"/>
 </map>
 </div>
 </div>
@@ -88,6 +90,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a5e5010df31ed177ba095311f3d28ee26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e5010df31ed177ba095311f3d28ee26"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_SPIRIT_DEBUG</b></td></tr>
+<tr class="separator:a5e5010df31ed177ba095311f3d28ee26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e654728b92a3e3e7040c10d72e77868"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e654728b92a3e3e7040c10d72e77868"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DEBUG_PARSER</b>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a8e654728b92a3e3e7040c10d72e77868"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,6 +102,14 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a61f39ebb749de5076c2581264454fbd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61f39ebb749de5076c2581264454fbd0"></a>
 typedef Scanner&lt; MemoryBlockList::iterator &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cwchess::pgn::scanner_t</b></td></tr>
 <tr class="separator:a61f39ebb749de5076c2581264454fbd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a6a9cea440ec85a93ec6ebab8829fcc27"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6a9cea440ec85a93ec6ebab8829fcc27"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a6a9cea440ec85a93ec6ebab8829fcc27"><td class="memTemplItemLeft" align="right" valign="top">std::ostream&amp; &#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="PgnDatabase_8cc.html#a6a9cea440ec85a93ec6ebab8829fcc27">cwchess::pgn::operator&lt;&lt;</a> (std::ostream&amp; os, Scanner&lt; T &gt; const&amp; const_scanner)</td></tr>
+<tr class="memdesc:a6a9cea440ec85a93ec6ebab8829fcc27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug helper function. <br /></td></tr>
+<tr class="separator:a6a9cea440ec85a93ec6ebab8829fcc27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file contains the implementation of class pgn::Database. </p>

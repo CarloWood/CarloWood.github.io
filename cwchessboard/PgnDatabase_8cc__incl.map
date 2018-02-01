@@ -1,8 +1,8 @@
 <map id="PgnDatabase.cc" name="PgnDatabase.cc">
-<area shape="rect" id="node8" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database. " alt="" coords="682,80,794,107"/>
-<area shape="rect" id="node16" href="$PgnGrammar_8h.html" title="This file contains the declaration of class PgnGrammar. " alt="" coords="96,80,207,107"/>
-<area shape="rect" id="node19" href="$chattr_8h.html" title="Character attribute definitions and arrays. " alt="" coords="1162,80,1229,107"/>
-<area shape="rect" id="node22" href="$Color_8h.html" title="This file contains the declaration of class Color. " alt="" coords="1074,80,1138,107"/>
-<area shape="rect" id="node13" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable. " alt="" coords="719,244,837,271"/>
-<area shape="rect" id="node14" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList. " alt="" coords="671,162,805,189"/>
+<area shape="rect" id="node9" href="$PgnDatabase_8h.html" title="This file contains the declaration of class pgn::Database. " alt="" coords="646,80,758,107"/>
+<area shape="rect" id="node17" href="$PgnGrammar_8h.html" title="This file contains the declaration of class PgnGrammar. " alt="" coords="105,80,216,107"/>
+<area shape="rect" id="node20" href="$chattr_8h.html" title="Character attribute definitions and arrays. " alt="" coords="1183,80,1250,107"/>
+<area shape="rect" id="node23" href="$Color_8h.html" title="This file contains the declaration of class Color. " alt="" coords="1095,80,1159,107"/>
+<area shape="rect" id="node14" href="$Referenceable_8h.html" title="This file contains the declaration of class Referenceable. " alt="" coords="671,244,789,271"/>
+<area shape="rect" id="node15" href="$MemoryBlockList_8h.html" title="This file contains the declaration of class MemoryBlockList. " alt="" coords="635,162,769,189"/>
 </map>

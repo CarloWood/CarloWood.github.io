@@ -13,9 +13,9 @@
 
 <div id="content" class="cdeh">
 
-<h1>Directory dependent history and environment</h1>
+<h1>Directory dependent history and environment, version 2</h1>
 
-<div id="date">Carlo Wood, Apr 2007</div>
+<div id="date">Carlo Wood, Apr 2018</div>
 
 <h2>Table of contents</h2>
 
@@ -32,7 +32,7 @@
 
 <p>This page describes how to set up <em>cdeh</em>, a set of
 scripts to automatically switch history and environment
-(environment variables and aliases) as function of the directory (tree)
+(environment variables, functions and aliases) as function of the directory (tree)
 that you are in.</p>
 
 <p>If, like me, you like working from the command line, and you
@@ -81,7 +81,8 @@ if you set them prior to initialization of cdeh, then their values are
 used.</p>
 
 <p>The environment is changed by sourcing any files in your directory tree
-that have the name <code>env.source</code>.
+that have the name <code>env.source</code>, starting with the file closest
+to the root of the file system.
 These files may contain whatever you want.
 Personally, I use a system to facilitate different C++ projects in different
 directories, dictating some mandatory content of <code>env.source</code>,
@@ -96,57 +97,58 @@ it is possible to install them in your home directory if you don't
 have root.</p>
 
 <p>There are three system wide files. Normally, the environment variable
-<code>CDEHROOT</code> should be set system wide, and the two
+<code>CDEH_ROOT</code> should be set system wide, and the two
 files <a href="do_prompt">do_prompt</a> and <a href="env.bashrc">env.bashrc</a>
-should be installed in <code>CDEHROOT</code>.
+should be installed in <code>CDEH_ROOT</code>.
 I also have <code>addhistory</code> (see below) installed in
-<code>CDEHROOT</code>, and keep a symbolic link from
+<code>CDEH_ROOT</code>, and keep a symbolic link from
 <code>/usr/local/bin</code> to it.
-The directory <code>$CDEHROOT/history</code> should exist,
+The directory <code>$CDEH_ROOT/history</code> should exist,
 be owned by root and mode 1777. If you don't have root, then
 it should exist, be owned by you and be mode 700.
 For example,
 
 <pre>
-&gt; cd $CDEHROOT
+&gt; cd $CDEH_ROOT
 &gt; ls -l
--rwxr-xr-x 1 root staff   93 2007-04-18 17:04 <a href="addhistory">addhistory</a>*
--rwxr-xr-x 1 root staff 3058 2007-04-18 16:31 <a href="do_prompt">do_prompt</a>*
--rw-r--r-- 1 root staff 2200 2007-04-18 17:24 <a href="env.bashrc">env.bashrc</a>
-drwxrwxrwt 4 root root  4096 2007-04-18 15:52 history/
+-rwxr-xr-x 1 root root    93 2007-05-25 17:04 <a href="addhistory">addhistory</a>*
+-rwxr-xr-x 1 root root  3676 2018-02-16 16:31 <a href="do_prompt">do_prompt</a>*
+-rw-r--r-- 1 root root  6477 2018-02-16 17:24 <a href="env.bashrc">env.bashrc</a>
+drwxrwxrwt 4 root root  4096 2018-02-14 15:52 history/
 </pre>
 
 <p>The latter needs to be sourced from, for example,
 your <code>~/.bashrc</code> file. You can do this by adding the following
-line at the bottom of your <code>~/.bashrc</code> file:</p>
+line at the <em>very bottom</em> of your <code>~/.bashrc</code> file:</p>
 
 <pre>
+#CDEH_VERBOSE=1                 # Set this to get more stuff printed.
 HISTSIZE=1200                   # Example, the default is 1000.
-CDEHROOT=/encrypted/cdeh        # Or define this globally.
-. $CDEHROOT/env.bashrc
+CDEH_ROOT=/encrypted/cdeh       # Or define this globally.
+source $CDEH_ROOT/env.bashrc
 </pre>
 
-<p>Note the leading dot (.).</p>
-
-<p>By picking an encrypted partition for <code>CDEHROOT</code>,
+<p>By picking an encrypted partition for <code>CDEH_ROOT</code>,
 all history files will be encrypted. This is the reason that the
 history files aren't stored in the users home directory by default
 (which might not be encrypted).</p>
 
-<p>The script <code>do_prompt</code> sources <code>env.source</code>
-files in the highest directory that one is in. Thus, in any case
-you will need such a file in the root: <code>/env.source</code>.
-For now you can just touch it to create an empty file. See below
-for a practical example.</p>
+<p>The PROMPT_COMMAND will now source all <code>env.source</code>
+files in your working directory path, starting with file with the shortest
+path. For example, if there exist <code>/opt/env.source</code>,
+<code>/opt/projects/cdeh/env.source</code> and <code>/opt/projects/cdeh/test/env.source</code>
+and you cd into the directory <code>/opt/projects/cdeh/test/a/b</code>
+then first <code>/opt/env.source</code> will be sourced, followed
+by <code>/opt/projects/cdeh/env.source</code> and finally <code>/opt/projects/cdeh/test/env.source</code>.</p>
 
 <p>The small script <a href="addhistory">addhistory</a> should be installed
-somewhere in your <code>PATH</code> or in <code>CDEHROOT</code>
-(to keep everything together), using for example a symlink from
+somewhere in your <code>PATH</code>, or in <code>CDEH_ROOT</code>
+(to keep everything together) using for example a symlink from
 <code>/usr/local/bin</code>.</p>
 
 <p>Running <code>addhistory</code> inside any
 directory will start a new history file for that directory and all
-of it's subdirectories (that do not already have their own history file).</p>
+of its subdirectories (that do not already have their own history file).</p>
 
 <a name="details">
 <h2>Detailed description</h2>
@@ -155,33 +157,42 @@ of it's subdirectories (that do not already have their own history file).</p>
 
 <p>The following environment variables are set:
 <ul>
-<li><code><b>CDEHHISTSIZE</b></code> is set to <code>HISTSIZE</code> or,
+<li><code><b>CDEH_HISTSIZE</b></code> is set to <code>HISTSIZE</code> or,
 if that wasn't defined, to 1000.
 Subsequentially, <code><b>HISTSIZE</b></code> is reset to
-<code>CDEHHISTSIZE</code> every time <code>PROMPT_COMMAND</code> is
+<code>CDEH_HISTSIZE</code> every time <code>PROMPT_COMMAND</code> is
 executed. Thus, if you wish to use a particular <code>HISTSIZE</code>,
 you have to set it <em>before</em> sourcing
 <code>env.bashrc</code> &mdash;
-or, you can change <code>CDEHHISTSIZE</code> afterwards.
+or, you can change <code>CDEH_HISTSIZE</code> afterwards.
 <li>If <code><b>HISTFILESIZE</b></code> isn't already set at the moment that
 <code>env.bashrc</code> is sourced, or when its
-value is less than <code>CDEHHISTSIZE</code>, then it is set to the
-same value as <code>CDEHHISTSIZE</code>.
-<li><code><b>CDEHUSER</b></code> is set to <code>"`/usr/bin/whoami`"</code>.
+value is less than <code>CDEH_HISTSIZE</code>, then it is set to the
+same value as <code>CDEH_HISTSIZE</code>.
+<li><code><b>CDEH_USER</b></code> is set to <code>"`/usr/bin/whoami`"</code>.
 It should be possible to use this as a directory name. It is used
 in the path of other files in order to allow the use of this
 system by more than one user. The reason that those files aren't stored
 in the users home directories is that I want to allow the use of
 an encrypted partition for the history files, and the users home directory
 doesn't need to be encrypted.
-<li><code><b>CDEHHISTROOT</b></code> is set to the base path for the history
-files of this user: <code>$CDEHROOT/history/$CDEHUSER</code>.
-<li><code><b>CDEHTMP</b></code> is set to a uniq path in /tmp for temporary
+<li><code><b>CDEH_HISTROOT</b></code> is set to the base path for the history
+files of this user: <code>$CDEH_ROOT/history/$CDEH_USER</code>.
+<li><code><b>CDEH_TMP</b></code> is set to a uniq path in /tmp for temporary
 files.
-<li><code><b>PROMPT_COMMAND</b></code> is initialized.
 <li>A <code>function</code> <code><b>exit</b></code> is defined, overriding
 the normal 'exit'. This is done to assure that the history is written
 when you exit the shell, and to cleanup temporary files from <code>/tmp</code>.
+<li>A <code>function</code> <code><b>resource</b></code> is defined; you can run
+this reread (possibly altered) <code>env.source</code> files without
+changing directory.
+<li>The <code>functions</code> <code><b>no_path</b></code>, <code><b>add_path</b></code>, <code><b>pre_path</b></code> and <code><b>del_path</b></code> are
+defined which allow you to manipulate colon seperated directory lists like <code>PATH</code>.
+<li>If <code><b>TOPPROJECT</b></code> is not set, it is set to <code>DEFAULT_TOPPROJECT</code>.
+<li><code><b>PROMPT_COMMAND</b></code> is initialized.
+<li><code><b>CDEH_STORE_ENVIRONMENT</b></code> is set to <code>"yes"</code> so that on the first
+invocation of <code>PROMPT_COMMAND</code> the current environment is saved to <code>$CDEH_TMP/env.base</code>.
+This is why sourcing <code>env.bashrc</code> must occur at the very end of your <code>~/.bashrc</code> file.
 </ul>
 </p>
 
@@ -189,13 +200,13 @@ when you exit the shell, and to cleanup temporary files from <code>/tmp</code>.
 
 <p>This is the main script, executed from <code>PROMPT_COMMAND</code>.
 There is little to edit in this file, although you might need to be
-aware of the fact that it starts with setting <code>CDEHTMP</code>
+aware of the fact that it starts with setting <code>CDEH_TMP</code>
 again. This should be the <em>same</em> path as is being used in
 <code>env.bashrc</code> of course.</p>
 
 <p>Nevertheless, the following points probably need your attention:
 <ul>
-<li>In case the directory <code>CDEHHISTROOT</code> doesn't exist,
+<li>In case the directory <code>CDEH_HISTROOT</code> doesn't exist,
 the script will print (every prompt) a warning. Since cdeh only runs
 every prompt and doesn't keep a record of what warnings it sent before,
 you might get error or warning messages <em>every</em> prompt. Don't
@@ -205,10 +216,10 @@ window into something that reflects both, the current working directory
 as well as the history root path.
 It does this by calling <code>xtermset</code>, so you want to have
 that installed (it is probably part of the package <em>xtermset</em>.
-On debian: <code>apt-get install xtermset</code>).
+On ubuntu/debian: <code>apt-get install xtermset</code>).
 <li>In order not to be confused by symbolic links, the script uses
 the inodes of directories to know if it changed directory or not.
-These inodes are retieved by called <code>stat</code> (package: coreuitls)
+These inodes are retieved by calling <code>stat</code> (package: coreuitls)
 and <code>awk</code> (package: gawk), both of which need to be in your
 <code>PATH</code>.
 </ul>
@@ -217,42 +228,8 @@ and <code>awk</code> (package: gawk), both of which need to be in your
 <a name="env.source">
 <h2>Example: A system for environment switching</h2>
 
-<p>Whenever you change directory, <a href="#download">CDEH</a> will
-descent the directories of the current working directory looking for
-the first <code>env.source</code> file and source it. For example,
-if there exists <code>/env.source</code>,
-<code>/home/carlo/env.source</code> and
-<code>/home/carlo/projects/libecc/env.source</code>, then
-changing directory to <code>/home/carlo</code> will source
-<code>/home/carlo/env.source</code> while changing directory to
-<code>/home/carlo/projects/libecc/libecc/src</code> will
-source <code>/home/carlo/projects/libecc/env.source</code>, instead.</p>
-
-<p>Personally, I use the following system for my different C++ projects.
-<ul>
-<li>In the root (/) I keep <a href="root-env.source">this <code>env.source</code></a>,
-needed to <em>undo</em> the effects of any other <code>env.source</code> that
-I use. After all, when you leave a directory then you want
-specific environment settings for that directory to disappear again!
-<b>Don't forget to set <code>DEFAULTPATH</code></b>, see the next item,
-or your <code>PATH</code> will become empty and you cannot execute any commands
-anymore without giving the full path (hint: /usr/bin/vim ~/.bashrc):</p>
-<li>In my <code>.bashrc</code> file I set <code>DEFAULTPATH</code> to whatever
-I want to use when I am in an arbitrary directory that doesn't set it's own
-<code>PATH</code>:
-<pre>
-export DEFAULTPATH="$HOME/bin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/X11R6/bin:/usr/X11R6/bin:$PROTODIR/scripts:/usr/games"
-export PATH="$DEFAULTPATH"
-</pre>
-I also set <code>DEFAULT_TOPPROJECT</code> to the project directory that I
-want to be the default project when I open a new terminal window
-(<code>TOPPROJECT</code> is the current project that I am working on and
-determines the compiler version to use for library projects),
-<pre>
-export DEFAULT_TOPPROJECT=/home/carlo/projects/ircproxy
-</pre>
-<li>In project directories (like <code>/home/carlo/projects/ircproxy</code>)
-I then have the project specific <code>env.source</code> file, and a
+<p><li>In project directories (like <code>/home/carlo/projects/ircproxy</code>)
+I have the project specific <code>env.source</code> file, and a
 <code>env.compiler</code> file. The latter determines which compiler to use
 when this project is the current/main project. Even library project
 directories have their own <code>env.compiler</code> file, because I can
@@ -299,11 +276,13 @@ CXXCPP="/usr/local/$CC/bin/cpp -x c++"
 export CC CXX
 export CPP CXXCPP
 </pre>
-<li>Each project (root) directory gets an <code>env.source</code>
+<li>Each projects (root) directory gets an <code>env.source</code>
 that defines several "standard" environment variables and aliases.
 <ul>
+<li>REPOBASE &mdash; The projects root directory.
 <li>TOPPROJECT &mdash; This environment variable is only set
 for standalone projects. Library projects usually don't define this.
+<li>GIT_AUTHOR_EMAIL, GIT_AUTHOR_NAME, GIT_COMMITTER_EMAIL, GIT_COMMITTER_NAME &mdash; Set to the identity to use for that project.
 <li>CFLAGS, CXXFLAGS, CPPFLAGS, LDFLAGS &mdash; Whatever is appropriate
 to use for this project. These environment variables are usually used
 by <em>configure</em> and/or the Makefile.
@@ -313,7 +292,7 @@ by <em>configure</em> and/or the Makefile.
 which use ccache when this environment variable is set.
 <li>INSTALL_PREFIX &mdash; The install prefix used to configure the project.
 This is dependend on the compiler version, so that libraries and applications
-compiled with a specific compiler versions will only use eachother (and
+compiled with a specific compiler version will only use eachother (and
 whatever is installed as part of the Operating System when the library is
 not available in <code>INSTALL_PREFIX</code>).
 <li>PKG_CONFIG_PATH &mdash; Used by <code>pkg-config(1)</code>, used in
@@ -339,8 +318,6 @@ project are.
 <li>vi &mdash; This alias is redefined in order to tell vim where the tag
 files for this particular project can be found
 (as generated with <code>ctags(1)</code>).
-<li>configure &mdash; As explained before, I use this alias to configure
-a project. It has to be executed from the object directory.
 <li>syncwww &mdash; Whenever a project contains documentation, the alias
 <code>syncwww</code> is defined to whatever command needs to be executed
 to export this documentation, synchronizing the documentation of the
@@ -348,41 +325,81 @@ current project with the external (public) web pages. Again,
 not bothering me anymore with project specific details.
 </ul>
 </p>
+<p>The following functions are defined:
+<ul>
+<li>configure &mdash; usually,
+<code>
+configure ()
+{
+    pushd "$REPOBASE-objdir";
+    $REPOBASE/configure $CONFIGURE_OPTIONS &amp;&amp; echo "Configured with $CONFIGURE_OPTIONS.";
+    popd
+}
+</code>
+<li>make &mdash; usually,
+<code>
+make () 
+{ 
+    CURDIR=$(pwd);
+    CPUS=`grep '^processor' /proc/cpuinfo | wc --lines`;
+    not_done=1;
+    while [ $not_done -eq 1 ]; do
+        not_done=0;
+        case $1 in 
+            -j)
+                shift;
+                CPUS=$1;
+                shift;
+                not_done=1
+            ;;
+            maintainer-clean)
+                /usr/bin/make -C $REPOBASE-objdir maintainer-clean;
+                cd $REPOBASE &amp;&amp; ./autogen.sh
+            ;;
+            ctags | tags)
+                cd $REPOBASE-objdir &amp;&amp; ctags --language-force=C++ --regex-C++='/(^|[[:space:];{])using[[:space:]]+([[:alnum:]_]*)[[:space:]]*=/\2/' `s`
+            ;;
+            *)
+                /usr/bin/make -C $REPOBASE-objdir -j $CPUS $@
+            ;;
+        esac;
+    done;
+    cd $CURDIR
+}
+</code>
+</ul>
+</p>
 <p>As an example, the following is my <code>env.source</code> file
 as used for my cwchessboard project:</p>
 <pre>
-export TOPPROJECT=/home/carlo/projects/cwchessboard
-source /env.source
-source $TOPPROJECT/env.compiler
-
-CPPFLAGS=
-LDFLAGS=
-CFLAGS=-g3
-CXXFLAGS=-g3
-
-export CPPFLAGS LDFLAGS CFLAGS CXXFLAGS
-
-# These two are helper variables.
-GCCVER=`$CXX -v 2&gt;&amp;1 | grep '^gcc[ -][Vv]ersion' | sed -e 's/gcc[ -][Vv]ersion //' -e 's/ (.*//' -e 's/ /-/g'`
-INSTALL_PREFIX="/usr/local/install/$GCCVER"
-
-PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig"
-del_path .
-pre_path "$INSTALL_PREFIX/bin"
-pre_path .
-pre_path "$INSTALL_PREFIX/lib" LD_LIBRARY_PATH
-
-export PKG_CONFIG_PATH PATH LD_LIBRARY_PATH INSTALL_PREFIX
-
-alias s='ls /home/carlo/projects/cwchessboard/cwchessboard/*.cc /home/carlo/projects/cwchessboard/cwchessboard/*.h'
-alias vi='vim -c "set tags=/home/carlo/projects/cwchessboard/cwchessboard-objdir/tags"'
-
-export CONFIGURE_OPTIONS="--enable-maintainer-mode --enable-debug --prefix=$INSTALL_PREFIX"
-alias configure='../cwchessboard/configure $CONFIGURE_OPTIONS'
-
-export OUTPUT_DIRECTORY=/home/carlo/www
-
-export CTAGS_ROOT_SRCDIRS="/usr/src/gtk/glib-current /usr/src/gtk/gtk+-current"
+  export TOPPROJECT=/home/carlo/projects/cwchessboard
+  source $TOPPROJECT/env.compiler
+  
+  CPPFLAGS=
+  LDFLAGS=
+  CFLAGS=-g3
+  CXXFLAGS=-g3
+  
+  export CPPFLAGS LDFLAGS CFLAGS CXXFLAGS
+  
+  # These two are helper variables.
+  GCCVER=`$CXX -v 2&gt;&amp;1 | grep '^gcc[ -][Vv]ersion' | sed -e 's/gcc[ -][Vv]ersion //' -e 's/ (.*//' -e 's/ /-/g'`
+  INSTALL_PREFIX="/usr/local/install/$GCCVER"
+  
+  PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig"
+  del_path .
+  pre_path "$INSTALL_PREFIX/bin"
+  pre_path .
+  pre_path "$INSTALL_PREFIX/lib" LD_LIBRARY_PATH
+  
+  export PKG_CONFIG_PATH PATH LD_LIBRARY_PATH INSTALL_PREFIX
+  
+  alias s='ls $TOPPROJECT/cwchessboard/*.cc $TOPPROJECT/cwchessboard/*.h'
+  alias vi='vim -c "set tags=$TOPPROJECT/cwchessboard-objdir/tags"'
+  
+  export CONFIGURE_OPTIONS="--enable-maintainer-mode --enable-debug --prefix=$INSTALL_PREFIX"
+  export OUTPUT_DIRECTORY=/home/carlo/www
+  export CTAGS_ROOT_SRCDIRS="/usr/src/gtk/glib-current /usr/src/gtk/gtk+-current"
 </pre>
 <p>While a C++ <em>library</em> project, like <code>libcwd</code>,
 does not set <code>TOPPROJECT</code>, it can
@@ -390,38 +407,79 @@ does not set <code>TOPPROJECT</code>, it can
 configure options.
 This project also defines the alias <code>syncwww</code>:</p>
 <pre>
-source /env.source
-source $TOPPROJECT/env.compiler
-
-# These two are helper variables.
-GCCVER=`$CXX -v 2&gt;&amp;1 | grep '^gcc[ -][Vv]ersion' | sed -e 's/gcc[ -][Vv]ersion //' -e 's/ (.*//' -e 's/ /-/g'`
-INSTALL_PREFIX="/usr/local/install/$GCCVER"
-
-CPPFLAGS=
-LDFLAGS=
-CFLAGS=
-CXXFLAGS=
-
-export CPPFLAGS LDFLAGS CFLAGS CXXFLAGS
-
-PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig"
-pre_path "$INSTALL_PREFIX/bin"
-pre_path "$INSTALL_PREFIX/lib" LD_LIBRARY_PATH
-
-export PKG_CONFIG_PATH PATH LD_LIBRARY_PATH 
-alias s="ls /home/carlo/projects/libcwd/libcwd/*.cc /home/carlo/projects/libcwd/libcwd/include/*.h /home/carlo/projects/libcwd/libcwd/include/libcwd/*.h /home/carlo/projects/libcwd/libcwd/include/libcwd/*.inl /home/carlo/projects/libcwd/libcwd/utils/*.cc"
-alias vi='vim -c "set tags=/home/carlo/projects/libcwd/libcwd-objdir/tags,/home/carlo/projects/libcwd/libcwd-objdir/include/tags,/home/carlo/projects/libcwd/libcwd-objdir/include/libcwd/tags,/home/carlo/projects/libcwd/libcwd-objdir/utils/tags"'
-alias syncwww='rsync -rltz -e /usr/bin/ssh --delete --exclude-from=/home/carlo/projects/libcwd/libcwd-objdir/documentation/www/exclude --verbose /home/carlo/projects/libcwd/libcwd-objdir/documentation/ libcwd-shell:"~/libcwd.www/htdocs"'
-
-export CONFIGURE_OPTIONS="--enable-maintainer-mode --prefix=$INSTALL_PREFIX"
-alias configure='../libcwd/configure $CONFIGURE_OPTIONS'
-
-BASENAME=`basename "$TOPPROJECT"`
-if [ "$BASENAME" == ircproxy -o "$BASENAME" == cppgraph ]; then
-  CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-threading"
-fi
+  source $TOPPROJECT/env.compiler
+  
+  export GIT_COMMITTER_NAME="Carlo Wood"
+  export GIT_COMMITTER_EMAIL="carlo@alinoe.com"
+  export GIT_AUTHOR_NAME="Carlo Wood"
+  export GIT_AUTHOR_EMAIL="carlo@alinoe.com"
+  
+  export OUTPUT_DIRECTORY="/home/carlo/www"
+  export REPOBASE="/home/carlo/projects/libcwd/libcwd"
+  
+  # These two are helper variables.
+  GCCVER=`$CXX -v 2&gt;&amp;1 | grep '^gcc[ -][Vv]ersion' | sed -e 's/gcc[ -][Vv]ersion //' -e 's/ (.*//' -e 's/ /-/g'`
+  INSTALL_PREFIX="/usr/local/install/$GCCVER"
+  
+  if test "$TOPPROJECT" = "/opt/secondlife/viewers"; then
+  if test "$(pwd)" = "$REPOBASE-objdir32"; then
+    INSTALL_PREFIX="/sl/i386-linux-gnu/usr"
+    CXXFLAGS=-m32
+  else
+    INSTALL_PREFIX="/sl/x86_64-linux-gnu/usr"
+    CXXFLAGS=
+  fi
+  fi
+  
+  CPPFLAGS=
+  LDFLAGS=
+  CFLAGS=
+  
+  export CPPFLAGS LDFLAGS CFLAGS CXXFLAGS
+  
+  PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig"
+  pre_path "$INSTALL_PREFIX/bin"
+  pre_path "$INSTALL_PREFIX/lib" LD_LIBRARY_PATH
+  
+  export PKG_CONFIG_PATH PATH LD_LIBRARY_PATH
+  
+  alias s="ls $REPOBASE/*.cc $REPOBASE/include/*.h $REPOBASE/include/libcwd/*.h $REPOBASE/include/libcwd/*.inl $REPOBASE/utils/*.cc"
+  alias vi='vim -c "set tags=$REPOBASE-objdir/tags,$REPOBASE-objdir/include/tags,$REPOBASE-objdir/include/libcwd/tags,$REPOBASE-objdir/utils/tags"'
+  alias syncwww='rsync -rltz -e /usr/bin/ssh --delete --exclude-from=$REPOBASE-objdir/documentation/www/exclude --verbose $REPOBASE-objdir/documentation/ libcwd-shell:"~/libcwd.www/htdocs"'
+  
+  export CONFIGURE_OPTIONS="--enable-maintainer-mode --prefix=$INSTALL_PREFIX"
+  
+  # Compiler colorization.
+  add_path /usr/src/crror/crror
+  export GOPATH=~/golang
+  
+  BASENAME=`basename "$TOPPROJECT"`
+  if [ "$BASENAME" == ircproxy -o "$BASENAME" == cppgraph ]; then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-threading"
+  fi
+  if [ "$BASENAME" == viewers ]; then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-nonthreading --disable-alloc --disable-location --enable-optimize"
+  fi
+  if [ "$BASENAME" == slavatar ]; then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-alloc --enable-optimize"
+  fi
+  if [ "$BASENAME" == "speech" ]; then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-location --enable-optimize"
+  fi
+  if [ "$BASENAME" == "Firmware" ]; then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-alloc --disable-optimize"
+  fi
+  if [ "$BASENAME" == "aicxx" ]; then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-optimize"
+  fi
+  if [ "$BASENAME" == "memorymodel" ]; then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-alloc --disable-location --enable-optimize"
+  fi
 </pre>
 </ul>
+
+Where the shell functions configure and make are already defined
+in a parent directory of this project.
 
 Of course, these are just ideas. Use your creativity and write
 env.source files that will make <em>your</em> life easier!
@@ -429,7 +487,7 @@ env.source files that will make <em>your</em> life easier!
 
 </div> <!-- content -->
 
-<div id="footer">Copyright &copy; 2007 Carlo Wood</div>
+<div id="footer">Copyright &copy; 2007, 2018 Carlo Wood</div>
 
 </body>
 </html>

@@ -1,37 +1,64 @@
-# cdeh -- an automatic history and environment switch system.
+# cdeh v2.0 -- an automatic history and environment switch system.
 #
-# Copyright (C) 2007, Carlo Wood <carlo@alinoe.com>
-
-CDEHTMP="/tmp/cdeh.$CDEHUSER/$1"
-if ! test -d "$CDEHTMP"; then
-  echo "Recreating $CDEHTMP" 2>&1
-  mkdir -p "$CDEHTMP"
+# Copyright (C) 2007 (v1.0), 2018 (v2.0)  Carlo Wood <carlo@alinoe.com>
+#
+# $1 : PID of the shell
+# $2 : $HISTFILE
+#
+EXITCODE=1
+KEEP_ENVFILE=
+CDEH_TMP="/tmp/cdeh.$CDEH_USER/$1"
+if ! test -d "$CDEH_TMP"; then
+  echo "Recreating $CDEH_TMP" 2>&1
+  mkdir -p "$CDEH_TMP"
 fi
-if ! expr "$2" : "$CDEHHISTROOT/" >/dev/null; then
+if ! expr "$2" : "^$CDEH_HISTROOT/" >/dev/null; then
   # In case this is the very first time we run this, do some initialization.
-  if ! test -f "$CDEHHISTROOT/history"; then
-    if ! test -d "$CDEHHISTROOT"; then
-      echo "$0: WARNING: \"$CDEHHISTROOT\": No such directory."
+  if ! test -f "$CDEH_HISTROOT/history"; then
+    if ! test -d "$CDEH_HISTROOT"; then
+      echo "$0: WARNING: \"$CDEH_HISTROOT\": No such directory."
     fi
-    touch "$CDEHHISTROOT/history"
+    touch "$CDEH_HISTROOT/history"
   fi
   echo "Reloading history for $HOME"
-  HISTSIZE=$CDEHHISTSIZE
-  history -r "$CDEHHISTROOT/history"
+  HISTSIZE=$CDEH_HISTSIZE
+  history -r "$CDEH_HISTROOT/history"
   PREVIOUS_DIR="nothing"
 else
-  if test -e "$CDEHTMP/prevwd"; then
-    source "$CDEHTMP/prevwd"
+  if test -e "$CDEH_TMP/prevwd"; then
+    source "$CDEH_TMP/prevwd"
+  fi
+  if test -n "$CDEH_REMOVE_STORE"; then
+    echo 'unset CDEH_REMOVE_STORE' > "$CDEH_TMP/store.env"
+    echo "$CDEH_TMP/store.env" > "$CDEH_TMP/envfile"
+    KEEP_ENVFILE=1
+    EXITCODE=0
   fi
 fi
-EXITCODE=1
+if test "$CDEH_STORE_ENVIRONMENT" = "yes"; then
+  if test -n "$CDEH_VERBOSE"; then
+    echo 'echo "$$ SAVING ENTIRE ENVIRONMENT to $CDEH_TMP/env.base"' > "$CDEH_TMP/store.env";
+  else
+    echo -n > "$CDEH_TMP/store.env";
+  fi
+  declare -f __cdeh_store_environment | grep -v '^[_{}]' >> "$CDEH_TMP/store.env"
+  echo 'export CDEH_REMOVE_STORE=1' >> "$CDEH_TMP/store.env"
+  echo 'CDEH_STORE_ENVIRONMENT=' >> "$CDEH_TMP/store.env"
+  echo "$CDEH_TMP/store.env" > "$CDEH_TMP/envfile"
+  KEEP_ENVFILE=1
+  EXITCODE=0
+fi
 if [ "$PREVIOUS_DIR" != "$PWD" ]; then
-  echo "PREVIOUS_DIR=\"$PWD\"" > "$CDEHTMP/prevwd"
-  rm -f "$CDEHTMP/histfile" "$CDEHTMP/envfile"
+  echo "PREVIOUS_DIR=\"$PWD\"" > "$CDEH_TMP/prevwd"
+  rm -f "$CDEH_TMP/histfile"
+  if test -z "$KEEP_ENVFILE"; then
+    rm -f "$CDEH_TMP/envfile"
+  fi
   CURRENT_DIR="$PWD"
+  CDEH_NEW_DIR=
   until [ "$CURRENT_DIR" = "" ]; do
-    if [ -f "$CDEHHISTROOT/$CURRENT_DIR/history" ]; then
-      NEW_DIR="$CURRENT_DIR"
+    if [ -f "$CDEH_HISTROOT/$CURRENT_DIR/history" ]; then
+      CDEH_NEW_DIR="$CURRENT_DIR"
       break
     fi
     CURRENT_DIR="${CURRENT_DIR%/*}"
@@ -41,57 +68,42 @@ if [ "$PREVIOUS_DIR" != "$PWD" ]; then
   fi
   TITLE="`echo "[$CURRENT_DIR]$PWD" | sed -e 's%\[[^]]*/%[%' -e 's%\(\[[^]]*\]\)'"$CURRENT_DIR"'%\1 %' -e 's%\[\]%[/]%' -e 's% $%%' -e 's%^\[/\]$%'"$PWD"'%'`"
   xtermset -title "$TITLE"
-  if [ "$CURRENT_DIR" = "/" -a -f "$CDEHHISTROOT/history" ]; then
-    NEW_DIR="/"
+  if [ "$CURRENT_DIR" = "/" -a -f "$CDEH_HISTROOT/history" ]; then
+    CDEH_NEW_DIR="/"
   fi
-  if [ "$NEW_DIR" = "" ]; then
-    NEW_DIR="/"
+  if [ "$CDEH_NEW_DIR" = "" ]; then
+    CDEH_NEW_DIR="/"
   fi
-  INODE='"'`stat "$NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
-  if [ -f "$CDEHTMP/prevhd" ]; then
-    source "$CDEHTMP/prevhd"
+  INODE='"'`stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
+  if [ -f "$CDEH_TMP/prevhd" ]; then
+    source "$CDEH_TMP/prevhd"
   else
     PREVIOUS_INODE=
   fi
   if [ "$PREVIOUS_INODE" != "$INODE" ]; then
-    echo "PREVIOUS_INODE=$INODE" > "$CDEHTMP/prevhd"
-    echo "PREVIOUS_DIR=\"$NEW_DIR\"" >> "$CDEHTMP/prevhd"
-    if [ "$2" != "$CDEHHISTROOT/$CURRENT_DIR/history" ]; then
-      history -w "$CDEHHISTROOT/$PREVIOUS_DIR/history"
-      echo "$CDEHHISTROOT/$CURRENT_DIR/history" > "$CDEHTMP/histfile"
+    echo "PREVIOUS_INODE=\"$INODE\"" > "$CDEH_TMP/prevhd"
+    echo "PREVIOUS_DIR=\"$CDEH_NEW_DIR\"" >> "$CDEH_TMP/prevhd"
+    if [ "$2" != "$CDEH_HISTROOT/$CURRENT_DIR/history" ]; then
+      history -w "$CDEH_HISTROOT/$PREVIOUS_DIR/history"
+      echo "$CDEH_HISTROOT/$CURRENT_DIR/history" > "$CDEH_TMP/histfile"
       echo "History changed from \"$PREVIOUS_DIR\" to \"$CURRENT_DIR\""
       EXITCODE=0
     fi
   fi
-  CURRENT_DIR="$PWD"
-  until [ "$CURRENT_DIR" = "" ]; do
-    if [ -f "$CURRENT_DIR/env.source" ]; then
-      NEW_DIR="$CURRENT_DIR"
-      break
-    fi
-    CURRENT_DIR="${CURRENT_DIR%/*}"
-  done
-  if [ "$CURRENT_DIR" = "" ]; then
-    CURRENT_DIR="/"
-  fi
-  if [ "$CURRENT_DIR" = "/" -a -f "/env.source" ]; then
-    NEW_DIR="/"
-  fi
-  if [ "$NEW_DIR" = "" ]; then
-    NEW_DIR="/"
-  fi
-  INODE='"'`stat "$NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
-  if [ -f "$CDEHTMP/preved" ]; then
-    source "$CDEHTMP/preved"
+  __cdeh_rebuild_source_dirs
+  INODE='"'`stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
+  if [ -f "$CDEH_TMP/preved" ]; then
+    source "$CDEH_TMP/preved"
   else
     PREVIOUS_INODE=
   fi
   if [ "$PREVIOUS_INODE" != "$INODE" ]; then
-    echo "PREVIOUS_INODE=$INODE" > "$CDEHTMP/preved"
-    echo "PREVIOUS_DIR=\"$NEW_DIR\"" >> "$CDEHTMP/preved"
-    if [ "$CDEHENVFILE" != "$CURRENT_DIR/env.source" ]; then
-      echo "$CURRENT_DIR/env.source" > "$CDEHTMP/envfile"
-      echo "Environment changed from \"$PREVIOUS_DIR\" to \"$CURRENT_DIR\""
+    echo "PREVIOUS_INODE=\"$INODE\"" > "$CDEH_TMP/preved"
+    echo "PREVIOUS_DIR=\"$CDEH_NEW_DIR\"" >> "$CDEH_TMP/preved"
+    __cdeh_rebuild_envfile
+    NEW_CDEH_ENVFILE=$(cat "$CDEH_TMP/envfile")
+    if [ "$CDEH_ENVFILE" != "$NEW_CDEH_ENFILE" ]; then
+      echo "Environment changed from \"$PREVIOUS_DIR\" to \"$CDEH_CURRENT_DIR\""
       EXITCODE=0
     fi
   fi

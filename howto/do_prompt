@@ -6,7 +6,7 @@
 # $2 : $HISTFILE
 #
 EXITCODE=1
-KEEP_ENVFILE=
+KEEP_ENVFILES=
 CDEH_TMP="/tmp/cdeh.$CDEH_USER/$1"
 if ! test -d "$CDEH_TMP"; then
   echo "Recreating $CDEH_TMP" 2>&1
@@ -30,8 +30,8 @@ else
   fi
   if test -n "$CDEH_REMOVE_STORE"; then
     echo 'unset CDEH_REMOVE_STORE' > "$CDEH_TMP/store.env"
-    echo "$CDEH_TMP/store.env" > "$CDEH_TMP/envfile"
-    KEEP_ENVFILE=1
+    echo "$CDEH_TMP/store.env" > "$CDEH_TMP/envfiles"
+    KEEP_ENVFILES=1
     EXITCODE=0
   fi
 fi
@@ -44,15 +44,15 @@ if test "$CDEH_STORE_ENVIRONMENT" = "yes"; then
   declare -f __cdeh_store_environment | grep -v '^[_{}]' >> "$CDEH_TMP/store.env"
   echo 'export CDEH_REMOVE_STORE=1' >> "$CDEH_TMP/store.env"
   echo 'CDEH_STORE_ENVIRONMENT=' >> "$CDEH_TMP/store.env"
-  echo "$CDEH_TMP/store.env" > "$CDEH_TMP/envfile"
-  KEEP_ENVFILE=1
+  echo "$CDEH_TMP/store.env" > "$CDEH_TMP/envfiles"
+  KEEP_ENVFILES=1
   EXITCODE=0
 fi
 if [ "$PREVIOUS_DIR" != "$PWD" ]; then
   echo "PREVIOUS_DIR=\"$PWD\"" > "$CDEH_TMP/prevwd"
   rm -f "$CDEH_TMP/histfile"
-  if test -z "$KEEP_ENVFILE"; then
-    rm -f "$CDEH_TMP/envfile"
+  if test -z "$KEEP_ENVFILES"; then
+    rm -f "$CDEH_TMP/envfiles"
   fi
   CURRENT_DIR="$PWD"
   CDEH_NEW_DIR=
@@ -74,14 +74,14 @@ if [ "$PREVIOUS_DIR" != "$PWD" ]; then
   if [ "$CDEH_NEW_DIR" = "" ]; then
     CDEH_NEW_DIR="/"
   fi
-  INODE='"'`stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
+  INODE=$(stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }')
   if [ -f "$CDEH_TMP/prevhd" ]; then
     source "$CDEH_TMP/prevhd"
   else
     PREVIOUS_INODE=
   fi
   if [ "$PREVIOUS_INODE" != "$INODE" ]; then
-    echo "PREVIOUS_INODE=\"$INODE\"" > "$CDEH_TMP/prevhd"
+    echo "PREVIOUS_INODE=$INODE" > "$CDEH_TMP/prevhd"
     echo "PREVIOUS_DIR=\"$CDEH_NEW_DIR\"" >> "$CDEH_TMP/prevhd"
     if [ "$2" != "$CDEH_HISTROOT/$CURRENT_DIR/history" ]; then
       history -w "$CDEH_HISTROOT/$PREVIOUS_DIR/history"
@@ -91,19 +91,26 @@ if [ "$PREVIOUS_DIR" != "$PWD" ]; then
     fi
   fi
   __cdeh_rebuild_source_dirs
-  INODE='"'`stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }'`'"'
+  test -z "$CDEH_VERBOSE" || echo "$$ CDEH_NEW_DIR is now \"$CDEH_NEW_DIR\""
+  INODE=$(stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }')
   if [ -f "$CDEH_TMP/preved" ]; then
     source "$CDEH_TMP/preved"
   else
     PREVIOUS_INODE=
+    PREVIOUS_DIR="nothing"
   fi
+  test -z "$CDEH_VERBOSE" || echo "$$ PREVIOUS_INODE='$PREVIOUS_INODE'; PREVIOUS_DIR=\"$PREVIOUS_DIR\"; INODE='$INODE'"
   if [ "$PREVIOUS_INODE" != "$INODE" ]; then
-    echo "PREVIOUS_INODE=\"$INODE\"" > "$CDEH_TMP/preved"
+    echo "PREVIOUS_INODE=$INODE" > "$CDEH_TMP/preved"
     echo "PREVIOUS_DIR=\"$CDEH_NEW_DIR\"" >> "$CDEH_TMP/preved"
-    __cdeh_rebuild_envfile
-    NEW_CDEH_ENVFILE=$(cat "$CDEH_TMP/envfile")
-    if [ "$CDEH_ENVFILE" != "$NEW_CDEH_ENFILE" ]; then
-      echo "Environment changed from \"$PREVIOUS_DIR\" to \"$CDEH_CURRENT_DIR\""
+    __cdeh_rebuild_envfiles
+    NEW_CDEH_ENVFILES=$(cat "$CDEH_TMP/envfiles")
+    test -z "$CDEH_VERBOSE" || echo "$$ CDEH_ENVFILES=\""$CDEH_ENVFILES"\"; NEW_CDEH_ENVFILES=\""$NEW_CDEH_ENVFILES"\""
+    if [ "$CDEH_ENVFILES" != "$NEW_CDEH_ENVFILES" ]; then
+      test -z "$CDEH_VERBOSE" || echo "$$ resource, because CDEH_ENVFILES ("$CDEH_ENVFILES") != NEW_CDEH_ENVFILES ("$NEW_CDEH_ENVFILES")"
+      if test "$PREVIOUS_DIR" != "$CDEH_CURRENT_DIR"; then
+        echo "Environment changed from \"$PREVIOUS_DIR\" to \"$CDEH_CURRENT_DIR\""
+      fi
       EXITCODE=0
     fi
   fi

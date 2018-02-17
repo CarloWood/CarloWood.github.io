@@ -100,7 +100,7 @@ function __cdeh_store_environment ()
 
 function __cdeh_clear_environment ()
 {
-  test -z "$CDEH_VERBOSE" || echo "$$ CLEARING ENTIRE ENVIRONMENT"
+  test -z "$CDEH_VERBOSE" || echo "$$ CLEARING ENVIRONMENT"
   for name in $(declare -p | \
                 /bin/grep '^declare -[AFafgilntux-]* ' | \
                 /bin/sed -e 's/=.*//;s/.* //' | \
@@ -125,7 +125,7 @@ function __cdeh_resource ()
 {
   CDEH_SAVE_IFS="$IFS"
   IFS=$'\n'
-  for __cdeh_env_file in $CDEH_ENVFILE; do
+  for __cdeh_env_file in $CDEH_ENVFILES; do
     if test "$__cdeh_env_file" = "__cdeh_reset_environment"; then
       __cdeh_clear_environment
       test -z "$CDEH_VERBOSE" || echo "$$ RELOADING SAVED ENVIRONMENT from $CDEH_TMP/env.base"
@@ -155,6 +155,8 @@ function __cdeh_rebuild_source_dirs ()
   if test $cdeh_i -gt 0; then
     CDEH_CURRENT_DIR="${CDEH_SOURCE_DIRS[0]}"
     CDEH_NEW_DIR="$CDEH_CURRENT_DIR"
+  else
+    CDEH_NEW_DIR="/"
   fi
   if [ -f "/env.source" ]; then
     CDEH_SOURCE_DIRS[cdeh_i]=""
@@ -165,24 +167,24 @@ function __cdeh_rebuild_source_dirs ()
   fi
 }
 
-function __cdeh_rebuild_envfile ()
+function __cdeh_rebuild_envfiles ()
 {
-  echo "__cdeh_reset_environment" >> "$CDEH_TMP/envfile"
+  echo "__cdeh_reset_environment" >> "$CDEH_TMP/envfiles"
   cdeh_j=$cdeh_i
   while test $cdeh_j -gt 0; do
    cdeh_j=$((cdeh_j - 1))
-   echo ${CDEH_SOURCE_DIRS[$cdeh_j]}/env.source >> "$CDEH_TMP/envfile"
+   echo ${CDEH_SOURCE_DIRS[$cdeh_j]}/env.source >> "$CDEH_TMP/envfiles"
   done
 }
 
-declare -xf __cdeh_store_environment __cdeh_resource __cdeh_rebuild_source_dirs __cdeh_rebuild_envfile
+declare -xf __cdeh_store_environment __cdeh_resource __cdeh_rebuild_source_dirs __cdeh_rebuild_envfiles
 
 function resource ()
 {
   __cdeh_rebuild_source_dirs
-  rm -f "$CDEH_TMP/envfile"
-  __cdeh_rebuild_envfile
-  export CDEH_ENVFILE=$(cat "$CDEH_TMP/envfile")
+  rm -f "$CDEH_TMP/envfiles"
+  __cdeh_rebuild_envfiles
+  export CDEH_ENVFILES=$(cat "$CDEH_TMP/envfiles")
   __cdeh_resource
 }
 
@@ -221,8 +223,8 @@ export PROMPT_COMMAND='
         export HISTFILE=$(/bin/cat "$CDEH_TMP/histfile");
         history -r;
       fi;
-      if test -f "$CDEH_TMP/envfile"; then
-        export CDEH_ENVFILE=$(/bin/cat "$CDEH_TMP/envfile");
+      if test -f "$CDEH_TMP/envfiles"; then
+        export CDEH_ENVFILES=$(/bin/cat "$CDEH_TMP/envfiles");
         __cdeh_resource;
       fi;
     fi'

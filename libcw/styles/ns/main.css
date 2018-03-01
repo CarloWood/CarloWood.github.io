@@ -1,0 +1,37 @@
+/* Incremental style sheet for netscape navigator */
+
+/* At least try to make it look the same as on IE */
+HR {
+  line-height: 2ex;		/* 2 times font-size IE/font-size our */
+  vertical-align: middle;
+}
+
+/* Header styles */
+
+.header {
+  line-height   : 1;
+  margin-left	: 6;
+}
+
+.header-copyright {
+  margin-left	: 6;
+}
+
+/* Table of contents styles */
+
+BODY.toc {
+  margin-left	: 0;
+  margin-right	: 0;
+}
+
+.toc-header1 {
+  margin-bottom	: 0;
+  margin-top	: 0;
+}
+
+/* Navigation column styles */
+
+BODY.nav {
+  margin-top: 10;
+  margin-left: 4;
+}

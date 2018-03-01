@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: topleft.html,v 1.7 2000/08/04 20:18:55 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>Navigation Index Top Left</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+<BASE target="main">
+</HEAD>
+
+<BODY class="nav">
+
+<TABLE width=64 border=0 cellspacing=0 cellpadding=0>
+  <TR>
+    <TD class="nav" align=LEFT>
+      <SCRIPT TYPE="text/javascript">
+	url = document.location.href.toString();
+	pos = url.indexOf("?");
+	chap = url.substring(pos+1,url.length);
+        document.write("<A class=\"nav\" href=max.html?" + chap + " target=_top>");
+      </SCRIPT>
+      <IMG src="../images/buttons/lr_min.gif" alt="Minimize header frame" width=60 border=0></A>
+    </TD>
+  </TR>
+  <TR>
+    <TD class="nav" align=LEFT>
+      <A class="nav" href="../index.html#start" target="_top">
+      <IMG src="../images/buttons/lr_home.gif" alt="Home page of libcw" width=60 border=0></A>
+    </TD>
+  </TR>
+</TABLE>
+
+</BODY>
+</HTML>

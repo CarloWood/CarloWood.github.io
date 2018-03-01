@@ -1,0 +1,537 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: traits.html,v 1.15 2000/12/08 03:20:40 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<P><IMG width=247 height=63 src="../images/UnderConstruction.gif" alt="This page is incomplete and being changed daily" align=bottom border=0></P>
+
+<H1>Input and Output Traits</H1>
+
+<HR SIZE=1 NOSHADE>
+
+<A name="intro"></A>
+<H2>3.1 Relationships</H2>
+
+<P>The libcw <I>traits</I> classes are the glue between the device classes, the <A HREF="dbstreambuf.html">dynamic buffers</A>,
+the libcw kernel (the main loop) and the rest of your application.&nbsp;
+Sections &sect;3.1.2 through &sect;3.1.5 describe the relationship between the <I>traits</I> classes and these four entities.</P>
+
+<A NAME="base"></A>
+<H3>3.1.1 Four base classes</H3>
+
+<P>The <I>traits</I> classes come in four base class flavors:</P>
+
+</DIV> <!-- normal -->
+<TABLE CELLPADDING=2 CELLSPACING=2>
+<TR>
+  <TD WIDTH=20>&nbsp;</TD>
+  <TD>
+    <IMG src="../images/ball_brown_gimp.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0>
+  </TD>
+  <TD>
+<SPAN class="code">input_ct</SPAN> is the base class for <I>input traits</I> classes.&nbsp;
+Derived classes define how to <I>decode</I> input data</BR>
+(see the left green box in <A HREF="#fig1">figure 1</A>).
+  </TD>
+</TR>
+<TR>
+  <TD WIDTH=20>&nbsp;</TD>
+  <TD>
+    <IMG src="../images/ball_brown_gimp.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0>
+  </TD>
+  <TD>
+    <SPAN class="code">output_ct</SPAN> is the base class for <I>output traits</I> classes<BR>
+    (see the right green box in <A HREF="#fig1">figure 1</A>).
+  </TD>
+</TR>
+<TR>
+  <TD WIDTH=20>&nbsp;</TD>
+  <TD>
+    <IMG src="../images/ball_brown_gimp.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0>
+  </TD>
+  <TD>
+    Finally, <SPAN class="code">input_link_ct</SPAN> and <SPAN class="code">output_link_ct</SPAN> are two special base
+    classes used to link two devices together in a way that one will read the contents of the other - without any decoding:
+    The devices will use the same buffer.
+  </TD>
+</TR>
+</TABLE>
+<DIV class="normal">
+
+<P>Classes derived from <SPAN class="code">input_ct</SPAN> and <SPAN class="code">input_link_ct</SPAN> describe
+<I>input</I> characteristics while <SPAN class="code">output_ct</SPAN> and <SPAN class="code">output_link_ct</SPAN> describe
+<I>output</I> characteristics.</P>
+
+<H3>3.1.2 The relationship with device objects</H3>
+
+<H4>3.1.2.1 Template parameters</H4>
+
+<P>A <I>device</I> is an entity that has a single file descriptor.&nbsp;
+Libcw by default provides definitions for <I>files</I>, <I>sockets</I> and <I>pipes</I>.&nbsp;
+Device classes are defined as template classes with one or two template parameters.&nbsp;
+Read only and write only devices use a single template parameter, while IO devices use two template parameters:
+one for the input characteristics and one for the output characteristics.</P>
+
+<H4>3.1.2.2 Input or output device</H4>
+
+<P>The template parameters that need to be passed to the device classes are the <I>traits</I> classes, or classes derived from those.&nbsp;
+The type of the <I>traits</I> class determines whether a device is read-only or write-only.&nbsp;
+When two template parameters are needed then exactly one <I>input traits</I> class and one <I>output traits</I> class must be passed.</P>
+
+<H4>3.1.2.3 Inheritance</H4>
+
+<P>The template parameters and thus the <I>traits</I> classes, are used as a <B>base class</B> of
+the device objects, using multiple inheritance in the case of IO devices with two template parameters
+(see figure 1).</P>
+
+<A NAME="fig1"></A>
+<CENTER>
+<IMG width=520 height=620 src="../images/dbbuf.png" alt="Overview of inheritance" align=bottom border=0><BR CLEAR=ALL>
+</CENTER>
+<P STYLE="margin-left: 20; margin-right: 20">Figure 1. Class hierarchy of an IO device decoding a protocol XXX.&nbsp;
+The light gray text represents user defined parts using inheritance.&nbsp;
+The green boxes contain the input and output <I>traits</I> classes.&nbsp;
+Virtual base classes are represented with yellow lines.&nbsp;
+The objects <SPAN class="code">input_ct</SPAN>
+and <SPAN class="code">output_ct</SPAN> each contain a pointer to respectively the input buffer and the output buffer.&nbsp;
+The libcw kernel class <SPAN class="code">fd_dct</SPAN> calls virtual functions for IO events.</P>
+
+<H4>3.1.2.4 Summary</H4>
+
+</DIV>
+<TABLE CELLPADDING=2 CELLSPACING=2>
+<TR>
+  <TD WIDTH=20>&nbsp;</TD>
+  <TD><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></TD>
+  <TD>Traits classes are passed as template parameters to device classes.</TD>
+</TR>
+<TR>
+  <TD WIDTH=20>&nbsp;</TD>
+  <TD><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></TD>
+  <TD>The <I>type</I> of a traits class determines whether a device is an input or output device.</TD>
+</TR>
+<TR>
+  <TD WIDTH=20>&nbsp;</TD>
+  <TD><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></TD>
+  <TD>The traits class is a base class of the device object.</TD>
+</TR>
+</TR>
+</TABLE>
+<DIV class="normal">
+
+<H3>3.1.3 The relationship with IO buffers</H3>
+
+<A NAME="pointer"></A>
+<H4>3.1.3.1 The buffer pointer</H4>
+
+<P>Each of the four <A HREF="#base"><I>traits</I> base classes</A> contains one <A HREF="dbstreambuf.html#types">buffer</A> pointer,
+the type of which depends on the type of the <I>traits</I> class.&nbsp;
+See table 1.</P>
+
+</DIV>
+<H5 ALIGN=CENTER>Table 1. The attribute of the different <I>traits</I> base classes.</H5>
+<CENTER>
+<TABLE BGCOLOR=Wheat BORDERCOLOR=#503c2c WIDTH=500 BORDER=1 CELLPADDING=4 CELLSPACING=0>
+  <TR>
+    <TD BGCOLOR="#a98061"><FONT COLOR="#ffffff"><I>traits</I> class</FONT></TD>
+    <TD BGCOLOR="#a98061"><FONT COLOR="#ffffff">attribute</FONT></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">input_ct</SPAN></TD>
+    <TD><SPAN class="code"><A HREF="dbstreambuf.html#input_buffer_ct">input_buffer_ct</A>*&nbsp;&nbsp;ibuffer</SPAN></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">output_ct</SPAN></TD>
+    <TD><SPAN class="code"><A HREF="dbstreambuf.html#output_buffer_ct">output_buffer_ct</A>*&nbsp;obuffer</SPAN></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">input_link_ct</SPAN></TD>
+    <TD><SPAN class="code"><A HREF="dbstreambuf.html#link_buffer_ct">link_buffer_ct</A>*&nbsp;&nbsp;&nbsp;ibuffer</SPAN></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">output_link_ct</SPAN></TD>
+    <TD><SPAN class="code"><A HREF="dbstreambuf.html#link_buffer_ct">link_buffer_ct</A>*&nbsp;&nbsp;&nbsp;obuffer</SPAN></TD>
+  </TR>
+</TABLE>
+</CENTER>
+<DIV class="normal">
+
+<P>This pointer must be passed to the constructor of the <I>traits</I> class and must be allocated with <SPAN class="code">new</SPAN>.&nbsp;
+De-allocation is taken care of by the buffer itself.&nbsp;
+<A NAME="note"></A>[ The constructor of the <I>traits</I> base class takes care of calling respectively
+<A HREF="dbstreambuf.html#dbstreambuf_ct::set_input_device"><SPAN class="code">dbstreambuf::set_input_device()</SPAN></A>
+or
+<A HREF="dbstreambuf.html#dbstreambuf_ct::set_output_device"><SPAN class="code">dbstreambuf::set_output_device()</SPAN></A>,
+while the destructor of the <I>traits</I> class takes care of calling
+<A HREF="dbstreambuf.html#dbstreambuf_ct::release"><SPAN class="code">dbstreambuf::release()</SPAN></A>;
+this causes the <I>automagic</I> deletion of the buffer when its last device is destructed. ]</P>
+
+<P>While <SPAN class="code">ibuffer</SPAN> (<SPAN class="code">obuffer</SPAN>) is protected, it is possible to get a copy
+of the buffer pointer by means of the public method <SPAN class="code">rddbbuf()</SPAN>.</P>
+
+<H4>3.1.3.2 Type definitions</H4>
+
+<P>In order to allow more general templates to be written, the <I>traits</I> classes contain two <SPAN class="code">typedef</SPAN>s
+that are related with the buffers, see table&nbsp;2.</P>
+
+</DIV>
+<H5 ALIGN=CENTER>Table 2. The typedefs of the different <I>traits</I> base classes.</H5>
+<CENTER>
+<TABLE BGCOLOR=Wheat BORDERCOLOR=#503c2c WIDTH=500 BORDER=1 CELLPADDING=4 CELLSPACING=0>
+  <TR>
+    <TD BGCOLOR="#a98061"><FONT COLOR="#ffffff"><I>traits</I> class</FONT></TD>
+    <TD BGCOLOR="#a98061"><FONT COLOR="#ffffff">type</FONT></TD>
+    <TD BGCOLOR="#a98061"><FONT COLOR="#ffffff">value</FONT></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">input_ct</SPAN></TD>
+    <TD><SPAN class="code">buffer_ct</SPAN></TD>
+    <TD><SPAN class="code">input_buffer_ct</SPAN></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">output_ct</SPAN></TD>
+    <TD><SPAN class="code">buffer_ct</SPAN></TD>
+    <TD><SPAN class="code">output_buffer_ct</SPAN></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">input_link_ct</SPAN></TD>
+    <TD><SPAN class="code">buffer_ct</SPAN><BR><SPAN class="code">buflinkT</SPAN></TD>
+    <TD><SPAN class="code">link_buffer_ct</SPAN><BR><SPAN class="code">output_link_ct</SPAN></TD>
+  </TR>
+  <TR>
+    <TD><SPAN class="code">output_link_ct</SPAN></TD>
+    <TD><SPAN class="code">buffer_ct</SPAN><BR><SPAN class="code">buflinkT</SPAN></TD>
+    <TD><SPAN class="code">link_buffer_ct</SPAN><BR><SPAN class="code">input_link_ct</SPAN></TD>
+  </TR>
+</TABLE>
+</CENTER>
+<DIV class="normal">
+
+<H4>3.1.3.3 Default minimum buffer size</H4>
+
+<P>A <I>traits</I> class also determines the default <A HREF="dbstreambuf.html#buffer design">minimum block size</A> of the buffers.&nbsp;
+A constant <SPAN class="code">static size_t const default_blocksize_c</SPAN> is defined in each <I>traits</I> class and should be
+used as default minimum block size when creating default buffers.&nbsp;
+The <I>traits</I> base classes contain default values.&nbsp; See table 3.</P>
+
+</DIV>
+<H5 ALIGN=CENTER>Table 3. The default default minimum block size as a function of the different <I>traits</I> base classes.</H5>
+<CENTER>
+<TABLE BGCOLOR=Wheat BORDERCOLOR=#503c2c WIDTH=500 BORDER=1 CELLPADDING=4 CELLSPACING=0>
+  <TR>
+    <TD BGCOLOR="#a98061">
+      <FONT COLOR="#ffffff"><I>traits</I> class</FONT>
+    </TD>
+    <TD BGCOLOR="#a98061">
+      <FONT COLOR="#ffffff">value of<SPAN class="code"> default_blocksize_c</SPAN></FONT>
+    </TD>
+  </TR>
+  <TR>
+    <TD>
+      <SPAN class="code">input_ct</SPAN>
+    </TD>
+    <TD>
+      512
+    </TD>
+  </TR>
+  <TR>
+    <TD>
+      <SPAN class="code">output_ct</SPAN>
+    </TD>
+    <TD>
+      2048
+    </TD>
+  </TR>
+  <TR>
+    <TD>
+      <SPAN class="code">link_ct</SPAN>
+    </TD>
+    <TD>
+      2048
+    </TD>
+  </TR>
+</TABLE>
+</CENTER>
+<DIV class="normal">
+
+<P>You can change the default minimum block size by overriding this value in derived <I>traits</I> classes.</P>
+
+<H4>3.1.3.4 Summary</H4>
+
+</DIV>
+<TABLE CELLPADDING=2 CELLSPACING=2>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD>
+    <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+  </TD>
+  <TD>
+    Traits classes exist of a single pointer that points to a buffer.
+  </TD>
+</TR>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD>
+    <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+  </TD>
+  <TD>
+    The <I>type</I> of a traits class determines the type of buffer (<A HREF="dbstreambuf.html#interface">interface</A>),
+    and provides a default <A HREF="dbstreambuf.html#buffer design">minimum block size</A> for the buffer.
+  </TD>
+</TR>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD>
+    <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+  </TD>
+  <TD>
+    The traits classes take care of the &quot;garbage collection&quot;
+    <A HREF="dbstreambuf.html#fad">mechanism</A> of the buffers.
+  </TD>
+</TR>
+</TR>
+</TABLE>
+<DIV class="normal">
+
+<H3>3.1.4 The relationship with the libcw kernel</H3>
+
+<A NAME="virtual"></A>
+<H4>3.1.4.1 Virtual functions</H4>
+
+<P>The <I>traits</I> classes are derived from the virtual base
+class <SPAN class="code">fd_dct</SPAN>, see <A HREF="#fig1">figure 1</A>.&nbsp;
+An IO event on the file descriptor of a device causes a virtual function of <SPAN class="code">fd_dct</SPAN> to be called.&nbsp;
+The <I>traits</I> classes catch these IO events by overriding these virtual functions.</P>
+
+<P>The two virtual functions that are declared by <SPAN class="code">fd_dct</SPAN> are described below.</P>
+
+<H5 class="function"><a name="fd_dct::read_from_fd"></a>
+<PRE>virtual void read_from_fd(void)</PRE>
+</H5>
+
+<P>Overridden by classes derived from <SPAN class="code">input_ct</SPAN> and <SPAN class="code">input_link_ct</SPAN>.&nbsp;
+Data should be read from file descriptor <SPAN class="code">fd()</SPAN> and written to the buffer pointed to
+by <A HREF="#pointer"><SPAN class="code">ibuffer</SPAN></A>.&nbsp;
+This method should call <SPAN class="code">reset_need_read()</SPAN> when no more reading is needed or wanted
+(for instance when the buffer is too <A HREF="dbstreambuf.html#dbstreambuf_ct::buffer_full">full</A>).&nbsp;
+This method should call <A HREF="dbstreambuf.html#reducing"><SPAN class="code">reduce_buf_if_empty()</SPAN></A>
+to make sure that the buffer reduces its size.&nbsp;
+Write access to the buffer is provided through the <A HREF="dbstreambuf.html#input_buffer_ct::device"><SPAN class="code">dev2buf_</SPAN></A>
+methods of <SPAN class="code">ibuffer</SPAN>.</P>
+
+<H5 class="function"><a name="fd_dct::write_to_fd"></a>
+<PRE>virtual void write_to_fd(void)</PRE>
+</H5>
+
+<P>Overridden by classes derived from <SPAN class="code">output_ct</SPAN> and <SPAN class="code">output_link_ct</SPAN>.&nbsp;
+Data should be read from the buffer pointed to by <A HREF="#pointer"><SPAN class="code">obuffer</SPAN></A> and written
+to file descriptor <SPAN class="code">fd()</SPAN>.&nbsp;
+This method should call <SPAN class="code">reset_need_write()</SPAN> when no more writing is currently possible or
+needed (for instance, when the buffer is <A HREF="dbstreambuf.html#dbstreambuf_ct::buffer_empty">empty</A>).&nbsp;
+Read access to the buffer is provided through the <A HREF="dbstreambuf.html#output_buffer_ct::device"><SPAN class="code">buf2dev_</SPAN></A>
+methods of <SPAN class="code">obuffer</SPAN>.</P>
+
+<H4>3.1.4.2 Summary</H4>
+
+</DIV>
+<TABLE WIDTH=520 CELLPADDING=2 CELLSPACING=2>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD>
+    <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+  </TD>
+  <TD>
+    <I>Traits</I> classes are derived from the <I>kernel class</I> <SPAN class="code">fd_dct</SPAN>.
+  </TD>
+</TR>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD>
+    <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+  </TD>
+  <TD>
+    The input <I>traits</I> classes catch the input events on the file descriptor of the device by implementing
+    the virtual function <SPAN class="code">read_from_fd()</SPAN>.
+  </TD>
+</TR>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD>
+    <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+  </TD>
+  <TD>
+    The output <I>traits</I> classes catch the output events on the file descriptor of the device by implementing
+    the virtual function <SPAN class="code">write_to_fd()</SPAN>.
+  </TD>
+</TR>
+</TABLE>
+<DIV class="normal">
+
+<H3>3.1.5 The relationship with the application</H3>
+
+<H4>3.1.5.1 Input events</H4>
+
+<P>An application based on libcw is event driven.&nbsp;
+Input events (like receiving new data on a socket) happen more
+frequently than other events in networking applications,
+therefore being the most important events of the application.&nbsp;
+However, input events do not use the
+<A HREF="../events/interface.html">events interface</A>
+of libcw; this general <I>events interface</I>
+is intended for event servers with an arbitrary number of clients
+while data received on an input device needs to go to a single object
+at most: the decoder.&nbsp;
+It would be a waste of resources to use the general <I>events
+interface</I> for the most important event, while it has only
+such a simple demand.</P>
+
+<P>The approach used in libcw is to use a complete new type
+(<SPAN class="code">class</SPAN>) per device/protocol combination.&nbsp;
+Catching input events is done by overriding the virtual method
+<A HREF="#fd_dct::read_from_fd"><SPAN class="code">read_from_fd()</SPAN></A>.</P>
+
+<P>Extra support is added for so called &laquo;message blocks&raquo;.&nbsp;
+A <I>message block</I> is a contiguous part of a data stream:
+data received over a stream can be cut into pieces (messages) and presented to the user
+per <I>message</I> rather than per data-block as read with the read(2) system call.&nbsp;
+For those protocols that this doesn't make sense (although I can't think of any) the device/protocol class should
+simply override <A HREF="#fd_dct::read_from_fd"><SPAN class="code">read_from_fd()</SPAN></A>
+and process the raw data when it arrives.&nbsp;
+Otherwise, the existing <SPAN class="code">read_from_fd()</SPAN> of the abstract class
+<A HREF="#read_input_ct"><SPAN class="code">read_input_ct</SPAN></A> defined by
+libcw can be used.</P>
+
+<H4>3.1.5.2 Standard Traits base classes</H4>
+
+<P>Libcw comes with a few more specialized traits classes that can be
+used as base class for protocol decoder and encoder classes.</P>
+
+<A NAME="read_input_ct"></A>
+<H5>3.1.5.2.1 <SPAN class="code">class read_input_ct</SPAN></H5>
+
+<P>This class declares four virtual functions.</P>
+
+<H5 class="function"><a name="read_input_ct::new_dreceived"></a>
+<PRE>virtual int new_dreceived(char const* new_data, size_t len)</PRE>
+</H5>
+
+<P>This pure virtual function is called when <SPAN class="para">len</SPAN> bytes of new data
+is read with a successful read(2) system call (so always <SPAN class="code">len > 0</SPAN>).&nbsp;
+When the received data contains or completes a new message, the number of bytes that belong to this next message should be returned.&nbsp;
+If no complete message is received yet then zero must be returned.</P>
+
+<P class="example">For example, consider a binary protocol that starts
+with an integer of 2 bytes which represents the total length of the message
+(including those two bytes), then <SPAN class="code">new_dreceived</SPAN> could
+be implemented as follows.</P>
+
+<PRE class="example-code">
+class my_binary_protocol : public read_input_ct {
+private:
+  uint16_t remaining_bytes;
+  uint16_t const one_byte_magic = 0xffff;	// `remaining_bytes' is set to this
+  						// value when only one byte of the
+						// length was received so far.
+  union {
+    uint16_t remaining_bytes_network_order;
+    char first_two_bytes[2];
+  };
+
+protected:
+  my_binary_protocol(input_buffer_ct* ibuf) : read_input_ct(ibuf), remaining_bytes(0) { }
+
+  virtual int new_dreceived(char const* new_data, size_t len);
+};
+
+int my_binary_protocol::new_dreceived(char const* new_data, size_t len);
+{
+  register uint16_t remaining_bytes_cache = remaining_bytes;
+  if (remaining_bytes_cache == 0)		// Start of new message?
+  {
+    if (len > 1)				// Got complete length?
+      remaining_bytes_cache = ntohs((uint16_t*)new_data);
+    else					// Only got first byte of length
+    {
+      first_two_bytes[0] = *new_data;		// `len' is always > 0
+      remaining_bytes = one_byte_magic;		// Set flag: we only got one length byte
+      return 0;
+    }
+  }
+  else
+    remaining_bytes = 0;			// Anticipate that the next test is true
+  if (len >= remaining_bytes_cache)		// Complete message?
+    return remaining_bytes_cache;
+  if (remaining_bytes_cache == one_byte_magic)	// Already got first byte previous call?
+  {
+    first_two_bytes[1] = *new_data;
+    remaining_bytes_cache = ntohs(remaining_bytes_network_order) - 1;
+  }
+  remaining_bytes = remaining_bytes_cache - len;
+  return 0;
+}
+</PRE>
+
+<P class="example">This code was optimized so it can be used in a real life application as well.&nbsp;
+The optimized path assumes that received packets are either much larger than the message sizes and/or that an integer number
+of messages fit exactly in the received packets.&nbsp;
+This means that by far most calls will be done with <SPAN class="code">remaining_bytes == 0</SPAN>
+and <SPAN class="code">len</SPAN> larger or equal the size of the next
+message.</P>
+
+<H5 class="function"><a name="read_input_ct::decode"></a>
+<PRE>virtual void decode(msg_block_ct msg)</PRE>
+</H5>
+
+<P>This pure virtual function is called when a new message has been received.&nbsp;
+Possible actions are for instance queueing (possibly using a decoded priority),
+throttling (disabling the device for a given period of time),
+using the function as an <A HREF="../events/design.html#event generator">event generator</A>
+and/or requesting <A HREF="../kernel/timing.html#requesting">timer events</A> in order to trigger other actions.&nbsp;
+In other words treat this call as an event, because that is what it is.</P>
+
+<H5 class="function"><a name="read_input_ct::read_returned_zero"></a>
+<PRE>virtual void read_returned_zero(void)</PRE>
+</H5>
+
+<P>This virtual function is called when <SPAN class="code">read(2)</SPAN> returned <SPAN class="code">0</SPAN>.&nbsp;
+The meaning depends on the exact device , but in general it means that no more data will be received
+from this device: it can be closed and removed by calling the member
+function <SPAN class="code">fd_dct::del()</SPAN>.</P>
+
+<H5 class="function"><a name="read_input_ct::read_error"></a>
+<PRE>virtual void read_error(int err)</PRE>
+</H5>
+
+<P>This virtual function is called when <SPAN class="code">read(2)</SPAN> returned a fatal error.&nbsp;
+The error is passed as <SPAN class="para">err</SPAN>.&nbsp;
+The default calls <SPAN class="code">fd_dct::del()</SPAN>.</P>
+
+<A NAME="write_output_ct"></A>
+<H5>3.1.5.2.2 <SPAN class="code">class write_output_ct</SPAN></H5>
+
+<P>This class declares one virtual function.</P>
+
+<H5 class="function"><a name="write_output_ct::write_error"></a>
+<PRE>virtual void write_error(int err)</PRE>
+</H5>
+
+<P>This virtual function is called when <SPAN class="code">write(2)</SPAN> returned a fatal error.&nbsp;
+The error is passed as <SPAN class="para">err</SPAN>.&nbsp;
+The default calls <SPAN class="code">fd_dct::close()</SPAN>.</P>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

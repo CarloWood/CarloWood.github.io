@@ -1,0 +1,838 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: interface.html,v 1.11 2000/08/04 20:18:55 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: events interface</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<H1>2. libcw event interface</H1>
+
+<HR SIZE=1 NOSHADE>
+
+<A NAME="Class overview"></A>
+<H2>2.1 Overriding methods</H2>
+
+<P>Class methods listed in the next paragraphs are prepended with a little ball.&nbsp;
+The color of this ball indicates whether or not you are expected to override that method in a derived class:</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_yellow_icon.gif" ALT="Must be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	Must be overridden.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_green_icon.gif" ALT="May be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	May be overridden.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_orange_icon.gif" ALT="Should not be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	Should not be overridden.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	Must never be overridden.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<A NAME="Classes defined by libcw"></A>
+<H2>2.2 Classes defined by libcw</H2>
+
+<H3>2.2.1 Introduction</H3>
+
+<P>The library defines five classes, in <SPAN class="code">libcw/events.h</SPAN>:</P>
+
+<PRE class="code">
+class <A HREF="#busy_interface_ct">busy_interface_ct</A>;
+
+template&lt;class <A HREF="#EventType">EVENTTYPE</A>&gt;
+  class <A HREF="#event_request_base_tct">event_request_base_tct</A>;
+
+template&lt;class <A HREF="#EventRequestBase">EVENTREQUESTBASE</A>&gt;
+  class <A HREF="#event_request_queue_tct">event_request_queue_tct</A>;
+
+template&lt;class <A HREF="#EventRequestBase">EVENTREQUESTBASE</A>, class <A HREF="#EventRequestQueue">EVENTREQUESTQUEUE</A> = event_request_queue_tct&lt;EVENTREQUESTBASE&gt; &gt;
+  class <A HREF="#event_server_tct">event_server_tct</A>;
+
+template&lt;class <A HREF="#EventRequestBase">EVENTREQUESTBASE</A>, class <A HREF="#EventRequestQueue">EVENTREQUESTQUEUE</A> = event_request_queue_tct&lt;EVENTREQUESTBASE&gt; &gt;
+  class <A HREF="#event_data_server_tct">event_data_server_tct</A>;
+</PRE>
+
+<P>There are in total seven nested (template) classes, three defined by
+busy_interface_ct, two by event_server_tct and two by event_data_server_tct.&nbsp;
+However, these nested classes are of no concern to the user and will not be mentioned any further.</P>
+
+<P>Either <B>event_server_tct</B> or <B>event_data_server_tct</B> is
+the actual <A HREF="design.html#event server">event server</A>.&nbsp;
+They are identical except that the latter supports event <A HREF="#request data">request data</A>.&nbsp;
+All other characteristics that distinguish different event servers are defined in the two template parameter classes that are
+passed to it: <SPAN class="code">EVENTREQUESTBASE</SPAN> and <SPAN class="code">EVENTREQUESTQUEUE</SPAN>.</P>
+
+<P><SPAN class="code"><A HREF="#EventRequestQueue">EVENTREQUESTQUEUE</A></SPAN>
+determines the characteristics of the request queue: the type of
+queue and how the requests are stored and retrieved.&nbsp;
+<B>class event_request_queue_tct</B> is a default class which uses a deque to
+store the event requests and which handles all requests (in the order
+in which they were requested) every time its <SPAN class="code">trigger()</SPAN> method is called.&nbsp;
+Most custom event servers will need to write a different <SPAN class="code">EVENTREQUESTQUEUE</SPAN> class.</P>
+
+<P><SPAN class="code"><A HREF="#EventRequestBase">EVENTREQUESTBASE</A></SPAN>
+must be derived from <B>event_request_base_tct</B>.&nbsp;
+It determines the characteristics of the requests themselves.&nbsp;
+In particular, it defines data that needs to be stored in the request object itself (which is passed with the requests).&nbsp;
+This data can for instance be used use by the <A HREF="design.html#event trigger">trigger</A> call to determine
+which requests need handling.</P>
+
+<A NAME="busy_interface_ct"></A>
+<H3>2.2.2 <SPAN class="H3code">class busy_interface_ct</SPAN></H3>
+
+<P>This class represents a <A HREF="design.html#busy interface">busy interface</A>.&nbsp;
+It is only a default class however and the user may define their own busy interface, or use this one as a base class.</P>
+
+<P>An <A HREF="design.html#event client">event client</A> can have
+zero or more busy interface objects, one of which it can pass to the
+<A HREF="design.html#event server">event server</A> when requesting
+events from it.</P>
+
+<P>A busy interface class must define the following public methods:</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_orange_icon.gif" ALT="Should not be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+bool
+is_busy(void) const</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Return <SPAN class="code">true</SPAN> when the interface is <I>busy</I>, <SPAN class="code">false</SPAN> otherwise.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_orange_icon.gif" ALT="Should not be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+void
+set_busy(void)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Increment the <I>busy depth</I> counter: Marks the interface busy.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_orange_icon.gif" ALT="Should not be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+void
+unset_busy(void)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Decrement the <I>busy depth</I> counter: The object becomes
+	<I>not busy</I> when the <SPAN class="code">unset_busy</SPAN> method is called
+	as often as the <SPAN class="code">set_busy</SPAN> method was called before.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_orange_icon.gif" ALT="Should not be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTREQUESTBASE&gt;
+  void
+  queue(EVENTREQUESTBASE* event_request, typename EVENTREQUESTBASE::event_type_ct const&amp; event_type)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Queue the event until the object becomes <I>not busy</I>, then call <SPAN class="code">event_request-&gt;rehandle(event_type)</SPAN>.<BR>
+	This method should also take care to call the pair <SPAN class="code">event_request-&gt;add_reference()</SPAN> and
+	<SPAN class="code">event_request-&gt;release()</SPAN>, see <A HREF="#add_reference">below</A>.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P>When an event occurs for a client that provided a busy interface,
+then the <SPAN class="code">is_busy()</SPAN> method is called; when this method
+returns <SPAN class="code">false</SPAN> then first the <SPAN class="code">set_busy()</SPAN>
+method is called, then the call back function of the client is called
+and finally the <SPAN class="code">unset_busy()</SPAN> method is called.&nbsp;
+If <SPAN class="code">is_busy()</SPAN> returned <SPAN class="code">true</SPAN> however, then the
+<SPAN class="code">queue()</SPAN> method is called.</P>
+
+<A NAME="event_request_base_tct"></A>
+<H3>2.2.3 <SPAN class="H3code">template&lt;class EVENTTYPE&gt; class event_request_base_tct</SPAN></H3>
+
+<P>This class is only needed when you design a new <A HREF="#EventServer">EventServer</A> class.&nbsp;
+It is an abstract class, used as base class for event request objects,
+and needs to be passed to the event server as the <SPAN class="code">EVENTREQUESTBASE</SPAN> template parameter.</P>
+
+<P>You will need to derive your own <A HREF="#EventRequestBase">EventRequestBase</A>
+class from this class when you want to use specific <I>event request
+data</I>, see <A HREF="#request data">below</A>.</P>
+
+<P><A NAME="add_reference"></A>Class event_request_base_tct defines
+the following public methods:</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_orange_icon.gif" ALT="Should not be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+void
+add_reference(void)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Increments the <I>reference counter</I>.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_orange_icon.gif" ALT="Should not be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+void
+release(void)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Decrements the <I>reference counter</I> counter: The object is
+	deleted when the <SPAN class="code">release</SPAN> method is called once more
+	often than the <SPAN class="code">add_reference</SPAN> method was called.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P>Usually, <SPAN class="code">add_reference()</SPAN> and <SPAN class="code">release()</SPAN>
+will be called as a pair as part of the queuing mechanism of a busy interface class.&nbsp;
+The method <SPAN class="code">release()</SPAN> is always called
+after a request is <A HREF="#handle">handle()</A>-ed.</P>
+
+<P>Further more, the following type is defined:</P>
+
+</DIV> <!-- normal -->
+<DL>
+<DD>
+<TABLE CELLPADDING=2 CELLSPACING=2>
+  <TR>
+    <TD>
+      <P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+    </TD>
+    <TD>
+      <PRE class="code">event_type_ct</PRE>
+    </TD>
+  </TR>
+  <TR>
+    <TD></TD>
+    <TD>
+      Defined as <SPAN class="code">typedef EVENTTYPE event_type_ct;</SPAN><BR>where
+      <SPAN class="code">EVENTTYPE</SPAN> is the template parameter defining the
+      <A HREF="design.html#event type">event type</A> of this server.
+    </TD>
+  </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P><A NAME="handle"></A>Finally, class event_request_base_tct is an
+interface, defining the virtual functions:</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+virtual void
+handle(EVENTTYPE const&amp; event_type) = 0</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Passes <SPAN class="code">event_type</SPAN> to the client by calling its
+	call back function, or queues the event when the client is busy.&nbsp;
+	This method takes care of calling <SPAN class="code">set_busy()</SPAN> /
+	<SPAN class="code">unset_busy()</SPAN>.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+virtual void
+rehandle(EVENTTYPE const&amp; event_type) = 0</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Passes <SPAN class="code">event_type</SPAN> to the client by calling its
+	call back function.&nbsp; This method is only called when the client
+	just became <I>not busy</I> but still is marked as <I>busy</I>!
+	So no extra calls to <SPAN class="code">set_busy()</SPAN> and <SPAN class="code">unset_busy()</SPAN>
+	are performed.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P>You should not override or call these two functions.</P>
+
+<A NAME="event_request_queue_tct"></A>
+<H3>2.2.4 <SPAN class="H3code">template&lt;class EVENTREQUESTBASE&gt; class event_request_queue_tct;</SPAN></H3>
+
+<P>This is the default <SPAN class="code">EVENTREQUESTQUEUE</SPAN> template
+parameter of <A HREF="#event_server_tct">event_server_tct</A> and <A HREF="#event_data_server_tct">event_data_server_tct</A>.&nbsp
+It stores requests in a STL <SPAN class="code">deque</SPAN>.&nbsp;
+All requests are handled, in the same order as that they were added, when the <SPAN class="code">trigger()</SPAN>
+method is called.</P>
+
+<P>Click <A HREF="#EventRequestQueue">here</A> for information on
+what a custom <SPAN class="code">EVENTREQUESTQUEUE</SPAN> must provide.</P>
+
+<P>Class event_request_queue_tct has one public method:</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+void
+trigger(typename EVENTREQUESTBASE::event_type_ct const&amp; event_type);</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Calls <SPAN class="code"><A HREF="#handle">handle</A>(event_type)</SPAN>
+	for all queued request objects in the same order as the requests
+	were added.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<A NAME="event_server_tct"></A>
+<H3>2.2.5 <SPAN class="H3code">template&lt;class EVENTREQUESTBASE, class EVENTREQUESTQUEUE&gt; class event_server_tct</SPAN></H3>
+
+<P>This class defines an interface for requesting events <I>without</I>
+<A HREF="#request data">request data</A>, by means of four overloaded
+<SPAN class="code">operator()</SPAN> template methods:</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT&gt;
+  void
+  operator()(EVENTCLIENT&amp; ec,
+             void (EVENTCLIENT::*em)(event_type_ct const&amp;))</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Request to call back function <SPAN class="code">ec.em(event_type)</SPAN>.&nbsp;
+	Does not use a busy interface or a cookie.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT, class BUSYINTERFACE&gt;
+  void
+  operator()(EVENTCLIENT&amp; ec,
+             void (EVENTCLIENT::*em)(event_type_ct const&amp;),
+	     BUSYINTERFACE&amp; bi)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Request to call back function <SPAN class="code">ec.em(event_type)</SPAN>.&nbsp;
+	Use busy interface <SPAN class="code">bi</SPAN>.&nbsp;
+	Does not use a cookie.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" "Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT, class REQUESTCOOKIE&gt;
+  void
+  operator()(EVENTCLIENT&amp; ec,
+             void (EVENTCLIENT::*em)(event_type_ct const&amp;, REQUESTCOOKIE),
+	     REQUESTCOOKIE cookie)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Request to call back function <SPAN class="code">ec.em(event_type, cookie)</SPAN>.&nbsp;
+	Does not use a busy interface.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT, class REQUESTCOOKIE, class BUSYINTERFACE&gt;
+  void
+  operator()(EVENTCLIENT&amp; ec,
+             void (EVENTCLIENT::*em)(event_type_ct const&amp;, REQUESTCOOKIE),
+	     REQUESTCOOKIE cookie,
+	     BUSYINTERFACE&amp; bi)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Request to call back function <SPAN class="code">ec.em(event_type, cookie)</SPAN>.&nbsp;
+	Use busy interface <SPAN class="code">bi</SPAN>.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P><SPAN class="code">EVENTCLIENT</SPAN>, <SPAN class="code">REQUESTCOOKIE</SPAN> and
+<SPAN class="code">BUSYINTERFACE</SPAN> can be any arbitrary class type, although
+<SPAN class="code">BUSYINTERFACE</SPAN> must provide the necessary methods of course.&nbsp;
+In general, the provided <A HREF="#busy_interface_ct">busy_interface_ct</A> will be sufficient.</P>
+
+<P>The <SPAN class="code">REQUESTCOOKIE</SPAN>
+object is copied into the request object and returned with <SPAN class="code">em()</SPAN>,
+the call back function, when the request is being handled.</P>
+
+<A NAME="event_data_server_tct"></A>
+<H3>2.2.6 <SPAN class="H3code">template&lt;class EVENTREQUESTBASE, class EVENTREQUESTQUEUE&gt; class event_data_server_tct</SPAN></H3>
+
+<P>This class defines an interface for requesting events <I>with</I>
+request data, by means of four overloaded <SPAN class="code">operator()</SPAN> template methods.&nbsp;
+It is completely identical with class <A HREF="#event_server_tct">event_server_tct</A> above, except that
+the first parameter of the <SPAN class="code">operator()</SPAN> methods is of type
+<SPAN class="code">EVENTREQUESTBASE::<A HREF="#request data">event_request_data_ct</A></SPAN>
+and will be passed as initialization data to the constructor of
+<SPAN class="code"><A HREF="#EventRequestBase">EVENTREQUESTBASE</A></SPAN>.</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT&gt;
+  void
+  operator()(typename EVENTREQUESTBASE::event_request_data_ct rd,
+             EVENTCLIENT&amp; ec,
+	     void (EVENTCLIENT::*em)(event_type_ct const&amp;));</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Pass <I>request data</I> <SPAN class="code">rd</SPAN> with request to call
+	back function <SPAN class="code">ec.em(event_type)</SPAN>.&nbsp;
+	Does not use a busy interface or a cookie.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+      <P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT, class BUSYINTERFACE&gt;
+  void
+  operator()(typename EVENTREQUESTBASE::event_request_data_ct rd,
+             EVENTCLIENT&amp; ec,
+	     void (EVENTCLIENT::*em)(event_type_ct const&amp;),
+	     BUSYINTERFACE&amp; bi);</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Pass <I>request data</I> <SPAN class="code">rd</SPAN> with request to call
+	back function <SPAN class="code">ec.em(event_type)</SPAN>.&nbsp;
+	Use busy interface <SPAN class="code">bi</SPAN>.&nbsp;
+	Does not use a cookie.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT, class REQUESTCOOKIE&gt;
+  void
+  operator()(typename EVENTREQUESTBASE::event_request_data_ct rd,
+             EVENTCLIENT&amp; ec,
+	     void (EVENTCLIENT::*em)(event_type_ct const&amp;, REQUESTCOOKIE),
+	     REQUESTCOOKIE cookie);</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Pass <I>request data</I> <SPAN class="code">rd</SPAN> with request to call
+	back function <SPAN class="code">ec.em(event_type, cookie)</SPAN>.&nbsp;
+	Does not use a busy interface.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+	<P>&nbsp;</P>
+      </TD>
+      <TD VALIGN=TOP></TD>
+    </TR>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_red_icon.gif" ALT="Must never be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+template&lt;class EVENTCLIENT, class REQUESTCOOKIE, class BUSYINTERFACE&gt;
+  void
+  operator()(typename EVENTREQUESTBASE::event_request_data_ct rd,
+             EVENTCLIENT&amp; ec,
+	     void (EVENTCLIENT::*em)(event_type_ct const&amp;, REQUESTCOOKIE),
+	     REQUESTCOOKIE cookie,
+	     BUSYINTERFACE&amp; bi)</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Pass <I>request data</I> <SPAN class="code">rd</SPAN> with request to call
+	back function <SPAN class="code">ec.em(event_type, cookie)</SPAN>.&nbsp;
+	Use busy interface <SPAN class="code">bi</SPAN>.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P>Note the difference between <A HREF="#request data">event_request_data_ct</A>
+and <SPAN class="code">REQUESTCOOKIE</SPAN>:&nbsp; The first is a fixed type
+determined by the developer of the event server.&nbsp;
+<SPAN class="code">REQUESTCOOKIE</SPAN> is arbitrary and can differ from request to request.&nbsp;
+The Cookie object is returned to the caller, while the request data is
+not; and vica versa, the Cookie object is not available to the event
+server code while the request data can be used in (for example) the
+<A HREF="design.html#event trigger">trigger</A> method.</P>
+
+<A NAME="EventServer classes"></A>
+<H2>2.3 <SPAN class="H2code">EventServer</SPAN> classes</H2>
+
+<P>Defining a new Event Server involves the definition of, at most,
+five classes:</P>
+
+<PRE class="code">
+class EventData
+class EventType
+class EventRequestBase
+class RequestQueue
+class EventServer
+</PRE>
+
+<A NAME="EventData"></A>
+<H3>2.3.1 <SPAN class="H3code">EventData</SPAN></H3>
+
+<P>Libcw makes no distinction between EventData and EventType: Only EventType is used.&nbsp;
+EventData merely contains data and operators that work on that data,
+while EventType must be an unique type, devoted to this specific EventServer.&nbsp;
+EventType can be derived from EventData allowing to use EventData also for other purposes (like other event servers).</P>
+
+<A NAME="EventType"></A>
+<H3>2.3.2 <SPAN class="H3code">EventType</SPAN></H3>
+
+<P>This class is specific for this EventServer, hence the use of the word <I>type</I>.&nbsp;
+However, you will mostly consider it to be <I>data</I>,
+and that is correct because it should be derived from EventData.&nbsp;
+EventType is the type that is passed from the event server to the event client, as parameter of the call back function.&nbsp;
+While the type can be any arbitrary object, it should be noted that it is passed as a <SPAN class="code">const</SPAN> reference.&nbsp;
+This means that you can't change it until you copied it.&nbsp;
+It might be obvious why a reference is passed, and not a copy, while that is faster.&nbsp;
+The reason it has to be <SPAN class="code">const</SPAN> is that the same object is passed to every client that requested the event.</P>
+
+<A NAME="EventRequestBase"></A>
+<H3>2.3.3 <SPAN class="H3code">EventRequestBase</SPAN></H3>
+
+<P>For every request made by a client, a request object needs to be stored in a queue.&nbsp;
+The created objects are of different types however: Different clients, different call back functions, different
+busy interfaces if any and different cookies if any.&nbsp;
+Therefore we can only store a pointer in the queue: A pointer to the base class of the request object.&nbsp;
+EventRequestBase is this base class, allowing you to control the objects available in the request queue.</P>
+
+<P>The EventRequestBase must be derived from <A HREF="#event_request_base_tct">event_request_base_tct</A>.</P>
+
+<A NAME="request data"></A>
+<P><B>Request data</B></P>
+
+<P>It is possible to add extra attributes to the EventRequestBase:
+You can add one object which will be initialized with data provided by the client, when the client issues its request.&nbsp;
+In order to do so, you need to define the type <SPAN class="code">event_request_data_ct</SPAN> inside
+your EventRequestBase class and provide a constructor that takes that
+type as single parameter.</P>
+
+<P class="example">Example:</P>
+
+<PRE class="example-code">
+class MyEventType { /* ... */ };
+
+class MyEventRequestBase: public event_request_base_tct&lt;MyEventType&gt; {
+  typedef struct timeval event_request_data_ct;
+private:
+  struct timeval t;
+public:
+  MyEventRequestBase(struct timeval a) : t(a) { }
+};
+</PRE>
+
+<P>In order to let the event server create request objects with this
+constructor, one must use <A HREF="#event_data_server_tct"><SPAN class="code">event_data_server_tct</SPAN></A>.&nbsp;
+Class <A HREF="#event_server_tct"><SPAN class="code">event_server_tct</SPAN></A> will call the
+default constructor of EventRequestBase.</P>
+
+<A NAME="EventRequestQueue"></A>
+<H3>2.3.4 <SPAN class="H3code">EventRequestQueue</SPAN></H3>
+
+<P>This object is a base class for the event server.&nbsp;
+It must store requests and call the <SPAN class="code"><A HREF="#handle">handle()</A></SPAN>
+method of the requests when they are triggered (optionally deleting
+requests after that by calling their <SPAN class="code">release()</SPAN> method).</P>
+
+<P>When the object is destructed, it must call the <SPAN class="code"><B>release()</B></SPAN>
+method of all requests that are still stored.</P>
+
+<P>An EventRequestQueue class must define one protected method:</P>
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+	<P><IMG src="../images/ball_green_icon.gif" ALT="May be overridden" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+	<PRE class="code">
+void
+add_request(EventRequestBase*);</PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD></TD>
+      <TD>
+	Store the request pointer.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P class="example">Example:</P>
+
+<PRE class="example-code">
+class MyEventRequestQueue {
+  typedef priority_queue&lt;MyEventRequestBase*, list&lt;MyEventRequestBase*&gt;, ptr_greater&gt; event_requests_ct;
+private:
+  event_requests_ct event_requests;
+  ~MyEventRequestQueue();
+public:
+  struct again* it_happened(int hard);  /* (arbitrary) trigger method */
+protected:
+  void add_request(MyEventRequestBase* er) { event_requests.push(er); }
+};
+
+MyEventRequestQueue::~MyEventRequestQueue()
+{
+  while (!event_requests.empty())
+  {
+    event_requests.top()-&gt;release();
+    event_requests.pop();
+  }
+}
+</PRE>
+
+<P class="example">Here <SPAN class="code">ptr_greater</SPAN> is a function object that sorts the priority queue.</P>
+
+<P>For a working example of an event server that uses a priority queue, see libcw/timing.h.</P>
+
+<A NAME="EventServer"></A>
+<H3>2.3.5 <SPAN class="H3code">EventServer</SPAN></H3>
+
+<P>EventServer is basically just a typedef.&nbsp;
+Depending on whether or not you use <I>request data</I>, one defines this type as:</P>
+
+<PRE class="code">
+typedef event_server_tct&lt;EventRequestBase, EventRequestQueue&gt; EventServer;
+</PRE>
+
+<P>or as</P>
+
+<PRE class="code">
+typedef event_data_server_tct&lt;EventRequestBase, EventRequestQueue&gt; EventServer;
+</PRE>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

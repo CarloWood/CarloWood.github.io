@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: timing.html,v 1.10 2000/08/03 13:53:05 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<P><IMG width=247 height=63 src="../images/UnderConstruction.gif" alt="This page is incomplete and being changed daily" align=bottom border=0></P>
+
+<H1>Timing</H1>
+
+<HR SIZE=1 NOSHADE>
+
+<A name="intro"></A>
+<H2>3.1 Introduction</H2>
+
+<P>An application based on libcw is event driven.&nbsp;
+All events that need queueing are dispatched from the <I>main loop</I>,
+meaning that during the processing of such an event all other events are blocked until the processing has finished and
+the application returns to the main loop.&nbsp;
+An advantage of this is that there is no need for locking, as is needed with threading.&nbsp;
+The disadvantage is that the accuracy of <EM>timing</EM> depends on the rather arbitrary duration of these
+event-handling cycles.</P>
+
+<A name="main loop"></A>
+<H2>3.2 Main loop</H2>
+
+<P>The <I>main loop</I> of the libcw application processes events in the following order:</P>
+
+<UL>
+<LI>Handle <A HREF="signals.html">signal events</A></LI>
+<LI>Delete device objects marked for removal</LI>
+<LI>Leave main loop if requested</LI>
+<LI>Handle <I>timer events</I></LI>
+<LI>Handle output events</LI>
+<LI>Handle input events</LI>
+</UL>
+
+<A name="timer event server"></A>
+<H2>3.3 The timer event server</H2>
+
+<H5 class="function"><a name="timer_event_server_ct"></a>
+<PRE>timer_event_server_ct</PRE></H5>
+
+<P>Libcw treats timer events as <A HREF="../events/toc.html">events</A>.&nbsp;
+The <A HREF="../events/design.html#event server">event server</A>
+for timer events is a <A HREF="../global/global.html#Singleton">singleton</A>, its instance can be accessed through the static method
+<SPAN class="code">timer_event_server_ct::<A HREF="../global/global.html#Singleton::instance">instance</A>()</SPAN>.&nbsp;
+The <I>timer event server</I> accepts <A HREF="../events/interface.html#request data">request data</A>
+of type<SPAN class="code"> struct timeval</SPAN>.</P>
+
+<P>As with all <A HREF="../events/toc.html">events</A>, a <A HREF="../events/design.html#busy interface">busy interface</A>
+and/or a <A HREF="../events/design.html#cookies">cookie</A> can be passed to the
+<A HREF="#timerRequest"><SPAN class="code">timerRequest</SPAN></A> call as needed
+(see also chapter Events <A HREF="../events/interface.html#event_data_server_tct">&sect;2.2.6</A>).</P>
+
+<A NAME="requesting"></A>
+<H2>3.4 Requesting timer events</H2>
+
+<A NAME="request data"></A>
+<H3>3.4.1 The request data</H3>
+
+<P>The <A HREF="../events/interface.html#request data">request data</A> is a <SPAN class="code">struct timeval</SPAN>: the interval to
+wait before using the callback function.&nbsp;
+The timer event will not occur before
+<SPAN class="code">timer_event_server_ct::instance().get_now()</SPAN> <EM>plus</EM> the given interval.&nbsp;
+It is guaranteed that <EM>after</EM> that time no new <TT>IO</TT> events are handled before the timer event is delivered to the event client
+(or its busy interface).&nbsp;
+Timer events that are requested to expire at the <EM>same</EM> time are handled in an undefined order.</P>
+
+<A NAME="timerRequest"></A>
+<H3>3.4.2 The <SPAN class="H3code">timerRequest</SPAN> macro</H3>
+
+<P>The <A HREF="../events/interface.html">event interface</A> uses
+<A HREF="../events/interface.html#event_data_server_tct"><SPAN class="code">operator()</SPAN></A> to register event requests.&nbsp;
+Because the timer server is a <A HREF="../global/global.html#Singleton">singleton</A>,
+one must use the rather obnoxious looking code
+(where <SPAN class="code">Foo::foo</SPAN> is an event client and <SPAN class="code">Foo::timed_out(timer_event_type_ct const&amp;)</SPAN>
+the callback function)</P>
+
+<PRE class="code">
+  struct timeval interval = { 5, 0 };
+  (timer_event_server_ct::instance())(interval, foo, &amp;Foo::timed_out);
+</PRE>
+
+<P>In order to make such expressions more readable, libcw defines the macro <SPAN class="code">timerRequest</SPAN></P>
+
+<PRE class="code">
+#define timerRequest (timer_event_server_ct::instance())
+</PRE>
+
+<P>allowing the developer to request timer events with better looking code</P>
+
+<PRE class="code">
+  timerRequest(interval, foo, &amp;Foo::timed_out);
+</PRE>
+
+<P>Read <A HREF="signals.html#macro">here</A> why a macro is prefered over a function call in this case.</P>
+
+<P class="example">For example, suppose you wish to request member function
+<SPAN class="code">template&lt;typename COOKIE&gt; void Foo::timed_out(timer_event_type_ct const&amp; expired_at, COOKIE cookie);</SPAN>
+of object <SPAN class="code">foo</SPAN> to be called with an <SPAN class="code">int</SPAN> <SPAN class="code">cookie</SPAN>,
+60&nbsp;seconds after <I>now</I>.&nbsp; Then you'd write:</P>
+
+<PRE class="example-code">
+Foo foo;
+int cookie = 123;
+struct timeval interval = { 60, 0 };
+
+timerRequest(interval, foo, &amp;Foo::timed_out&lt;int&gt;, cookie);
+</PRE>
+
+<A NAME="receiving"></A>
+<H2>3.5 Receiving timer events</H2>
+
+<A NAME="timer_event_data_ct"></A>
+<H3>3.5.1 <SPAN class="H3code">class timer_event_data_ct</SPAN></H3>
+
+<P>The <A HREF="#timer_event_type_ct">event type</A> reference that is passed as parameter to the callback function
+(the &laquo;<SPAN class="code">Foo::timed_out</SPAN>&raquo; above), is <EM>derived</EM> from
+<SPAN class="code">class timer_event_data_ct</SPAN>.</P>
+
+<H5 class="function">
+<PRE>struct timeval timer_event_data_ct::get_expire_time(void) const</PRE>
+</H5>
+
+<P>Returns the time at which this event should have expired.&nbsp;
+The real time (<SPAN class="code">timer_event_server_ct::instance().get_now()</SPAN>)
+will always be larger.</P>
+
+<A NAME="timer_event_type_ct"></A>
+<H3>3.5.2 <SPAN class="H3code">class timer_event_type_ct</SPAN></H3>
+
+<P>This is the unique <A HREF="../events/interface.html#EventType">event type</A> of <SPAN class="code">timer_event_server_ct</SPAN> which
+is passed to the callback function.&nbsp;
+It is derived from <A HREF="#timer_event_data_ct"><SPAN class="code">timer_event_data_ct</SPAN></A>
+and doesn't have any extra data or methods.</P>
+
+<P class="example">For example, the callback function <SPAN class="code">timed_out&lt;typename COOKIE&gt;</SPAN>
+from the previous example could be defined like:</P>
+
+<PRE class="example-code">
+template&lt;typename COOKIE&gt;
+  void Foo::timed_out(timer_event_type_ct const&amp; expired_at, COOKIE cookie)
+  {
+    Dout( dc::notice,
+        "It should be a little past " &lt;&lt; expired_at.get_expire_time() &lt;&lt; " now. "
+        "I got the cookie: " &lt;&lt; cookie );
+  }
+</PRE>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

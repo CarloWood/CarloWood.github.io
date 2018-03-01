@@ -1,0 +1,31 @@
+/* Style Sheets for tutorial */
+
+P { width: 500pt; }
+P.download { font-size: 80%; }
+H2 { color: rgb(62, 122, 242); }
+DIV.faq-frame {
+  border-style: solid;
+  border-bottom-width: 1pt;
+  border-left-width: 5pt;
+  background-color: rgb(240, 240, 224);
+  padding-bottom: 0.50cm;
+  margin-bottom: 0.10cm;
+}
+SPAN.faqH {
+  margin-top: 0.50cm;
+  margin-left: 0.50cm;
+  margin-bottom: 0.0cm;
+  font-size: 14pt;
+  font-weight: bold;
+  color: rgb(57, 36, 188);
+}
+UL.faq {
+  font-size: 12pt;
+}
+UL LI {
+  font-size: 12pt;
+}
+.highlight {
+  font-weight: normal;
+  color: red;
+}

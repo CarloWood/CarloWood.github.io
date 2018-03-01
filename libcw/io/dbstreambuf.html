@@ -1,0 +1,704 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: dbstreambuf.html,v 1.13 2000/08/04 20:18:55 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<H1>Dynamic Blocks stream buffer</H1>
+
+<HR SIZE=1 NOSHADE>
+
+<A name="intro"></A>
+<H2>2.1 Introduction</H2>
+
+<A name ="About"></A>
+<H3>2.1.1 About this chapter</H3>
+
+<P>This chapter describes class <SPAN class="code">dbstreambuf_ct</SPAN>,
+which is derived from the ANSI/ISO C++ class <SPAN class="code">streambuf</SPAN>.</P>
+
+<P>Seldom a class is derived from <SPAN class="code">streambuf</SPAN>;
+chances are that you never used anything else for stream buffering
+than the standard <I>streambuf</I> class from your C++ library.</P>
+
+<P>The knowledge needed to understand and work with a streambuf class
+(a class derived from streambuf) is too large to be covered in this
+chapter, hence a basic knowledge about stream buffers is presumed.&nbsp;
+If you have no idea what a streambuf is and don't want to know it,
+then you can skip this chapter: It will not be of concern to you.</P>
+
+<A name ="wchar_t"></A>
+<H3>2.1.2 No <SPAN class="H3code">wchar_t</SPAN></H3>
+
+<P>For historical reasons a <I>streambuf</I> controls input from and
+output to <I>character</I> sequences.&nbsp; ANSI/ISO C++ supports both <I>char</I>
+and <I>wchar_t</I> by defining the template basic_streambuf&lt;class charT&gt;
+and defining streambuf with:<BR>
+<SPAN class="code">typedef basic_streambuf&lt;char&gt;     streambuf;</SPAN><BR>
+Libcw is currently not supporting <I>wchar_t</I> because at the time
+of writing there is no good libstdc++ available.&nbsp;
+This will change in the future.</P>
+
+<A name ="versus"></A>
+<H3>2.1.3 Text versus binary</H3>
+
+<P>A function which converts an arbitrary
+<I>type</I> into a <I>series</I> of characters is called a <I>serializer</I>.&nbsp;
+If this is done in order to store an object of that <I>type</I> to disk for
+instance, then no information should be lost, but that is not a condition.&nbsp;
+Later it would be possible to <I>restore</I> that object by reading the series
+of characters in and translating it back to its original <I>type</I>.&nbsp;
+Such a series could be <I>text</I> or it could be <I>binary</I>.&nbsp;
+There is no big difference between text and binary, at least
+not from a technical point of view.&nbsp; But usually a <I>text</I> representation
+is mostly readable and usually doesn't contain the character
+<SPAN class="code">'\0'</SPAN>.&nbsp; Moreover, a <I>binary</I> representation will in general
+use much fewer bytes then a <I>text</I> representation.</P>
+
+<A name ="inserters"></A>
+<H3>2.1.4 Inserters: text representation</H3>
+
+<P>The <I>inserter</I> function
+<SPAN class="code">ostream&nbsp;&amp; operator&lt;&lt;(ostream&amp;,&nbsp;<I>type</I>)</SPAN>
+is a <I>serializer</I>: It converts <I>type</I> into a series of characters
+and these characters are written to a <I>streambuf</I>.&nbsp; The role of ostream
+is to provide a hook to the streambuf class and to store some information about
+how to serialize internal types.&nbsp;
+All predefined <SPAN class="code">ostream&amp;&nbsp;operator&lt;&lt;</SPAN> inserters for the internal types convert into a (readable) text
+representation. As a programmer you seldom write to the streambuf yourself:
+Instead you convert your objects into a representation with internal types
+and use existing inserters to write to the streambuf object.&nbsp;
+As a result, the inserter functions &lt;&lt; usually serialize into a <I>text</I> representation.&nbsp;
+The functions <SPAN class="code">istream&amp; operator&gt;&gt;</SPAN> <I>read</I> from a
+streambuf and should obviously expect and understand this text
+representation.</P>
+
+<A name ="streambuf"></A>
+<H3>2.1.5 The<SPAN class="H3code"> streambuf </SPAN>interface</H3>
+
+<P>The interface of a <SPAN class="code">streambuf</SPAN> for reading and writing is purely <I>binary</I>.&nbsp;
+A streambuf has functions to read from the <I>get area</I> and functions to write to the <I>put area</I>.&nbsp;
+An <I>area</I> is a contiguous block in memory.&nbsp;
+The use of areas allows for the option of non-contiguous buffers.&nbsp;
+It can consist of multiple memory <I>blocks</I>, or it could be circular for instance.</P>
+
+<A name ="interface design"></A>
+<H2>2.2 Interface design of <SPAN class="H2code">dbstreambuf_ct</SPAN></H2>
+
+<P>The normal <SPAN class="code">streambuf</SPAN> object represents a <B>single</B> buffer.&nbsp;
+This is not a problem when you are writing to a device that is write-only
+(an <SPAN class="code">ostream</SPAN>) or reading from a device that is read-only
+(an <SPAN class="code">istream</SPAN>), see figure 1.</P>
+
+<CENTER>
+<IMG width=192 height=351 src="../images/dbstreambuf_interface1.png"><BR CLEAR=ALL>
+</CENTER>
+<P STYLE="margin-left: 20; margin-right: 20">Figure 1. The interfaces of a single streambuf object as needed
+for <SPAN class="code">ostream</SPAN> and <SPAN class="code">istream</SPAN> objects.&nbsp;
+For instance, for a write-only device the read interface would be used by the device
+while the write interface would be used by <SPAN class="code">ostream&amp;</SPAN>
+<SPAN class="code">operator&lt;&lt;</SPAN> functions.</P>
+
+<P>A problem occurs when you use an <SPAN class="code">iostream</SPAN>.&nbsp;
+An <SPAN class="code">iostream</SPAN> is derived using multiple inheritance,
+from <SPAN class="code">ostream</SPAN> and <SPAN class="code">istream</SPAN> that share
+their virtual base class <SPAN class="code">ios</SPAN> which keeps the pointer to the
+<SPAN class="code">streambuf</SPAN>.&nbsp;
+As a result, an <SPAN class="code">iostream</SPAN> uses <B>the same buffer</B> for input <I>and</I> output!
+For a device like a non-blocking socket this is disastrous.&nbsp;
+This is one of the reasons that libcw needs to define its own streambuf
+class: we need two buffers per <SPAN class="code">iostream</SPAN> object.</P>
+
+<P>Given the facts that
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+        <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+        an iostream points to a single streambuf,
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+        <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+        a single streambuf has one interface for writing and one interface for reading,
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+        <P><IMG src="../images/ball_yellow_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+        and an iostream needs two buffers, one for reading and one for writing.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+we conclude:
+
+</DIV> <!-- normal -->
+<DL>
+  <DD>
+  <TABLE CELLPADDING=2 CELLSPACING=2>
+    <TR>
+      <TD>
+        <P><IMG src="../images/ball_green_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+        One streambuf contains one buffer in order to keep a balance between the number of buffers and number of read/write interfaces.
+      </TD>
+    </TR>
+    <TR>
+      <TD>
+        <P><IMG src="../images/ball_green_icon.gif" ALIGN=BOTTOM WIDTH=14 HEIGHT=14 BORDER=0></P>
+      </TD>
+      <TD>
+        The <I>put area</I> and <I>get area</I> of the streambuf that an iostream points to need to belong to <I>different</I> buffers.
+      </TD>
+    </TR>
+  </TABLE>
+</DL>
+<DIV class="normal">
+
+<P>And from that we finally conclude that an iostream needs <B>two</B>
+streambuf objects with crosslinked put/get area pointers.&nbsp;
+This is shown in figure 2.</P>
+
+<CENTER>
+<IMG width=450 height=352 src="../images/dbstreambuf_interface2.png"><BR CLEAR=ALL>
+</CENTER>
+
+<P STYLE="margin-left: 20; margin-right: 20">Figure 2. The crosslinked interfaces of two streambuf objects as needed
+for <SPAN class="code">iostream</SPAN> objects.&nbsp; The interface of <SPAN class="code">streambuf</SPAN>
+1 is used by the operators <SPAN class="code">&lt;&lt;</SPAN> and <SPAN class="code">&gt;&gt;</SPAN>
+while the interface of <SPAN class="code">streambuf</SPAN> 2 is be used by a device.</P>
+
+<A NAME="buffer design"></A>
+<H2>2.3 Buffer design of <SPAN class="H2code">dbstreambuf_ct</SPAN></H2>
+
+<P>The internal buffer is a deque of allocated memory blocks.&nbsp;
+Data is written to the last memory block in the deque, until the end of the block is reached.&nbsp;
+At that moment a new block is allocated and inserted at the end of the deque.&nbsp;
+Note that if the buffer becomes empty the put area is reset to the
+beginning of the current block; so if reading keeps pace with writing
+then allocation of new blocks is not necessary.</P>
+
+<P>When a new block needs to be allocated then its size is calculated to be the number of unread
+bytes stored in the buffer at that moment, rounded up to the nearest typical malloc size.&nbsp;
+The latter causes no memory to be wasted.</P>
+
+<P>Data is never moved in memory.&nbsp;
+This makes <SPAN class="code">dbstreambuf_ct</SPAN> as fast as possible: All data is at most written once and reading is done
+by providing a pointer that points directly into the buffer.&nbsp;
+The only exception is when a <I>message</I> is read from the buffer that crosses a block boundary.&nbsp;
+In that case a temporal block is allocated and the message is copied to this
+block in order to make it contiguous.&nbsp;
+Note that by specifying a <I>minimum block size</I> that is significantly
+larger than the average message length that will be read, the extra overhead
+because of this will be negligible.</P>
+
+<A name ="types"></A>
+<H2>2.4 Input, Output and Link buffer</H2>
+
+<P>The reason that the same class is used for both input and output buffering
+is that it is easier to maintain: There is no duplicated code.&nbsp;
+Having the same interface for input and output buffers turns out to be very confusing however.&nbsp;
+Another disadvantage of using the same type for input and output buffers is that they can be confused by accident.&nbsp;
+Therefore all methods except the accessors are protected and two new classes are derived from <SPAN class="code">dbstreambuf_ct</SPAN>
+that implement a public and more intuitive input and output interface.</P>
+
+<A NAME="interface"></A>
+<P>For a correct understanding it is important to realize that the difference between an input and output buffer is purely semantic:
+There is no <EM>real</EM> difference between an input buffer and an output buffer.&nbsp;
+Only the <EM>interface</EM> has been restricted in order to make the use in its own class less error prone.</P>
+
+<P>There is a third class of buffers that is needed however.&nbsp;
+While an input buffer allows to read from a device, it can not write to a device (and vica versa for an output buffer).&nbsp;
+Sometimes two devices need to be <EM>linked</EM>:
+They need to share the same buffer, one device will write to this buffer while the other device reads from that same buffer.&nbsp;
+We will call this type of <EM>buffer interface</EM> a link buffer.</P>
+
+<A NAME="input_buffer_ct"></A>
+<H3>2.4.1 <SPAN class="H3code">input_buffer_ct</SPAN></H3>
+
+<P>The <SPAN class="code">input_buffer_ct</SPAN> is used to buffer data that is read from a device.&nbsp;
+This means that apart from the normal access to the buffer via
+the <SPAN class="code">streambuf</SPAN> virtual functions and
+<SPAN class="code">istream&amp; operator&gt;&gt;()</SPAN>, we need an interface for
+<I>raw</I> read access and an interface that allows the device to
+write its data into the buffer.</P>
+
+<A NAME="input_buffer_ct::constructor"></A>
+<H4>2.4.1.1 Constructor</H4>
+
+<H5 class="function"><a name="input_buffer_ct::input_buffer_ct"></a>
+<PRE>input_buffer_ct::input_buffer_ct (size_t minimum_blocksize = default_input_buffer_blocksize_c,
+                                  size_t buffer_full_watermark = (size_t)-1,
+                                  size_t max_alloc = (size_t)-1)</PRE>
+</H5>
+
+<P>This constructs a dynamic, blocks input stream buffer.&nbsp;
+The minimum number of allocated bytes for one block of the buffer is <EM>minimum_blocksize</EM>.&nbsp;
+The maximum possible number of total allocated bytes of all blocks together is <EM>max_alloc</EM>.&nbsp;
+When this value is reached, <EM>overflow()</EM> will return <SPAN class="code">EOF</SPAN>.&nbsp;
+The accessor <EM>buffer_full()</EM> returns true when the number of buffered
+bytes in the input buffer exceed <EM>buffer_full_watermark</EM>.</P>
+
+<P>A new buffer always needs to be allocated with operator <SPAN class="code">new</SPAN>.</P>
+
+<A name ="input_buffer_ct::binary"></A>
+<H4>2.4.1.2 Binary read access</H4>
+
+<H5 class="function"><a name="input_buffer_ct::raw_gptr"></a>
+<PRE>char* input_buffer_ct::raw_gptr(void) const</PRE>
+</H5>
+
+<P>Calls <SPAN class="code">dbstreambuf_ct::igptr()</SPAN>:
+Returns a pointer to the start of the <I>get area</I> of the input buffer.</P>
+
+<H5 class="function"><a name="input_buffer_ct::raw_gbump"></a>
+<PRE>void input_buffer_ct::raw_gbump(int n)</PRE>
+</H5>
+
+<P>Calls <SPAN class="code">dbstreambuf_ct::igbump(n)</SPAN>:
+Advances the <I>get area</I> pointer of the input buffer by <I>n</I>.&nbsp;
+No error checking is done.</P>
+
+<H5 class="function"><a name="input_buffer_ct::raw_sgetn"></a>
+<PRE>size_t input_buffer_ct::raw_sgetn(char* s, size_t n)</PRE>
+</H5>
+
+<P>Returns <SPAN class="code">dbstreambuf_ct::ixsgetn(s, n)</SPAN>: Copies at most <I>n</I> characters from
+the input buffer to the character array <I>s</I> though not more than the number of characters that are in the buffer at that moment.&nbsp;
+Returns the number of characters actually copied.</P>
+
+<P>These three functions are typically called from
+<SPAN class="code">decode_input_ct::new_msg_received(size_t&nbsp;len,&nbsp;bool&nbsp;contiguous)</SPAN>
+or a reimplemented version of that virtual function.</P>
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+void my_input_ct::new_msg_received(size_t message_length, bool contiguous)
+{
+  if (contiguous)
+  {
+    char* get_pointer = ibuffer->raw_gptr();
+    ibuffer->raw_gbump(message_length);
+    decode(get_pointer, message_length);
+  }
+  else
+  {
+    char* tmp_msg_buf = new char[message_length];
+    AllocTag(tmp_msg_buf, "Buffer to make received message contiguous before decoding it.");
+    ibuffer->raw_sgetn(tmp_msg_buf, message_length);
+    decode(tmp_msg_buf, message_length);
+    delete [] tmp_msg_buf;
+  }
+}
+</PRE>
+
+<A NAME="input_buffer_ct::device"></A>
+<H4>2.4.1.3 The device interface</H4>
+
+<H5 class="function"><a name="input_buffer_ct::dev2buf_contiguous"></a>
+<PRE>size_t input_buffer_ct::dev2buf_contiguous(void) const</PRE>
+</H5>
+
+<P>Returns the number of contiguous characters that can be written
+directly to memory at the position returned by <SPAN class="code">dev2buf_ptr()</SPAN>.&nbsp;
+If this function returns zero, then call <SPAN class="code">dev2buf_contiguous_forced()</SPAN>.</P>
+
+<H5 class="function"><a name="input_buffer_ct::dev2buf_contiguous_forced"></a>
+<PRE>size_t input_buffer_ct::dev2buf_contiguous_forced(void)</PRE>
+</H5>
+
+<P>Returns the number of contiguous characters that can be written
+directly to memory at the position returned by <SPAN class="code">dev2buf_ptr()</SPAN>.&nbsp;
+This function does not return zero unless the buffer is full or 
+out of memory.</P>
+
+<H5 class="function"><a name="input_buffer_ct::dev2buf_ptr"></a>
+<PRE>char* input_buffer_ct::dev2buf_ptr(void) const</PRE>
+</H5>
+
+<P>Returns <SPAN class="code">streambuf::pptr()</SPAN>:
+Returns a pointer to the start of the <I>put area</I> of the input buffer.</P>
+
+<H5 class="function"><a name="input_buffer_ct::dev2buf_bump"></a>
+<PRE>void input_buffer_ct::dev2buf_bump(int n)</PRE>
+</H5>
+
+<P>Calls <SPAN class="code">streambuf::pbump(n)</SPAN>:
+Advances the <I>put area</I> pointer of the input buffer by <I>n</I>.&nbsp;
+No error checking is done.</P>
+
+<P>These four functions are typically called from <SPAN class="code">read_input_ct::read_from_fd(void)</SPAN>
+or a reimplemented version of that virtual function.</P>
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+void my_input_ct::read_from_fd(void)
+{
+  size_t contiguous_length, read_length;
+
+  if ((contiguous_length = ibuffer->dev2buf_contiguous()) == 0
+      &amp;&amp; (contiguous_length = ibuffer->dev2buf_contiguous_forced()) == 0)
+  {
+    reset_need_read();
+    return;
+  }
+  char* new_data = ibuffer->dev2buf_ptr();
+  if ((read_length = ::read(fd(), new_data, contiguous_length)) <= 0) { ... }
+  ibuffer->dev2buf_bump(read_length);
+  // ...
+}
+</PRE>
+
+<A name ="reducing"></A>
+<H4>2.4.1.4 Reducing the buffer size</H4>
+
+<H5 class="function"><a name="input_buffer_ct::reduce_buf_if_empty"></a>
+<PRE>void input_buffer_ct::reduce_buf_if_empty(void)</PRE>
+</H5>                                                                     
+
+<P>If the buffer is empty, reduces the buffer to a single block with the minimum blocksize
+as specified during <A HREF="#input_buffer_ct::constructor">construction</A> of the buffer.&nbsp;
+This function is also typically called from <SPAN class="code">read_input_ct::read_from_fd(void)</SPAN>.</P>
+
+<A NAME="output_buffer_ct"></A>
+<H3>2.4.2 <SPAN class="H3code">output_buffer_ct</SPAN></H3>
+
+<P>The <SPAN class="code">output_buffer_ct</SPAN> is used to buffer data before it is written to a device.&nbsp;
+This means that apart from the normal access to the buffer via the <SPAN class="code">streambuf</SPAN> virtual functions and
+<SPAN class="code">ostream&amp; operator&lt;&lt;()</SPAN>, we need an interface for
+<I>raw</I> write access and an interface that allows the device to
+read its data from the buffer.</P>
+
+<A NAME="output_buffer_ct::constructor"></A>
+<H4>2.4.2.1 Constructor</H4>
+
+<H5 class="function"><a name="output_buffer_ct::output_buffer_ct"></a>
+<PRE>output_buffer_ct::output_buffer_ct (size_t minimum_blocksize = default_output_buffer_blocksize_c,
+                                    size_t buffer_full_watermark = (size_t)-1,
+                                    size_t max_alloc = (size_t)-1)</PRE>
+</H5>
+
+<P>This constructs a dynamic, blocks output stream buffer.&nbsp;
+The minimum number of allocated bytes for one block of the buffer is <EM>minimum_blocksize</EM>.&nbsp;
+The maximum possible number of total allocated bytes of all blocks together is <EM>max_alloc</EM>.&nbsp;
+When this value is reached, <EM>overflow()</EM> will return <SPAN class="code">EOF</SPAN>.&nbsp;
+The accessor <EM>buffer_full()</EM> returns true when the number of buffered
+bytes in the output buffer exceed <EM>buffer_full_watermark</EM>.</P>
+
+<P>A new buffer always needs to be allocated with operator <SPAN class="code">new</SPAN>.</P>
+
+<A name ="output_buffer_ct::binary"></A>
+<H4>2.4.2.2 Binary write access</H4>
+
+<H5 class="function"><a name="output_buffer_ct::raw_pptr"></a>
+<PRE>char* output_buffer_ct::raw_pptr(void) const</PRE>
+</H5>
+
+<P>Returns <SPAN class="code">streambuf::pptr()</SPAN>:
+Returns a pointer to the start of the <I>put area</I> of the output buffer.</P>
+
+<H5 class="function"><a name="output_buffer_ct::raw_pbump"></a>
+<PRE>void output_buffer_ct::raw_pbump(int n)</PRE>
+</H5>
+
+<P>Calls <SPAN class="code">streambuf::pbump(n)</SPAN>:
+Advances the <I>put area</I> pointer of the output buffer by <I>n</I>.&nbsp;
+No error checking is done.</P>
+
+<H5 class="function"><a name="output_buffer_ct::raw_sputn"></a>
+<PRE>size_t output_buffer_ct::raw_sputn(char* s, size_t n)</PRE>
+</H5>
+
+<P>Returns the virtual function <SPAN class="code">streambuf::xsputn(s, n)</SPAN>: Copies <I>n</I> characters from
+the character array <I>s</I> to the buffer.&nbsp;
+Returns the number of characters actually copied (always <I>n</I>, unless we did run out of memory).</P>
+
+<P>These three functions are hardly used, it makes much more sense to use operator&lt;&lt;
+which accesses the buffer via the virtual functions of <SPAN class="code">class streambuf</SPAN>.</P>
+
+<A NAME="output_buffer_ct::device"></A>
+<H4>2.4.2.3 The device interface</H4>
+
+<H5 class="function"><a name="output_buffer_ct::buf2dev_contiguous"></a>
+<PRE>size_t output_buffer_ct::buf2dev_contiguous(void) const</PRE>
+</H5>
+
+<P>Returns the number of bytes that can be read directly
+from memory at the position returned by <SPAN class="code">buf2dev_ptr()</SPAN>.&nbsp;
+If this function returns zero, then call <SPAN class="code">buf2dev_contiguous_forced()</SPAN>.</P>
+
+<H5 class="function"><a name="output_buffer_ct::buf2dev_contiguous_forced"></a>
+<PRE>size_t output_buffer_ct::buf2dev_contiguous_forced(void)</PRE>
+</H5>
+
+<P>Returns the number of bytes that can be read directly
+from memory at the position returned by <SPAN class="code">buf2dev_ptr()</SPAN>.&nbsp;
+Does not return 0 unless the buffer is empty.</P>
+
+<H5 class="function"><a name="output_buffer_ct::buf2dev_ptr"></a>
+<PRE>char* output_buffer_ct::buf2dev_ptr(void) const</PRE>
+</H5>
+
+<P>Calls <SPAN class="code">dbstreambuf_ct::igptr()</SPAN>:
+Returns a pointer to the start of the <I>get area</I> of the output buffer.</P>
+
+<H5 class="function"><a name="output_buffer_ct::buf2dev_bump"></a>
+<PRE>void output_buffer_ct::buf2dev_bump(int n)</PRE>
+</H5>
+
+<P>Calls <SPAN class="code">dbstreambuf_ct::igbump(n)</SPAN>:
+Advances the <I>get area</I> pointer of the output buffer by <I>n</I>.&nbsp;
+No error checking is done.</P>
+
+<P>These four functions are typically called from
+<SPAN class="code">write_output_ct::write_to_fd(void)</SPAN>
+or a reimplemented version of that virtual function.</P>
+
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+void my_output_ct::write_to_fd(void)
+{
+  size_t contiguous_length, written_length;
+  
+  if ((contiguous_length = obuffer->buf2dev_contiguous()) == 0
+      &amp;&amp; (contiguous_length = obuffer->buf2dev_contiguous_forced()) == 0)
+  {
+    reset_need_write();
+    return;
+  }
+  if ((written_length = ::write(fd(), obuffer->buf2dev_ptr(), contiguous_length)) < 0) { ... }
+  obuffer->buf2dev_bump(written_length);
+}
+</PRE>
+
+<A NAME="link_buffer_ct"></A>
+<H3>2.4.3 <SPAN class="H3code">link_buffer_ct</SPAN></H3>
+
+<P>The <SPAN class="code">link_buffer_ct</SPAN> is used to buffer data between two devices.&nbsp;
+This means that we need an interface that allows a device to <EM>write</EM>
+data to the buffer but also an interface that allows a device to <EM>read</EM> from the
+buffer.</P>
+
+<A NAME="link_buffer_ct::constructor"></A>
+<H4>2.4.3.1 Constructor</H4>
+
+<H5 class="function"><a name="link_buffer_ct::link_buffer_ct"></a>
+<PRE>link_buffer_ct::link_buffer_ct (size_t minimum_blocksize = default_output_buffer_blocksize_c,
+                                size_t buffer_full_watermark = (size_t)-1,
+                                size_t max_alloc = (size_t)-1)</PRE>
+</H5>
+
+<P>This constructs a dynamic, blocks link buffer.&nbsp;
+The minimum number of allocated bytes for one block of the buffer is <EM>minimum_blocksize</EM>.&nbsp;
+The maximum possible number of total allocated bytes of all blocks together is <EM>max_alloc</EM>.&nbsp;
+When this value is reached, <EM>overflow()</EM> will return <SPAN class="code">EOF</SPAN>.&nbsp;
+The accessor <EM>buffer_full()</EM> returns true when the number of buffered
+bytes in the output buffer exceed <EM>buffer_full_watermark</EM>.</P>
+
+<P>A new buffer always needs to be allocated with operator <SPAN class="code">new</SPAN>.</P>
+
+<A name ="link_buffer_ct::device"></A>
+<H4>2.4.3.2 The device interface</H4>
+
+<P>The interface of a link buffer uses the same names for its <I>write</I> interface as the
+device interface of the <A HREF="#input_buffer_ct::device">input</A> buffer and the same
+names for its <I>read</I> interface as the device interface of the
+<A HREF="#output_buffer_ct::device">output</A> buffer.&nbsp;
+Please see the respective sections above for details.</P>
+
+<A name ="observer"></A>
+<H2>2.5 Observer functions</H2>
+
+<A name ="sizes"></A>
+<H3>2.5.1 Sizes</H3>
+
+<H5 class="function"><a name="dbstreambuf_ct::minimum_block_size"></a>
+<PRE>size_t minimum_block_size(void) const</PRE>
+</H5>
+
+<P>Returns the true <I>minimum block</I> size in bytes.&nbsp;
+This value is not necessarily equal to the value passed to the constructor because its size is optimized for allocation with malloc.</P>
+
+<H5 class="function"><a name="dbstreambuf_ct::used_size"></a>
+<PRE>size_t used_size(void) const</PRE>
+</H5>
+
+Returns the current number of valid bytes in the buffer.&nbsp;
+<DIV>Used in <SPAN class="code">read_input_ct::read_from_fd(void)</SPAN></DIV>
+
+<A name ="internal"></A>
+<H3>2.5.2 Internal buffer state</H3>
+
+<H5 class="function"><a name="dbstreambuf_ct::buffer_empty"></a>
+<PRE>bool buffer_empty() const</PRE>
+</H5>
+
+Returns true if the buffer is empty.&nbsp;
+<DIV>Returned by <SPAN class="code">write_output_ct::writebuf_is_really_empty(void) const</SPAN></DIV>
+
+<H5 class="function"><a name="dbstreambuf_ct::buffer_full"></a>
+<PRE>bool buffer_full() const</PRE>
+</H5>
+
+This function returns true when <SPAN class="code">used_size()</SPAN> is larger than
+<SPAN class="code">buffer_full_watermark</SPAN> passed to the constructor.&nbsp;
+This doesn't mean that writing to the buffer will fail yet, but it should be used to for flow control.&nbsp;
+<DIV>Used in <SPAN class="code">read_input_ct::read_from_fd(void)</SPAN></DIV>
+
+<H5 class="function"><a name="dbstreambuf_ct::has_multiple_blocks"></a>
+<PRE>bool has_multiple_blocks(void) const</PRE>
+</H5>
+
+Returns true when this buffer currently has more then one <A HREF="#buffer design">block</A> allocated.&nbsp;
+This can be used to speed up read/write access methods.&nbsp;
+<DIV>Used in <SPAN class="code">read_input_ct::read_from_fd(void)</SPAN></DIV>
+
+<H5 class="function"><a name="dbstreambuf_ct::is_contiguous"></a>
+<PRE>bool is_contiguous(size_t len) const</PRE>
+</H5>
+
+Returns true if there is a contiguous string with length <I>len</I>
+in the current get area of the buffer.&nbsp;
+<DIV>Used in <SPAN class="code">read_input_ct::read_from_fd(void)</SPAN></DIV>
+
+<A name ="debug"></A>
+<H3>2.5.3 Debug function</H3>
+
+<A NAME="move_outside"></A>
+<P>When the macro <A HREF="../debugging/configure.html#DEBUGMARKER">DEBUGMARKER</A> is defined,
+then the following method becomes available:</P>
+
+<H5 class="function"><a name="dbstreambuf_ct::move_outside"></a>
+<PRE>void move_outside(debugmalloc_marker_ct* marker) const</PRE>
+</H5>
+
+<P>Moves the allocations of this buffer outside
+<A HREF="../debugging/markers.html">memory leak detection marker</A> <I>marker</I>.</P>
+
+<A name ="fad"></A>
+<H2>2.6 Flushing and deleting the buffer</H2>
+
+<A name ="flushing"></A>
+<H3>2.6.1 Flushing</H3>
+
+<P>Class <SPAN class="code">streambuf</SPAN> uses the virtual function
+<SPAN class="code">sync()</SPAN> to signal the need for flushing the buffer.&nbsp;
+This means that <SPAN class="code">sync()</SPAN> should not return
+until the buffer is written completely to the associated output device.&nbsp;
+While it is obviously a bad idea to use blocking at all in applications
+that libcw is aiming at (heavy duty network servers), this synchronizing
+is supported nevertheless; mainly for debugging output.</P>
+
+<P>When <SPAN class="code">dbstreambuf_ct::sync()</SPAN> is called,
+the buffer needs to call <SPAN class="code">fd_dct::sync()</SPAN>,
+a member function of the output device.&nbsp;
+Therefore, the buffer needs to know to which output device it is linked, if any.&nbsp;
+It would be impractical to pass a pointer to this device object as part of the constructor of the buffer:
+That would demand that the output device is created first, which has
+consequences that effect the application layer.&nbsp;
+Instead, the device pointer can be set with a separate function, which can be hidden from the application layer.&nbsp;
+This function is called in <A HREF="traits.html#note">another part</A> of libcw whenever a buffer is assigned to a device.</P>
+
+<A name ="deleting"></A>
+<H3>2.6.2 Deleting</H3>
+
+<P>When a buffer isn't used anymore, there is only one logical thing to do: delete it.&nbsp;
+A buffer can be used by one device (the input and output buffers) or two devices (the link buffer).&nbsp;
+Some sort of garbage collection mechanism is needed to determine when the buffer really isn't used anymore.&nbsp;
+Therefore devices need to register with the buffer and release the buffer again when they
+are done with it (mostly when the device itself is deleted).</P>
+
+<P>Registration with a buffer is done with the same function call that is
+used to pass the device pointer to the buffer; but this time we also need
+such a function for input devices! For the sake of symmetry this
+function also takes a device pointer.&nbsp;
+See &sect;2.6.3 for a definition of these two function calls.</P>
+
+<P>Releasing a buffer is done with the following method:</P>
+
+<H5 class="function"><a name="dbstreambuf_ct::release"></a>
+<PRE>bool dbstreambuf_ct::release(fd_dct* device)</PRE>
+</H5>
+
+<P>Deletes the buffer when this was the last device using it.&nbsp;
+Returns <I>true</I> when the buffer was actually deleted.</P>
+
+<A name ="setting"></A>
+<H3>2.6.3 Setting the device pointers</H3>
+
+<P>The device pointers can be set by calling either,</P>
+
+<H5 class="function"><a name="dbstreambuf_ct::set_input_device"></a>
+<PRE>void dbstreambuf_ct::set_input_device(fd_dct* device)</PRE>
+</H5>
+
+<P>Sets the input device that uses this buffer.&nbsp;
+Note that there can be only one input device per buffer, calling this function more then
+once results in undefined behaviour.&nbsp;
+At this moment, <I>device</I> isn't used, but that might change in the future.</P>
+
+<P>or,</P>
+
+<H5 class="function"><a name="dbstreambuf_ct::set_output_device"></a>
+<PRE>void dbstreambuf_ct::set_output_device(fd_dct* device)</PRE>
+</H5>
+
+<P>Sets the output device that uses this buffer.&nbsp;
+The use of <SPAN class="code">streambuf::sync()</SPAN>
+will cause <SPAN class="code"><I>device</I>->sync()</SPAN> to be called.&nbsp;
+Note that there can be only one output device per buffer, calling this
+function more than once results in undefined behavior.</P>
+
+<A name ="avoid"></A>
+<H3>2.6.4 Avoid blocking</H3>
+
+<P>Because <SPAN class="code">sync()</SPAN> is a blocking function, you don't want to use it.&nbsp;
+In order to avoid it, you should not use <SPAN class="code">flush</SPAN> and <SPAN class="code">endl</SPAN>, nor
+call <SPAN class="code">ostream::flush()</SPAN>.</P>
+
+<P class="example">For example, instead of doing</P>
+
+<PRE class="example-code">
+myDevice << "Hello World" << endl;	// Write a line with a new-line (and flush it)
+myDevice.flush();			// Flush the ostream (?!)
+myDevice.del();				// Delete the device object
+</PRE>
+
+<P class="example">you should do something like</P>
+
+<PRE class="example-code">
+myDevice << "Hello World\n";		// Write a line with a new-line
+myDevice.del();				// Causes the device object to be deleted
+					// <B>after</B> everything is written out.
+</PRE>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

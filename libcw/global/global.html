@@ -1,0 +1,602 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: global.html,v 1.12 2001/02/25 02:24:59 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<H1>Global Objects Management</H1>
+
+<HR SIZE=1 NOSHADE>
+
+<A NAME="design"></A>
+<H2>1.1 Design</H2>
+
+<A name="fiasco"></A>
+<H3>1.1.1 The &laquo;&nbsp;<I><SPAN class="H3code">static</SPAN> initialization order fiasco</I>&nbsp;&raquo;</H3>
+
+<P>The <I><SPAN class="code">static</SPAN> initialization order fiasco</I> is a
+<A HREF="http://www.cerfnet.com/~mpcline/c++-faq-lite/ctors.html#[10.11]" target="_blank">well known</A> problem, involving
+<SPAN class="code">static</SPAN> or global objects with a constructor that uses one or more other
+<SPAN class="code">static</SPAN> or global objects, so that the <EM>order</EM>
+in which the <SPAN class="code">static</SPAN> and global objects are initialized is important.</P>
+
+<TABLE>
+<TR>
+<TD VALIGN=TOP>
+[
+</TD>
+<TD VALIGN=TOP>
+Note that anything that can be initialized with an assignment,&nbsp; <SPAN class="example">for example:
+<SPAN class="code">&nbsp;struct&nbsp;Foo&nbsp;x&nbsp;= {&nbsp;'a',&nbsp;10,&nbsp;"Hello"&nbsp;};</SPAN></SPAN>
+is not the problem; such initialization data resides in the <CODE>.data</CODE> segment and will never
+depend on other <SPAN class="code">static</SPAN> or global objects. ]
+</TD>
+</TR>
+</TABLE>
+
+<P>The <A HREF="http://www.cerfnet.com/~mpcline/c++-faq-lite/ctors.html#[10.11]">generally accepted solution</A>
+for this problem is to wrap all <SPAN class="code">static</SPAN> objects in a <SPAN class="code">static</SPAN> or
+global function and use that to access the objects.</P>
+
+<P>The disadvantage of that method is that the compiler will check whether or not the <SPAN class="code">static</SPAN>
+object has been initialized <EM>every</EM> time you call its access function.</P>
+
+<P class="example">For example, consider the following code that makes use of this wrapping technique</P>
+
+<PRE class="example-code">
+// File x.cpp
+  
+#include "Fred.hpp"
+  
+Fred&amp; x(void)
+{
+  static Fred* ans = new Fred();
+  return *ans;
+} 
+
+// File Barney.cpp
+#include "Barney.hpp"
+  
+Barney::Barney()
+{
+  // ...
+  x().goBowling();
+  // ...
+} 
+</PRE>
+
+<P class="example">After optimization, the assembly code for
+<SPAN class="code">x().goBowling();</SPAN> inside <SPAN class="code">Barney::Barney()</SPAN> reads</P>
+
+<PRE class="example-code">
+        <FONT COLOR="red">cmpl $0,_.tmp_0.3</FONT>
+        <FONT COLOR="red">jne .L5</FONT>
+        movl $1,_.tmp_0.3
+        pushl $1
+        call __builtin_new
+        movl %eax,ans.2
+        addl $4,%esp
+.L5:
+        pushl ans.2
+        call goBowling__4Fred
+        movl 8(%ebp),%eax
+</PRE>
+
+<P class="example">The check, whether or not the <SPAN class="code">static</SPAN> <SPAN class="code">Fred</SPAN> object
+is initialized already, is marked <FONT COLOR="red">red</FONT>.&nbsp;
+This check is necessary because in this example
+(directly from the <A HREF="http://www.cerfnet.com/~mpcline/c++-faq-lite/ctors.html#[10.11]" target="_blank">C++ FAQ</A>)
+we access <SPAN class="code">x</SPAN> (<SPAN class="code">Fred</SPAN>) from within the constructor of a
+<EM>global</EM> object (<SPAN class="code">Barney</SPAN>).&nbsp;
+The created <SPAN class="code">Fred</SPAN> object can <EM>only</EM> be accessed by calling
+<SPAN class="code">Fred::x()</SPAN>, which means that <EM>every time</EM> you use it, the application will perform
+the <FONT COLOR="red">check</FONT> whether or not the <SPAN class="code">static</SPAN> object is already initialized.</P>
+
+<A name="alternative"></A>
+<H3>1.1.2 An alternative solution</H3>
+
+<P>There is an alternative solution for the <I><SPAN class="code">static</SPAN> initialization order fiasco</I>.&nbsp;
+While the solution given in the C++-FAQ is not error prone, the problem is <EM>not</EM> that the developer
+is a total clueless newbie that has to be protected against himself.&nbsp; The problem is that the order of
+initialization of global objects is rather arbitrary (compiler implementation dependant).</P>
+
+<P>The <I>Carlo Wood solution</I> to the <I><SPAN class="code">static</SPAN> initialization order fiasco</I>
+is to use two different access functions: one with check that is used inside constructors of
+<SPAN class="code">static</SPAN> and global objects; and one without check that is used everywhere else
+(all code that can be called from <SPAN class="code">main()</SPAN>.</P>
+
+<P>Applying this idea to the above example results in code like</P>
+
+<PRE class="code">
+    // File x.hpp
+    
+    #include "Fred.hpp"
+
+    class GlobalFred {
+    private:
+      static Fred* ans;
+    public:
+      static Fred&amp; x(void);
+	  {
+	    if (!ans)
+	      ans = new Fred;
+	    return *ans;
+	  }
+      static Fred&amp; x_without_check(void)
+          {
+	    return *ans;
+	  }
+    };
+
+    // File x.cpp
+
+    #include "x.hpp"
+
+    Fred* GlobalFred::ans;
+</PRE>
+
+<P>Note the need for a new class: <SPAN class="code">GlobalFred</SPAN>.&nbsp; The <SPAN class="code">static</SPAN>
+pointer <SPAN class="code">ans</SPAN> is now a private member of this class so that we can access it
+from both, <SPAN class="code">x(void)</SPAN> as well as <SPAN class="code">x_without_check(void)</SPAN>.</P>
+
+<P>Inside <EM>constructors</EM> the safe <SPAN class="code">GlobalFred::x()</SPAN> is used.&nbsp;
+But outside constructors the member function <SPAN class="code">GlobalFred::x_without_check()</SPAN>
+can be used instead, omitting the redundant <SPAN class="code">NULL</SPAN> check for
+<SPAN class="code">GlobalFred::ans</SPAN>.</P>
+
+<P>When a non-constructor function that uses <SPAN class="code">GlobalFred::x_without_check()</SPAN> is called from a constructor
+of a global object, then this constructor should simply first call <SPAN class="code">GlobalFred::x()</SPAN>.&nbsp;
+Consider the function</P>
+
+<PRE class="code">
+    void goOut(void)
+    {
+      if (GlobalFred::x_without_check().goBowling())
+        bowling = true;
+    }
+</PRE>
+
+<P>This function happily assumes that the <SPAN class="code">Fred</SPAN> object is already initialized.&nbsp;
+When this function is accessed from a constructor, you need to do something like</P>
+
+<PRE class="code">
+    Barney::Barney()
+    {
+      // goOut uses GlobalFred
+      GlobalFred::x();     // Instantiate GlobalFred::ans
+      goOut();
+      // ...
+    } 
+</PRE>
+
+<A name="Global"></A>
+<H2>1.2 The <SPAN class="H2code">Global&lt;&gt;</SPAN> template</H2>
+
+<P>The best is to completely avoid the need for <SPAN class="code">static</SPAN> or global objects.&nbsp;
+For those cases that they can not be avoided libcw provides a template to help with the declaration
+of global objects.&nbsp; There is no need for <SPAN class="code">static</SPAN> objects: use namespaces
+to avoid name collisions.</P>
+
+<H5 class="function">
+<PRE>template&lt;class TYPE, int instance, class CONVERTER = GlobalConverterInt&gt;
+  class Global
+</PRE>
+</H5>
+
+<P>This class provides access to an object of type <SPAN class="code">TYPE</SPAN> the instance of which
+is determined by <SPAN class="code">instance</SPAN>, an integer constant.&nbsp;
+The <SPAN class="code">CONVERTER</SPAN> class converts the given <SPAN class="code">instance</SPAN>
+integer into data of an arbitrary type that is passed to the constructor of <SPAN class="code">TYPE</SPAN> when
+the object is created.</P>
+
+<P>Constructors of <SPAN class="code">static</SPAN>, global and <SPAN class="code">Global&lt;&gt;</SPAN>
+classes need to access such objects through the member function
+<SPAN class="code">Global&lt;TYPE,&nbsp;instance, CONVERTER&gt;::instantiate()</SPAN>,
+while other code can access the object without a check for instantiation through a call to
+the member function <SPAN class="code">Global&lt;TYPE,&nbsp;instance&gt;::instance()</SPAN>.</P>
+
+<P>Explicit instantiation of the <SPAN class="code">TYPE</SPAN> object is needed by defining a
+<SPAN class="code">static</SPAN> or global object of type <SPAN class="code">Global&lt;TYPE,&nbsp;instance,&nbsp;CONVERTER&gt;</SPAN>
+for each occurance of <SPAN class="code">instance</SPAN>.</P>
+
+<P>The default <SPAN class="code">CONVERTER</SPAN> class <SPAN class="code">GlobalConverterInt</SPAN>
+simply passes the constant <SPAN class="code">instance</SPAN> directly to the constructor of <SPAN class="code">TYPE</SPAN>.&nbsp;
+One other special <SPAN class="code">CONVERTER</SPAN> class is defined: <SPAN class="code">GlobalConverterVoid</SPAN>
+which calls the default constructor <SPAN class="code">TYPE(void)</SPAN>.&nbsp; User defined <SPAN class="code">CONVERTER</SPAN> classes
+must define a public <SPAN class="code">operator()(int)</SPAN> that converts the  passed <SPAN class="code">instance</SPAN>
+into the needed constructor parameter.&nbsp; The <SPAN class="code">CONVERTER</SPAN> class may depend on <SPAN class="code">instance</SPAN>
+(you may use a different <SPAN class="code">CONVERTER</SPAN> class for each <SPAN class="code">instance</SPAN>).</P>
+
+<P class="example">For example, if you want two global objects of type <SPAN class="code">Fred</SPAN>,
+<SPAN class="code">foo</SPAN> and <SPAN class="code">bar</SPAN>.&nbsp; The instance <SPAN class="code">foo</SPAN> should
+be created by calling the default constructor, while the instance <SPAN class="code">bar</SPAN> should be
+created by calling a constructor <SPAN class="code">Fred("bar")</SPAN>.</P>
+
+<PRE class="example-code">
+// File Fred.h
+
+class Fred {
+public:
+  Fred(void);
+  Fred(char const* label);
+  // ...
+};
+
+// File GlobalFred.h:
+
+#include &lt;assert.h&gt;
+#include "Fred.h"
+
+enum GlobalFredInstance {
+  foo,
+  bar
+};
+
+class GlobalConverterBar {
+public:
+  char const* operator()(int instance)
+  {
+    assert(instance == bar);
+    return "bar";
+  }
+};
+
+// File GlobalFred.cc:
+
+#include &lt;libcw/global.h&gt;
+#include "GlobalFred.h"
+
+// Explicit instantiation:
+namespace {
+  static Global&lt;Fred, foo, GlobalConverterVoid&gt; S_dummy_1;
+  static Global&lt;Fred, bar, GlobalConverterBar&gt; S_dummy_2;
+}
+</PRE>
+
+<P class="example">Then inside a the constructors of (other) global classes use</P>
+
+<PRE class="example-code">
+  Global&lt;Fred, foo, GlobalConverterVoid&gt;::instantiate() <SPAN class="normal">and</SPAN>
+  Global&lt;Fred, bar, GlobalConverterBar&gt;::instantiate()
+</PRE>
+
+<P class="example">While elsewhere use</P>
+
+<PRE class="example-code">
+  Global&lt;Fred, foo&gt;::instance() <SPAN class="normal">and</SPAN>
+  Global&lt;Fred, bar&gt;::instance()
+</PRE>
+
+<P class="example">Note that there is no need to specify the converter class here as it won't be used anyway.</P>
+
+<P>Consider</P>
+
+<PRE class="code">
+struct Fred {
+  int a;
+  int add(int i) { return a + i; }
+  Fred(void) : a(5) { }
+};
+</PRE>
+
+<P>Then the assembly code of <SPAN class="code">Global&lt;Fred, 0, GlobalConverterVoid&gt;::instantiate().add(3)</SPAN>
+when compiling with -O3 looks like</P>
+
+<PRE class="code">
+        <FONT COLOR="red">cmpb $0,_Q35libcw10_internal_t10GlobalBase2Z4Fredi0.initialized</FONT>
+        <FONT COLOR="red">jne .L3205</FONT>
+        call initialize_instance___t6Global3Z4Fredi0Z19GlobalConverterVoid
+.L3205:
+        movl _Q35libcw10_internal_t10GlobalBase2Z4Fredi0.instance_,%eax
+        addl $3,%eax
+</PRE>
+
+<P>While <SPAN class="code">Global&lt;Fred, 0&gt;::instance().add(3)</SPAN>
+results in the assembly code</P>
+
+<PRE class="code">
+        movl _Q35libcw10_internal_t10GlobalBase2Z4Fredi0.instance_,%eax
+        addl $3,%eax
+</PRE>
+
+<P>The latter is as fast as it can get (the same as when using a real
+<SPAN class="code">static</SPAN> object).</P>
+
+<A NAME="singletons"></A>
+<H2>1.3 Singletons</H2>
+
+<A NAME="general"></A>
+<H3>1.3.1 Libcw and singletons in general</H3>
+
+<P>Gamma et al, in their book <EM>Design Patterns</EM>, put the emphasis on
+the characteristic of a singleton class that it can have only one instance.&nbsp;
+That this is misleading, not to say incorrect, shows from the fact that
+they list as point four in the paragraph <EM>Consequences</EM> that a
+singleton pattern permits a variable (read <I>controlable</I>) number of
+instances.&nbsp; What in fact is the most important characteristic of a singleton
+is that <EM>all</EM> data of the singleton class <EM>and that includes
+<B><SPAN class="code">static</SPAN></B> data</EM>, is encapsulated and can only
+be accessed through a single, and thus global, point of access.</P>
+
+<P>If, for example, <SPAN class="code">class Foo</SPAN> were a singleton:</P>
+
+<PRE class="code">
+class Foo {
+  static int x;
+  int y;
+private:
+  Foo(void);
+  Foo(Foo const&amp;);
+  ~Foo();
+public:
+  Foo&amp; instance(void);
+};
+</PRE>
+
+<P>then the number of <SPAN class="code">x</SPAN> instances would always equal the number of <SPAN class="code">y</SPAN> instances,
+and hence there is no reason to make <SPAN class="code">x</SPAN> <SPAN class="code">static</SPAN>.</P>
+
+<P>There seems to be confusion about whether or not a singleton should have a private constructor.&nbsp;
+Also <I>Design Patterns</I> uses a <SPAN class="code">protected</SPAN> constructor in their examples.&nbsp;
+This is only correct however when the singleton base class does not contain any static data, or when
+all data is private (as opposed to protected), the class provides it's own global point of access
+(the <SPAN class="code">instance()</SPAN> function) and none of the derived classes has a public constructor.&nbsp;
+The latter requirement is the one that makes it dangerous to use a protected constructor for singleton base classes
+of libraries.</P>
+
+<P>Especially with the `<SPAN class="code">Global&lt;&gt;</SPAN>' implementation of libcw it is
+crucial that the constructors are private because the <SPAN class="code">static</SPAN>
+<SPAN class="code">instance_</SPAN> pointer is <B>not</B> a member of the singleton class itself:
+every class <EM>derived</EM> from a `singleton' will have its own instance but still share the
+<SPAN class="code">static</SPAN> data of the base class and therefore would not be a singleton anymore!
+Base classes without any <SPAN class="code">static</SPAN> data however can use protected constructors
+if such is desirable.</P>
+
+<P>It is interesting to note that for a class <SPAN class="code">Atreyu</SPAN> that doesn't
+contain <SPAN class="code">static</SPAN> data,
+every <SPAN class="code">Global&lt;Atreyu,</SPAN>&nbsp;<SPAN class="code">instance&gt;</SPAN>
+is a singleton on its own: it provides a global point of access to the data of class <SPAN class="code">Atreyu</SPAN>.&nbsp;
+That for different values of <SPAN class="code">instance</SPAN> more instances of <SPAN class="code">Atreyu</SPAN>
+are created is irrelevant (as long as the constructors of <SPAN class="code">Atreyu</SPAN> are private/protected
+of course).</P>
+
+<P>However, it would not be safe to assume that a user class doesn't contain <SPAN class="code">static</SPAN> data
+(sometimes it is even <EM>necessary</EM> that a class contains <SPAN class="code">static</SPAN> data despite
+the fact that it is a singleton, as is the case for the libcw <SPAN class="code">SignalServer</SPAN> class).&nbsp;
+And thus we arrive at the following restrictions for a true singleton class <SPAN class="code">SINGLETON</SPAN>:</P>
+
+<OL TYPE=1>
+<LI><SPAN class="code">SINGLETON</SPAN> must have private constructors.</LI>
+<LI><SPAN class="code">SINGLETON</SPAN> should allow only a single instance to be created per allowed
+<SPAN class="code">instance</SPAN> by defining one friend per <SPAN class="code">instance</SPAN>:
+<SPAN class="code">Global&lt;SINGLETON,&nbsp;instance,&nbsp;GlobalConverterVoid&gt;::Instance</SPAN>.</LI>
+</OL>
+
+<P>Libcw reserves <SPAN class="code">-1</SPAN> for the <SPAN class="code">instance</SPAN> of singletons with
+exactly one instance.</P>
+
+<P class="example">As an example, lets consider a class <SPAN class="code">Twin</SPAN> that should have
+two instances: <SPAN class="code">left</SPAN> and <SPAN class="code">right</SPAN>.&nbsp;
+Note that these two instances <B>do</B> share their <SPAN class="code">static</SPAN> data members!</P>
+
+<P class="example">This class could be defined as</P>
+
+<PRE class="example-code">
+enum {
+  left,
+  right
+};
+
+class Twin {
+  friend class Global&lt;Twin, left, GlobalConverterVoid&gt;::Instance;
+  friend class Global&lt;Twin, right, GlobalConverterVoid&gt;::Instance;
+  // ...
+private:
+  Twin(void);
+  ~Twin();
+  Twin(Twin const&amp;) { }
+  Twin&amp; operator=(Twin const&amp;) { return *this; }
+};
+
+static Global&lt;Twin, left&gt; leftTwin;
+static Global&lt;Twin, right&gt; rightTwin;
+</PRE>
+
+<P class="example">And the two instances could be accessed through:</P>
+
+<PRE class="example-code">
+	Global&lt;Twin, left&gt;::instance()
+</PRE>
+
+<P class="example">and</P>
+
+<PRE class="example-code">
+	Global&lt;Twin, right&gt;::instance()
+</PRE>
+
+<P class="example">respectively.&nbsp; When class <SPAN class="code">Twin</SPAN> doesn't have
+<SPAN class="code">static</SPAN> members then both instances would be true singletons.</P>
+
+<A NAME="base"></A>
+<H3>1.3.2 Singleton base classes</H3>
+
+<P>There are two approaches for singleton base classes:</P>
+
+<OL TYPE=1>
+<LI>The base class has protected constructors and does not have any <SPAN class="code">static</SPAN> attributes.</LI>
+<LI>The base class has private constructors and declares the one derived class as friend.</LI>
+</OL>
+
+<P>Consider the following code:</P>
+
+<PRE class="code">
+class B1 {
+protected:	// Base class without static data
+  B1(void);
+};
+
+class B2 : public B1 {
+private:	// Base class with static data
+  static int data;
+  friend B3;
+  B2(void);
+};
+
+class B3 : public B2 {
+private:	// Base class with static data (from B2)
+  friend Final;
+  B3(void);
+};
+
+class Final : public B3 {
+private:	// The final singleton class
+  friend class Global&lt;Final, 1, GlobalConverterVoid&gt;::Instance;    // Only allow instance `1'
+  Final(void);
+  ~Final();
+  Final(Final const&amp;) { }
+};
+</PRE>
+
+<A NAME="Singleton"></A>
+<H3>1.3.3 The <SPAN class="H3code">Singleton&lt;&gt;</SPAN> template</H3>
+
+<H5 class="function"><a name="Singleton::Singleton"></a>
+<PRE>template&lt;class FINAL, class CHILD = FINAL&gt;
+  class Singleton
+</PRE>
+</H5>
+
+<P>This template is a simple <SPAN class="code">Global</SPAN> adaptor class for
+singletons with exactly one instance.&nbsp; <SPAN class="code">FINAL</SPAN> is the final
+singleton class while <SPAN class="code">CHILD</SPAN> is the class that is
+directly derived from <SPAN class="code">Singleton</SPAN>.</P>
+
+<H5 class="function"><a name="Singleton::instantiate"></a>
+<PRE>
+FINAL&amp; Singleton::instantiate(void)
+</PRE>
+</H5>
+
+<P>Returns a reference to the global instance of <SPAN class="code">FINAL</SPAN>.&nbsp;
+If the instance wasn't initialized yet then it is first initialized.&nbsp;
+Use this function only in the constructors of other global objects.</P>
+
+<H5 class="function"><a name="Singleton::instance"></a>
+<PRE>
+FINAL&amp; Singleton::instance(void)
+</PRE>
+</H5>
+
+<P>Returns a reference to the global instance of <SPAN class="code">FINAL</SPAN>.&nbsp;
+This function should be used outside constructors of global objects.</P>
+
+<H5 class="function"><a name="Singleton::Instance"></a>
+<PRE>
+typename Singleton::Instance
+</PRE>
+</H5>
+
+<P>The type of the <SPAN class="code">friend</SPAN> class that has to be added
+to the <SPAN class="code">FINAL</SPAN> singleton class.</P>
+
+<H5 class="function">
+<PRE>template&lt;class FINAL&gt;
+  class SingletonInstance
+</PRE>
+</H5>
+
+<P>The type of the singleton instance place holder.</P>
+
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+template&lt;class FINAL&gt;
+class B1 : public Singleton&lt;FINAL, B1&gt; {
+protected:	// Base class without static data
+  B1(void);
+};
+
+template&lt;class FINAL, class CHILD = FINAL&gt;
+class B2 : public B1&lt;FINAL&gt; {
+  friend CHILD;
+private:	// Base class with static data
+  static int data;
+  B2(void);
+};
+
+template&lt;class FINAL, class CHILD = FINAL&gt;
+class B3 : public B2&lt;FINAL, B3&gt; {
+  friend CHILD;
+private:	// Base class with static data (from B2)
+  B3(void);
+};
+</PRE>
+
+<P class="example"><SPAN class="code">// Final.h:</SPAN></P>
+
+<PRE class="example-code">
+class Final : public B3&lt;Final&gt; {
+  friend class Instance;
+private:	// The final singleton class
+  Final(void);
+  ~Final();
+  Final(Final const&amp;) { }
+};
+</PRE>
+
+<P class="example"><SPAN class="code">// Final.cc:</SPAN></P>
+
+<PRE class="example-code">
+static SingletonInstance&lt;Final&gt; Final_instance __attribute__ ((unused));
+</PRE>
+
+<A NAME="large"></A>
+<H3>1.3.4 Singleton with large base class</H3>
+
+<P>When a base class is very large, it would be inefficient to compile it as a template
+for each compilation unit that uses the singleton.&nbsp; This paragraph gives an example
+of how to deal with that dilemma.</P>
+
+<P>This trick only works when the base class does not contain any <SPAN class="code">static</SPAN> data members!
+Consider the following class <SPAN class="code">Large</SPAN>, which does not have any <SPAN class="code">static</SPAN> data:</P>
+
+<PRE class="code">
+// Class does not contain any static data (also not in member functions!)
+class Large {
+public:
+  Large(void);
+  // ...
+};
+</PRE>
+
+<P>Then the following, small declaration is a true singleton:</P>
+
+<PRE class="code">
+class Final : public Singleton&lt;Final&gt;, public Large {
+  friend class Instance;
+private:
+  Final(void) { }
+};
+</PRE>
+
+<P>because there is no way you can touch the data of the (single) instance of <SPAN class="code">Final</SPAN>
+otherwise than through a call to <SPAN class="code">Final::instance()</SPAN>.</P>
+
+<P>This trick is used for <SPAN class="code">timer_event_server_ct</SPAN> and for <SPAN class="code">SignalServer</SPAN>;
+it might be instructive to study those two classes.</P>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

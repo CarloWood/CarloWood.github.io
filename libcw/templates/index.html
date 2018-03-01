@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
+<HTML LANG="en-us">
+<!-- $Id: index.html,v 1.6 2000/08/02 23:18:14 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/break_out_of_frame.js"></SCRIPT>
+</HEAD>
+
+<!--
+     Note: Netscapes frame sizes are incorrect.  The numbers below result in
+     86,5 (netscape 4.61 on win95).  Fortunately the sum of which is the same
+     again.
+-->
+
+<SCRIPT TYPE="text/javascript">
+  url = document.location.href.toString();
+  pos = url.indexOf("?");
+  chap = url.substring(pos+1,url.length);
+
+  with(document)
+  {
+    writeln("<FRAMESET rows=87,4,* border=0 frameborder=no framespacing=0>");
+      writeln("<FRAMESET cols=108,*>");
+	writeln("<FRAME name=topleft src=topleft.html?" + chap + " scrolling=no marginwidth=10 marginheight=0>");
+	writeln("<FRAME name=header src=header.html scrolling=no marginwidth=10 marginheight=0>");
+      writeln("</FRAMESET>");
+      writeln("<FRAME name=ruler src=ruler.html scrolling=no marginwidth=10>");
+      writeln("<FRAMESET cols=108,*>");
+	writeln("<FRAME name=\"navigation bar\" src=nav.html?" + chap + " scrolling=no marginwidth=10>");
+	writeln("<FRAME name=main src=\"../" + chap + "/toc.html\" scrolling=auto marginwidth=10>");
+      writeln("</FRAMESET>");
+    writeln("</FRAMESET>");
+  }
+</SCRIPT>
+<NOSCRIPT><BODY bgcolor=0><CENTER><FONT color="red" size=+4>Enable JavaScript!</FONT></CENTER></BODY></NOSCRIPT>
+</HTML>

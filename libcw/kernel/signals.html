@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: signals.html,v 1.8 2000/08/03 13:53:05 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<H1>Signals</H1>
+
+<HR SIZE=1 NOSHADE>
+
+<A name="intro"></A>
+<H2>2.1 Introduction</H2>
+
+<P>Signals are often described as <I>software interrupts</I>.&nbsp;
+The kernel of a multitasking Operating System such as
+UNIX switches between running applications when either a running application goes to sleep (calls a blocking
+system call or enters select(2) or poll(2)) or after a certain period of time (ie. 10 ms).&nbsp;
+Signals are handled by the kernel at the moment it switches between running processes, hence the word <I>software</I> interrupts.&nbsp;
+Interrupting an application that doesn't go to sleep within 10 ms is performed by a
+hardware interrupt though and the program execution can be at any arbitrary point.&nbsp;
+When such an application has pending signals, then the signal handler function is called
+while the application is in a totally undefined state.&nbsp;
+For instance, the application could be in the middle of a call to malloc(3) or free(3), which makes it
+dangerous to allocate memory from within a signal handler.</P>
+
+<P>The result of how signals work is that signal handlers can only be allowed to set a flag of a very simple
+type: <SPAN class=code">sig_atomic_t</SPAN> (often an <SPAN class=code">int</SPAN>).&nbsp;
+This fact gives signals their <B>real</B> meaning:
+Signals are a way of <I>communication</I> between processes or between the kernel and a process.&nbsp;
+Signals fall in the category of IPC (Inter Process Communication), just like pipes and UNIX sockets.&nbsp;
+For a correct understanding of signals one has to see them as <I>messages</I>, not as interrupts.</P>
+
+<P>And like with messages received via a socket, there is no accurate timing possible - not without a Real Time kernel.</P>
+
+<A name="signal event server"></A>
+<H2>2.2 The signal(7) event server</H2>
+
+<H5 class="function"><a name="SignalServer"></a>
+<PRE>SignalServer</PRE></H5>
+
+<P>Libcw treats signals as <A HREF="../events/toc.html">events</A>.&nbsp;
+The <A HREF="../events/design.html#event server">event server</A>
+for signals is a <A HREF="../global/global.html#Singleton">singleton</A>, its instance can be accessed through the static method
+<SPAN class="code">SignalServer::<A HREF="../global/global.html#Singleton::instance">instance</A>()</SPAN>.&nbsp;
+The <I>signal event server</I> accepts <A HREF="../events/interface.html#request data">request data</A> of type
+<A HREF="#SignalRequestData"><SPAN class="code">SignalRequestData</SPAN></A>.</P>
+
+<P>The <I>signal event server</I> uses sigaction(2) to turn on and off handling of signals.&nbsp;
+Handling is turned on when events are requested and turned off when the last request is removed.&nbsp;
+Note that <EM>before</EM> any event request a signal is handled by its default handler
+(<SPAN class="code">SIG_DFL</SPAN>), while after the last event request is removed, the signal is ignored
+(<SPAN class="code">SIG_IGN</SPAN>).<P>
+
+<P>A single handler is used for all signals, counting the total number of signals
+occurred as well as the number of occurrances <EM>per</EM> signal.&nbsp;
+Signal events are dispatched from the main loop.&nbsp;
+The number of times a specific signal occurred in between two such main loop checks is passed as part of
+the <A HREF="#SignalData"><SPAN class="code">SignalData</SPAN></A> to the
+<A HREF="../events/design.html#event client">event client</A>.</P>
+
+<P>As with all <A HREF="../events/toc.html">events</A>, a <A HREF="../events/design.html#busy interface">busy interface</A>
+and/or a <A HREF="../events/design.html#cookies">cookie</A> can be passed to the
+<A HREF="#signalRequest"><SPAN class="code">signalRequest</SPAN></A> call as needed
+(see also chapter Events <A HREF="../events/interface.html#event_data_server_tct">&sect;2.2.6</A>).</P>
+
+<A NAME="requesting"></A>
+<H2>2.3 Requesting signal events</H2>
+
+<A NAME="SignalRequestData"></A>
+<H3>2.3.1 <SPAN class="H3code">SignalRequestData</SPAN></H3>
+
+<H5 class="function"><a name="SignalRequestData::SignalRequestData"></a>
+<PRE>SignalRequestData::SignalRequestData (int sig, int flags = 0)</PRE>
+</H5>
+
+<P>Constructs a signal request object.</P>
+
+<P><SPAN class="para">sig</SPAN> is the requested signal.</P>
+
+<P><SPAN class="para">flags</SPAN> specifies a set of flags which modify the behavior of the signal handling process.&nbsp;
+It is formed by  the  bit-wise OR of zero or more of the following:</P>
+
+<TABLE>
+<TR>
+<TD WIDTH=20>
+</TD>
+<TD>
+<SPAN class="code">sigOneShot</SPAN>
+</TD>
+<TD>:</TD>
+<TD WIDTH=400>
+Remove the request after it is being handled.&nbsp;
+The callback function will be called only once.
+</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD>
+<SPAN class="code">sigReplace</SPAN>
+</TD>
+<TD>:</TD>
+<TD WIDTH=400>
+For each signal type <SPAN class="para">sig</SPAN>, there can be only one request with this flag set.&nbsp;
+Each new request with <SPAN class="code">sigReplace</SPAN> set causes
+the previous request to be removed.
+</TD>
+</TR>
+</TABLE>
+
+<A NAME="signalRequest"></A>
+<H3>2.3.2 The <SPAN class="H3code">signalRequest</SPAN> macro</H3>
+
+<P>The <A HREF="../events/interface.html">event interface</A> uses
+<A HREF="../events/interface.html#event_data_server_tct"><SPAN class="code">operator()</SPAN></A> to register event requests.&nbsp;
+Because the signal server is a <A HREF="../global/global.html#Singleton">singleton</A>,
+one must use the rather obnoxious looking code
+(where <SPAN class="code">Foo::foo</SPAN> is an event client and <SPAN class="code">Foo::gotSIGHUP(SignalType const&amp;)</SPAN>
+the callback function)</P>
+
+<PRE class="code">
+  (SignalServer::instance())(SignalRequestData(SIGHUP), foo, &amp;Foo::gotSIGHUP);
+</PRE>
+
+<P>In order to make such expressions more readable, libcw defines the macro <SPAN class="code">signalRequest</SPAN></P>
+
+<PRE class="code">
+#define signalRequest (SignalServer::instance())
+</PRE>
+
+<P>allowing the developer to request signal notifications with better looking code</P>
+
+<PRE class="code">
+  signalRequest(SignalRequestData(SIGHUP), foo, &amp;Foo::gotSIGHUP);
+</PRE>
+
+<P class="example">For example, suppose you want your application class <SPAN class="code">MyApplication</SPAN> to handle
+the signals <SPAN class="code">SIGINT</SPAN> and <SPAN class="code">SIGHUP</SPAN>.&nbsp;
+Then you could request the signal server to notify you by calling:</P>
+
+<PRE class="example-code">
+  signalRequest(SignalRequestData(SIGINT, sigOneShot|sigReplace),
+      MyApplication::instance(), &amp;MyApplication::handle_signal);
+
+  signalRequest(SignalRequestData(SIGHUP),
+      MyApplication::instance(), &amp;MyApplication::handle_signal);
+</PRE>
+
+<P class="example">where the callback function must be declared as</P>
+
+<PRE class="example-code">
+void MyApplication::handle_signal(SignalType const&amp;);
+</PRE>
+
+<A NAME="macro"></A>
+<P>Note that instead of the macro we could have created a global reference for the server with</P>
+
+<PRE class="code">
+  SignalServer&amp; signalRequest(SignalServer::instantiate());
+</PRE>
+
+<P>However, this solution has a pitfall: You don't know in what order global objects are initialized
+(click <A HREF="../global/global.html#fiasco">here</A> for more info).&nbsp;
+Using this global reference, the compiler assumes that it is initialized and uses its value without checking it.&nbsp;
+That means that this would coredump when a signal is requested from the constructor
+of a global object that is initialized first.&nbsp;
+Therefore you shouldn't use such a reference from global constructors, but instead
+<SPAN class="code">(SignalServer::instantiate())</SPAN>.</P>
+
+<P>In this sense, the reference is equivalent with <SPAN class="code">SignalServer::instance()</SPAN> (also this function
+returns a reference without checking if it is initialized, see chapter <A HREF="../global/global.html">Global Objects Management</A>)
+except for the order of initialization: it is possible that using the reference <EM>does</EM>
+work on one operating system, but doesn't work on another and vica versa.&nbsp;
+The relevant difference however is that the macro <SPAN class="code">DEBUGGLOBAL</SPAN> enables checks
+for &laquo;static initialization order fiasco&raquo; errors when
+<SPAN class="code">SignalServer::instance()</SPAN> is used, but would not catch such an error when the <EM>reference</EM>
+<SPAN class="code">signalRequest</SPAN> is used in a global constructor (and is initialized first by coincidence).&nbsp;
+This is why using the reference is bad.</P>
+
+<P>So now we have to choose between the following solutions:</P>
+<OL>
+<LI>Use the reference nevertheless and simply hope that signals won't be requested from global constructors.</LI>
+<LI>Let the user use <SPAN class="code">(SignalServer::instance())</SPAN> all the time, hoping that they won't
+create a reference themselfs and fall in the pit that way.</LI>
+<LI>Change the type of <SPAN class="code">signalRequest</SPAN> when <SPAN class="code">DEBUGGLOBAL</SPAN> is defined,
+and do some special trick in that case.</LI>
+<LI>Duplicate the <SPAN class="code">operator()</SPAN> code from the <A HREF="../events/interface.html#Classes defined by libcw">Events</A>
+section and build in the needed checks especially for this <SPAN class="code">SignalServer</SPAN> case.</LI>
+<LI>Use a macro for <SPAN class="code">signalRequest</SPAN>.</LI>
+</OL>
+
+<P>Duplicating code and changing (proto)types as function of debugging macros are absolutely evil.&nbsp;
+Therefore we have only one solution left: use a macro for <SPAN class="code">signalRequest</SPAN>.</P>
+
+<P>The disadvantages of this macro are considered less serious than the disadvantages of the other solutions.</P>
+
+<A NAME="receiving"></A>
+<H2>2.4 Receiving signal events</H2>
+
+<A NAME="SignalData"></A>
+<H3>2.4.1 <SPAN class="H3code">class SignalData</SPAN></H3>
+
+<P>The <A HREF="#SignalType">event type</A> reference that is passed as a parameter to the callback function
+(the &laquo;<SPAN class="code">Foo::gotSIGHUP</SPAN>&raquo; above), is <EM>derived</EM> from <SPAN class="code">class SignalData</SPAN>.</P>
+
+<H5 class="function">
+<PRE>int SignalData::get_signal(void) const</PRE>
+</H5>
+
+<P>Returns the signal that needs handling.&nbsp;
+This is only interesting when using the same callback function for more than one signal, of course.</P>
+
+<H5 class="function">
+<PRE>sig_atomic_t SignalData::get_count(void) const</PRE>
+</H5>
+
+<P>Returns the number of times the signal occurred since the last time a callback
+function for this signal was called (or since any signal event request was received).&nbsp;
+This value will usually be 1 unless the application is being flooded with the signal
+faster then it could return to the main loop.</P>
+
+<A NAME="SignalType"></A>
+<H3>2.4.2 <SPAN class="H3code">class SignalType</SPAN></H3>
+
+<P>This is the unique <A HREF="../events/interface.html#EventType">event type</A> of <SPAN class="code">SignalServer</SPAN> which
+is passed to the callback function.&nbsp;
+It is derived from <A HREF="#SignalData"><SPAN class="code">SignalData</SPAN></A> and doesn't have any extra data or methods.</P>
+
+<P class="example">For example, the callback function <SPAN class="code">handle_signal</SPAN> from the previous
+example could be defined like:</P>
+
+<PRE class="example-code">
+void MyApplication::handle_signal(SignalType const&amp; signal_type)
+{
+  switch(signal_type.get_signal())
+  {
+    case SIGHUP:
+      Dout( dc::notice, "Received SIGHUP " << signal_type.get_count() << " times." );
+      break;
+    case SIGINT:
+      fd_dct::terminate_when_done();
+      break;
+  }
+}
+</PRE>
+
+<P class="example">Note that the usage of <SPAN class="code">sigOneShot</SPAN> in the request for SIGINT
+guarantees that <SPAN class="code">terminate_when_done()</SPAN> will only be called once.&nbsp;
+While the usage of the flag <SPAN class="code">sigReplace</SPAN> means that if later a new request for SIGINT is
+made by any other object, this one will be removed.</P>
+
+<A NAME="default"></A>
+<H2>2.5 Default signal handling</H2>
+
+<P>The <A HREF="application.html">application</A> base class <A HREF="application.html#base class"><SPAN class="code">libcw_app_tct</SPAN></A>
+initializes a few default signal handlers with the following effects:</P>
+
+<UL>
+<LI><SPAN class="code">SIGTERM </SPAN>always causes <SPAN class="code">fd_dct::terminate_when_done()</SPAN>
+to be called.</LI>
+
+<LI><SPAN class="code">SIGINT </SPAN>causes <SPAN class="code">fd_dct::return_when_done(-1)</SPAN>
+to be called (causing <SPAN class="code">mainloop()</SPAN> to return with value <SPAN class="code">-1</SPAN>).&nbsp;
+The request for this signal uses the flags <SPAN class="code">sigOneShot|SigReplace</SPAN> so it can
+easily be overridden with a new request.</LI>
+
+<LI>The handler for <SPAN class="code">SIGPIPE </SPAN>does nothing.&nbsp;
+It is necessary though to make sure the signal is never ignored.&nbsp;
+Therefore, this signal handler does <EM>not</EM> use the <SPAN class="code">sigOneShot</SPAN>
+or <SPAN class="code">SigReplace</SPAN> flags, making it sticky.</LI>
+
+<LI><SPAN class="code">SIGCHLD </SPAN>causes the application to call <SPAN class="code">waitpid(2)</SPAN>
+by default in order to avoid zombie processes.&nbsp;
+Also here the flag <SPAN class="code">SigReplace</SPAN> is used to allow overriding.</LI>
+</UL>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

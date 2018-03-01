@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: iomanip.html,v 1.8 2000/08/03 13:06:58 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META name="description" content="ostream manipulator extentions">
+<META name="keywords" content="ostream manipulator">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<BR>
+<H1>1. Ostream manipulators</H1>
+<HR SIZE=1 NOSHADE>
+
+<A NAME="Introduction"></A>
+<H2>1.1 Introduction</H2>
+
+<P>When an object of a certain type is written to an ostream, there sometimes is
+the need to specify a different format, a change of representation, which depends
+on the state of the ostream rather than on the object that is being written.</P>
+
+<P>Also the builtin types aren't always written in the same way to an ostream.&nbsp;
+Their format can be <I>manipulated</I> with the so called <I>output stream
+manipulators</I>; the standard C++ manipulators, defined in iomanip.h, are
+setbase(), setfill(), setprecision(), setw(), resetiosflags() and setiosflags().&nbsp;
+The data describing how a builtin type must be written to an ostream is stored in
+<SPAN class="code">class</SPAN> <SPAN class="code">ios</SPAN>, a virtual base class of <SPAN class="code">class</SPAN>
+<SPAN class="code">ostream</SPAN>.&nbsp;
+Therefore, these manipulators only change how (builtin) types are written to <B>one</B> particular ostream,
+without influencing how they are written to other ostreams.</P>
+
+<P>The purpose of this chapter is to design an implementation of manipulators for <I>custom</I> classes.&nbsp;
+&sect;1.2 concentrates on how to <I>find</I> the manipulator data that belongs to
+a particular ostream, &sect;1.3 describes <I>where</I> to store the manipulator data,
+while &sect;1.4 deals with the implementation of the <I>manipulators</I> themselves.&nbsp;
+And finally, examples that clarify how to use the implementation of libcw is given in &sect;1.5.</P>
+
+<A NAME="Identifying"></A>
+<H2>1.2 Identifying the ostream</H2>
+
+<P>An unique identifier of an ostream is the pointer to its virtual base class <SPAN class="code">ios</SPAN>.&nbsp;
+This pointer will always be the same for a given ostream object, because the copy constructor of class ios is private.</P>
+
+<P>When writing a custom class to a given ostream,
+its manipulator data object belonging to <I>that</I> ostream needs to be identified.&nbsp;
+Therefore, the <SPAN class="code">ios</SPAN> base class pointer, which is used to identify the ostream,
+must be stored together with the manipulator data object.&nbsp;
+For this purpose, libcw defines the template class <SPAN class="code">cmanip_id_tct&lt;CMANIP_DATA&gt;</SPAN>,
+where <SPAN class="code">CMANIP_DATA</SPAN> is the type of the Custom MANIPulator DATA object.</P>
+
+<P>Template class <SPAN class="code">cmanip_id_tct</SPAN> is defined in <SPAN class="code">&lt;libcw/cmanip.h&gt;</SPAN> as</P>
+
+<PRE class="code">
+template&lt;class OMANIP_DATA&gt;
+  class omanip_id_tct {
+    OMANIP_DATA omanip_data;
+    class ios const* id;
+  public:
+    omanip_id_tct(class ios const* iosp) : omanip_data(), id(iosp) { }
+    bool operator!=(class ios const* iosp) const { return id != iosp; }
+    OMANIP_DATA const&amp; get_omanip_data(void) const { return omanip_data; }
+    OMANIP_DATA&amp; get_omanip_data(void) { return omanip_data; }
+  };
+</PRE>
+
+<P>where <SPAN class="code"><I>id</I> </SPAN>is used to identify the ostream
+this object belongs to, through a call to <SPAN class="code">operator!=()</SPAN>.</P>
+
+<A NAME="Storing"></A>
+<H2>1.3 Storing manipulator data</H2>
+
+<P>Obviously it is not possible to store extra data in <SPAN class="code">ios</SPAN> for arbitrary custom classes.&nbsp;
+The manipulator data for a given class must be stored in its own class.&nbsp;
+For each ostream, exactly one manipulator data object of a given type will be needed.</P>
+
+<P>When writing an object to an ostream, its type and the type of the      
+corresponding manipulator data object will be known.&nbsp;
+Therefore, the manipulator data object can be stored in its own
+container, specific to the class that is being written,
+with the ostream as the search key.</P>
+
+<P>It seems reasonable to use a <SPAN class="code">vector</SPAN> as container, since
+applications do not usually have a lot of streams that objects of the
+same class are written to.&nbsp;
+Since there needs to be exactly one and only one container for each class that
+is written to an ostream, the most logical thing to do is to declare the
+container a static <SPAN class="code">vector</SPAN> inside a template function which
+has as sole parameter the type of the object that is being written.&nbsp;
+The following template function,<SPAN class="code"> get_omanip_data()</SPAN>, returns
+the requested manipulator data as a function of the ostream passed:</P>
+
+<PRE class="code">
+template&lt;class TYPE&gt;
+  inline typename TYPE::omanip_data_ct&amp;
+  get_omanip_data(ostream const&amp; os)
+  {
+    typedef omanip_id_tct&lt;typename TYPE::omanip_data_ct&gt; omanip_id_ct;
+    typedef vector&lt;omanip_id_ct&gt; ids_ct;
+    static ids_ct ids;
+    typename ids_ct::iterator i = find(ids.begin(), ids.end(), &amp;os);
+    if (i == ids.end())
+      i = ids.insert(ids.end(), omanip_id_ct(&amp;os));
+    return (*i).get_omanip_data();
+  }
+</PRE>
+
+<P>This function encapsulates the container, only providing access
+to manipulator data objects through a call to it as a function of
+the <SPAN class="code">TYPE</SPAN> being written and the <SPAN class="code">ostream</SPAN>
+that it is being written to.</P>
+
+<P>A <SPAN class="code">typedef</SPAN> in class <SPAN class="code">TYPE</SPAN>, the class being written,
+defines what is the type of the manipulator data object.&nbsp;
+If no such an object exists, it is automatically created using the default constructor.</P>
+
+<A NAME="Manipulators"></A>
+<H2>1.4 Manipulators</H2>
+
+<P>Libcw supports manipulators for custom classes much in the same way
+as the ordinairy manipulators are defined for the builtin types;
+however, care had to be taken not to polute the global namespace <SPAN class="code">::std</SPAN>.&nbsp;
+The manipulators are therefore static <I>member functions</I> of
+the class that is being written, and call <I>member functions</I> of
+the corresponding manipulator data object.</P>
+
+<P>A typical way to use manipulators in <TT>class</TT> <TT>Foobar</TT>, for example, is:</P>
+
+<PRE class="code">
+cout << Foobar::myManipulator(someParameter)
+</PRE>
+
+<P>which causes a call to the method<SPAN class="code"> myManipulator(someParameter)</SPAN> of
+the manipulator data object returned by <SPAN class="code">get_omanip_data&lt;Foobar&gt;(cout)</SPAN>.</P>
+
+<P>To ease the use of manipulators, libcw defines several macros.&nbsp;
+The manipulator function macros come in pairs; one macro defines the static manipulator function
+(compare with <SPAN class="code">Foobar::myManipulator</SPAN> in the example above), the other
+defines the operator&lt;&lt; that catches it.&nbsp;
+Because it is possible that there are two or more manipulators with the same
+<I>type</I>, it is not possible to combine those two macros.&nbsp;
+Within a given class (like <SPAN class="code">Foobar</SPAN> in the above example) the <I>type</I> of the manipulators
+will only depend on the number and type of the parameters that are passed.&nbsp;
+Therefore the <SPAN class="code">OPERATOR</SPAN> macro needs the types of these parameters to be passed too.&nbsp;
+The <SPAN class="code">FUNCTION</SPAN> macro needs also the <I>name</I> of the manipulator to be passed.&nbsp;
+There are macros defined for one and two parameter manipulators; they have
+names that start with <SPAN class="code">__DEFINE_OMANIP1</SPAN> and
+<SPAN class="code">__DEFINE_OMANIP2</SPAN> respectively.&nbsp;
+Although it is not allowed to use <SPAN class="code">void</SPAN> as a type in these
+macros, one can use <SPAN class="code">__DEFINE_OMANIP0</SPAN> which then will call
+<SPAN class="code">omanip_data_ct::func(<B>void</B>)</SPAN>.</P>
+
+<A NAME="Examples"></A>
+<H2>1.5 Examples</H2>
+
+<P>For example, if you want to define two manipulators for <SPAN class="code">class Foobar</SPAN>,
+<I>setcolor</I> and <I>setindent</I>, that both need one <SPAN class="code">int</SPAN> as parameter,
+you would define Foobar as follows:</P>
+
+<PRE class="code">
+#include &lt;libcw/iomanip.h&gt;
+
+class Foobar {
+  ...
+public:
+  typedef Foobar_manipulator_data_ct omanip_data_ct;
+  __DEFINE_OMANIP1_OPERATOR(Foobar, int)
+  __DEFINE_OMANIP1_FUNCTION(setcolor, int)
+  __DEFINE_OMANIP1_FUNCTION(setindent, int)
+  ...
+};
+</PRE>
+
+<P>where <SPAN class="code">Foobar_manipulator_data_ct</SPAN> is the class of the
+manipulator data that Foobar uses.</P>
+
+<P>An example of manipulators with zero and two parameters is</P>
+
+<PRE class="code">
+class Foobar {
+  ...
+public:
+  typedef Foobar_manipulator_data_ct omanip_data_ct;
+  __DEFINE_OMANIP0(Foobar, hex)
+  __DEFINE_OMANIP0(Foobar, dec)
+
+  __DEFINE_OMANIP2_OPERATOR(Foobar, int, char)
+  __DEFINE_OMANIP2_FUNCTION(setfill, int, char)
+  __DEFINE_OMANIP2_FUNCTION(setcolor, int, char)
+  ...
+};
+</PRE>
+
+<P>The corresponding <SPAN class="code">Foobar_manipulator_data_ct</SPAN> would then
+look like:</P>
+
+<PRE class="code">
+class Foobar_manipulator_data_ct {
+  ...
+public:
+  void hex(void);
+  void dec(void);
+  void setcolor(int);
+  void setindent(int);
+  void setfill(int, char);
+  void setcolor(int, char);
+};
+</PRE>
+
+<P>Note that when you use methods with the same name but different parameters,
+like <SPAN class="code">setcolor</SPAN> in the above example, then when you forget to declare one
+of these functions the resulting compilation error is quite confusing!
+You might want to test it out once so you will recognize the problem
+later on when it happens by mistake.</P>
+
+<P>Finally, the <SPAN class="code">operator&lt;&lt;()</SPAN> function that will print
+<SPAN class="code">Foobar</SPAN> will contain code like,</P>
+
+<PRE class="code">
+ostream&amp; operator&lt;&lt;(ostream&amp; os, Foobar const&amp; f)
+{
+  Foobar::omanip_data_ct&amp; manip_data(get_omanip_data&lt;Foobar&gt;(os));
+  ...
+  return os;
+}
+</PRE>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

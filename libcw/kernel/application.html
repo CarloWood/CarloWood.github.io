@@ -1,0 +1,541 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<!-- $Id: application.html,v 1.12 2001/02/25 02:24:59 libcw Exp $ -->
+
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<TITLE>libcw: An Object Oriented C++ library for networking applications</TITLE>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<DIV class="normal">
+
+<H1>The application</H1>
+
+<HR SIZE=1 NOSHADE>
+
+<A name="intro"></A>
+<H2>1.1 Introduction</H2>
+
+<P>Object Oriented means that also the application is associated with an object.&nbsp;
+This <I>application object</I> is a singleton: there can be only one such an object at any given time.&nbsp;
+The purpose of the <I>application object</I> is to encapsulate variables that need to be available application wide.&nbsp;
+It takes care of the initialization of libcw and the processing of command line parameters.&nbsp;
+Also <A HREF="signals.html">signal handlers</A> are initialized by the <I>application object</I>.</P>
+
+<A name="object"></A>
+<H2>1.2 The application object</H2>
+
+<A NAME="base class"></A>
+<H3>1.2.1 Base class</H3>
+
+<P>The <I>application class</I> must be derived from the template <SPAN class="code">libcw_app_tct&lt;class <I>UserApp</I>&gt;</SPAN>,
+where <SPAN class="code"><I>UserApp</I></SPAN> is the <I>application class</I> itself.</P>
+
+<PRE class="code">
+#include &lt;libcw/libcw_app.h&gt;
+
+class MyApplication : public libcw_app_tct&lt;MyApplication&gt; {
+  friend class Instance;
+  ...
+};
+</PRE>
+
+<P>The template class <SPAN class="code">libcw_app_tct</SPAN> is a <SPAN class="code"><A HREF="../global/global.html#Singleton">Singleton</A></SPAN>
+and thus follows the general rules for Singleton objects:  Its constructors must be private and <SPAN class="code">friend class Instance;</SPAN>
+must be added.&nbsp;
+The static instance is to be defined in a source file:</P>
+
+<PRE class="code">
+namespace {
+  // reserve static space for the application object:
+  SingletonInstance&lt;MyApplication&gt; app_instance __attribute__ ((unused));
+}
+</PRE>
+
+<P>It is possible to derive a custom application <EM>base class</EM> to provide standard command line options
+and/or default <A HREF="signals.html">signal</A> behavior.&nbsp;
+Also this base class needs to follow the <A HREF="../global/global.html#base">rules</A> for
+<SPAN class="code"><A HREF="../global/global.html#Singleton">Singleton</A></SPAN> objects:</P>
+
+<PRE class="code">
+#include &lt;libcw/libcw_app.h&gt;
+
+template&lt;class FINAL, class CHILD = FINAL&gt;
+  class MyApplicationBase : libcw_app_tct&lt;FINAL&gt; {
+    friend CHILD;
+    ...
+  };
+</PRE>
+
+<A NAME="constructor"></A>
+<H3>1.2.2 Constructor</H3>
+
+<P>The constructor of the <I>application class</I> can only have a <I>default</I> constructor.</P>
+
+<P>The constructor is the place to tell libcw which command line parameters the application understands.&nbsp;
+It should contain a list of <A HREF="#libcw_app_ct::add_option">add_option()</A> calls and,
+if any command line arguments (that are not an option or option argument itself) need to be processed,
+a call to <A HREF="#libcw_app_ct::add_options_done">add_options_done()</A>.&nbsp;
+See &sect;1.3 for a description of those two member functions.</P>
+
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+<U>Header file:</U>
+
+<FONT COLOR="#888888">class UserApp : public libcw_app_tct&lt;UserApp&gt; {
+  friend class Instance;
+  ...</FONT>
+private:
+  UserApp(void);
+<FONT COLOR="#888888">};</FONT>
+
+<U>Source file:</U>
+
+UserApp::UserApp(void)
+{
+  // List of command line options
+  add_option(<FONT COLOR="#888888"> ... </FONT>);
+  add_option(<FONT COLOR="#888888"> ... </FONT>);
+  <FONT COLOR="#888888">...</FONT>
+  // Process remaining arguments
+  add_options_done(<FONT COLOR="#888888"> ... </FONT>);
+}
+</PRE>
+
+<P>Be sure to make the constructor private.</P>
+
+<A NAME="accessing"></A>
+<H3>1.2.3 Accessing the application object</H3>
+
+<P>Libcw provides a global point of access to the application object;
+instead of using global variables, declare private variables inside the application class
+and add public methods to interact with them.&nbsp;
+Variables representing command line parameters should be attributes of the application class.</P>
+
+<P>The application object can be accessed from anywhere with the usual
+static method <A HREF="../global/global.html#Singleton::instance"><SPAN class="code">instance()</SPAN></A>.</P>
+
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+  if (MyApplication::instance().is_daemon())
+    ...
+</PRE>
+
+<A NAME="creating"></A>
+<H3>1.2.4 Starting an application: <SPAN class="H3code">&nbsp;main()</SPAN></H3>
+
+<P>An application that is linked with libcw should <EM>not</EM> contain a <SPAN class="code">main()</SPAN> function.</P>
+
+<P>See also &sect;1.4 <A HREF="#start">Initializing and starting the application</A>.</P>
+
+<A NAME="exiting"></A>
+<H3>1.2.5 Exiting an application</H3>
+
+<P>In order to exit an application call the member function
+<SPAN class="code">libcw_app_ct&lt;<I>UserApp</I>&gt;::libcw_exit(<I>exit_code</I>)</SPAN>,
+where <SPAN class="code"><I>exit_code</I></SPAN> is the return value of the application
+(Ie.<SPAN class="code"> UserApp::instance()->libcw_exit(0)</SPAN>).&nbsp;
+This method flushes the debug file
+(if any, see <SPAN class="command-line-parameter">--log-file</SPAN> <A HREF="#debug parameters">below</A>)
+and frees the memory allocated by libcw, before exiting.</P>
+
+<A NAME="command line"></A>
+<H2>1.3 Command line parameters</H2>
+
+<A NAME="default"></A>
+<H3>1.3.1 Default command line options</H3>
+
+<P>The base class <SPAN class="code">libcw_app_tct</SPAN> provides five default command line options:</P>
+
+</DIV>
+<TABLE VALIGN=TOP CELLPADDING=2 CELLSPACING=2>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD VALIGN=TOP WIDTH=150>
+    <SPAN class="command-line-parameter">--help</SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD>
+    Call the virtual member function <A HREF="#libcw_app_ct::print_usage"><SPAN class="code">print_usage(cout)</SPAN></A> and exit successfully.
+  </TD>
+</TR>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD VALIGN=TOP WIDTH=150>
+    <SPAN class="command-line-parameter">--version</SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD>
+    Call the virtual member function <A HREF="#libcw_app_ct::print_version"><SPAN class="code">print_version(cout)</SPAN></A> and exit successfully.
+  </TD>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD VALIGN=TOP WIDTH=150>
+    <SPAN class="command-line-parameter">--libcw-version</SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD>
+    Print libcw version information to <SPAN class="code">cout</SPAN> and exit successfully.
+  </TD>
+</TR>
+<TR>
+  <TD></TD>
+  <TD VALIGN=TOP>
+    <SPAN class="command-line-parameter">--foreground, -f</SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD>
+    Run the application in the foreground.
+  </TD>
+</TR>
+<TR>
+  <TD></TD>
+  <TD VALIGN=TOP>
+    <SPAN class="command-line-parameter">--daemon</SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD>
+    Run the application in the background.
+  </TD>
+</TR>
+</TABLE>
+<DIV class="normal">
+
+<A NAME="debug parameters"></A>
+<P>When the macro <SPAN class="code"><A HREF="../debugging/configure.html#DEBUG">DEBUG</A></SPAN>
+is defined, four more command line options are provided and the application runs by default in the foreground,
+otherwise the application runs by default in the background.&nbsp;
+The four extra <A HREF="../debugging/toc.html">debug</A> options are:</P>
+
+</DIV>
+<TABLE CELLPADDING=2 CELLSPACING=2>
+<TR>
+  <TD WIDTH=20></TD>
+  <TD VALIGN=TOP WIDTH=400>
+    <SPAN class="command-line-parameter">--log-file <SPAN class="command-line-variable">debug-file</SPAN></SPAN>,&nbsp;
+    <SPAN class="command-line-parameter">-l&nbsp;<SPAN class="command-line-variable">debug-file</SPAN></SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD VALIGN=TOP>
+    Log debug output to <SPAN class="command-line-variable">debug-file</SPAN>.
+  </TD>
+</TR>
+<TR>
+  <TD></TD>
+  <TD VALIGN=TOP>
+    <SPAN class="command-line-parameter">--debug</SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD VALIGN=TOP>
+    Turn on all debugging (same as <SPAN class="command-line-parameter">--debug-enable all</SPAN>).
+  </TD>
+</TR>
+<TR>
+  <TD></TD>
+  <TD VALIGN=TOP>
+    <SPAN class="command-line-parameter">--debug-enable <SPAN class="command-line-variable">debug-channels</SPAN></SPAN>,&nbsp;
+    <SPAN class="command-line-parameter">-d&nbsp;<SPAN class="command-line-variable">debug-channels</SPAN></SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD VALIGN=TOP>
+    Turn on <I>debug-channels</I>, a comma seperated list of debug channel names.
+  </TD>
+</TR>
+<TR>
+  <TD></TD>
+  <TD VALIGN=TOP>
+    <SPAN class="command-line-parameter">--debug-disable <SPAN class="command-line-variable">debug-channels</SPAN></SPAN>,&nbsp;
+    <SPAN class="command-line-parameter">-u&nbsp;<SPAN class="command-line-variable">debug-channels</SPAN></SPAN>
+  </TD>
+  <TD VALIGN=TOP>:</TD>
+  <TD VALIGN=TOP>
+    Turn off <I>debug-channels</I>.
+  </TD>
+</TR>
+</TABLE>
+<DIV class="normal">
+
+<P>Here <SPAN class="command-line-variable">debug-channels</SPAN> is a comma seperated list of
+<A HREF="../debugging/debug.html#ChannelObjects">debug channels</A>.&nbsp;
+When the application is started, a list of all debug channel names is automatically printed.&nbsp;
+This <A HREF="../debugging/debug.html#ListChannels">list</A> also reflects whether the output to each
+debug channel was enabled or disabled.&nbsp;
+Channel names can be abbreviated.&nbsp;
+If the abbreviation is not unique, the first matching channel name is chosen.&nbsp;
+The matching of the channel names is not case sensitive.&nbsp;
+There is one special debug channel that can be used to refer to all debug channels at once: <TT>ALL</TT>.</P>
+
+<P class="example">For example,</P>
+
+<P class="example">to turn on all debug channels except<SPAN class="code"> LLISTS </SPAN>and<SPAN class="code"> MALLOC</SPAN>,
+one can type:</P>
+
+<PRE class="example-code">$ foobar --debug-enable All --debug-disable llists --debug-disable MAL</PRE>
+
+<P class="example">while the shortest way to achieve the same is</P>
+
+<PRE class="example-code">$ foobar -da -ul,m</PRE>
+
+<A NAME="version"></A>
+<H3>1.3.2 Printing version information</H3>
+
+<H5 class="function"><a name="libcw_app_ct::print_version"></a>
+<PRE>virtual void libcw_app_ct::print_version(ostream&amp; os) const = 0;
+</PRE>
+</H5>
+
+<P>This virtual function is called when the command line option <SPAN class="command-line-parameter">--version</SPAN> is given.&nbsp;
+It does not have a default but must be defined in the final application class and print the version and copyright information to
+the given <SPAN class="code">ostream</SPAN>.</P>
+
+<A NAME="usage message"></A>
+<H3>1.3.3 Printing a usage message</H3>
+
+<H5 class="function"><a name="libcw_app_ct::print_usage"></a>
+<PRE>virtual void libcw_app_ct::print_usage(ostream&amp; os) const;
+</PRE>
+</H5>
+
+<P>This virtual function is called when the command line option <SPAN class="command-line-parameter">--help</SPAN> is given.&nbsp;
+It is also called from the default <A HREF="#libcw_app_ct::finish_options"><SPAN class="code">finish_options()</SPAN></A>
+when <SPAN class="code">errflg</SPAN> is set.&nbsp;
+The default behavior of this function is to print the usage message with a layout as shown in this example:</P>
+
+<PRE class="code">
+~/c++/libcw/src/io/tests>burst_tst --help
+Usage:
+    burst_tst [options]
+Options:
+    --backlog &lt;number&gt;                 : Backlog of the listen socket.
+    --number-of-clients &lt;number&gt;,
+    -n &lt;number&gt;                        : The number of clients to connect.
+    --help                             : Print this help and exit.
+    --version, -V                      : Print version information and exit.
+    --libcw-version                    : Return version of linked libcw.
+    --daemon                           : Run program in the background.
+    --log-file &lt;debug-file&gt;,
+    -l &lt;debug-file&gt;                    : Log debug output to &lt;debug-file&gt;.
+    --debug                            : Turn on all debugging (same as -d all).
+    --debug-enable &lt;debug-channels&gt;,
+    -d &lt;debug-channels&gt;                : Turn on &lt;debug-channels&gt;, a comma
+                                         seperated list of debug channel names.
+    --debug-disable &lt;debug-channels&gt;,
+    -u &lt;debug-channels&gt;                : Turn off &lt;debug-channels&gt;.
+</PRE>
+
+<P>where everything below the line &laquo;<SPAN class="code">Options:</SPAN>&raquo; is printed by calling</P>
+
+<H5 class="function"><a name="libcw_app_ct::print_options"></a>
+<PRE>void libcw_app_ct::print_options(ostream&amp;&nbsp;os, char&nbsp;const*&nbsp;indent) const
+</PRE>
+</H5>
+
+<P>This method prints a list of all options and their description to the given <SPAN class="code">ostream</SPAN>.&nbsp;
+Each option that was added with <SPAN class="code">add_option()</SPAN> is listed, unless the <I>description</I> passed
+to <A HREF="#libcw_app_ct::add_option"><SPAN class="code">add_option()</SPAN></A> was a <SPAN class="code">NULL</SPAN> pointer.</P>
+
+<A NAME="adding"></A>
+<H3>1.3.4 Adding command line options</H3>
+
+<P>Command line options are added in the <A HREF="#constructor">constructor</A> by calling the member function</P>
+
+<H5 class="function"><a name="libcw_app_ct::add_option"></a>
+<PRE>template &lt;class UserApp&gt;
+void libcw_app_ct::add_option(void (UserApp::*callback)(char const*),
+                              char const* long_name,
+			      char        short_name,
+			      char const* usage_argument_name,
+			      char const* usage_description);
+</PRE>
+</H5>
+
+<P>where <SPAN class="para">callback</SPAN> must be a member function processing a single command line option
+with the long name <SPAN class="para">long_name</SPAN> and/or the short name <SPAN class="para">short_name</SPAN>.&nbsp;
+When only a short option is desired then <SPAN class="para">long_name</SPAN> should be <SPAN class="code">NULL</SPAN>
+and when only a long option is desired then <SPAN class="para">short_name</SPAN> should be <SPAN class="code">0</SPAN>.&nbsp;
+The parameter <SPAN class="para">usage_argument_name</SPAN> determines if this option takes an argument: the option does not
+take an argument when this parameter is <SPAN class="code">NULL</SPAN>.&nbsp;
+Otherwise <SPAN class="para">usage_argument_name</SPAN> points to a string printed
+in the <A HREF="#usage message">usage message</A> at the place of the argument.&nbsp;
+If the first character of <SPAN class="para">usage_argument_name</SPAN> is a <SPAN class="code">'['</SPAN> then the
+argument is <I>optional</I>, otherwise the argument is <I>required</I>.&nbsp;
+Finally, <SPAN class="para">usage_description</SPAN> should point to a string describing the option,
+or when <SPAN class="para">usage_description</SPAN> is <SPAN class="code">NULL</SPAN> then no usage message is printed
+for this option at all.</P>
+
+<P>Options defined in the <A HREF="#base class">base class</A> of the application object can be overridden by adding an option with
+the same name.&nbsp;
+For instance, in the example below the default <SPAN class="command-line-parameter">-V</SPAN> option
+that normally means the same as <SPAN class="command-line-parameter">--version</SPAN>, is overridden to mean <I>Verbose</I>.</P>
+
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+<FONT COLOR="#888888">UserApp::UserApp(void)</FONT> : verbose(false)
+<FONT COLOR="#888888">{</FONT>
+  add_option(&amp;UserApp::command_line_option_verbose,
+      NULL, 'V', NULL, "Make application Verbose.");
+  add_option(&amp;UserApp::command_line_option_number_of_clients,
+      "number-of-clients", 'n', "&lt;number&gt;", "The number of clients to connect.");
+<FONT COLOR="#888888">  ...
+}</FONT>
+
+void UserApp::command_line_option_verbose(char const* UNUSED(opt))
+{
+  verbose = true;
+}
+
+void UserApp::command_line_option_number_of_clients(char const* opt) // `opt' is "-n" or
+{								     // "--number-of-clients"
+  number_of_clients = atoi(optarg);
+  if (number_of_clients <= 0 || number_of_clients > 1020)
+  {
+    cerr << application_name << ": " << opt << " : out of range" << endl;
+    libcw_exit(-1);
+  }
+}
+</PRE>
+
+<P class="example">would cause the usage message to become</P>
+
+<PRE class="example-output">
+<FONT COLOR="#888888">Usage:
+    progname [options]
+Options:</FONT>
+    --number-of-clients &lt;number&gt;,
+    -n &lt;number&gt;                        : The number of clients to connect.
+    -V                                 : Make application Verbose.
+    <FONT COLOR="#888888">...</FONT>
+    --version                          : Print version information and exit.
+</PRE>
+
+<A NAME="arguments"></A>
+<H3>1.3.5 Command line arguments</H3>
+
+<P>Extra command line arguments can be processed by adding the
+following member function to the <A HREF="#constructor">constructor</A> of the application class.</P>
+
+<H5 class="function"><a name="libcw_app_ct::add_options_done"></a>
+<PRE>template &lt;class UserApp&gt;
+void libcw_app_ct::add_options_done(void (UserApp::*options_done)(int&amp;, char* const*&amp;),
+                                    char const* usage_arguments);
+</PRE>
+</H5>
+
+<P>After all command line options are decoded, the application calls the list of <SPAN class="para">options_done</SPAN>
+member functions that were passed as argument of <SPAN class="code">add_options_done()</SPAN>, starting with the
+one that was added last (in the constructor of the final application) and ending with the one that was added first
+(in the constructor of the base class).&nbsp;
+The <SPAN class="para">options_done</SPAN> call back functions must be of the form</P>
+
+<PRE class="code">void UserApp::myOptionsDone(int&amp;&nbsp;argc, char*&nbsp;const*&amp;&nbsp;argv)</PRE>
+
+<P>where <SPAN class="para">argc</SPAN> is the number of arguments in the array <SPAN class="para">argv</SPAN>.&nbsp;
+The pointer <SPAN class="para">argv</SPAN> points to the start of an array of pointers to the remaining command line
+arguments (those which are not already processed as option or option argument).&nbsp; If this member function processes any
+command line argument, it should update <SPAN class="para">argc</SPAN> and <SPAN class="para">argv</SPAN> otherwise
+the <A HREF="#base class">base class</A> of the application will process that argument again.</P>
+
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+<FONT COLOR="#888888">UserApp::UserApp(void)
+{
+  ...</FONT>
+  add_options_done(&amp;UserApp::get_filename, "[filename]");
+<FONT COLOR="#888888">}</FONT>
+
+void UserApp::get_filename(int&amp;&nbsp;argc, char*&nbsp;const*&amp;&nbsp;argv)
+{
+  if (argc != 1)
+    errflg = true;
+  else
+    filename = argv[0];
+  --argc;
+  ++argv;
+}
+</PRE>
+
+<P class="example">would cause the usage message to become</P>
+
+<PRE class="example-output">
+<FONT COLOR="#888888">Usage:
+    progname [options]</FONT> [filename]
+<FONT COLOR="#888888">Options:
+    ...</FONT>
+</PRE>
+
+<A NAME="error"></A>
+<H3>1.3.6 Error handling</H3>
+
+<P>When an error is detected during the processing of command line arguments
+then the boolean <SPAN class="code">errflg</SPAN> should be set.&nbsp;
+It is also set when an unknown command line option was given or a mandatory option argument was missing.</P>
+
+<P>After all options and arguments are processed, libcw calls the virtual member function</P>
+
+<H5 class="function"><a name="libcw_app_ct::finish_options"></a>
+<PRE>virtual void libcw_app_ct::finish_options(void) const
+</PRE>
+</H5>
+
+<P>This is the prefered function from which <SPAN class="code"><A HREF="#libcw_app_ct::print_usage">print_usage</A>(cerr)</SPAN>
+should be called in case of an error.&nbsp;
+It can also be used to check for inconsistent combinations of command line options; although it makes
+more sense to include option dependent code in an <A HREF ="#libcw_app_ct::add_options_done"><SPAN class="para">options_done</SPAN></A>
+member function, as <EM>this</EM> method can be overridden by a derived class while an <SPAN class="para">options_done</SPAN> can not.&nbsp;
+The default implementation of <SPAN class="code">finish_options</SPAN> is</P>
+
+<PRE class="code">
+void libcw_app_ct::finish_options(void) const
+{
+  if (errflg)
+  {
+    print_usage(cerr);
+    libcw_exit(2);
+  }
+}
+</PRE>
+
+<A NAME="start"></A>
+<H2>1.4 Initializing and starting the application</H2>
+
+<P>After initializing itself and processing all command line arguments, libcw calls the virtual
+function <SPAN class="code">start()</SPAN>.&nbsp;
+Here the application can be initialized and the main loop entered by calling <SPAN class="code">mainloop()</SPAN>.&nbsp;</P>
+
+<P class="example">For example,</P>
+
+<PRE class="example-code">
+<FONT COLOR="#888888">class MyApplication : public libcw_app_tct&lt;MyApplication&gt; {
+  ...
+protected:</FONT>
+  virtual void start(void);
+<FONT COLOR="#888888">  ...
+};</FONT>
+
+void MyApplication::start(void)
+{
+  // Initialisation:
+<FONT COLOR="#888888">  ...</FONT>
+  // Start main loop:
+  libcw_exit(mainloop());
+}
+</PRE>
+
+<P>The reason that <SPAN class="code">mainloop()</SPAN> has to be called from <SPAN class="code">start()</SPAN> is to allow the user
+to execute more code after it returns.&nbsp;
+It is possible to call <SPAN class="code">mainloop()</SPAN> more then once.</P>
+
+<HR SIZE=1 NOSHADE>
+<ADDRESS>Copyright &copy; 1999 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</DIV>
+</BODY>
+</HTML>

@@ -1,0 +1,211 @@
+/*
+ * Style Sheet for the libcw documentation
+ *
+ * Copyright (c) 2000, Carlo Wood
+ */
+
+BODY { background: rgb(247, 252, 248); margin-top: 10; }
+BODY, .normal { color: black; }
+BODY, .normal, TD, TH {
+  font-family: verdana;
+  font-size: 10pt;
+}
+
+A:link, A:visited, A:active { text-decoration: underline; font-weight: normal; }
+A:link { color: blue; }
+A:visited, A:active { color: black; }
+
+/* Heading fonts and sizes */
+
+H1, H2, H3, H4, H5 { font-family: sans-serif; }
+
+H1 { font-size: 26pt }
+H2 { font-size: 20pt }
+H3 { font-size: 16pt }
+H4 { font-size: 14pt }
+H5 { font-size: 13pt }
+
+H1.function, H2.function, H3.function, H4.function, H5.function, H6.function { font-family: courier }
+
+H1.function { font-size: 12pt }
+H2.function { font-size: 12pt }
+H3.function { font-size: 12pt }
+H4.function { font-size: 12pt }
+H5.function { font-size: 12pt }
+H6.function { font-size: 12pt }
+
+.H1code { font-size: 24pt }
+.H2code { font-size: 18pt }
+.H3code { font-size: 15pt }
+.H4code { font-size: 13pt }
+.H5code { font-size: 12pt }
+.H6code { font-size: 10pt }
+
+/* Special classes */
+
+.table {
+  font-family: sans-serif;
+  font-size: 18pt;
+  font-weight: bold;
+  margin-top: 3px;
+  margin-bottom: 3px
+}
+
+A.image-link:link, A.image-link:visited, A.image-link:active { text-decoration: none }
+
+.code, .example-code, .nld, .output, .example-output {
+  font-family: courier;
+  font-size: 13pt;
+}
+
+/* Colors */
+.code { color: #000040; }
+.nld { color: #b80047; }
+.output { color: rgb(40, 0, 100) }
+.example, .example-code, .example-output { color: #2323DC }
+
+/* Indentation */
+PRE.example-code, PRE.example-output { margin-left: 30px }
+PRE.output, PRE.code { margin-left: 10px }
+
+/* Font styles */
+.filename { font-family: courier }
+.para { font-style: italic }
+.command-line-parameter { font-weight: bold }
+.command-line-variable { font-weight: normal; font-style: italic }
+.H1code, .H2code, .H3code, .H4code, .H5code, .H6code {
+  font-family: courier;
+  font-weight: bold;
+  color: #000040;
+}
+.shell-command { font-family: ludica; font-size: 12pt; }
+
+/* Header styles */
+
+BODY.header {
+  background	: rgb(247, 252, 248);
+  margin-top	: 6;
+  margin-bottom	: 0;
+  margin-left	: 0;
+  margin-right	: 8;
+}
+
+.header {
+  font-family	: sans-serif;
+  font-size	: 16pt;
+  font-weight	: normal;
+  margin-top	: 0;
+  margin-bottom	: 0;
+  margin-left	: 0;
+  margin-right	: 0;
+}
+
+.header-copyright {
+  font-family	: MS sans serif, sans-serif;
+  font-size	: 10pt;
+  font-weight	: normal;
+  margin-top	: 0;
+  margin-bottom	: 0;
+  margin-left	: 0;
+  margin-right	: 0;
+}
+
+/* Table of contents styles */
+
+BODY.toc {
+  background	: rgb(247, 252, 248);
+  font-family	: sans-serif
+  font-size	: 12pt;
+  font-weight	: normal;
+  margin-top	: 10;
+  margin-bottom	: 0;
+  margin-left	: 3;
+  margin-right	: 8;
+}
+
+A.toc:link, A.toc:visited, A.toc:active, A.toc1:link, A.toc1:visited, A.toc1:active { text-decoration: none; color: rgb(0, 150, 100) }
+A.toc:link, A.toc1:link { color: rgb(0, 0, 255) }
+A.toc1:link { text-decoration: underline }
+
+H1.toc { font-size: 24pt }
+
+.toc-header1 {
+  font-family   : sans-serif;
+  font-size     : 18pt;
+  margin-bottom	: 4;
+  margin-top	: 1;
+  margin-left	: 0;
+  font-weight	: bold;
+}
+
+.toc-number2f {
+  font-family	: times;
+  font-size     : 12pt;
+  margin-bottom	: 2;
+  margin-top	: 0;
+}
+
+.toc-header2f {
+  font-family   : sans-serif;
+  font-size     : 14pt;
+  margin-bottom	: 2;
+  margin-top	: 0;
+  font-weight	: normal;
+}
+
+.toc-number2 {
+  font-family	: times;
+  font-size     : 12pt;
+  margin-bottom	: 2;
+  margin-top: 15;
+}
+
+.toc-header2 {
+  font-family   : sans-serif;
+  font-size     : 14pt;
+  margin-bottom	: 2;
+  margin-top	: 15;
+  font-weight	: normal;
+}
+
+.toc-number3 {
+  font-family	: times;
+  font-size     : 12pt;
+  margin-bottom	: 2;
+}
+
+.toc-header3 {
+  font-family   : sans-serif;
+  font-size     : 13pt;
+  margin-bottom	: 2;
+  margin-left	: 4;
+}
+
+.toc-number4 {
+  font-family	: times;
+  font-size     : 10pt;
+  margin-bottom	: 2;
+}
+
+.toc-header4 {
+  font-family   : sans-serif;
+  font-size     : 13pt;
+  margin-bottom	: 2;
+  margin-left	: 8;
+}
+
+/* Navigation column styles */
+
+BODY.nav, TD.nav, TH.nav {
+  background-image: URL(../images/strip4.gif); 
+  color: black;
+}
+
+BODY.nav { 
+  margin-top: 12; 
+  margin-bottom: 0; 
+  margin-right: 0;
+  margin-left: 14;
+}
+
+A.nav:link, A.nav:visited, A.nav:active { text-decoration: none }

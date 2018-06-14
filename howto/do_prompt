@@ -66,8 +66,6 @@ if [ "$PREVIOUS_DIR" != "$PWD" ]; then
   if [ "$CURRENT_DIR" = "" ]; then
     CURRENT_DIR="/"
   fi
-  TITLE="`echo "[$CURRENT_DIR]$PWD" | sed -e 's%\[[^]]*/%[%' -e 's%\(\[[^]]*\]\)'"$CURRENT_DIR"'%\1 %' -e 's%\[\]%[/]%' -e 's% $%%' -e 's%^\[/\]$%'"$PWD"'%'`"
-  xtermset -title "$TITLE"
   if [ "$CURRENT_DIR" = "/" -a -f "$CDEH_HISTROOT/history" ]; then
     CDEH_NEW_DIR="/"
   fi
@@ -91,6 +89,8 @@ if [ "$PREVIOUS_DIR" != "$PWD" ]; then
     fi
   fi
   __cdeh_rebuild_source_dirs
+  TITLE="`echo "[$CDEH_CURRENT_DIR]$PWD" | sed -e 's%\[[^]]*/%[%' -e 's%\(\[[^]]*\]\)'"$CDEH_CURRENT_DIR"'%\1 %' -e 's%\[\]%[/]%' -e 's% $%%' -e 's%^\[/\]$%'"$PWD"'%'`"
+  xtermset -title "$TITLE"
   test -z "$CDEH_VERBOSE" || echo "$$ CDEH_NEW_DIR is now \"$CDEH_NEW_DIR\""
   INODE=$(stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }')
   if [ -f "$CDEH_TMP/preved" ]; then

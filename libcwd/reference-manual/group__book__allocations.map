@@ -1,0 +1,9 @@
+<map id="Memory Allocation Debug Support" name="Memory Allocation Debug Support">
+<area shape="rect" id="node1" href="$group__chapter__magic__numbers.html" title="Overflow/Underflow\l Protection (Red Zones)" alt="" coords="236,5,397,47"/>
+<area shape="rect" id="node2" href="$group__group__overview.html" title="Overview Of Allocated\l Memory" alt="" coords="240,71,393,112"/>
+<area shape="rect" id="node3" href="$group__group__markers.html" title="Memory Allocation Markers\l: Memory Leak Checking" alt="" coords="226,136,407,177"/>
+<area shape="rect" id="node4" href="$group__group__annotation.html" title="Allocation Annotation" alt="" coords="244,202,389,229"/>
+<area shape="rect" id="node5" href="$group__group__finding.html" title="Finding (Information\l About) Memory Allocations" alt="" coords="225,253,408,295"/>
+<area shape="rect" id="node7" href="$group__book__allocations__intro.html" title="Memory Allocation Debug\l Support: Introduction" alt="" coords="231,319,403,360"/>
+<area shape="rect" id="node8" href="$group__chapter__validation.html" title="De&#45;Allocation Pointer\l Validation" alt="" coords="244,384,389,425"/>
+</map>

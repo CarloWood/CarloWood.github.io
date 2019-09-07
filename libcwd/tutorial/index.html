@@ -1,0 +1,286 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML LANG="en-us">
+<HEAD>
+<META name="Author" content="Carlo Wood">
+<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<META http-equiv="content-script-type" content="text/javascript">
+<TITLE>libcwd: The C++ Debugging Support Library - Tutorial</TITLE>
+<SCRIPT SRC="../scripts/detect_browser.js"></SCRIPT>
+<SCRIPT>need_style_tutorial=1</SCRIPT>
+<SCRIPT SRC="../scripts/load_style_sheets.js"></SCRIPT>
+</HEAD>
+<BODY>
+
+<TABLE class="header" height=64 width="100%" cellpadding=0 cellspacing=0 border=0>
+  <TR>
+    <TD width=237 valign=top>
+      <IMG valign=top src="../images/libcwd_logo.png" alt="" align=left border=0>
+    </TD>
+    <TD width="100%" align=center>
+      <DIV class="header-title">
+      The C++ Debugging Support Library
+      </DIV>
+      <DIV class="header-copyright">
+      By Carlo Wood, &copy;1999 - 2003.
+      </DIV>
+    </TD>
+  </TR>
+  <SCRIPT>if (is_mozilla4) document.write("<TR><TD colspan=2 height=19 valign=bottom><HR SIZE=2 NOSHADE></TD></TR>");</SCRIPT>
+</TABLE>
+
+<DIV class="body">
+<P>Welcome to the tutorial of libcwd, an Object Oriented debugging support library for C++ developers.</P>
+
+<H1>Table of Contents</H1>
+
+</DIV>
+<TABLE border=0 cellpadding=0 cellspacing=10>
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" alt="Main index" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="../reference-manual/index.html" target="_top">
+    back to main index
+  </A></DIV>
+</TD>
+</TR>
+
+<!-- -Page 1---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="intro.html">
+    Introduction
+  </A></DIV>
+</TD>
+</TR>
+<!-- -Page 2---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut1.html">
+    Tutorial 1 : Hello World
+  </A></DIV>
+</TD>
+</TR>
+<!-- -Page 3---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut2.html">
+    Tutorial 2 : Creating Your Own Debug Channels
+  </A></DIV>
+</TD>
+</TR>
+<!-- -Page 4---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut3.html">
+    Tutorial 3 : Setting The <CODE>ostream</CODE>
+  </A></DIV>
+</TD>
+</TR>
+<!-- -Page 5---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut4.html">
+    Tutorial 4 : Management Of <CODE>CWDEBUG</CODE>
+  </A></DIV>
+</TD>
+</TR>
+<!-- -Page 6---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut5.html">
+    Tutorial 5 : Advanced Examples
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=15></TD>
+<TD>
+  <TABLE border=0 cellpadding=0 cellspacing=0>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number2f">
+    5.1
+</DIV></TD>
+<TD><DIV class="toc-header2f">
+  <A class="toc" HREF="tut5.html#Running">
+    Running Over All Debug Channels
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number2">
+    5.2
+</DIV></TD>
+<TD><DIV class="toc-header2">
+  <A class="toc" HREF="tut5.html#Debug">
+    Debug Channels And Name Spaces
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number2">
+    5.3
+</DIV></TD>
+<TD><DIV class="toc-header2">
+  <A class="toc" HREF="tut5.html#Combining">
+    Combining Channels
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number2">
+    5.4
+</DIV></TD>
+<TD><DIV class="toc-header2">
+  <A class="toc" HREF="tut5.html#Formatting">
+    Formatting Debug Output
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number3">
+    5.4.1
+</DIV></TD>
+<TD><DIV class="toc-header3">
+  <A class="toc" HREF="tut5.html#Control">
+    Control Flags
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number3">
+    5.4.2
+</DIV></TD>
+<TD><DIV class="toc-header3">
+  <A class="toc" HREF="tut5.html#Methods">
+    Methods Of The Debug Object
+  </A></DIV>
+</TD>
+</TR>
+
+  </TABLE>
+</TD>
+</TR>
+<!-- -Page 7---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut6.html">
+    Tutorial 6 : The Debugging Of Dynamic Memory Allocations
+  </A></DIV>
+</TD>
+</TR>
+<!-- -Page 8---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut7.html">
+    Tutorial 7 : Advanced Examples
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=15></TD>
+<TD>
+  <TABLE border=0 cellpadding=0 cellspacing=0>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number2f">
+    7.1
+</DIV></TD>
+<TD><DIV class="toc-header2f">
+  <A class="toc" HREF="tut7.html#Removing">
+    Removing Allocations From The Allocated Memory Overview
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number2">
+    7.2
+</DIV></TD>
+<TD><DIV class="toc-header2">
+  <A class="toc" HREF="tut7.html#Retrieving">
+    Retrieving Information About Memory Allocations
+  </A></DIV>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH=50><DIV class="toc-number2">
+    7.3
+</DIV></TD>
+<TD><DIV class="toc-header2">
+  <A class="toc" HREF="tut7.html#Memory">
+    Memory Leak Detection
+  </A></DIV>
+</TD>
+</TR>
+
+  </TABLE>
+</TD>
+</TR>
+<!-- -Page 9---------------------------------------------------- -->
+
+<TR>
+<TD WIDTH=15 valign=center>
+  <IMG width=34 height=34 src="../images/toc.png" align=top border=0>
+</TD>
+<TD valign=center><DIV class="toc-header1">
+  <A class="toc1" href="tut8.html">
+    Tutorial 8 : Debugging Threaded Applications
+  </A></DIV>
+</TD>
+</TR>
+
+</TABLE>
+<DIV class="normal">
+
+
+</DIV>
+
+<ADDRESS>Copyright &copy; 2001, 2002 Carlo Wood.&nbsp; All rights reserved.</ADDRESS>
+
+</BODY>
+</HTML>

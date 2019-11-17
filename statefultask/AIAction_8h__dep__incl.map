@@ -1,0 +1,6 @@
+<map id="statefultask/AIAction.h" name="statefultask/AIAction.h">
+<area shape="rect" id="node2" href="$AIThreadPool_8h.html" title="Thread pool implementation. " alt="" coords="247,80,431,107"/>
+<area shape="rect" id="node3" href="$AIPackagedTask_8h.html" title="Run code in a thread. Declaration of template class AIPackagedTask. " alt="" coords="5,155,211,181"/>
+<area shape="rect" id="node4" href="$AIStatefulTask_8cxx.html" title="Implementation of AIStatefulTask. " alt="" coords="235,155,442,181"/>
+<area shape="rect" id="node5" href="$AIThreadPool_8cxx.html" title="Implementation of AIThreadPool. " alt="" coords="466,155,665,181"/>
+</map>

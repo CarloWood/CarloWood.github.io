@@ -1,0 +1,117 @@
+/* Override doxygen stylesheet font */
+
+body, table, div, p, dl {
+	font: 17px/20px Roboto,sans-serif;
+}
+
+p.reference, p.definition {
+	font: 400 17px/20px Roboto,sans-serif;
+}
+
+table.directory {
+    font: 400 17px Roboto,sans-serif;
+}
+
+div.line {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+div#mainpage div.header {
+  display: none;
+}
+
+/* Adopt boost filesystem css */
+
+body {
+  max-width: 21cm;
+  margin: 0px auto;
+}
+
+ins  {background-color: #CCFFCC; text-decoration: none;}
+del  {background-color: #FFCACA; text-decoration: none;}
+pre  {background-color: #D7EEFF; font-size: 95%; font-family: "courier new", courier, serif;}
+code {font-size: 110%; font-family: "courier new", courier, serif;}
+table {font-size: 90%;}
+
+/* Fine tuning */
+
+ul.features li {
+  margin-top: 1em;
+}
+
+ul.features li.title {
+  margin-top: 1em;
+  font-size: 20px;
+}
+
+div#titlearea table {
+  border-spacing: 0;
+}
+
+div#titlearea table td {
+  width: 100%;
+  background-color: #001314;    /* The background color of aistatfultask_arc.png */
+  text-align: left;
+}
+
+p#html_header1 {
+  font-size: 22px;
+  margin-bottom: 4px;
+  color: #feffff;
+}
+
+p#html_header1 span#name {
+  color: #674333;               /* The brownish color of aistatfultask_arc.png */
+}
+
+p#html_header2 {
+  margin-top: 0px;
+  color: #b1fcfc;               /* The light-blue color of aistatfultask_arc.png */
+}
+
+.projectname {
+  color: #674333;
+}
+
+/*
+div#mainpage {
+  max-width: 6.5in;
+  margin-left: 150px;
+}
+*/
+
+div.todothis {
+  white-space: pre;
+  font-size: 18px;
+  font-style: normal;
+  margin-left: 50px;
+}
+
+div.todothis span {
+  font-style: italic;
+}
+
+table.implement_table {
+  border-spacing: 0;
+  margin-left: 20px;
+}
+
+table.implement_table td.item {
+  padding-right: 10px;
+}
+
+a#details + h2.groupheader {
+  display:none;
+}
+
+div.textblock {
+  border-bottom: 1px solid #879ECB;
+  width: 100%;
+/*  max-width: 782px;             /* The width as used in div#mainpage + left + right margin of div.textblock p */
+}
+
+div.textblock p,h3 {
+  /*margin-left: 75px;
+  margin-right: 75px;*/
+}

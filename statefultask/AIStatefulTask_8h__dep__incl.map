@@ -1,9 +1,0 @@
-<map id="statefultask/AIStatefulTask.h" name="statefultask/AIStatefulTask.h">
-<area shape="rect" id="node2" href="$AIEngine_8h.html" title="Declaration of class AIEngine. " alt="" coords="225,87,384,114"/>
-<area shape="rect" id="node5" href="$AIFriendOfStatefulTask_8h.html" title="Base class of classes that extend AIStatefulTask derived tasks as member function. " alt="" coords="434,80,637,121"/>
-<area shape="rect" id="node7" href="$AITimer_8h.html" title="Generate a timer event. Declaration of class AITimer. " alt="" coords="665,87,816,114"/>
-<area shape="rect" id="node3" href="$AIEngine_8cxx.html" title="Implementation of AIEngine. " alt="" coords="5,169,177,196"/>
-<area shape="rect" id="node4" href="$AIStatefulTask_8cxx.html" title="Implementation of AIStatefulTask. " alt="" coords="201,169,408,196"/>
-<area shape="rect" id="node6" href="$AIPackagedTask_8h.html" title="Run code in a thread. Declaration of template class AIPackagedTask. " alt="" coords="433,169,638,196"/>
-<area shape="rect" id="node8" href="$AITimer_8cxx.html" title="Implementation of AITimer. " alt="" coords="662,169,827,196"/>
-</map>

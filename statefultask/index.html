@@ -174,8 +174,18 @@ ASSERT(!m_debug_weak_ptr.expired());</pre>
       implemented in a single virtual function (<code>multiplex_impl</code>).
       Only one thread at a time will execute that function, so it is basically
       single-threaded; no mutex locking is necessary for any of the private
-      variable. Synchronization with other threads (tasks) is provided by
-      the library in a fail-safe way.</li>
+      variables. Synchronization with other tasks is provided by the library in a
+      fail-safe way.</li>
+      <li>For example, a parent task could start a child task that will call
+      <code>signal</code> on its parent once it is done. The parent has to <code>wait</code>
+      until the child task has finished; and therefore calls <code>wait</code>
+      immediately after starting the child task. This normally leads to a race
+      condition: will the <code>signal</code> arrive before or after the parent
+      calls <code>wait</code>? But here that doesn't matter: both the <code>signal</code>
+      and the <code>wait</code> call merely toggle a flag and are processed
+      atomically once the parent returned to the library and it has to be
+      decided if the parent task needs to go to sleep; which it will only do
+      when <code>wait</code> was called and <code>signal</code> wasn't.</li>
       <li>When a task is run from an <code>AIEngine</code> then it is executed
       from a known point in the main loop of, for example, some other library.
       That means that the task runs at the moment that that library doesn't
@@ -186,15 +196,15 @@ ASSERT(!m_debug_weak_ptr.expired());</pre>
   <li class="title">Error handling and reporting via C++ exceptions.</li>
     <ul>
       <li>C++ exceptions are the preferred error reporting mechanism for most applications.
-      The exception thrown includes the detailed error code information important for
-      diagnosing the exact cause of errors. In most cases such errors are fatal for
-      whatever task initiated it. For example, the user tries to write a file
-      to a non-existing directory. Then the rest of the program can continue running,
-      the only thing needed is to cancel this user-action. Hence, an error is closely
-      related (if not the same) as a pop-up telling the user of a problem.
-      The library makes use of <code>AIAlert</code> error reporting, which has
-      been written with exactly that in mind and are ready for translation into
-      other languages.</li>
+      The exception thrown includes detailed information important for diagnosing the
+      exact cause of errors. One can use english or keywords; the errors are in a format
+      that allows translation (and reordering of information as a result of a different grammar).
+      This allows one to start in English and add translation later.
+      In most cases such errors are fatal for whatever task initiated it. For example,
+      the user tries to write a file to a non-existing directory.
+      Then the rest of the program can continue running, the only thing needed is to
+      cancel this user-action. Hence, an error is closely related to (if not the same as)
+      a pop-up telling the user of a problem.</li>
     </ul>
 </ul>
 

@@ -170,9 +170,9 @@ ASSERT(!m_debug_weak_ptr.expired());</pre>
     <ul>
       <li>AIStatefulTask helps in many ways with writing a (heavy) multi-threaded
       program without running into all the normal problems: each Task is an object
-      with its own (private) members that it is manipulating. A task basically
-      exists of a single virtual function (<code>multiplex_impl</code>). Only
-      one thread at a time will execute that function, so it is basically
+      with its own (private) members that it is manipulating. The core of a task is
+      implemented in a single virtual function (<code>multiplex_impl</code>).
+      Only one thread at a time will execute that function, so it is basically
       single-threaded; no mutex locking is necessary for any of the private
       variable. Synchronization with other threads (tasks) is provided by
       the library in a fail-safe way.</li>

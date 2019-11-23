@@ -168,19 +168,19 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a3689b906bb32631a30f407cc140b77d1"><td class="memItemLeft" align="right" valign="top"><a id="a3689b906bb32631a30f407cc140b77d1"></a>
-static <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a3689b906bb32631a30f407cc140b77d1">max_state</a> = AITimer_expired + 1</td></tr>
-<tr class="memdesc:a3689b906bb32631a30f407cc140b77d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">One beyond the largest state of this task. <br /></td></tr>
-<tr class="separator:a3689b906bb32631a30f407cc140b77d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d772001ddeb16cd60a52ddb76885a72"><td class="memItemLeft" align="right" valign="top"><a id="a0d772001ddeb16cd60a52ddb76885a72"></a>
+static <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a0d772001ddeb16cd60a52ddb76885a72">state_end</a> = AITimer_expired + 1</td></tr>
+<tr class="memdesc:a0d772001ddeb16cd60a52ddb76885a72"><td class="mdescLeft">&#160;</td><td class="mdescRight">One beyond the largest state of this task. <br /></td></tr>
+<tr class="separator:a0d772001ddeb16cd60a52ddb76885a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classAIStatefulTask"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classAIStatefulTask')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
-<tr class="memitem:a29399a077a42a82ea7896ef995257358 inherit pub_static_attribs_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a29399a077a42a82ea7896ef995257358"></a>
-static <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a29399a077a42a82ea7896ef995257358">max_state</a> = <a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022a3bce552d1e92ce75c5c4e71c86a95ef2">bs_killed</a> + 1</td></tr>
-<tr class="memdesc:a29399a077a42a82ea7896ef995257358 inherit pub_static_attribs_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">The next state value to use for derived classes. <br /></td></tr>
-<tr class="separator:a29399a077a42a82ea7896ef995257358 inherit pub_static_attribs_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb2ea8142438089410700b94ad354364 inherit pub_static_attribs_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="adb2ea8142438089410700b94ad354364"></a>
+static <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#adb2ea8142438089410700b94ad354364">state_end</a> = <a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022a3bce552d1e92ce75c5c4e71c86a95ef2">bs_killed</a> + 1</td></tr>
+<tr class="memdesc:adb2ea8142438089410700b94ad354364 inherit pub_static_attribs_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">The next state value to use for derived classes. <br /></td></tr>
+<tr class="separator:adb2ea8142438089410700b94ad354364 inherit pub_static_attribs_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
-<tr class="memitem:a71591ba6ecd0af62d75b4292a1308e24"><td class="memItemLeft" align="right" valign="top"><a id="a71591ba6ecd0af62d75b4292a1308e24"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a71591ba6ecd0af62d75b4292a1308e24">timer_state_type</a> { <b>AITimer_start</b> = direct_base_type::max_state, 
+<tr class="memitem:a71591ba6ecd0af62d75b4292a1308e24"><td class="memItemLeft" align="right" valign="top"><a id="a71591ba6ecd0af62d75b4292a1308e24"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a71591ba6ecd0af62d75b4292a1308e24">timer_state_type</a> { <b>AITimer_start</b> = direct_base_type::state_end, 
 <b>AITimer_expired</b>
  }<tr class="memdesc:a71591ba6ecd0af62d75b4292a1308e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">The different states of the stateful task. <br /></td></tr>
 </td></tr>
@@ -372,13 +372,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <!-- HTML footer for doxygen 1.8.11-->
 <!-- start footer part -->
 <hr class="footer"/>
-<address class="footer" style="text-align:left;">
-<span style="margin-left: 10px; font-size: 90%;">Copyright &copy; 2018, 2019 Carlo Wood.&nbsp; All rights reserved.</span>
-<span style="float:right;">
-<small>Generated by&#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.13
-</small></span>
+<address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
+Revised Sat Nov 23 2019
+<span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>
 </html>

@@ -26,5 +26,6 @@ var searchData=
   ['aitimer',['AITimer',['../classAITimer.html',1,'AITimer'],['../classAITimer.html#a06876e158f802e759b7d6201c9b94893',1,'AITimer::AITimer()']]],
   ['aitimer_2ecxx',['AITimer.cxx',['../AITimer_8cxx.html',1,'']]],
   ['aitimer_2eh',['AITimer.h',['../AITimer_8h.html',1,'']]],
-  ['aiwaitconditionfunc',['AIWaitConditionFunc',['../AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8',1,'AIStatefulTask.h']]]
+  ['aiwaitconditionfunc',['AIWaitConditionFunc',['../AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8',1,'AIStatefulTask.h']]],
+  ['a_20tasks_20life_20cycle',['A tasks life cycle',['../lifecycle.html',1,'usage']]]
 ];

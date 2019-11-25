@@ -79,7 +79,7 @@ $(function() {
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for task objects. </p>
-<p>Derive a new task from this base class. The derived class must have a protected destructor that uses the <code>override</code> keyword.</p>
+<p>Derive a new task from this base class. The derived class must have a protected destructor that uses the <span class="inlinecode">override</span> keyword.</p>
 <p>Furthermore a derived class must define, </p><table class="implement_table">
 <tr>
 <td class="item"><a class="el" href="classExample.html#example_task">direct_base_type </a></td><td>The immediate base class of the derived class. </td></tr>
@@ -180,7 +180,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a827dfb8d3bb87f27c2d373475d389982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if we are added to the current engine.  <a href="#a827dfb8d3bb87f27c2d373475d389982">More...</a><br /></td></tr>
 <tr class="separator:a827dfb8d3bb87f27c2d373475d389982"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24a4e2c228f2a900e94495aa4ba662db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a24a4e2c228f2a900e94495aa4ba662db">is_immediate</a> () const</td></tr>
-<tr class="memdesc:a24a4e2c228f2a900e94495aa4ba662db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if are currently running in an immediate handler.  <a href="#a24a4e2c228f2a900e94495aa4ba662db">More...</a><br /></td></tr>
 <tr class="separator:a24a4e2c228f2a900e94495aa4ba662db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97db3645e798f357596622ae24517d01"><td class="memItemLeft" align="right" valign="top"><a id="a97db3645e798f357596622ae24517d01"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>default_is_immediate</b> () const</td></tr>
@@ -582,9 +581,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return true if are currently running in an immediate handler. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if this task is not running in an <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a> or the AIThreadPool. </dd></dl>
+<p>Return true if this task is currently running in an immediate handler. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="structAIStatefulTask_1_1Handler.html#a933c3c024a9b3fe38c97e5efbe70b17c" title="Return true if this is an immediate  Handler. ">Handler::is_immediate</a> </dd></dl>
 
 </div>
 </div>
@@ -732,7 +729,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Sat Nov 23 2019
+Revised Mon Nov 25 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

@@ -73,9 +73,10 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A hook to the protected control functions of <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>. </p>
+<div class="textblock"><p>A hook to the protected control functions of <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>.</p>
+<p>Allows to call the <a class="el" href="group__group__protected.html">protected control functions</a> of a task.</p>
 <p>Usage:</p>
-<div class="fragment"><div class="line"><span class="keyword">class </span>MyTool : <span class="keyword">public</span> <a class="code" href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a></div><div class="line">{</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="comment">// Task is the (base class of the) class containing this MyTool as member object.</span></div><div class="line">  MyTool(<a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>* <a class="code" href="namespacetask.html">task</a>) : <a class="code" href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a>(task) { }</div><div class="line"></div><div class="line">  <span class="keywordtype">void</span> f()</div><div class="line">  {</div><div class="line">    <span class="comment">// Now we can call the \@link group_protected protected control functions@endlink of \c task.</span></div><div class="line">    <a class="code" href="classAIFriendOfStatefulTask.html#aa8c4615a17a1488aea2d872faa8ceb34">yield</a>();</div><div class="line">  }</div><div class="line">};</div></div><!-- fragment --> </div>
+<div class="fragment"><div class="line"><span class="keyword">class </span>MyTool : <span class="keyword">public</span> <a class="code" href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a></div><div class="line">{</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="comment">// Task is the (base class of the) class containing this MyTool as member object.</span></div><div class="line">  MyTool(<a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>* <a class="code" href="namespacetask.html">task</a>) : <a class="code" href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a>(task) { }</div><div class="line"></div><div class="line">  <span class="keywordtype">void</span> f()</div><div class="line">  {</div><div class="line">    <span class="comment">// Now we can call the protected control functions of `task`.</span></div><div class="line">    <a class="code" href="classAIFriendOfStatefulTask.html#aa8c4615a17a1488aea2d872faa8ceb34">yield</a>();</div><div class="line">  }</div><div class="line">};</div></div><!-- fragment --> </div>
 <p><code>#include &lt;<a class="el" href="AIFriendOfStatefulTask_8h_source.html">AIFriendOfStatefulTask.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AIFriendOfStatefulTask:</div>
@@ -171,7 +172,7 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Sat Nov 23 2019
+Revised Mon Nov 25 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

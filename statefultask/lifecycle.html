@@ -79,7 +79,7 @@ $(function() {
 <p class="startli">The quick and dirty way, where you just want to run a task a single time. The task will delete itself when finished. </p><div class="fragment"><div class="line"><span class="comment">// Here &#39;task&#39; is usually just some automatic variable.</span></div><div class="line">MyTask* <a class="code" href="namespacetask.html">task</a> = <span class="keyword">new</span> MyTask(my_args);</div><div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;my_initialization(my_params); <span class="comment">// Assuming MyTask needs this.</span></div><div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;run(handler, callback_args);  <span class="comment">// This will cause &#39;task&#39; to</span></div><div class="line">                                    <span class="comment">// be deleted when finished.</span></div><div class="line"><span class="comment">// Do not use &#39;task&#39; anymore here.</span></div></div><!-- fragment --><p class="endli"></p>
 </li>
 <li>
-If you want to control the life-time of the Task. <div class="fragment"><div class="line"><span class="comment">// In general &#39;m_task&#39; will be a member variable of an object.</span></div><div class="line">boost::intrusive_ptr&lt;MyTask&gt; m_task = <span class="keyword">new</span> MyTask(my_args);</div><div class="line"></div><div class="line"><span class="comment">// Then, every time you want to run it:</span></div><div class="line">m_task-&gt;my_initialization(my_params);</div><div class="line">m_task-&gt;run(handler, callback_args);</div><div class="line"><span class="comment">// The task object will be kept around until both,</span></div><div class="line"><span class="comment">// &#39;m_task&#39; is destructed and the task did finish.</span></div></div><!-- fragment --> </li>
+If you want to control the life-time of the Task. <div class="fragment"><div class="line"><span class="comment">// In general &#39;m_task&#39; will be a member variable of an object.</span></div><div class="line">boost::intrusive_ptr&lt;MyTask&gt; m_task = task::create&lt;MyTask&gt;(my_args);</div><div class="line"></div><div class="line"><span class="comment">// Then, every time you want to run it:</span></div><div class="line">m_task-&gt;my_initialization(my_params);</div><div class="line">m_task-&gt;run(handler, callback_args);</div><div class="line"><span class="comment">// The task object will be kept around until both,</span></div><div class="line"><span class="comment">// &#39;m_task&#39; is destructed and the task did finish.</span></div></div><!-- fragment --> </li>
 </ol>
 <p>In both cases <span class="inlinecode">handler</span> is either an <span class="inlinecode">AIEngine*</span> or a AIQueueHandle.</p>
 <p>Note that this allows the task to be re-used: it can simply be re-initialized and run again after it finished; there is no need to allocate memory on the heap and construct a Task object every time you want to run it! Of course a task must be finished first before you can restart it.</p>
@@ -97,7 +97,7 @@ If you want to control the life-time of the Task. <div class="fragment"><div cla
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Sat Nov 23 2019
+Revised Mon Nov 25 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

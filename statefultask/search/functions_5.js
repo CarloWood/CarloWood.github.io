@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['handle',['Handle',['../unionAIStatefulTask_1_1Handler_1_1Handle.html#a25ab0183c26bf8b46fdfae8080263508',1,'AIStatefulTask::Handler::Handle::Handle(AIEngine *engine_)'],['../unionAIStatefulTask_1_1Handler_1_1Handle.html#aee84423e83d0b9648f37908d2cd7d5fc',1,'AIStatefulTask::Handler::Handle::Handle(AIQueueHandle queue_handle_)']]],
-  ['handler',['Handler',['../structAIStatefulTask_1_1Handler.html#aca54ebf01e1ecef9caa3a071b52fcc39',1,'AIStatefulTask::Handler::Handler(AIEngine *engine)'],['../structAIStatefulTask_1_1Handler.html#a8cbc793e81e1a30a5c736d6d81784b18',1,'AIStatefulTask::Handler::Handler(AIQueueHandle queue_handle)']]],
-  ['hasmaxduration',['hasMaxDuration',['../classAIEngine.html#a1de1677177469993f4b2fed8e3c438e2',1,'AIEngine']]]
+  ['get',['get',['../classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#adfc23ef9ea9389e0cf176f59682a9fd7',1,'AIDelayedFunction&lt; R(Args...)&gt;::get()'],['../classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a736fd6b64f1547354970f9c417b70b87',1,'AIPackagedTask&lt; R(Args...)&gt;::get()']]],
+  ['get_5finterval',['get_interval',['../classAITimer.html#a4e2258b14372861d1ef4c57d34b36925',1,'AITimer']]],
+  ['get_5fqueue_5fhandle',['get_queue_handle',['../structAIStatefulTask_1_1Handler.html#ad153dd9a853d482cd606e71162b0d322',1,'AIStatefulTask::Handler']]],
+  ['getduration',['getDuration',['../classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66',1,'AIStatefulTask']]]
 ];

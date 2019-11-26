@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['queue_5fhandle',['queue_handle',['../unionAIStatefulTask_1_1Handler_1_1Handle.html#a19e331a28c9bf538fbc545e6a646bb79',1,'AIStatefulTask::Handler::Handle']]]
+  ['protected_20control_20functions_2e',['Protected control functions.',['../group__group__protected.html',1,'']]],
+  ['public_20control_20functions_2e',['Public control functions.',['../group__group__public.html',1,'']]]
 ];

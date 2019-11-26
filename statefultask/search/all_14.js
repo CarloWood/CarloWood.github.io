@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['yield_20and_20engine_20control',['Yield and engine control',['../group__group__yield.html',1,'']]],
-  ['yield',['yield',['../classAIFriendOfStatefulTask.html#aa8c4615a17a1488aea2d872faa8ceb34',1,'AIFriendOfStatefulTask::yield()'],['../classAIFriendOfStatefulTask.html#a80f38d989d264d5f7026d948d568c1a0',1,'AIFriendOfStatefulTask::yield(AIEngine *engine)'],['../group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2',1,'AIStatefulTask::yield()'],['../group__group__yield.html#gafaad43cb215ff180e8fb9e288abd257c',1,'AIStatefulTask::yield(Handler handler)']]],
-  ['yield_5fframe',['yield_frame',['../classAIFriendOfStatefulTask.html#a1111198b3249e6ae13ba02b5f0483ea3',1,'AIFriendOfStatefulTask::yield_frame()'],['../group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766',1,'AIStatefulTask::yield_frame()']]],
-  ['yield_5fif_5fnot',['yield_if_not',['../classAIFriendOfStatefulTask.html#aa3eb350f966cfb30df88436243fcac9c',1,'AIFriendOfStatefulTask::yield_if_not()'],['../group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22',1,'AIStatefulTask::yield_if_not()']]],
-  ['yield_5fms',['yield_ms',['../classAIFriendOfStatefulTask.html#a27c570e0308fea7882c697d1304bbc5f',1,'AIFriendOfStatefulTask::yield_ms()'],['../group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902',1,'AIStatefulTask::yield_ms()']]]
+  ['wait',['wait',['../classAIFriendOfStatefulTask.html#ad8b5cd853d59466d3ade73320eef2ed3',1,'AIFriendOfStatefulTask::wait()'],['../group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897',1,'AIStatefulTask::wait()']]],
+  ['wait_5funtil',['wait_until',['../classAIFriendOfStatefulTask.html#ab1bb0db356c336a66b12efd2e4028a13',1,'AIFriendOfStatefulTask::wait_until(AIWaitConditionFunc const &amp;wait_condition, condition_type conditions)'],['../classAIFriendOfStatefulTask.html#a3ecb133f7feaee5a0f7fc6987f5d2021',1,'AIFriendOfStatefulTask::wait_until(AIWaitConditionFunc const &amp;wait_condition, condition_type conditions, state_type new_state)'],['../group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af',1,'AIStatefulTask::wait_until(AIWaitConditionFunc const &amp;wait_condition, condition_type conditions)'],['../group__group__wait.html#gac67d26752d9e61d9c686fbee14b4444d',1,'AIStatefulTask::wait_until(AIWaitConditionFunc const &amp;wait_condition, condition_type conditions, state_type new_state)']]],
+  ['waiting',['waiting',['../classAIStatefulTask.html#a487f7328bbd5508b63855194d2403f94',1,'AIStatefulTask']]],
+  ['waiting_5for_5faborting',['waiting_or_aborting',['../classAIStatefulTask.html#ab2b07501507b6597fbd99b859bce4261',1,'AIStatefulTask']]],
+  ['wake_5fup',['wake_up',['../classAIEngine.html#afdc70055417c2d427dce37010930b899',1,'AIEngine']]],
+  ['writing_20a_20task',['Writing a task',['../writingatask.html',1,'usage']]]
 ];

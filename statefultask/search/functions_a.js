@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['operator_20bool',['operator bool',['../structAIStatefulTask_1_1Handler.html#a02a176044564db9029919e7e8d718bd7',1,'AIStatefulTask::Handler']]],
-  ['operator_28_29',['operator()',['../classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#a3617e78deaf2b1257f439e045d8a198d',1,'AIDelayedFunction&lt; R(Args...)&gt;::operator()()'],['../classAIDelayedFunction_3_01void_07Args_8_8_8_08_4.html#a6d4bc786e10abd2a249911e350faea21',1,'AIDelayedFunction&lt; void(Args...)&gt;::operator()()'],['../classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#aeaf86b9e3a24627a8979e1d55f534ce7',1,'AIPackagedTask&lt; R(Args...)&gt;::operator()()']]],
-  ['operator_3c_3c',['operator&lt;&lt;',['../AIStatefulTask_8cxx.html#a3cbf03ec9734f47515ba48946899dbaf',1,'AIStatefulTask.cxx']]],
-  ['operator_3d_3d',['operator==',['../structAIStatefulTask_1_1Handler.html#a82a63fa453b6988b945dbcfc17d5a331',1,'AIStatefulTask::Handler']]]
+  ['mainloop',['mainloop',['../classAIEngine.html#a64bcf4899082850d29960198aae37f70',1,'AIEngine']]],
+  ['multiplex_5fimpl',['multiplex_impl',['../classExample.html#a5e23b83406c365bed7cbeeb196071726',1,'Example::multiplex_impl()'],['../classAIStatefulTask.html#a57233a1b95a6fdbef04c4cab3fd890ae',1,'AIStatefulTask::multiplex_impl()'],['../classAITimer.html#af6ec5aa4e376301f05a15d5362bb30c8',1,'AITimer::multiplex_impl()']]]
 ];

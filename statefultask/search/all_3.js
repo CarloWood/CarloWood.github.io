@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['defaultmemorypagepool',['DefaultMemoryPagePool',['../classstatefultask_1_1DefaultMemoryPagePool.html',1,'statefultask']]],
+  ['defaultmemorypagepool',['DefaultMemoryPagePool',['../classstatefultask_1_1DefaultMemoryPagePool.html',1,'statefultask::DefaultMemoryPagePool&lt; MPP &gt;'],['../classstatefultask_1_1DefaultMemoryPagePool.html#ac310b89f570e3313e2ff6cccb20e3080',1,'statefultask::DefaultMemoryPagePool::DefaultMemoryPagePool(size_t block_size=0x8000, utils::MemoryPagePool::blocks_t minimum_chunk_size=0, utils::MemoryPagePool::blocks_t maximum_chunk_size=0)'],['../classstatefultask_1_1DefaultMemoryPagePool.html#a7adb7675c199cc23c406867801d6b235',1,'statefultask::DefaultMemoryPagePool::DefaultMemoryPagePool(ArgT &amp;&amp;... args)']]],
   ['defaultmemorypagepool_2ecxx',['DefaultMemoryPagePool.cxx',['../DefaultMemoryPagePool_8cxx.html',1,'']]],
   ['defaultmemorypagepool_2eh',['DefaultMemoryPagePool.h',['../DefaultMemoryPagePool_8h.html',1,'']]],
   ['defaultmemorypagepoolbase',['DefaultMemoryPagePoolBase',['../classstatefultask_1_1DefaultMemoryPagePoolBase.html',1,'statefultask']]],

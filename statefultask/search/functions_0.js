@@ -10,5 +10,6 @@ var searchData=
   ['aifriendofstatefultask',['AIFriendOfStatefulTask',['../classAIFriendOfStatefulTask.html#a722046a07e56ab98ca741d12a47211b6',1,'AIFriendOfStatefulTask']]],
   ['aipackagedtask',['AIPackagedTask',['../classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a072d9d06adc511cbcb4f49bfe3e5b7ba',1,'AIPackagedTask&lt; R(Args...)&gt;::AIPackagedTask(AIStatefulTask *parent_task, AIStatefulTask::condition_type condition, R(*fp)(Args...), AIQueueHandle object_queue_handle)'],['../classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#ac933acb37de54338cf8c5dfeebcac472',1,'AIPackagedTask&lt; R(Args...)&gt;::AIPackagedTask(AIStatefulTask *parent_task, AIStatefulTask::condition_type condition, C *object, R(C::*memfp)(Args...), AIQueueHandle object_queue_handle)']]],
   ['aistatefultask',['AIStatefulTask',['../classAIStatefulTask.html#ad63774288f04f401632549e944ee5183',1,'AIStatefulTask']]],
+  ['aistatefultaskmutex',['AIStatefulTaskMutex',['../classAIStatefulTaskMutex.html#a2d03ec4978cad88116cb67bb218943b2',1,'AIStatefulTaskMutex']]],
   ['aitimer',['AITimer',['../classAITimer.html#a06876e158f802e759b7d6201c9b94893',1,'AITimer']]]
 ];

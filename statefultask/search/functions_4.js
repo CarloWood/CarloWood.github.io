@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['get',['get',['../classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#adfc23ef9ea9389e0cf176f59682a9fd7',1,'AIDelayedFunction&lt; R(Args...)&gt;::get()'],['../classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a736fd6b64f1547354970f9c417b70b87',1,'AIPackagedTask&lt; R(Args...)&gt;::get()']]],
-  ['get_5finterval',['get_interval',['../classAITimer.html#a4e2258b14372861d1ef4c57d34b36925',1,'AITimer']]],
-  ['get_5fqueue_5fhandle',['get_queue_handle',['../structAIStatefulTask_1_1Handler.html#ad153dd9a853d482cd606e71162b0d322',1,'AIStatefulTask::Handler']]],
-  ['getduration',['getDuration',['../classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66',1,'AIStatefulTask']]]
+  ['finish',['finish',['../classAIFriendOfStatefulTask.html#a4593fb6804bcc3f22e1f51302d72db92',1,'AIFriendOfStatefulTask::finish()'],['../group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b',1,'AIStatefulTask::finish()']]],
+  ['finish_5fimpl',['finish_impl',['../classExample.html#a418945b72b830cbc95f3d2cb10f62e83',1,'Example::finish_impl()'],['../classAIStatefulTask.html#a872025f08ce55e54810495690da7b337',1,'AIStatefulTask::finish_impl()']]],
+  ['finished',['finished',['../classAIStatefulTask.html#a9fe975f2acbc2e25380c77874644fd25',1,'AIStatefulTask']]],
+  ['flush',['flush',['../classAIEngine.html#a961f78e330bb5106b49d40391c5026ed',1,'AIEngine']]],
+  ['force_5fkilled',['force_killed',['../classExample.html#a760624809516dc2da099b27ece1d6b55',1,'Example::force_killed()'],['../classAIStatefulTask.html#a415a771f1c6fd7046702921215eb37dc',1,'AIStatefulTask::force_killed()']]]
 ];

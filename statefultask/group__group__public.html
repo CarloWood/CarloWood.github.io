@@ -73,13 +73,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga0593a004b92de37cbcfae9f3cfcccaec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#ga0593a004b92de37cbcfae9f3cfcccaec">AIStatefulTask::kill</a> ()</td></tr>
-<tr class="memdesc:ga0593a004b92de37cbcfae9f3cfcccaec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate a task from the call back.  <a href="#ga0593a004b92de37cbcfae9f3cfcccaec">More...</a><br /></td></tr>
 <tr class="separator:ga0593a004b92de37cbcfae9f3cfcccaec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac520d813fed06cba4eef1913c3daca3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">AIStatefulTask::abort</a> ()</td></tr>
-<tr class="memdesc:gac520d813fed06cba4eef1913c3daca3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the task (unsuccessful finish).  <a href="#gac520d813fed06cba4eef1913c3daca3f">More...</a><br /></td></tr>
 <tr class="separator:gac520d813fed06cba4eef1913c3daca3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b7111d021ba8507748df416a0631e5d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">AIStatefulTask::signal</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition)</td></tr>
-<tr class="memdesc:ga8b7111d021ba8507748df416a0631e5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake up a waiting task.  <a href="#ga8b7111d021ba8507748df416a0631e5d">More...</a><br /></td></tr>
 <tr class="separator:ga8b7111d021ba8507748df416a0631e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -98,9 +95,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Abort the task (unsuccessful finish). </p>
-<p>This function can be called from <code>multiplex_imp</code>, but also by a child task and therefore by any thread. The child task should use a <code>boost::intrusive_ptr&lt;<a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>&gt;</code> to access this task.</p>
+<p>Abort the task (unsuccessful finish).</p>
+<p>This function can be called from <code>multiplex_imp</code>, but also by a child task and therefore by any thread. The child task should use a <code>boost::intrusive_ptr&lt;<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>&gt;</code> to access this task.</p>
 <p>A call to <code>abort</code> and <code>finish</code> will cause a task to not call <code>multiplex_impl</code> again at all after leaving it (except when <code>finish_impl</code> calls <code>run</code> again, in which case the task is restarted from the beginning). </p>
 
 </div>
@@ -119,8 +115,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Terminate a task from the call back. </p>
+<p>Terminate a task from the call back.</p>
 <p>This function may <em>only</em> be called from the call back function (and cancels a call to <a class="el" href="group__group__run.html">run</a> from <a class="el" href="classExample.html#a418945b72b830cbc95f3d2cb10f62e83">finish_impl</a>). </p>
 
 </div>
@@ -140,10 +135,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Wake up a waiting task. </p>
+<p>Wake up a waiting task.</p>
 <p>This is the only control function that can be called by any thread at any moment.</p>
-<p>Those threads should use a <code>boost::intrusive_ptr&lt;<a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>&gt;</code> to access this task.</p>
+<p>Those threads should use a <code>boost::intrusive_ptr&lt;<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>&gt;</code> to access this task.</p>
 <p>Guarantee at least one full run of <em>multiplex</em> iff this task is still blocked since the last call to <code>wait(conditions)</code> where <code>(conditions &amp; condition) != 0</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -160,7 +154,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

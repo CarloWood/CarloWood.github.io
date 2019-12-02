@@ -74,24 +74,24 @@ $(function() {
 <div class="textblock"><h3>template&lt;typename R, typename ... Args&gt;<br />
 class AIDelayedFunction&lt; R(Args...)&gt;</h3>
 
-<p>Helper class for AIPackagedTask. </p>
+<p>Helper class for AIPackagedTask.</p>
 <p>This object reserves storage a function pointer, its arguments and a return value.</p>
 <p>The function pointer is initialized at creation, the arguments are added later.</p>
 <p>The actual invokation of the function happens by calling the <a class="el" href="classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#a6166f596a57f6cee74039fa8e480a720">invoke()</a> member function, which stores the return value once again in this object.</p>
 <p>The return value can later be obtained through the member function <a class="el" href="classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#adfc23ef9ea9389e0cf176f59682a9fd7">get()</a>.</p>
 <p>Usage example:</p>
-<div class="fragment"><div class="line">AIDelayedFunction&lt;char(int, double)&gt; delayed_function(&amp;f);           <span class="comment">// char f(int, double);</span></div></div><!-- fragment --><p> or </p><div class="fragment"><div class="line">AIDelayedFunction&lt;char(int, double)&gt; delayed_function(&amp;obj, &amp;C::f);  <span class="comment">// char C::f(int, double); where obj is of type C.</span></div><div class="line"></div><div class="line">delayed_function(1, 1.0);            <span class="comment">// Store the arguments.</span></div><div class="line"></div><div class="line">delayed_function.invoke();           <span class="comment">// Call f(1, 1.0) or obj.f(1, 1.0) and store the result.</span></div><div class="line"></div><div class="line"><span class="keywordtype">char</span> c = delayed_function.get();     <span class="comment">// Get the result.</span></div></div><!-- fragment --> </div>
+<div class="fragment"><div class="line">AIDelayedFunction&lt;char(int, double)&gt; delayed_function(&amp;f);           <span class="comment">// char f(int, double);</span></div></div><!-- fragment --><p>or</p>
+<div class="fragment"><div class="line">AIDelayedFunction&lt;char(int, double)&gt; delayed_function(&amp;obj, &amp;C::f);  <span class="comment">// char C::f(int, double); where obj is of type C.</span></div><div class="line"></div><div class="line">delayed_function(1, 1.0);            <span class="comment">// Store the arguments.</span></div><div class="line"></div><div class="line">delayed_function.invoke();           <span class="comment">// Call f(1, 1.0) or obj.f(1, 1.0) and store the result.</span></div><div class="line"></div><div class="line"><span class="keywordtype">char</span> c = delayed_function.get();     <span class="comment">// Get the result.</span></div></div><!-- fragment --> </div>
 <p><code>#include &lt;<a class="el" href="AIDelayedFunction_8h_source.html">AIDelayedFunction.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a88dc9fbec99ba16ab29b4696ca6027f2"><td class="memItemLeft" align="right" valign="top"><a id="a88dc9fbec99ba16ab29b4696ca6027f2"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#a88dc9fbec99ba16ab29b4696ca6027f2">AIDelayedFunction</a> (R(*fp)(Args...))</td></tr>
-<tr class="memdesc:a88dc9fbec99ba16ab29b4696ca6027f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an AIDelayedFunction for a free function <code>R f(Args...)</code>. <br /></td></tr>
+<tr class="memdesc:a88dc9fbec99ba16ab29b4696ca6027f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an AIDelayedFunction for a free function <span class="inlinecode">R f(Args...)</span>. <br /></td></tr>
 <tr class="separator:a88dc9fbec99ba16ab29b4696ca6027f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afee6617cfca8f7ece2101cdc1da13077"><td class="memTemplParams" colspan="2">template&lt;class C &gt; </td></tr>
 <tr class="memitem:afee6617cfca8f7ece2101cdc1da13077"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#afee6617cfca8f7ece2101cdc1da13077">AIDelayedFunction</a> (C *object, R(C::*memfn)(Args...))</td></tr>
-<tr class="memdesc:afee6617cfca8f7ece2101cdc1da13077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an AIDelayedFunction for a member function <code>R C::f(Args...)</code> of <em>object</em>.  <a href="#afee6617cfca8f7ece2101cdc1da13077">More...</a><br /></td></tr>
 <tr class="separator:afee6617cfca8f7ece2101cdc1da13077"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa46d79686aa895b35e560cf02b5371c"><td class="memItemLeft" align="right" valign="top"><a id="aaa46d79686aa895b35e560cf02b5371c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#aaa46d79686aa895b35e560cf02b5371c">swap</a> (<a class="el" href="classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#a88dc9fbec99ba16ab29b4696ca6027f2">AIDelayedFunction</a> &amp;other) noexcept</td></tr>
@@ -148,8 +148,7 @@ template&lt;class C &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construct an AIDelayedFunction for a member function <code>R C::f(Args...)</code> of <em>object</em>. </p>
+<p>Construct an AIDelayedFunction for a member function <span class="inlinecode">R C::f(Args...)</span> of <em>object</em>.</p>
 <p>The object must have a lifetime that exceeds the call to <a class="el" href="classAIDelayedFunction_3_01R_07Args_8_8_8_08_4.html#a6166f596a57f6cee74039fa8e480a720">invoke</a>. </p>
 
 </div>
@@ -162,7 +161,7 @@ template&lt;class C &gt; </div>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

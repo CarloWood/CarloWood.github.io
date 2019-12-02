@@ -91,10 +91,8 @@ Modules</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga160831e7b091af4095a9f60e33834328"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">AIStatefulTask::set_state</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> new_state)</td></tr>
-<tr class="memdesc:ga160831e7b091af4095a9f60e33834328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the state to run, the next invocation of multiplex_impl.  <a href="#ga160831e7b091af4095a9f60e33834328">More...</a><br /></td></tr>
 <tr class="separator:ga160831e7b091af4095a9f60e33834328"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf7642911a8012284ec7aa5a9a700b06b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">AIStatefulTask::finish</a> ()</td></tr>
-<tr class="memdesc:gaf7642911a8012284ec7aa5a9a700b06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark that the task finished and schedule the call back.  <a href="#gaf7642911a8012284ec7aa5a9a700b06b">More...</a><br /></td></tr>
 <tr class="separator:gaf7642911a8012284ec7aa5a9a700b06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59d5a998e43866969cd8d92b8924ddb1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#ga59d5a998e43866969cd8d92b8924ddb1">AIStatefulTask::is_self_locked</a> (<a class="el" href="classAIStatefulTaskMutex.html">AIStatefulTaskMutex</a> &amp;stateful_task_mutex)</td></tr>
 <tr class="separator:ga59d5a998e43866969cd8d92b8924ddb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,8 +125,7 @@ page_state_evolution </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Mark that the task finished and schedule the call back. </p>
+<p>Mark that the task finished and schedule the call back.</p>
 <p>A call to <code>abort</code> and <code>finish</code> will cause a task to not call <code>multiplex_impl</code> again at all after leaving it (except when <code>finish_impl</code> calls <code>run</code> again, in which case the task is restarted from the beginning). </p>
 
 </div>
@@ -183,8 +180,7 @@ page_state_evolution </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Set the state to run, the next invocation of multiplex_impl. </p>
+<p>Set the state to run, the next invocation of multiplex_impl.</p>
 <p>This function can be called from <code>initialize_impl</code> and <code>multiplex_impl</code>.</p>
 <p>A call to <code>set_state</code> has no immediate effect, except that the <em>next</em> invokation of <code>multiplex_impl</code> will be with the state that was passed to the (last) call to <code>set_state</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -201,7 +197,7 @@ page_state_evolution </dd></dl>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

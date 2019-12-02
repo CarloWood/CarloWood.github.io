@@ -79,11 +79,11 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Describes if, how and where to run a task. </p>
-<p>By constructing a <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> from <a class="el" href="structAIStatefulTask_1_1Handler.html#a31078b881cbbf42d2e3e3998b905d1b2ae8710aab384c04d9e7cc871e9977a2ee" title="Construct an idle Handler. ">Handler::idle</a>, it describes that a task is <b>idle</b>, <b>or</b> that <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> is <b>not to be used</b> when other alternatives exist.</p>
-<p>By constructing a <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> from <a class="el" href="structAIStatefulTask_1_1Handler.html#a31078b881cbbf42d2e3e3998b905d1b2ac0333f77fe5c74c627b723a8e70f2932" title="Construct an immediate Handler. ">Handler::immediate</a>, it describes that a task should run in the thread that calls <a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run()</a> or the thread that wakes up a task by calling <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d" title="Wake up a waiting task. ">signal()</a>. Hence, this handler causes a task to run to until the first time it goes idle, or calls <code>yield</code>, before returning from <code>run</code> / <code>signal</code> respectively.</p>
-<p>When a <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> is constructed from an <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a> pointer, then it describes that a task should run in that engine.</p>
-<p>Finally, a <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> can be constructed from AIQueueHandle, describing that a task should run in the thread pool by adding it to the PriorityQueue of that handle. </p>
+<div class="textblock"><p>Describes if, how and where to run a task.</p>
+<p>By constructing a <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> from <a class="el" href="structAIStatefulTask_1_1Handler.html#a31078b881cbbf42d2e3e3998b905d1b2ae8710aab384c04d9e7cc871e9977a2ee" title="Construct an idle Handler. ">Handler::idle</a>, it describes that a task is <b>idle</b>, <b>or</b> that <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> is <b>not to be used</b> when other alternatives exist.</p>
+<p>By constructing a <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> from <a class="el" href="structAIStatefulTask_1_1Handler.html#a31078b881cbbf42d2e3e3998b905d1b2ac0333f77fe5c74c627b723a8e70f2932" title="Construct an immediate Handler. ">Handler::immediate</a>, it describes that a task should run in the thread that calls <a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run()</a> or the thread that wakes up a task by calling <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal()</a>. Hence, this handler causes a task to run to until the first time it goes idle, or calls <code>yield</code>, before returning from <code>run</code> / <code>signal</code> respectively.</p>
+<p>When a <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> is constructed from an <a class="el" href="classAIEngine.html">AIEngine</a> pointer, then it describes that a task should run in that engine.</p>
+<p>Finally, a <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> can be constructed from AIQueueHandle, describing that a task should run in the thread pool by adding it to the PriorityQueue of that handle. </p>
 </div>
 <p><code>#include &lt;<a class="el" href="AIStatefulTask_8h_source.html">AIStatefulTask.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -92,14 +92,14 @@ Collaboration diagram for AIStatefulTask::Handler:</div>
 <div class="center"><img src="structAIStatefulTask_1_1Handler__coll__graph.png" border="0" usemap="#AIStatefulTask_1_1Handler_coll__map" alt="Collaboration graph"/></div>
 <map name="AIStatefulTask_1_1Handler_coll__map" id="AIStatefulTask_1_1Handler_coll__map">
 <area shape="rect" id="node2" href="unionAIStatefulTask_1_1Handler_1_1Handle.html" title="Contains extra data that depends on the type of the Handler. " alt="" coords="5,95,168,136"/>
-<area shape="rect" id="node3" href="classAIEngine.html" title="Task queue and dispatcher. " alt="" coords="49,5,124,32"/>
+<area shape="rect" id="node3" href="classAIEngine.html" title="AIEngine" alt="" coords="49,5,124,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionAIStatefulTask_1_1Handler_1_1Handle.html">Handle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains extra data that depends on the type of the <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>.  <a href="unionAIStatefulTask_1_1Handler_1_1Handle.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains extra data that depends on the type of the <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>.  <a href="unionAIStatefulTask_1_1Handler_1_1Handle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -124,19 +124,19 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa1fe3cf9aacc0be068a7f86e2fbdb62d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca54ebf01e1ecef9caa3a071b52fcc39"><td class="memItemLeft" align="right" valign="top"><a id="aca54ebf01e1ecef9caa3a071b52fcc39"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html#aca54ebf01e1ecef9caa3a071b52fcc39">Handler</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine)</td></tr>
-<tr class="memdesc:aca54ebf01e1ecef9caa3a071b52fcc39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> from an <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a> pointer. <br /></td></tr>
+<tr class="memdesc:aca54ebf01e1ecef9caa3a071b52fcc39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> from an <a class="el" href="classAIEngine.html">AIEngine</a> pointer. <br /></td></tr>
 <tr class="separator:aca54ebf01e1ecef9caa3a071b52fcc39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cbc793e81e1a30a5c736d6d81784b18"><td class="memItemLeft" align="right" valign="top"><a id="a8cbc793e81e1a30a5c736d6d81784b18"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html#a8cbc793e81e1a30a5c736d6d81784b18">Handler</a> (AIQueueHandle queue_handle)</td></tr>
-<tr class="memdesc:a8cbc793e81e1a30a5c736d6d81784b18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> from an AIQueueHandle. <br /></td></tr>
+<tr class="memdesc:a8cbc793e81e1a30a5c736d6d81784b18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> from an AIQueueHandle. <br /></td></tr>
 <tr class="separator:a8cbc793e81e1a30a5c736d6d81784b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af37420fb70091a985361b1701b00e4f4"><td class="memItemLeft" align="right" valign="top"><a id="af37420fb70091a985361b1701b00e4f4"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html#af37420fb70091a985361b1701b00e4f4">is_engine</a> () const</td></tr>
-<tr class="memdesc:af37420fb70091a985361b1701b00e4f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this is an engine <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. <br /></td></tr>
+<tr class="memdesc:af37420fb70091a985361b1701b00e4f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this is an engine <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. <br /></td></tr>
 <tr class="separator:af37420fb70091a985361b1701b00e4f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a933c3c024a9b3fe38c97e5efbe70b17c"><td class="memItemLeft" align="right" valign="top"><a id="a933c3c024a9b3fe38c97e5efbe70b17c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html#a933c3c024a9b3fe38c97e5efbe70b17c">is_immediate</a> () const</td></tr>
-<tr class="memdesc:a933c3c024a9b3fe38c97e5efbe70b17c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this is an <a class="el" href="structAIStatefulTask_1_1Handler.html#a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb">immediate </a> <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. <br /></td></tr>
+<tr class="memdesc:a933c3c024a9b3fe38c97e5efbe70b17c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this is an <a class="el" href="structAIStatefulTask_1_1Handler.html#a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb">immediate </a> <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. <br /></td></tr>
 <tr class="separator:a933c3c024a9b3fe38c97e5efbe70b17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad153dd9a853d482cd606e71162b0d322"><td class="memItemLeft" align="right" valign="top"><a id="ad153dd9a853d482cd606e71162b0d322"></a>
 AIQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html#ad153dd9a853d482cd606e71162b0d322">get_queue_handle</a> () const</td></tr>
@@ -159,14 +159,14 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a0941f2c6ab21a2d61027f3c01db83dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea9e7f3a92c493364764e377c0062205"><td class="memItemLeft" align="right" valign="top"><a id="aea9e7f3a92c493364764e377c0062205"></a>
 <a class="el" href="structAIStatefulTask_1_1Handler.html#a49239baf5f285bd7d8161234a54c45d1">type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html#aea9e7f3a92c493364764e377c0062205">m_type</a></td></tr>
-<tr class="memdesc:aea9e7f3a92c493364764e377c0062205"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of this <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. Construct a special <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. <br /></td></tr>
+<tr class="memdesc:aea9e7f3a92c493364764e377c0062205"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of this <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. Construct a special <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. <br /></td></tr>
 <tr class="separator:aea9e7f3a92c493364764e377c0062205"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a58a1b2d74e680a118cc560866c0dac0f"><td class="memItemLeft" align="right" valign="top"><a id="a58a1b2d74e680a118cc560866c0dac0f"></a>
 std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html#a58a1b2d74e680a118cc560866c0dac0f">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> const &amp;handler)</td></tr>
-<tr class="memdesc:a58a1b2d74e680a118cc560866c0dac0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a> to an ostream. <br /></td></tr>
+<tr class="memdesc:a58a1b2d74e680a118cc560866c0dac0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> to an ostream. <br /></td></tr>
 <tr class="separator:a58a1b2d74e680a118cc560866c0dac0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
@@ -184,9 +184,9 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 <p>A typed use by the constuctor Handler(special_t). </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a31078b881cbbf42d2e3e3998b905d1b2ae8710aab384c04d9e7cc871e9977a2ee"></a>idle&#160;</td><td class="fielddoc"><p>Construct an idle <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a31078b881cbbf42d2e3e3998b905d1b2ae8710aab384c04d9e7cc871e9977a2ee"></a>idle&#160;</td><td class="fielddoc"><p>Construct an idle <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a31078b881cbbf42d2e3e3998b905d1b2ac0333f77fe5c74c627b723a8e70f2932"></a>immediate&#160;</td><td class="fielddoc"><p>Construct an immediate <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. </p>
+<tr><td class="fieldname"><a id="a31078b881cbbf42d2e3e3998b905d1b2ac0333f77fe5c74c627b723a8e70f2932"></a>immediate&#160;</td><td class="fielddoc"><p>Construct an immediate <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. </p>
 </td></tr>
 </table>
 
@@ -206,13 +206,13 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 <p>The type of <a class="el" href="structAIStatefulTask_1_1Handler.html#aea9e7f3a92c493364764e377c0062205">m_type</a>. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1ac87839c65308c498a8b4e611c811f70d"></a>idle_h&#160;</td><td class="fielddoc"><p>An idle <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1ac87839c65308c498a8b4e611c811f70d"></a>idle_h&#160;</td><td class="fielddoc"><p>An idle <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb"></a>immediate_h&#160;</td><td class="fielddoc"><p>An immediate <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. </p>
+<tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb"></a>immediate_h&#160;</td><td class="fielddoc"><p>An immediate <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1a04950d91679c67187cfebbf5325ef0e4"></a>engine_h&#160;</td><td class="fielddoc"><p>An engine <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. </p>
+<tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1a04950d91679c67187cfebbf5325ef0e4"></a>engine_h&#160;</td><td class="fielddoc"><p>An engine <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1afab9afd9e8947ac35ad9b4bbd5bf2813"></a>thread_pool_h&#160;</td><td class="fielddoc"><p>A thread pool <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>. </p>
+<tr><td class="fieldname"><a id="a49239baf5f285bd7d8161234a54c45d1afab9afd9e8947ac35ad9b4bbd5bf2813"></a>thread_pool_h&#160;</td><td class="fielddoc"><p>A thread pool <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. </p>
 </td></tr>
 </table>
 
@@ -226,7 +226,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

@@ -77,7 +77,6 @@ $(function() {
 Functions</h2></td></tr>
 <tr class="memitem:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="memTemplParams" colspan="2">template&lt;typename TaskType , typename... ARGS, typename  = typename std::enable_if&lt;std::is_base_of&lt;AIStatefulTask, TaskType&gt;::value&gt;::type&gt; </td></tr>
 <tr class="memitem:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="memTemplItemLeft" align="right" valign="top">boost::intrusive_ptr&lt; TaskType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">create</a> (ARGS &amp;&amp;... args)</td></tr>
-<tr class="memdesc:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to create tasks.  <a href="#aaf85b35668e9562dc3647e4fd1a9e2fe">More...</a><br /></td></tr>
 <tr class="separator:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -100,11 +99,10 @@ template&lt;typename TaskType , typename... ARGS, typename  = typename std::enab
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Convenience function to create tasks. </p>
+<p>Convenience function to create tasks.</p>
 <p>Typical usage,</p>
-<div class="fragment"><div class="line"><span class="keyword">class </span>ATask : <span class="keyword">public</span> <a class="code" href="classAIStatefulTask.html">AIStatefulTask</a> {</div><div class="line">  ...</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="keywordtype">void</span> init(...);</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">class </span>SomeClass</div><div class="line">{</div><div class="line">  boost::intrusive_ptr&lt;ATask&gt; m_task;</div><div class="line"></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  SomeClass() : m_task(<a class="code" href="namespacetask.html">task</a>::<a class="code" href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">create</a>&lt;ATask&gt;(<span class="comment">/* constructor arguments of ATask */</span>)) { }</div><div class="line"></div><div class="line">  <span class="keywordtype">void</span> initial_run(...)</div><div class="line">  {</div><div class="line">    m_task-&gt;init(...);</div><div class="line">    m_task-&gt;run(...);</div><div class="line">  }</div><div class="line">};</div></div><!-- fragment --><p>Or, for a one-shot task</p>
-<div class="fragment"><div class="line"><span class="keyword">auto</span> <a class="code" href="namespacetask.html">task</a> = task::create&lt;ATask&gt;(<span class="comment">/* constructor arguments of ATask */</span>);</div><div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;init(...);</div><div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;run(...);</div></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="keyword">class </span>ATask : <span class="keyword">public</span> <a class="code" href="classAIStatefulTask.html">AIStatefulTask</a> {</div><div class="line">  ...</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="keywordtype">void</span> init(...);</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">class </span>SomeClass</div><div class="line">{</div><div class="line">  boost::intrusive_ptr&lt;ATask&gt; m_task;</div><div class="line"></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  SomeClass() : m_task(<a class="code" href="namespacetask.html">task</a>::<a class="code" href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">create</a>&lt;ATask&gt;(/\* constructor arguments of ATask *\/)) { }</div><div class="line"></div><div class="line">  <span class="keywordtype">void</span> initial_run(...)</div><div class="line">  {</div><div class="line">    m_task-&gt;init(...);</div><div class="line">    m_task-&gt;run(...);</div><div class="line">  }</div><div class="line">};</div></div><!-- fragment --><p>Or, for a one-shot task</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> <a class="code" href="namespacetask.html">task</a> = task::create&lt;ATask&gt;(/\* constructor arguments of ATask *\/);</div><div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;init(...);</div><div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;run(...);</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
@@ -112,7 +110,7 @@ template&lt;typename TaskType , typename... ARGS, typename  = typename std::enab
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

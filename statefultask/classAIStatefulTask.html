@@ -78,7 +78,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base class for task objects. </p>
+<div class="textblock"><p>Base class for task objects.</p>
 <p>Derive a new task from this base class. The derived class must have a protected destructor that uses the <span class="inlinecode">override</span> keyword.</p>
 <p>Furthermore a derived class must define, </p><table class="implement_table">
 <tr>
@@ -102,7 +102,7 @@ $(function() {
 <tr>
 <td class="item"><a class="el" href="classExample.html#a760624809516dc2da099b27ece1d6b55">force_killed</a></td><td>Member function that is called when the task is killed. </td></tr>
 </table>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classExample.html" title="An example task class. ">Example</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classExample.html">Example</a> </dd></dl>
 </div>
 <p><code>#include &lt;<a class="el" href="AIStatefulTask_8h_source.html">AIStatefulTask.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -110,8 +110,8 @@ Inheritance diagram for AIStatefulTask:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAIStatefulTask__inherit__graph.png" border="0" usemap="#AIStatefulTask_inherit__map" alt="Inheritance graph"/></div>
 <map name="AIStatefulTask_inherit__map" id="AIStatefulTask_inherit__map">
-<area shape="rect" id="node3" href="classAITimer.html" title="The timer task. " alt="" coords="5,155,73,181"/>
-<area shape="rect" id="node4" href="classExample.html" title="An example task class. " alt="" coords="97,155,171,181"/>
+<area shape="rect" id="node3" href="classAITimer.html" title="AITimer" alt="" coords="5,155,73,181"/>
+<area shape="rect" id="node4" href="classExample.html" title="Example" alt="" coords="97,155,171,181"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -123,7 +123,6 @@ Collaboration diagram for AIStatefulTask:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes if, how and where to run a task.  <a href="structAIStatefulTask_1_1Handler.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -146,11 +145,12 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad63774288f04f401632549e944ee5183"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#ad63774288f04f401632549e944ee5183">AIStatefulTask</a> (CWDEBUG_ONLY(bool debug))</td></tr>
-<tr class="memdesc:ad63774288f04f401632549e944ee5183"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of base class <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>.  <a href="#ad63774288f04f401632549e944ee5183">More...</a><br /></td></tr>
 <tr class="separator:ad63774288f04f401632549e944ee5183"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac40d1760493b87dcd12920caf0165f87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler, std::function&lt; void(bool)&gt; cb_function)</td></tr>
 <tr class="separator:gac40d1760493b87dcd12920caf0165f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9900f50731b8bc419d034832baef0d4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#ga9900f50731b8bc419d034832baef0d4c">run</a> (std::function&lt; void(bool)&gt; cb_function)</td></tr>
+<tr class="memitem:ga9900f50731b8bc419d034832baef0d4c"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#ga9900f50731b8bc419d034832baef0d4c">run</a> (std::function&lt; void(bool)&gt; cb_function)</td></tr>
+<tr class="memdesc:ga9900f50731b8bc419d034832baef0d4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The same as above but use the <a class="el" href="structAIStatefulTask_1_1Handler.html#a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb">immediate </a> <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. <br /></td></tr>
 <tr class="separator:ga9900f50731b8bc419d034832baef0d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad20d48b8239a6f07738d61461a65edb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#gad20d48b8239a6f07738d61461a65edb9">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler, <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> *parent, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition, <a class="el" href="classAIStatefulTask.html#a324d12498b3656b815b88741b8c5657c">on_abort_st</a> on_abort=<a class="el" href="classAIStatefulTask.html#a324d12498b3656b815b88741b8c5657cae7b1902fa7f7ce6687e188a338721c9e">abort_parent</a>)</td></tr>
 <tr class="separator:gad20d48b8239a6f07738d61461a65edb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -159,25 +159,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ga6a1a48030a912ae51de1c6ff18f0d3bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#ga6a1a48030a912ae51de1c6ff18f0d3bd">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler=<a class="el" href="structAIStatefulTask_1_1Handler.html#a31078b881cbbf42d2e3e3998b905d1b2ac0333f77fe5c74c627b723a8e70f2932">Handler::immediate</a>)</td></tr>
 <tr class="separator:ga6a1a48030a912ae51de1c6ff18f0d3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0593a004b92de37cbcfae9f3cfcccaec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#ga0593a004b92de37cbcfae9f3cfcccaec">kill</a> ()</td></tr>
-<tr class="memdesc:ga0593a004b92de37cbcfae9f3cfcccaec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate a task from the call back.  <a href="group__group__public.html#ga0593a004b92de37cbcfae9f3cfcccaec">More...</a><br /></td></tr>
 <tr class="separator:ga0593a004b92de37cbcfae9f3cfcccaec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac520d813fed06cba4eef1913c3daca3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort</a> ()</td></tr>
-<tr class="memdesc:gac520d813fed06cba4eef1913c3daca3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the task (unsuccessful finish).  <a href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">More...</a><br /></td></tr>
 <tr class="separator:gac520d813fed06cba4eef1913c3daca3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b7111d021ba8507748df416a0631e5d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition)</td></tr>
-<tr class="memdesc:ga8b7111d021ba8507748df416a0631e5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake up a waiting task.  <a href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">More...</a><br /></td></tr>
 <tr class="separator:ga8b7111d021ba8507748df416a0631e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17b9024efb750d98f835ea050a07414e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a17b9024efb750d98f835ea050a07414e">running</a> () const</td></tr>
-<tr class="memdesc:a17b9024efb750d98f835ea050a07414e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the derived class is running.  <a href="#a17b9024efb750d98f835ea050a07414e">More...</a><br /></td></tr>
 <tr class="separator:a17b9024efb750d98f835ea050a07414e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a487f7328bbd5508b63855194d2403f94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a487f7328bbd5508b63855194d2403f94">waiting</a> () const</td></tr>
-<tr class="memdesc:a487f7328bbd5508b63855194d2403f94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the derived class is running and idle.  <a href="#a487f7328bbd5508b63855194d2403f94">More...</a><br /></td></tr>
 <tr class="separator:a487f7328bbd5508b63855194d2403f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2b07501507b6597fbd99b859bce4261"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#ab2b07501507b6597fbd99b859bce4261">waiting_or_aborting</a> () const</td></tr>
-<tr class="memdesc:ab2b07501507b6597fbd99b859bce4261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the derived class is running and idle or already being aborted.  <a href="#ab2b07501507b6597fbd99b859bce4261">More...</a><br /></td></tr>
 <tr class="separator:ab2b07501507b6597fbd99b859bce4261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a827dfb8d3bb87f27c2d373475d389982"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a827dfb8d3bb87f27c2d373475d389982">active</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler) const</td></tr>
-<tr class="memdesc:a827dfb8d3bb87f27c2d373475d389982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if we are added to the current engine.  <a href="#a827dfb8d3bb87f27c2d373475d389982">More...</a><br /></td></tr>
 <tr class="separator:a827dfb8d3bb87f27c2d373475d389982"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24a4e2c228f2a900e94495aa4ba662db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a24a4e2c228f2a900e94495aa4ba662db">is_immediate</a> () const</td></tr>
 <tr class="separator:a24a4e2c228f2a900e94495aa4ba662db"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,26 +178,19 @@ Public Member Functions</h2></td></tr>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>default_is_immediate</b> () const</td></tr>
 <tr class="separator:a97db3645e798f357596622ae24517d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fe975f2acbc2e25380c77874644fd25"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a9fe975f2acbc2e25380c77874644fd25">finished</a> () const</td></tr>
-<tr class="memdesc:a9fe975f2acbc2e25380c77874644fd25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the task finished.  <a href="#a9fe975f2acbc2e25380c77874644fd25">More...</a><br /></td></tr>
 <tr class="separator:a9fe975f2acbc2e25380c77874644fd25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dd75e11ef6fd1b14613ad494d8e93d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a4dd75e11ef6fd1b14613ad494d8e93d9">aborted</a> () const</td></tr>
-<tr class="memdesc:a4dd75e11ef6fd1b14613ad494d8e93d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this task was aborted.  <a href="#a4dd75e11ef6fd1b14613ad494d8e93d9">More...</a><br /></td></tr>
 <tr class="separator:a4dd75e11ef6fd1b14613ad494d8e93d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a855cb8523b22595dc5ef69361633e7bb"><td class="memItemLeft" align="right" valign="top"><a id="a855cb8523b22595dc5ef69361633e7bb"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a855cb8523b22595dc5ef69361633e7bb">executing</a> () const</td></tr>
-<tr class="memdesc:a855cb8523b22595dc5ef69361633e7bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this thread is executing this task right now (aka, we're inside <code>multiplex</code> somewhere). <br /></td></tr>
+<tr class="memitem:a855cb8523b22595dc5ef69361633e7bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a855cb8523b22595dc5ef69361633e7bb">executing</a> () const</td></tr>
 <tr class="separator:a855cb8523b22595dc5ef69361633e7bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09e20373d0b86c70a80a27e754c1bd66"><td class="memItemLeft" align="right" valign="top">duration_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66">getDuration</a> () const</td></tr>
-<tr class="memdesc:a09e20373d0b86c70a80a27e754c1bd66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total time that this task has been running.  <a href="#a09e20373d0b86c70a80a27e754c1bd66">More...</a><br /></td></tr>
 <tr class="separator:a09e20373d0b86c70a80a27e754c1bd66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a416f76c11dda361438485e424e43e501"><td class="memItemLeft" align="right" valign="top">static char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a416f76c11dda361438485e424e43e501">state_str</a> (<a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022">base_state_type</a> state)</td></tr>
-<tr class="memdesc:a416f76c11dda361438485e424e43e501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return stringified state, for debugging purposes.  <a href="#a416f76c11dda361438485e424e43e501">More...</a><br /></td></tr>
 <tr class="separator:a416f76c11dda361438485e424e43e501"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a650d995db3e1117ce9c26947aef34d90"><td class="memItemLeft" align="right" valign="top">static char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a650d995db3e1117ce9c26947aef34d90">event_str</a> (event_type event)</td></tr>
-<tr class="memdesc:a650d995db3e1117ce9c26947aef34d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return stringified event, for debugging purposes.  <a href="#a650d995db3e1117ce9c26947aef34d90">More...</a><br /></td></tr>
 <tr class="separator:a650d995db3e1117ce9c26947aef34d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -237,40 +223,30 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memdesc:ad7f8d3e0fc4f46d67cc412d39bc8fc14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:ad7f8d3e0fc4f46d67cc412d39bc8fc14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga160831e7b091af4095a9f60e33834328"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> new_state)</td></tr>
-<tr class="memdesc:ga160831e7b091af4095a9f60e33834328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the state to run, the next invocation of multiplex_impl.  <a href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">More...</a><br /></td></tr>
 <tr class="separator:ga160831e7b091af4095a9f60e33834328"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6b0f3ba324cd8ca6b4a2f925c106897"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">wait</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:gaf6b0f3ba324cd8ca6b4a2f925c106897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for <em>condition</em>.  <a href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">More...</a><br /></td></tr>
 <tr class="separator:gaf6b0f3ba324cd8ca6b4a2f925c106897"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2af39e888e9cfd3936e9fbfe399c08af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:ga2af39e888e9cfd3936e9fbfe399c08af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block until the <em>wait_condition</em> returns true.  <a href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">More...</a><br /></td></tr>
 <tr class="separator:ga2af39e888e9cfd3936e9fbfe399c08af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac67d26752d9e61d9c686fbee14b4444d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#gac67d26752d9e61d9c686fbee14b4444d">wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions, <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> new_state)</td></tr>
-<tr class="memdesc:gac67d26752d9e61d9c686fbee14b4444d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block until the <em>wait_condition</em> returns true.  <a href="group__group__wait.html#gac67d26752d9e61d9c686fbee14b4444d">More...</a><br /></td></tr>
 <tr class="separator:gac67d26752d9e61d9c686fbee14b4444d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf7642911a8012284ec7aa5a9a700b06b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish</a> ()</td></tr>
-<tr class="memdesc:gaf7642911a8012284ec7aa5a9a700b06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark that the task finished and schedule the call back.  <a href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">More...</a><br /></td></tr>
 <tr class="separator:gaf7642911a8012284ec7aa5a9a700b06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59d5a998e43866969cd8d92b8924ddb1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#ga59d5a998e43866969cd8d92b8924ddb1">is_self_locked</a> (<a class="el" href="classAIStatefulTaskMutex.html">AIStatefulTaskMutex</a> &amp;stateful_task_mutex)</td></tr>
 <tr class="separator:ga59d5a998e43866969cd8d92b8924ddb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00981f1360b10d5f99f805d501a537a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">yield</a> ()</td></tr>
-<tr class="memdesc:ga00981f1360b10d5f99f805d501a537a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Yield to give CPU to other tasks, but do not block.  <a href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">More...</a><br /></td></tr>
 <tr class="separator:ga00981f1360b10d5f99f805d501a537a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32265465bc41279fea4654941ff31de7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">target</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:ga32265465bc41279fea4654941ff31de7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue running from <em>engine</em>.  <a href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">More...</a><br /></td></tr>
 <tr class="separator:ga32265465bc41279fea4654941ff31de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafaad43cb215ff180e8fb9e288abd257c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#gafaad43cb215ff180e8fb9e288abd257c">yield</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:gafaad43cb215ff180e8fb9e288abd257c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The above two combined.  <a href="group__group__yield.html#gafaad43cb215ff180e8fb9e288abd257c">More...</a><br /></td></tr>
 <tr class="separator:gafaad43cb215ff180e8fb9e288abd257c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga04f5c7619157f72cf98700e423bd6766"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766">yield_frame</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int frames)</td></tr>
-<tr class="memdesc:ga04f5c7619157f72cf98700e423bd6766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch to <em>engine</em> and sleep for <em>frames</em> frames.  <a href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766">More...</a><br /></td></tr>
 <tr class="separator:ga04f5c7619157f72cf98700e423bd6766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa79810701038b0c5fa974fc4b64dc902"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">yield_ms</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int ms)</td></tr>
-<tr class="memdesc:gaa79810701038b0c5fa974fc4b64dc902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch to <em>engine</em> and sleep for <em>ms</em> milliseconds.  <a href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">More...</a><br /></td></tr>
 <tr class="separator:gaa79810701038b0c5fa974fc4b64dc902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">yield_if_not</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not really yield, unless the current engine is not <em>engine</em>.  <a href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">More...</a><br /></td></tr>
 <tr class="separator:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:abf2da57033c2f1d05a7f6b59fe392d67"><td class="memItemLeft" align="right" valign="top">virtual char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">state_str_impl</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> run_state) const</td></tr>
 <tr class="memdesc:abf2da57033c2f1d05a7f6b59fe392d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to stringify a run state for debugging output. Must be overridden.  <a href="#abf2da57033c2f1d05a7f6b59fe392d67">More...</a><br /></td></tr>
 <tr class="separator:abf2da57033c2f1d05a7f6b59fe392d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -292,7 +268,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a872025f08ce55e54810495690da7b337"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a415a771f1c6fd7046702921215eb37dc"><td class="memItemLeft" align="right" valign="top"><a id="a415a771f1c6fd7046702921215eb37dc"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a415a771f1c6fd7046702921215eb37dc">force_killed</a> ()</td></tr>
-<tr class="memdesc:a415a771f1c6fd7046702921215eb37dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from <a class="el" href="classAIEngine.html#a961f78e330bb5106b49d40391c5026ed" title="Flush all tasks from this engine. ">AIEngine::flush()</a>. <br /></td></tr>
+<tr class="memdesc:a415a771f1c6fd7046702921215eb37dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from <a class="el" href="classAIEngine.html#a961f78e330bb5106b49d40391c5026ed">AIEngine::flush()</a>. <br /></td></tr>
 <tr class="separator:a415a771f1c6fd7046702921215eb37dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
@@ -331,11 +307,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
 </td></tr>
 <tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022ae322cda5bdc1ea7d2daf120cc69f091a"></a>bs_initialize&#160;</td><td class="fielddoc"><p>State after <code>run</code> and before/during <code>initialize_impl</code>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022a9b6c32619c183bf636f8a38c30fa1ecc"></a>bs_multiplex&#160;</td><td class="fielddoc"><p>State after <code>initialize_impl</code> and before <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b" title="Mark that the task finished and schedule the call back. ">finish()</a></code> or <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a></code>. </p>
+<tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022a9b6c32619c183bf636f8a38c30fa1ecc"></a>bs_multiplex&#160;</td><td class="fielddoc"><p>State after <code>initialize_impl</code> and before <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish()</a></code> or <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a></code>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022ad10a46cd78607d3dacfcd1d3ce68f3db"></a>bs_abort&#160;</td><td class="fielddoc"><p>State after <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a></code> <em>and</em> leaving <code>inside</code> multiplex_impl (if there), and before <code><a class="el" href="classAIStatefulTask.html#a61a6f86a6e413cf7391b756b0038d4f0" title="Called for base state bs_abort. ">abort_impl()</a></code>. </p>
+<tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022ad10a46cd78607d3dacfcd1d3ce68f3db"></a>bs_abort&#160;</td><td class="fielddoc"><p>State after <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a></code> <em>and</em> leaving <code>inside</code> multiplex_impl (if there), and before <code><a class="el" href="classAIStatefulTask.html#a61a6f86a6e413cf7391b756b0038d4f0" title="Called for base state bs_abort. ">abort_impl()</a></code>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022aebc06158eae8ab491a771da0173360f2"></a>bs_finish&#160;</td><td class="fielddoc"><p>State after <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b" title="Mark that the task finished and schedule the call back. ">finish()</a></code> (assuming <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a></code> isn't called) <em>and</em> leaving <code>multiplex_impl</code> (if there), or after <code>abort_impl</code>, and before <code><a class="el" href="classAIStatefulTask.html#a872025f08ce55e54810495690da7b337" title="Called for base state bs_finish. ">finish_impl()</a></code>. </p>
+<tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022aebc06158eae8ab491a771da0173360f2"></a>bs_finish&#160;</td><td class="fielddoc"><p>State after <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish()</a></code> (assuming <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a></code> isn't called) <em>and</em> leaving <code>multiplex_impl</code> (if there), or after <code>abort_impl</code>, and before <code><a class="el" href="classAIStatefulTask.html#a872025f08ce55e54810495690da7b337" title="Called for base state bs_finish. ">finish_impl()</a></code>. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="acb2390570fc523acceee2a25fc054022aec4ed721e379b53e6a25378842f23e48"></a>bs_callback&#160;</td><td class="fielddoc"><p>State after <code><a class="el" href="classAIStatefulTask.html#a872025f08ce55e54810495690da7b337" title="Called for base state bs_finish. ">finish_impl()</a></code> and before the call back. </p>
 </td></tr>
@@ -359,9 +335,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
 
 <p>What to do when a child task is aborted. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a324d12498b3656b815b88741b8c5657cae7b1902fa7f7ce6687e188a338721c9e"></a>abort_parent&#160;</td><td class="fielddoc"><p>Call <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a> on the parent. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a324d12498b3656b815b88741b8c5657cae7b1902fa7f7ce6687e188a338721c9e"></a>abort_parent&#160;</td><td class="fielddoc"><p>Call <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a> on the parent. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a324d12498b3656b815b88741b8c5657ca0c7895dfa591806cc29b0f39a1332213"></a>signal_parent&#160;</td><td class="fielddoc"><p>Call <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d" title="Wake up a waiting task. ">signal(condition_type)</a> on the parent anyway. </p>
+<tr><td class="fieldname"><a id="a324d12498b3656b815b88741b8c5657ca0c7895dfa591806cc29b0f39a1332213"></a>signal_parent&#160;</td><td class="fielddoc"><p>Call <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal(condition_type)</a> on the parent anyway. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a324d12498b3656b815b88741b8c5657ca2a91b60c5720a8bf32cb05c96d115bbf"></a>do_nothing&#160;</td><td class="fielddoc"><p>Abort without notifying the parent task. </p>
 </td></tr>
@@ -393,8 +369,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructor of base class <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>. </p>
+<p>Constructor of base class <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>.</p>
 <p>The <em>debug</em> parameter only exists when CWDEBUG is defined.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -428,8 +403,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return true if this task was aborted. </p>
+<p>Return true if this task was aborted.</p>
 <p>This value is guaranteed to be valid (only) after the task finished. </p>
 
 </div>
@@ -457,8 +431,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return true if we are added to the current engine. </p>
+<p>Return true if we are added to the current engine.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handler</td><td>The handler that this task is supposed to run in. </td></tr>
@@ -492,14 +465,39 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return stringified event, for debugging purposes. </p>
+<p>Return stringified event, for debugging purposes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>An event. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a855cb8523b22595dc5ef69361633e7bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a855cb8523b22595dc5ef69361633e7bb">&#9670;&nbsp;</a></span>executing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AIStatefulTask::executing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return true if this thread is executing this task right now (aka, we're inside <span class="inlinecode">multiplex</span> somewhere). </p>
 
 </div>
 </div>
@@ -525,9 +523,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return true if the task finished. </p>
-<p>If this function returns false then the callback (or call to <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a> on the parent) is guaranteed still going to happen. If this function returns true then the callback might have happened or might still going to happen. Call <a class="el" href="classAIStatefulTask.html#a4dd75e11ef6fd1b14613ad494d8e93d9" title="Return true if this task was aborted. ">aborted()</a> to check if the task finished successfully if this function returns true (or just call that in the callback). </p>
+<p>Return true if the task finished.</p>
+<p>If this function returns false then the callback (or call to <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a> on the parent) is guaranteed still going to happen. If this function returns true then the callback might have happened or might still going to happen. Call <a class="el" href="classAIStatefulTask.html#a4dd75e11ef6fd1b14613ad494d8e93d9">aborted()</a> to check if the task finished successfully if this function returns true (or just call that in the callback). </p>
 
 </div>
 </div>
@@ -553,8 +550,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return total time that this task has been running. </p>
+<p>Return total time that this task has been running.</p>
 <p>May only be called from the main thread. </p>
 
 </div>
@@ -581,7 +577,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return true if this task is currently running in an immediate handler. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="structAIStatefulTask_1_1Handler.html#a933c3c024a9b3fe38c97e5efbe70b17c" title="Return true if this is an immediate  Handler. ">Handler::is_immediate</a> </dd></dl>
+<p>Test if the current <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> is immediate.</p>
+<dl class="section return"><dt>Returns</dt><dd>True if this task is currently running in an immediate handler. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structAIStatefulTask_1_1Handler.html#a933c3c024a9b3fe38c97e5efbe70b17c" title="Return true if this is an immediate  Handler. ">Handler::is_immediate</a> </dd></dl>
 
 </div>
 </div>
@@ -607,9 +605,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return true if the derived class is running. </p>
-<p>The task was initialized (<em>after</em> <code>initialize_impl</code>) and did not call <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b" title="Mark that the task finished and schedule the call back. ">finish()</a></code> or <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a></code> yet (<em>before</em> <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b" title="Mark that the task finished and schedule the call back. ">finish()</a></code> or <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a></code>).</p>
+<p>Return true if the derived class is running.</p>
+<p>The task was initialized (<em>after</em> <code>initialize_impl</code>) and did not call <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish()</a></code> or <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a></code> yet (<em>before</em> <code><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish()</a></code> or <code><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a></code>).</p>
 <p>When a task enters <code>multiplex_impl</code> it is guaranteed to be running. </p>
 
 </div>
@@ -637,8 +634,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return stringified state, for debugging purposes. </p>
+<p>Return stringified state, for debugging purposes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td>A base state. </td></tr>
@@ -673,7 +669,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
 </div><div class="memdoc">
 
 <p>Called to stringify a run state for debugging output. Must be overridden. </p>
-<p>{ See <a class="el" href="classExample.html#example_task">example_task</a> for a description of the virtual functions. </p>
+<p>See <a class="el" href="classExample.html#example_task">example_task</a> for a description of the virtual functions. </p>
 
 <p>Reimplemented in <a class="el" href="classExample.html#af27efd10c3d750eddad76ff638a440b4">Example</a>, and <a class="el" href="classAITimer.html#a8e24c03469c693fa42579632eb392e61">AITimer</a>.</p>
 
@@ -693,8 +689,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Return true if the derived class is running and idle. </p>
+<p>Return true if the derived class is running and idle.</p>
 <p>Running and idle since the last call to <a class="el" href="group__group__wait.html">wait</a>; if already having been woken up due to a call to <a class="el" href="group__group__wait.html">signal(condition)</a> then we're still waiting until we actually re-entered <code>begin_loop</code>. </p>
 
 </div>
@@ -713,10 +708,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Return true if the derived class is running and idle or already being aborted. </p>
+<p>Return true if the derived class is running and idle or already being aborted.</p>
 <p>A task reached the state aborting after returning from <code>initialize_impl</code> or <code>multiplex_impl</code> that called <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a>. Or when <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a> is called from the outside while the task is idle (in which case we are in the state aborting directly after the call to <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a>).</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classAIStatefulTask.html#a487f7328bbd5508b63855194d2403f94" title="Return true if the derived class is running and idle. ">waiting</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classAIStatefulTask.html#a487f7328bbd5508b63855194d2403f94">waiting</a> </dd></dl>
 
 </div>
 </div>
@@ -729,7 +723,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

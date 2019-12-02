@@ -72,20 +72,20 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Task queue and dispatcher. </p>
+<div class="textblock"><p>Task queue and dispatcher.</p>
 <p>This object dispatches tasks from <a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70">mainloop()</a>.</p>
 <p>Each of the member functions <a class="el" href="group__group__run.html">AIStatefulTask::run()</a> end with a call to <code>AIStatefulTask::reset()</code> which in turn calls <code>AIStatefulTask::multiplex(initial_run)</code>. When a default engine was passed to <span class="inlinecode">run</span> then <span class="inlinecode">multiplex</span> adds the task to the queue of that engine. When a thread pool queue was passed to <code>run</code> then the task is added to that queue of the thread pool. If the special AIQueueHandle <a class="el" href="structAIStatefulTask_1_1Handler.html#a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb">immediate</a> was passed to <code>run</code> then the task is being run immediately in the thread that called <code>run</code> and will <em>keep</em> running until it is either aborted or one of <a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish()</a>, <a class="el" href="group__group__yield.html">yield*()</a> or <a class="el" href="group__group__wait.html">wait*()</a> is called!</p>
 <p>Moreover, every time a task run with <code>immediate</code> as handler (and that didn't set a target handler) calls <code>wait</code>, then the task will continue running immediately when some thread calls <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal()</a>, and again <em>keeps</em> running!</p>
 <p>If you don't want a call to <code>run</code> and/or <code>signal</code> to take too long, or it would not be thread-safe to not run the task from the main loop of a thread, then either pass a default engine, a thread pool queue, or (when the default handler is Handler::immediate) you've to make sure the task &dash; when (re)started &dash; quickly calls <code>yield*()</code> or <code>wait*()</code> (again), causing the task to be added to the highest priority queue of the thread pool.</p>
 <p>Note that if during such engineless and queueless state <a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">yield()</a> is called <em>without</em> passing a handler, then the task will be added to the highest priority queue of the thread pool.</p>
-<p>Sinds normally &dash; for some instance of <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a> &dash; it is the <em>same</em> thread that calls the <a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70" title="The main loop of the engine. ">AIEngine::mainloop</a> member function in the main loop of that thread, there is a one-on-one relationship between a thread and an <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a> object.</p>
+<p>Sinds normally &dash; for some instance of <a class="el" href="classAIEngine.html">AIEngine</a> &dash; it is the <em>same</em> thread that calls the <a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70">AIEngine::mainloop</a> member function in the main loop of that thread, there is a one-on-one relationship between a thread and an <a class="el" href="classAIEngine.html">AIEngine</a> object.</p>
 <p>Once a task is added to an engine then every time the thread of that engine returns to its main loop, it processes one or more tasks in its queue until either &mdash; all tasks are finished, idle, moved to another handler or aborted &mdash; or, if a maximum duration was set, until more than <a class="el" href="classAIEngine.html#abe22d14b72fd5c8deca0c282748243ca">max_duration</a> milliseconds was spent in the <code>mainloop</code> (this applies to new tasks, not a task whose <code>multiplex_impl</code> is already called &mdash;only a frequent call to <a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">yield()</a> is your friend there).</p>
 <p>Note that each <a class="el" href="classAIStatefulTask.html">task</a> object keeps track of three handlers:</p><ul>
 <li><code>AIStatefulTask::mTargetHandler&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Last handler passed to target() or yield*().</code></li>
 <li><code>AIStatefulTask::mState.current_handler&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// While idle <code>Handler::idle</code>, otherwise the first non-idle handler from the top (of this list of three), or Handler::immediate</code>.</li>
 <li><code>AIStatefulTask::mDefaultHandler&#160;// The handler passed to run() (that is <a class="el" href="structAIStatefulTask_1_1Handler.html#a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb">immediate </a> when none was passed).</code></li>
 </ul>
-<p>The first, <code>mTargetHandler</code>, is the handler that was passed to the last call of member function <a class="el" href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7" title="Continue running from engine. ">AIStatefulTask::target</a> (which is also called by the <a class="el" href="group__group__yield.html">AIStatefulTask::yield*()</a> member functions that take an engine or handler as parameter). It will be <code>idle</code> when <code>target</code> wasn't called yet, or when <code>Handler::idle</code> is explicitly passed as handler to one of these member functions.</p>
+<p>The first, <code>mTargetHandler</code>, is the handler that was passed to the last call of member function <a class="el" href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">AIStatefulTask::target</a> (which is also called by the <a class="el" href="group__group__yield.html">AIStatefulTask::yield*()</a> member functions that take an engine or handler as parameter). It will be <code>idle</code> when <code>target</code> wasn't called yet, or when <code>Handler::idle</code> is explicitly passed as handler to one of these member functions.</p>
 <p>The second, <code>current_handler</code>, is the handler that the task is added to &dash; for as long as the task needs to be run. It is Handler::idle when task didn't run at all yet or doesn't need to run anymore (e.g., when it is idle). As soon as this value is changed to a different value than the handler that the task is currently active in then that handler will not run that task anymore and remove it from its queue (if any); it is therefore the canonical handler that the task runs in. If a task goes idle, this value is set to Handler::idle; otherwise it is set to the last handler that that task did run in, which is the first non-idle handler from the top for the short list above.</p>
 <p>The last, <code>mDefaultHandler</code>, is the handler that is passed to <a class="el" href="group__group__run.html">run</a> and never changes. </p>
 </div>
@@ -94,29 +94,22 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abe22d14b72fd5c8deca0c282748243ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#abe22d14b72fd5c8deca0c282748243ca">AIEngine</a> (char const *<a class="el" href="classAIEngine.html#a8ce509443099bb1d81b709d4f78cfa71">name</a>, float max_duration=0.0f)</td></tr>
-<tr class="memdesc:abe22d14b72fd5c8deca0c282748243ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a>.  <a href="#abe22d14b72fd5c8deca0c282748243ca">More...</a><br /></td></tr>
 <tr class="separator:abe22d14b72fd5c8deca0c282748243ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a251533934f0c160aa4323df646d46d45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#a251533934f0c160aa4323df646d46d45">add</a> (<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> *stateful_task)</td></tr>
-<tr class="memdesc:a251533934f0c160aa4323df646d46d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <em>stateful_task</em> to this engine.  <a href="#a251533934f0c160aa4323df646d46d45">More...</a><br /></td></tr>
 <tr class="separator:a251533934f0c160aa4323df646d46d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64bcf4899082850d29960198aae37f70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70">mainloop</a> ()</td></tr>
-<tr class="memdesc:a64bcf4899082850d29960198aae37f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main loop of the engine.  <a href="#a64bcf4899082850d29960198aae37f70">More...</a><br /></td></tr>
 <tr class="separator:a64bcf4899082850d29960198aae37f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdc70055417c2d427dce37010930b899"><td class="memItemLeft" align="right" valign="top"><a id="afdc70055417c2d427dce37010930b899"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#afdc70055417c2d427dce37010930b899">wake_up</a> ()</td></tr>
 <tr class="memdesc:afdc70055417c2d427dce37010930b899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake up a sleeping engine. <br /></td></tr>
 <tr class="separator:afdc70055417c2d427dce37010930b899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a961f78e330bb5106b49d40391c5026ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#a961f78e330bb5106b49d40391c5026ed">flush</a> ()</td></tr>
-<tr class="memdesc:a961f78e330bb5106b49d40391c5026ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush all tasks from this engine.  <a href="#a961f78e330bb5106b49d40391c5026ed">More...</a><br /></td></tr>
 <tr class="separator:a961f78e330bb5106b49d40391c5026ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ce509443099bb1d81b709d4f78cfa71"><td class="memItemLeft" align="right" valign="top">char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#a8ce509443099bb1d81b709d4f78cfa71">name</a> () const</td></tr>
-<tr class="memdesc:a8ce509443099bb1d81b709d4f78cfa71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a human readable name of this engine.  <a href="#a8ce509443099bb1d81b709d4f78cfa71">More...</a><br /></td></tr>
 <tr class="separator:a8ce509443099bb1d81b709d4f78cfa71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d107f2e7c0a4f4e8cc02b1cc0d83457"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#a3d107f2e7c0a4f4e8cc02b1cc0d83457">setMaxDuration</a> (float max_duration)</td></tr>
-<tr class="memdesc:a3d107f2e7c0a4f4e8cc02b1cc0d83457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set mMaxDuration in milliseconds.  <a href="#a3d107f2e7c0a4f4e8cc02b1cc0d83457">More...</a><br /></td></tr>
 <tr class="separator:a3d107f2e7c0a4f4e8cc02b1cc0d83457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1de1677177469993f4b2fed8e3c438e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIEngine.html#a1de1677177469993f4b2fed8e3c438e2">hasMaxDuration</a> () const</td></tr>
-<tr class="memdesc:a1de1677177469993f4b2fed8e3c438e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if a maximum duration was set.  <a href="#a1de1677177469993f4b2fed8e3c438e2">More...</a><br /></td></tr>
 <tr class="separator:a1de1677177469993f4b2fed8e3c438e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -153,8 +146,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construct an <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a>. </p>
+<p>Construct an <a class="el" href="classAIEngine.html">AIEngine</a>.</p>
 <p>The argument <em>name</em> must be a string-literal (only the pointer to it is stored). If <em>max_duration</em> is less than or equal zero (the default) then no duration is set and the engine won't return from <a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70">mainloop</a> until all tasks in its queue either finished, are waiting (idle) or did yield to a different engine.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -182,8 +174,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Add <em>stateful_task</em> to this engine. </p>
+<p>Add <em>stateful_task</em> to this engine.</p>
 <p>The task will remain assigned to the engine until it no longer <a class="el" href="classAIStatefulTask.html#a827dfb8d3bb87f27c2d373475d389982">active</a> (tested after returning from <a class="el" href="classExample.html#a5e23b83406c365bed7cbeeb196071726">multiplex_impl</a>).</p>
 <p>Normally you should not call this function directly. Instead, use <a class="el" href="group__group__run.html">AIStatefulTask::run</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -209,8 +200,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Flush all tasks from this engine. </p>
+<p>Flush all tasks from this engine.</p>
 <p>All queued tasks are removed from the engine and marked as killed. This can be used when terminating a program, just prior to destructing all remaining objects, to avoid that tasks do call backs and use objects that are being destructed. </p>
 
 </div>
@@ -237,9 +227,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return true if a maximum duration was set. </p>
-<p>Note, only engines with a set maximum duration can be used to sleep on by using <a class="el" href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766" title="Switch to engine and sleep for frames frames. ">AIStatefulTask::yield_frame</a> or <a class="el" href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902" title="Switch to engine and sleep for ms milliseconds. ">AIStatefulTask::yield_ms</a>. </p>
+<p>Return true if a maximum duration was set.</p>
+<p>Note, only engines with a set maximum duration can be used to sleep on by using <a class="el" href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766">AIStatefulTask::yield_frame</a> or <a class="el" href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">AIStatefulTask::yield_ms</a>. </p>
 
 </div>
 </div>
@@ -257,8 +246,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>The main loop of the engine. </p>
+<p>The main loop of the engine.</p>
 <p>Run all tasks that were <a class="el" href="classAIEngine.html#a251533934f0c160aa4323df646d46d45">added</a> to the engine until they are all finished and/or idle, or until mMaxDuration milliseconds have passed if a maximum duration was set. </p>
 
 </div>
@@ -285,8 +273,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return a human readable name of this engine. </p>
+<p>Return a human readable name of this engine.</p>
 <p>This is simply the string that was passed upon construction. </p>
 
 </div>
@@ -306,8 +293,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Set mMaxDuration in milliseconds. </p>
+<p>Set mMaxDuration in milliseconds.</p>
 <p>The maximum time the engine will spend in <a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70">mainloop</a> calling <code>multiplex</code> on unfinished and non-idle tasks. Note that if the last call to <code>multiplex</code> takes considerable time then it is possible that the time spend in <code>mainloop</code> will go arbitrarily far beyond <code>mMaxDuration</code>. It is the responsibility of the user to not run states (of task) that can take too long in engines that have an <code>mMaxDuration</code> set. </p>
 
 </div>
@@ -321,7 +307,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

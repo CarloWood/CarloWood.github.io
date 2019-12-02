@@ -77,7 +77,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Declaration of base class <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>.  
+<p>Declaration of base class <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;threadsafe/aithreadsafe.h&quot;</code><br />
 <code>#include &quot;threadsafe/AIMutex.h&quot;</code><br />
@@ -118,13 +118,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for task objects.  <a href="classAIStatefulTask.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html">AIStatefulTask::Handler</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes if, how and where to run a task.  <a href="structAIStatefulTask_1_1Handler.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionAIStatefulTask_1_1Handler_1_1Handle.html">AIStatefulTask::Handler::Handle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains extra data that depends on the type of the <a class="el" href="structAIStatefulTask_1_1Handler.html" title="Describes if, how and where to run a task. ">Handler</a>.  <a href="unionAIStatefulTask_1_1Handler_1_1Handle.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains extra data that depends on the type of the <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>.  <a href="unionAIStatefulTask_1_1Handler_1_1Handle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -137,24 +135,24 @@ Namespaces</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ab6c86bbf81780084fce5eb93d2028af8"><td class="memItemLeft" align="right" valign="top"><a id="ab6c86bbf81780084fce5eb93d2028af8"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> = std::function&lt; bool()&gt;</td></tr>
-<tr class="memdesc:ab6c86bbf81780084fce5eb93d2028af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the functor that must be passed as first parameter to <a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af" title="Block until the wait_condition returns true. ">AIStatefulTask::wait_until</a>. <br /></td></tr>
+<tr class="memdesc:ab6c86bbf81780084fce5eb93d2028af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the functor that must be passed as first parameter to <a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">AIStatefulTask::wait_until</a>. <br /></td></tr>
 <tr class="separator:ab6c86bbf81780084fce5eb93d2028af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="memTemplParams" colspan="2">template&lt;typename TaskType , typename... ARGS, typename  = typename std::enable_if&lt;std::is_base_of&lt;AIStatefulTask, TaskType&gt;::value&gt;::type&gt; </td></tr>
 <tr class="memitem:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="memTemplItemLeft" align="right" valign="top">boost::intrusive_ptr&lt; TaskType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">task::create</a> (ARGS &amp;&amp;... args)</td></tr>
-<tr class="memdesc:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to create tasks.  <a href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">More...</a><br /></td></tr>
 <tr class="separator:aaf85b35668e9562dc3647e4fd1a9e2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Declaration of base class <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>. </p>
+<div class="textblock"><p>Declaration of base class <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>. </p>
+<p>ai-statefultask &ndash; Asynchronous, Stateful Task Scheduler library. </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.11-->
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

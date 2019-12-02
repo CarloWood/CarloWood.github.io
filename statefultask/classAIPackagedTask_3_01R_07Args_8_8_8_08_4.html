@@ -74,13 +74,13 @@ $(function() {
 <div class="textblock"><h3>template&lt;typename R, typename ... Args&gt;<br />
 class AIPackagedTask&lt; R(Args...)&gt;</h3>
 
-<p>A wrapper for a <em>(member) function</em> to be executed by the AIThreadPool. </p>
-<p>An AIPackagedTask is supposed to be a member of a class (e.g. <code>MyTask</code>) derived from <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>. The <code>this</code> pointer of that task should be passed to the constructor, along with a function to be called and a handle of the queue to add it to (as obtained by a call to <code>AIThreadPool::new_queue()</code>).</p>
+<p>A wrapper for a <em>(member) function</em> to be executed by the AIThreadPool.</p>
+<p>An AIPackagedTask is supposed to be a member of a class (e.g. <code>MyTask</code>) derived from <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>. The <code>this</code> pointer of that task should be passed to the constructor, along with a function to be called and a handle of the queue to add it to (as obtained by a call to <code>AIThreadPool::new_queue()</code>).</p>
 <p>It is possible to use a pointer to a free function or to the member function of a given object. In both cases with arbitrary signature.</p>
 <p>For example, suppose you have some object <code>foo</code> of type <code>Foo</code> with a member function called <code>retrieve</code> that has the signature <code>bool Foo::retrieve(int, double)</code>, whatever those parameters may mean. Then you could do:</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>MyTask : <span class="keyword">public</span> <a class="code" href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="line">{</div><div class="line">  AIPackagedTask&lt;bool(int, double)&gt; m_retrieve;              <span class="comment">// Space holder for all variables involved.</span></div><div class="line">  <span class="keyword">static</span> <a class="code" href="classAIFriendOfStatefulTask.html#a1a684a5e0c43ec6ca497ac5d86fb6e21">condition_type</a> constexpr retrieve_condition = 1;    <span class="comment">// The condition bit to be used.</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  MyTask(AIQueueHandle queue_handle) : m_retrieve(this, retrieve_condition, &amp;foo, &amp;Foo::retrieve, queue_handle) { }</div><div class="line">...</div><div class="line">};</div></div><!-- fragment --><p>where as <a class="el" href="writingatask.html#waiting">usual</a> <code>retrieve_condition</code> should be different from any other condition bits that this task is using. And where <code>queue_handle</code> is a handle that was previously returned by AIThreadPool::new_queue().</p>
 <p>Then this function can be called (repeatedly, with different parameters if need be) from <code>multiplex_impl</code> as follows:</p>
-<div class="fragment"><div class="line">...</div><div class="line">  <span class="keywordflow">case</span> MyTask_state20:</div><div class="line">    m_retrieve(n, y);                   <span class="comment">// Copy parameters to m_retrieve.</span></div><div class="line">    <a class="code" href="classAIFriendOfStatefulTask.html#a708e3c487bfa9bfcbea7f3ff5662b5dc">set_state</a>(MyTask_dispatch);</div><div class="line">  <span class="keywordflow">case</span> MyTask_dispatch:</div><div class="line">    <span class="keywordflow">if</span> (!m_retrieve.dispatch())         <span class="comment">// Put m_retrieve in the queue.</span></div><div class="line">    {</div><div class="line">      yield_frames(1);                  <span class="comment">// Yield because the queue was full.</span></div><div class="line">      <span class="keywordflow">break</span>;</div><div class="line">    }</div><div class="line">    <a class="code" href="classAIFriendOfStatefulTask.html#a708e3c487bfa9bfcbea7f3ff5662b5dc">set_state</a>(MyTask_state21);          <span class="comment">// Continue with state21 once the</span></div><div class="line">    <span class="keywordflow">break</span>;                              <span class="comment">//   function finished executing.</span></div><div class="line">  <span class="keywordflow">case</span> MyTask_state21:</div><div class="line">  {</div><div class="line">    <span class="keywordtype">bool</span> result = m_retrieve.get();     <span class="comment">// Get the result.</span></div></div><!-- fragment --> </div>
+<div class="fragment"><div class="line">...</div><div class="line">  <span class="keywordflow">case</span> MyTask_state20:</div><div class="line">    m_retrieve(n, y);                   <span class="comment">// Copy parameters to m_retrieve.</span></div><div class="line">    <a class="code" href="classAIFriendOfStatefulTask.html#a708e3c487bfa9bfcbea7f3ff5662b5dc">set_state</a>(MyTask_dispatch);</div><div class="line">    [[fallthrough]];</div><div class="line">  <span class="keywordflow">case</span> MyTask_dispatch:</div><div class="line">    <span class="keywordflow">if</span> (!m_retrieve.dispatch())         <span class="comment">// Put m_retrieve in the queue.</span></div><div class="line">    {</div><div class="line">      yield_frames(1);                  <span class="comment">// Yield because the queue was full.</span></div><div class="line">      <span class="keywordflow">break</span>;</div><div class="line">    }</div><div class="line">    <a class="code" href="classAIFriendOfStatefulTask.html#a708e3c487bfa9bfcbea7f3ff5662b5dc">set_state</a>(MyTask_state21);          <span class="comment">// Continue with state21 once the</span></div><div class="line">    <span class="keywordflow">break</span>;                              <span class="comment">//   function finished executing.</span></div><div class="line">  <span class="keywordflow">case</span> MyTask_state21:</div><div class="line">  {</div><div class="line">    <span class="keywordtype">bool</span> result = m_retrieve.get();     <span class="comment">// Get the result.</span></div></div><!-- fragment --> </div>
 <p><code>#include &lt;<a class="el" href="AIPackagedTask_8h_source.html">AIPackagedTask.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AIPackagedTask&lt; R(Args...)&gt;:</div>
@@ -96,18 +96,16 @@ Collaboration diagram for AIPackagedTask&lt; R(Args...)&gt;:</div>
 <div class="center"><img src="classAIPackagedTask_3_01R_07Args_8_8_8_08_4__coll__graph.png" border="0" usemap="#AIPackagedTask_3_01R_07Args_8_8_8_08_4_coll__map" alt="Collaboration graph"/></div>
 <map name="AIPackagedTask_3_01R_07Args_8_8_8_08_4_coll__map" id="AIPackagedTask_3_01R_07Args_8_8_8_08_4_coll__map">
 <area shape="rect" id="node2" href="classAIFriendOfStatefulTask.html" title="AIFriendOfStatefulTask" alt="" coords="25,171,184,197"/>
-<area shape="rect" id="node3" href="classAIStatefulTask.html" title="Base class for task objects. " alt="" coords="50,81,159,108"/>
+<area shape="rect" id="node3" href="classAIStatefulTask.html" title="AIStatefulTask" alt="" coords="50,81,159,108"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a072d9d06adc511cbcb4f49bfe3e5b7ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a072d9d06adc511cbcb4f49bfe3e5b7ba">AIPackagedTask</a> (<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> *parent_task, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">AIStatefulTask::condition_type</a> condition, R(*fp)(Args...), AIQueueHandle object_queue_handle)</td></tr>
-<tr class="memdesc:a072d9d06adc511cbcb4f49bfe3e5b7ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a packaged task for a free function.  <a href="#a072d9d06adc511cbcb4f49bfe3e5b7ba">More...</a><br /></td></tr>
 <tr class="separator:a072d9d06adc511cbcb4f49bfe3e5b7ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac933acb37de54338cf8c5dfeebcac472"><td class="memTemplParams" colspan="2">template&lt;class C &gt; </td></tr>
 <tr class="memitem:ac933acb37de54338cf8c5dfeebcac472"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#ac933acb37de54338cf8c5dfeebcac472">AIPackagedTask</a> (<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> *parent_task, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">AIStatefulTask::condition_type</a> condition, C *object, R(C::*memfp)(Args...), AIQueueHandle object_queue_handle)</td></tr>
-<tr class="memdesc:ac933acb37de54338cf8c5dfeebcac472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a packaged task for a member function.  <a href="#ac933acb37de54338cf8c5dfeebcac472">More...</a><br /></td></tr>
 <tr class="separator:ac933acb37de54338cf8c5dfeebcac472"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bbad743ac5ab9b39e28cc756d35a433"><td class="memItemLeft" align="right" valign="top"><a id="a2bbad743ac5ab9b39e28cc756d35a433"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a2bbad743ac5ab9b39e28cc756d35a433">~AIPackagedTask</a> ()</td></tr>
@@ -122,10 +120,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:aeaf86b9e3a24627a8979e1d55f534ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the arguments. <br /></td></tr>
 <tr class="separator:aeaf86b9e3a24627a8979e1d55f534ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a816b3e159ae2494035995ef96d02cf4b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a816b3e159ae2494035995ef96d02cf4b">dispatch</a> ()</td></tr>
-<tr class="memdesc:a816b3e159ae2494035995ef96d02cf4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put the task in a queue for execution in a different thread.  <a href="#a816b3e159ae2494035995ef96d02cf4b">More...</a><br /></td></tr>
 <tr class="separator:a816b3e159ae2494035995ef96d02cf4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a736fd6b64f1547354970f9c417b70b87"><td class="memItemLeft" align="right" valign="top">R&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a736fd6b64f1547354970f9c417b70b87">get</a> () const</td></tr>
-<tr class="memdesc:a736fd6b64f1547354970f9c417b70b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read out the result of the function.  <a href="#a736fd6b64f1547354970f9c417b70b87">More...</a><br /></td></tr>
 <tr class="separator:a736fd6b64f1547354970f9c417b70b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
@@ -146,47 +142,47 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <tr class="separator:a722046a07e56ab98ca741d12a47211b6 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a708e3c487bfa9bfcbea7f3ff5662b5dc inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a708e3c487bfa9bfcbea7f3ff5662b5dc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#a708e3c487bfa9bfcbea7f3ff5662b5dc">set_state</a> (<a class="el" href="classAIFriendOfStatefulTask.html#a5ec41fa75a5eda7923dc635a97e7b707">state_type</a> new_state)</td></tr>
-<tr class="memdesc:a708e3c487bfa9bfcbea7f3ff5662b5dc inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328" title="Set the state to run, the next invocation of multiplex_impl. ">AIStatefulTask::set_state</a>. <br /></td></tr>
+<tr class="memdesc:a708e3c487bfa9bfcbea7f3ff5662b5dc inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">AIStatefulTask::set_state</a>. <br /></td></tr>
 <tr class="separator:a708e3c487bfa9bfcbea7f3ff5662b5dc inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8b5cd853d59466d3ade73320eef2ed3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="ad8b5cd853d59466d3ade73320eef2ed3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#ad8b5cd853d59466d3ade73320eef2ed3">wait</a> (<a class="el" href="classAIFriendOfStatefulTask.html#a1a684a5e0c43ec6ca497ac5d86fb6e21">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:ad8b5cd853d59466d3ade73320eef2ed3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897" title="Wait for condition. ">AIStatefulTask::wait</a>. <br /></td></tr>
+<tr class="memdesc:ad8b5cd853d59466d3ade73320eef2ed3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">AIStatefulTask::wait</a>. <br /></td></tr>
 <tr class="separator:ad8b5cd853d59466d3ade73320eef2ed3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1bb0db356c336a66b12efd2e4028a13 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="ab1bb0db356c336a66b12efd2e4028a13"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#ab1bb0db356c336a66b12efd2e4028a13">wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIFriendOfStatefulTask.html#a1a684a5e0c43ec6ca497ac5d86fb6e21">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:ab1bb0db356c336a66b12efd2e4028a13 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af" title="Block until the wait_condition returns true. ">AIStatefulTask::wait_until</a>. <br /></td></tr>
+<tr class="memdesc:ab1bb0db356c336a66b12efd2e4028a13 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">AIStatefulTask::wait_until</a>. <br /></td></tr>
 <tr class="separator:ab1bb0db356c336a66b12efd2e4028a13 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ecb133f7feaee5a0f7fc6987f5d2021 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a3ecb133f7feaee5a0f7fc6987f5d2021"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#a3ecb133f7feaee5a0f7fc6987f5d2021">wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIFriendOfStatefulTask.html#a1a684a5e0c43ec6ca497ac5d86fb6e21">condition_type</a> conditions, <a class="el" href="classAIFriendOfStatefulTask.html#a5ec41fa75a5eda7923dc635a97e7b707">state_type</a> new_state)</td></tr>
-<tr class="memdesc:a3ecb133f7feaee5a0f7fc6987f5d2021 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af" title="Block until the wait_condition returns true. ">AIStatefulTask::wait_until</a>. <br /></td></tr>
+<tr class="memdesc:a3ecb133f7feaee5a0f7fc6987f5d2021 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">AIStatefulTask::wait_until</a>. <br /></td></tr>
 <tr class="separator:a3ecb133f7feaee5a0f7fc6987f5d2021 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4593fb6804bcc3f22e1f51302d72db92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a4593fb6804bcc3f22e1f51302d72db92"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#a4593fb6804bcc3f22e1f51302d72db92">finish</a> ()</td></tr>
-<tr class="memdesc:a4593fb6804bcc3f22e1f51302d72db92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b" title="Mark that the task finished and schedule the call back. ">AIStatefulTask::finish</a>. <br /></td></tr>
+<tr class="memdesc:a4593fb6804bcc3f22e1f51302d72db92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">AIStatefulTask::finish</a>. <br /></td></tr>
 <tr class="separator:a4593fb6804bcc3f22e1f51302d72db92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8c4615a17a1488aea2d872faa8ceb34 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="aa8c4615a17a1488aea2d872faa8ceb34"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#aa8c4615a17a1488aea2d872faa8ceb34">yield</a> ()</td></tr>
-<tr class="memdesc:aa8c4615a17a1488aea2d872faa8ceb34 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2" title="Yield to give CPU to other tasks, but do not block. ">AIStatefulTask::yield</a>. <br /></td></tr>
+<tr class="memdesc:aa8c4615a17a1488aea2d872faa8ceb34 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">AIStatefulTask::yield</a>. <br /></td></tr>
 <tr class="separator:aa8c4615a17a1488aea2d872faa8ceb34 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33e4aba09d44bbfaf7b1080c52499c92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a33e4aba09d44bbfaf7b1080c52499c92"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#a33e4aba09d44bbfaf7b1080c52499c92">target</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine)</td></tr>
-<tr class="memdesc:a33e4aba09d44bbfaf7b1080c52499c92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7" title="Continue running from engine. ">AIStatefulTask::target</a>. <br /></td></tr>
+<tr class="memdesc:a33e4aba09d44bbfaf7b1080c52499c92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">AIStatefulTask::target</a>. <br /></td></tr>
 <tr class="separator:a33e4aba09d44bbfaf7b1080c52499c92 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80f38d989d264d5f7026d948d568c1a0 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a80f38d989d264d5f7026d948d568c1a0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#a80f38d989d264d5f7026d948d568c1a0">yield</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine)</td></tr>
-<tr class="memdesc:a80f38d989d264d5f7026d948d568c1a0 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2" title="Yield to give CPU to other tasks, but do not block. ">AIStatefulTask::yield</a>. <br /></td></tr>
+<tr class="memdesc:a80f38d989d264d5f7026d948d568c1a0 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">AIStatefulTask::yield</a>. <br /></td></tr>
 <tr class="separator:a80f38d989d264d5f7026d948d568c1a0 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1111198b3249e6ae13ba02b5f0483ea3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a1111198b3249e6ae13ba02b5f0483ea3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#a1111198b3249e6ae13ba02b5f0483ea3">yield_frame</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int frames)</td></tr>
-<tr class="memdesc:a1111198b3249e6ae13ba02b5f0483ea3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766" title="Switch to engine and sleep for frames frames. ">AIStatefulTask::yield_frame</a>. <br /></td></tr>
+<tr class="memdesc:a1111198b3249e6ae13ba02b5f0483ea3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766">AIStatefulTask::yield_frame</a>. <br /></td></tr>
 <tr class="separator:a1111198b3249e6ae13ba02b5f0483ea3 inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27c570e0308fea7882c697d1304bbc5f inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a27c570e0308fea7882c697d1304bbc5f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#a27c570e0308fea7882c697d1304bbc5f">yield_ms</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int ms)</td></tr>
-<tr class="memdesc:a27c570e0308fea7882c697d1304bbc5f inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902" title="Switch to engine and sleep for ms milliseconds. ">AIStatefulTask::yield_ms</a>. <br /></td></tr>
+<tr class="memdesc:a27c570e0308fea7882c697d1304bbc5f inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">AIStatefulTask::yield_ms</a>. <br /></td></tr>
 <tr class="separator:a27c570e0308fea7882c697d1304bbc5f inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3eb350f966cfb30df88436243fcac9c inherit pro_methods_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="aa3eb350f966cfb30df88436243fcac9c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIFriendOfStatefulTask.html#aa3eb350f966cfb30df88436243fcac9c">yield_if_not</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine)</td></tr>
-<tr class="memdesc:aa3eb350f966cfb30df88436243fcac9c inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22" title="Do not really yield, unless the current engine is not engine. ">AIStatefulTask::yield_if_not</a>. <br /></td></tr>
+<tr class="memdesc:aa3eb350f966cfb30df88436243fcac9c inherit pro_methods_classAIFriendOfStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proxy for <a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">AIStatefulTask::yield_if_not</a>. <br /></td></tr>
 <tr class="separator:aa3eb350f966cfb30df88436243fcac9c inherit pro_methods_classAIFriendOfStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classAIFriendOfStatefulTask"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classAIFriendOfStatefulTask')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a></td></tr>
 <tr class="memitem:a226acfd25ffb33f1954041040cb9302e inherit pro_attribs_classAIFriendOfStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a226acfd25ffb33f1954041040cb9302e"></a>
@@ -242,8 +238,7 @@ template&lt;typename R , typename ... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construct a packaged task for a free function. </p>
+<p>Construct a packaged task for a free function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">parent_task</td><td>The task that <a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a816b3e159ae2494035995ef96d02cf4b">dispatch</a> will call <a class="el" href="classAIFriendOfStatefulTask.html#ab1bb0db356c336a66b12efd2e4028a13">wait_until</a> and <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal</a> on. </td></tr>
@@ -311,8 +306,7 @@ template&lt;class C &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construct a packaged task for a member function. </p>
+<p>Construct a packaged task for a member function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">parent_task</td><td>The task that <a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a816b3e159ae2494035995ef96d02cf4b">dispatch</a> will call <a class="el" href="classAIFriendOfStatefulTask.html#ab1bb0db356c336a66b12efd2e4028a13">wait_until</a> and <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal</a> on. </td></tr>
@@ -343,8 +337,7 @@ template&lt;typename R , typename ... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Put the task in a queue for execution in a different thread. </p>
+<p>Put the task in a queue for execution in a different thread.</p>
 <p>Actually queue the task in the AIObjectQueue whose handle was passed to the constructor and halt the <code>parent_task</code> as passed to the constructor until this task is finished.</p>
 <dl class="section return"><dt>Returns</dt><dd>True if the task was successfully queued; false if the queue was full. </dd></dl>
 
@@ -374,8 +367,7 @@ template&lt;typename R , typename ... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Read out the result of the function. </p>
+<p>Read out the result of the function.</p>
 <p>May only be called after <code>parent_task-&gt;signal(condition)</code> was called. </p>
 
 </div>
@@ -388,7 +380,7 @@ template&lt;typename R , typename ... Args&gt; </div>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

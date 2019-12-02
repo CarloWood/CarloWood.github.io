@@ -1,5 +1,4 @@
 var menudata={children:[
-{text:"Home",url:"index.html"},
 {text:"Table of contents",url:"pages.html"},
 {text:"Modules",url:"modules.html"},
 {text:"Namespaces",url:"namespaces.html",children:[

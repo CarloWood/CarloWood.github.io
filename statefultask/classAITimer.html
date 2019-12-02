@@ -74,12 +74,12 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The timer task. </p>
-<p>Before calling <a class="el" href="group__group__run.html">run()</a>, call <a class="el" href="classAITimer.html#ad366f26001746f96e8e98858463a0cb4" title="Set the interval after which the timer should expire. ">set_interval()</a> to pass needed parameters.</p>
+<div class="textblock"><p>The timer task.</p>
+<p>Before calling <a class="el" href="group__group__run.html">run()</a>, call <a class="el" href="classAITimer.html#ad366f26001746f96e8e98858463a0cb4">set_interval()</a> to pass needed parameters.</p>
 <p>When the task finishes it calls the callback, use parameter _1, (success) to check whether or not the task actually timed out or was cancelled. The boolean is true when it expired and false if the task was aborted.</p>
-<p>Objects of this type can be reused multiple times, see also the documentation of <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>.</p>
+<p>Objects of this type can be reused multiple times, see also the documentation of <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>.</p>
 <p>Typical usage:</p>
-<div class="fragment"><div class="line"><a class="code" href="classAITimer.html">AITimer</a>* timer = <span class="keyword">new</span> <a class="code" href="classAITimer.html#a06876e158f802e759b7d6201c9b94893">AITimer</a>;</div><div class="line"></div><div class="line">timer-&gt;<a class="code" href="classAITimer.html#ad366f26001746f96e8e98858463a0cb4">set_interval</a>(5.5);     <span class="comment">// 5.5 seconds time out interval.</span></div><div class="line">timer-&gt;<a class="code" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run</a>(...);             <span class="comment">// Start timer and pass callback; see AIStatefulTask.</span></div></div><!-- fragment --><p>The default behavior is to call the callback and then delete the <a class="el" href="classAITimer.html" title="The timer task. ">AITimer</a> object. One can call <a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run()</a> again from the callback function to get a repeating expiration. You can call run(...) with parameters too, but using <a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run()</a> without parameters will just reuse the old ones (call the same callback). </p>
+<div class="fragment"><div class="line"><a class="code" href="classAITimer.html">AITimer</a>* timer = <span class="keyword">new</span> <a class="code" href="classAITimer.html#a06876e158f802e759b7d6201c9b94893">AITimer</a>;</div><div class="line"></div><div class="line">timer-&gt;<a class="code" href="classAITimer.html#ad366f26001746f96e8e98858463a0cb4">set_interval</a>(5.5);     <span class="comment">// 5.5 seconds time out interval.</span></div><div class="line">timer-&gt;<a class="code" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run</a>(...);             <span class="comment">// Start timer and pass callback; see AIStatefulTask.</span></div></div><!-- fragment --><p>The default behavior is to call the callback and then delete the <a class="el" href="classAITimer.html">AITimer</a> object. One can call <a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run()</a> again from the callback function to get a repeating expiration. You can call run(...) with parameters too, but using <a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run()</a> without parameters will just reuse the old ones (call the same callback). </p>
 </div>
 <p><code>#include &lt;<a class="el" href="AITimer_8h_source.html">AITimer.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -87,7 +87,7 @@ Inheritance diagram for AITimer:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAITimer__inherit__graph.png" border="0" usemap="#AITimer_inherit__map" alt="Inheritance graph"/></div>
 <map name="AITimer_inherit__map" id="AITimer_inherit__map">
-<area shape="rect" id="node2" href="classAIStatefulTask.html" title="Base class for task objects. " alt="" coords="5,80,115,107"/>
+<area shape="rect" id="node2" href="classAIStatefulTask.html" title="AIStatefulTask" alt="" coords="5,80,115,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -95,7 +95,7 @@ Collaboration diagram for AITimer:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAITimer__coll__graph.png" border="0" usemap="#AITimer_coll__map" alt="Collaboration graph"/></div>
 <map name="AITimer_coll__map" id="AITimer_coll__map">
-<area shape="rect" id="node2" href="classAIStatefulTask.html" title="Base class for task objects. " alt="" coords="5,80,115,107"/>
+<area shape="rect" id="node2" href="classAIStatefulTask.html" title="AIStatefulTask" alt="" coords="5,80,115,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -103,21 +103,20 @@ Collaboration diagram for AITimer:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a06876e158f802e759b7d6201c9b94893"><td class="memItemLeft" align="right" valign="top"><a id="a06876e158f802e759b7d6201c9b94893"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a06876e158f802e759b7d6201c9b94893">AITimer</a> (CWDEBUG_ONLY(bool debug=false))</td></tr>
-<tr class="memdesc:a06876e158f802e759b7d6201c9b94893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="classAITimer.html" title="The timer task. ">AITimer</a> object. <br /></td></tr>
+<tr class="memdesc:a06876e158f802e759b7d6201c9b94893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="classAITimer.html">AITimer</a> object. <br /></td></tr>
 <tr class="separator:a06876e158f802e759b7d6201c9b94893"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad366f26001746f96e8e98858463a0cb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#ad366f26001746f96e8e98858463a0cb4">set_interval</a> (threadpool::Timer::Interval interval)</td></tr>
-<tr class="memdesc:ad366f26001746f96e8e98858463a0cb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the interval after which the timer should expire.  <a href="#ad366f26001746f96e8e98858463a0cb4">More...</a><br /></td></tr>
 <tr class="separator:ad366f26001746f96e8e98858463a0cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e2258b14372861d1ef4c57d34b36925"><td class="memItemLeft" align="right" valign="top">threadpool::Timer::Interval const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a4e2258b14372861d1ef4c57d34b36925">get_interval</a> () const</td></tr>
-<tr class="memdesc:a4e2258b14372861d1ef4c57d34b36925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the expiration interval.  <a href="#a4e2258b14372861d1ef4c57d34b36925">More...</a><br /></td></tr>
 <tr class="separator:a4e2258b14372861d1ef4c57d34b36925"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classAIStatefulTask"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classAIStatefulTask')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
 <tr class="memitem:ad63774288f04f401632549e944ee5183 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#ad63774288f04f401632549e944ee5183">AIStatefulTask</a> (CWDEBUG_ONLY(bool debug))</td></tr>
-<tr class="memdesc:ad63774288f04f401632549e944ee5183 inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of base class <a class="el" href="classAIStatefulTask.html" title="Base class for task objects. ">AIStatefulTask</a>.  <a href="classAIStatefulTask.html#ad63774288f04f401632549e944ee5183">More...</a><br /></td></tr>
 <tr class="separator:ad63774288f04f401632549e944ee5183 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac40d1760493b87dcd12920caf0165f87 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler, std::function&lt; void(bool)&gt; cb_function)</td></tr>
 <tr class="separator:gac40d1760493b87dcd12920caf0165f87 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9900f50731b8bc419d034832baef0d4c inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#ga9900f50731b8bc419d034832baef0d4c">run</a> (std::function&lt; void(bool)&gt; cb_function)</td></tr>
+<tr class="memitem:ga9900f50731b8bc419d034832baef0d4c inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#ga9900f50731b8bc419d034832baef0d4c">run</a> (std::function&lt; void(bool)&gt; cb_function)</td></tr>
+<tr class="memdesc:ga9900f50731b8bc419d034832baef0d4c inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">The same as above but use the <a class="el" href="structAIStatefulTask_1_1Handler.html#a49239baf5f285bd7d8161234a54c45d1ab2f53bbc738d09e1fdc9cd2d1821caeb">immediate </a> <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>. <br /></td></tr>
 <tr class="separator:ga9900f50731b8bc419d034832baef0d4c inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad20d48b8239a6f07738d61461a65edb9 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#gad20d48b8239a6f07738d61461a65edb9">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler, <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> *parent, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition, <a class="el" href="classAIStatefulTask.html#a324d12498b3656b815b88741b8c5657c">on_abort_st</a> on_abort=<a class="el" href="classAIStatefulTask.html#a324d12498b3656b815b88741b8c5657cae7b1902fa7f7ce6687e188a338721c9e">abort_parent</a>)</td></tr>
 <tr class="separator:gad20d48b8239a6f07738d61461a65edb9 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,25 +125,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ga6a1a48030a912ae51de1c6ff18f0d3bd inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#ga6a1a48030a912ae51de1c6ff18f0d3bd">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler=<a class="el" href="structAIStatefulTask_1_1Handler.html#a31078b881cbbf42d2e3e3998b905d1b2ac0333f77fe5c74c627b723a8e70f2932">Handler::immediate</a>)</td></tr>
 <tr class="separator:ga6a1a48030a912ae51de1c6ff18f0d3bd inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0593a004b92de37cbcfae9f3cfcccaec inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#ga0593a004b92de37cbcfae9f3cfcccaec">kill</a> ()</td></tr>
-<tr class="memdesc:ga0593a004b92de37cbcfae9f3cfcccaec inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate a task from the call back.  <a href="group__group__public.html#ga0593a004b92de37cbcfae9f3cfcccaec">More...</a><br /></td></tr>
 <tr class="separator:ga0593a004b92de37cbcfae9f3cfcccaec inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac520d813fed06cba4eef1913c3daca3f inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort</a> ()</td></tr>
-<tr class="memdesc:gac520d813fed06cba4eef1913c3daca3f inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the task (unsuccessful finish).  <a href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">More...</a><br /></td></tr>
 <tr class="separator:gac520d813fed06cba4eef1913c3daca3f inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b7111d021ba8507748df416a0631e5d inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition)</td></tr>
-<tr class="memdesc:ga8b7111d021ba8507748df416a0631e5d inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake up a waiting task.  <a href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">More...</a><br /></td></tr>
 <tr class="separator:ga8b7111d021ba8507748df416a0631e5d inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17b9024efb750d98f835ea050a07414e inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a17b9024efb750d98f835ea050a07414e">running</a> () const</td></tr>
-<tr class="memdesc:a17b9024efb750d98f835ea050a07414e inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the derived class is running.  <a href="classAIStatefulTask.html#a17b9024efb750d98f835ea050a07414e">More...</a><br /></td></tr>
 <tr class="separator:a17b9024efb750d98f835ea050a07414e inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a487f7328bbd5508b63855194d2403f94 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a487f7328bbd5508b63855194d2403f94">waiting</a> () const</td></tr>
-<tr class="memdesc:a487f7328bbd5508b63855194d2403f94 inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the derived class is running and idle.  <a href="classAIStatefulTask.html#a487f7328bbd5508b63855194d2403f94">More...</a><br /></td></tr>
 <tr class="separator:a487f7328bbd5508b63855194d2403f94 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2b07501507b6597fbd99b859bce4261 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#ab2b07501507b6597fbd99b859bce4261">waiting_or_aborting</a> () const</td></tr>
-<tr class="memdesc:ab2b07501507b6597fbd99b859bce4261 inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the derived class is running and idle or already being aborted.  <a href="classAIStatefulTask.html#ab2b07501507b6597fbd99b859bce4261">More...</a><br /></td></tr>
 <tr class="separator:ab2b07501507b6597fbd99b859bce4261 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a827dfb8d3bb87f27c2d373475d389982 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a827dfb8d3bb87f27c2d373475d389982">active</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler) const</td></tr>
-<tr class="memdesc:a827dfb8d3bb87f27c2d373475d389982 inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if we are added to the current engine.  <a href="classAIStatefulTask.html#a827dfb8d3bb87f27c2d373475d389982">More...</a><br /></td></tr>
 <tr class="separator:a827dfb8d3bb87f27c2d373475d389982 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24a4e2c228f2a900e94495aa4ba662db inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a24a4e2c228f2a900e94495aa4ba662db">is_immediate</a> () const</td></tr>
 <tr class="separator:a24a4e2c228f2a900e94495aa4ba662db inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,17 +144,12 @@ Public Member Functions</h2></td></tr>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>default_is_immediate</b> () const</td></tr>
 <tr class="separator:a97db3645e798f357596622ae24517d01 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fe975f2acbc2e25380c77874644fd25 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a9fe975f2acbc2e25380c77874644fd25">finished</a> () const</td></tr>
-<tr class="memdesc:a9fe975f2acbc2e25380c77874644fd25 inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the task finished.  <a href="classAIStatefulTask.html#a9fe975f2acbc2e25380c77874644fd25">More...</a><br /></td></tr>
 <tr class="separator:a9fe975f2acbc2e25380c77874644fd25 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dd75e11ef6fd1b14613ad494d8e93d9 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a4dd75e11ef6fd1b14613ad494d8e93d9">aborted</a> () const</td></tr>
-<tr class="memdesc:a4dd75e11ef6fd1b14613ad494d8e93d9 inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this task was aborted.  <a href="classAIStatefulTask.html#a4dd75e11ef6fd1b14613ad494d8e93d9">More...</a><br /></td></tr>
 <tr class="separator:a4dd75e11ef6fd1b14613ad494d8e93d9 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a855cb8523b22595dc5ef69361633e7bb inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a855cb8523b22595dc5ef69361633e7bb"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a855cb8523b22595dc5ef69361633e7bb">executing</a> () const</td></tr>
-<tr class="memdesc:a855cb8523b22595dc5ef69361633e7bb inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this thread is executing this task right now (aka, we're inside <code>multiplex</code> somewhere). <br /></td></tr>
+<tr class="memitem:a855cb8523b22595dc5ef69361633e7bb inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a855cb8523b22595dc5ef69361633e7bb">executing</a> () const</td></tr>
 <tr class="separator:a855cb8523b22595dc5ef69361633e7bb inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09e20373d0b86c70a80a27e754c1bd66 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">duration_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66">getDuration</a> () const</td></tr>
-<tr class="memdesc:a09e20373d0b86c70a80a27e754c1bd66 inherit pub_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total time that this task has been running.  <a href="classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66">More...</a><br /></td></tr>
 <tr class="separator:a09e20373d0b86c70a80a27e754c1bd66 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -207,7 +194,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a767a30e675aa822913c3f9a6614c63b6"><td class="memItemLeft" align="right" valign="top"><a id="a767a30e675aa822913c3f9a6614c63b6"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a767a30e675aa822913c3f9a6614c63b6">~AITimer</a> () override</td></tr>
-<tr class="memdesc:a767a30e675aa822913c3f9a6614c63b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call <a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b" title="Mark that the task finished and schedule the call back. ">finish()</a> (or <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a>), not delete. <br /></td></tr>
+<tr class="memdesc:a767a30e675aa822913c3f9a6614c63b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call <a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish()</a> (or <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a>), not delete. <br /></td></tr>
 <tr class="separator:a767a30e675aa822913c3f9a6614c63b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e24c03469c693fa42579632eb392e61"><td class="memItemLeft" align="right" valign="top"><a id="a8e24c03469c693fa42579632eb392e61"></a>
 char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAITimer.html#a8e24c03469c693fa42579632eb392e61">state_str_impl</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> run_state) const override</td></tr>
@@ -227,39 +214,28 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memdesc:ad7f8d3e0fc4f46d67cc412d39bc8fc14 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:ad7f8d3e0fc4f46d67cc412d39bc8fc14 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga160831e7b091af4095a9f60e33834328 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> new_state)</td></tr>
-<tr class="memdesc:ga160831e7b091af4095a9f60e33834328 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the state to run, the next invocation of multiplex_impl.  <a href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">More...</a><br /></td></tr>
 <tr class="separator:ga160831e7b091af4095a9f60e33834328 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6b0f3ba324cd8ca6b4a2f925c106897 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">wait</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:gaf6b0f3ba324cd8ca6b4a2f925c106897 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for <em>condition</em>.  <a href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">More...</a><br /></td></tr>
 <tr class="separator:gaf6b0f3ba324cd8ca6b4a2f925c106897 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2af39e888e9cfd3936e9fbfe399c08af inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:ga2af39e888e9cfd3936e9fbfe399c08af inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block until the <em>wait_condition</em> returns true.  <a href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">More...</a><br /></td></tr>
 <tr class="separator:ga2af39e888e9cfd3936e9fbfe399c08af inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac67d26752d9e61d9c686fbee14b4444d inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#gac67d26752d9e61d9c686fbee14b4444d">wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions, <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> new_state)</td></tr>
-<tr class="memdesc:gac67d26752d9e61d9c686fbee14b4444d inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block until the <em>wait_condition</em> returns true.  <a href="group__group__wait.html#gac67d26752d9e61d9c686fbee14b4444d">More...</a><br /></td></tr>
 <tr class="separator:gac67d26752d9e61d9c686fbee14b4444d inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf7642911a8012284ec7aa5a9a700b06b inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish</a> ()</td></tr>
-<tr class="memdesc:gaf7642911a8012284ec7aa5a9a700b06b inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark that the task finished and schedule the call back.  <a href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">More...</a><br /></td></tr>
 <tr class="separator:gaf7642911a8012284ec7aa5a9a700b06b inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59d5a998e43866969cd8d92b8924ddb1 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__protected.html#ga59d5a998e43866969cd8d92b8924ddb1">is_self_locked</a> (<a class="el" href="classAIStatefulTaskMutex.html">AIStatefulTaskMutex</a> &amp;stateful_task_mutex)</td></tr>
 <tr class="separator:ga59d5a998e43866969cd8d92b8924ddb1 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00981f1360b10d5f99f805d501a537a2 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">yield</a> ()</td></tr>
-<tr class="memdesc:ga00981f1360b10d5f99f805d501a537a2 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Yield to give CPU to other tasks, but do not block.  <a href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">More...</a><br /></td></tr>
 <tr class="separator:ga00981f1360b10d5f99f805d501a537a2 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32265465bc41279fea4654941ff31de7 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">target</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:ga32265465bc41279fea4654941ff31de7 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue running from <em>engine</em>.  <a href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">More...</a><br /></td></tr>
 <tr class="separator:ga32265465bc41279fea4654941ff31de7 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafaad43cb215ff180e8fb9e288abd257c inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#gafaad43cb215ff180e8fb9e288abd257c">yield</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:gafaad43cb215ff180e8fb9e288abd257c inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">The above two combined.  <a href="group__group__yield.html#gafaad43cb215ff180e8fb9e288abd257c">More...</a><br /></td></tr>
 <tr class="separator:gafaad43cb215ff180e8fb9e288abd257c inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga04f5c7619157f72cf98700e423bd6766 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766">yield_frame</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int frames)</td></tr>
-<tr class="memdesc:ga04f5c7619157f72cf98700e423bd6766 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch to <em>engine</em> and sleep for <em>frames</em> frames.  <a href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766">More...</a><br /></td></tr>
 <tr class="separator:ga04f5c7619157f72cf98700e423bd6766 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa79810701038b0c5fa974fc4b64dc902 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">yield_ms</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int ms)</td></tr>
-<tr class="memdesc:gaa79810701038b0c5fa974fc4b64dc902 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch to <em>engine</em> and sleep for <em>ms</em> milliseconds.  <a href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">More...</a><br /></td></tr>
 <tr class="separator:gaa79810701038b0c5fa974fc4b64dc902 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga669b3bea6b80ec684cb5b96b3fb84d22 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">yield_if_not</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:ga669b3bea6b80ec684cb5b96b3fb84d22 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not really yield, unless the current engine is not <em>engine</em>.  <a href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">More...</a><br /></td></tr>
 <tr class="separator:ga669b3bea6b80ec684cb5b96b3fb84d22 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe86c9acff86165977302965e5401e20 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="afe86c9acff86165977302965e5401e20"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">initialize_impl</a> ()</td></tr>
@@ -271,7 +247,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a872025f08ce55e54810495690da7b337 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a415a771f1c6fd7046702921215eb37dc inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a415a771f1c6fd7046702921215eb37dc"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a415a771f1c6fd7046702921215eb37dc">force_killed</a> ()</td></tr>
-<tr class="memdesc:a415a771f1c6fd7046702921215eb37dc inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from <a class="el" href="classAIEngine.html#a961f78e330bb5106b49d40391c5026ed" title="Flush all tasks from this engine. ">AIEngine::flush()</a>. <br /></td></tr>
+<tr class="memdesc:a415a771f1c6fd7046702921215eb37dc inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from <a class="el" href="classAIEngine.html#a961f78e330bb5106b49d40391c5026ed">AIEngine::flush()</a>. <br /></td></tr>
 <tr class="separator:a415a771f1c6fd7046702921215eb37dc inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
@@ -293,10 +269,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <tr class="separator:ab2831a32490449ec5320f939363ea059 inherit pub_types_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classAIStatefulTask"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classAIStatefulTask')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
 <tr class="memitem:a416f76c11dda361438485e424e43e501 inherit pub_static_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">static char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a416f76c11dda361438485e424e43e501">state_str</a> (<a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022">base_state_type</a> state)</td></tr>
-<tr class="memdesc:a416f76c11dda361438485e424e43e501 inherit pub_static_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return stringified state, for debugging purposes.  <a href="classAIStatefulTask.html#a416f76c11dda361438485e424e43e501">More...</a><br /></td></tr>
 <tr class="separator:a416f76c11dda361438485e424e43e501 inherit pub_static_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a650d995db3e1117ce9c26947aef34d90 inherit pub_static_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">static char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a650d995db3e1117ce9c26947aef34d90">event_str</a> (event_type event)</td></tr>
-<tr class="memdesc:a650d995db3e1117ce9c26947aef34d90 inherit pub_static_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return stringified event, for debugging purposes.  <a href="classAIStatefulTask.html#a650d995db3e1117ce9c26947aef34d90">More...</a><br /></td></tr>
 <tr class="separator:a650d995db3e1117ce9c26947aef34d90 inherit pub_static_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -322,8 +296,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Get the expiration interval. </p>
+<p>Get the expiration interval.</p>
 <dl class="section return"><dt>Returns</dt><dd>expiration interval in seconds. </dd></dl>
 
 </div>
@@ -351,15 +324,14 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Set the interval after which the timer should expire. </p>
+<p>Set the interval after which the timer should expire.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">interval</td><td>Amount of time in seconds before the timer will expire.</td></tr>
   </table>
   </dd>
 </dl>
-<p>Call <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f" title="Abort the task (unsuccessful finish). ">abort()</a> at any time to stop the timer (and delete the <a class="el" href="classAITimer.html" title="The timer task. ">AITimer</a> object). </p>
+<p>Call <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort()</a> at any time to stop the timer (and delete the <a class="el" href="classAITimer.html">AITimer</a> object). </p>
 
 </div>
 </div>
@@ -372,7 +344,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

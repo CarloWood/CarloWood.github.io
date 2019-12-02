@@ -82,13 +82,10 @@ Collaboration diagram for Going idle and waiting for an event.:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gaf6b0f3ba324cd8ca6b4a2f925c106897"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">AIStatefulTask::wait</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:gaf6b0f3ba324cd8ca6b4a2f925c106897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for <em>condition</em>.  <a href="#gaf6b0f3ba324cd8ca6b4a2f925c106897">More...</a><br /></td></tr>
 <tr class="separator:gaf6b0f3ba324cd8ca6b4a2f925c106897"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2af39e888e9cfd3936e9fbfe399c08af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">AIStatefulTask::wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
-<tr class="memdesc:ga2af39e888e9cfd3936e9fbfe399c08af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block until the <em>wait_condition</em> returns true.  <a href="#ga2af39e888e9cfd3936e9fbfe399c08af">More...</a><br /></td></tr>
 <tr class="separator:ga2af39e888e9cfd3936e9fbfe399c08af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac67d26752d9e61d9c686fbee14b4444d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__wait.html#gac67d26752d9e61d9c686fbee14b4444d">AIStatefulTask::wait_until</a> (<a class="el" href="AIStatefulTask_8h.html#ab6c86bbf81780084fce5eb93d2028af8">AIWaitConditionFunc</a> const &amp;wait_condition, <a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions, <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> new_state)</td></tr>
-<tr class="memdesc:gac67d26752d9e61d9c686fbee14b4444d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block until the <em>wait_condition</em> returns true.  <a href="#gac67d26752d9e61d9c686fbee14b4444d">More...</a><br /></td></tr>
 <tr class="separator:gac67d26752d9e61d9c686fbee14b4444d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -118,8 +115,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Wait for <em>condition</em>. </p>
+<p>Wait for <em>condition</em>.</p>
 <p>Go idle if non of the bits of <em>conditions</em> were signalled <em>twice</em> or more since the last call to <code>wait(</code>that_bit<code>)</code>. The task will continue whenever <code>signal(condition)</code> is called where <code>conditions &amp; condition != 0</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -163,8 +159,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Block until the <em>wait_condition</em> returns true. </p>
+<p>Block until the <em>wait_condition</em> returns true.</p>
 <p>Whenever something changed that might cause <em>wait_condition</em> to return <code>true</code>, <code>signal(condition)</code> must be called. Calling <code>signal(condition)</code> more often is okay.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -215,8 +210,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Block until the <em>wait_condition</em> returns true. </p>
+<p>Block until the <em>wait_condition</em> returns true.</p>
 <p>Whenever something changed that might cause <em>wait_condition</em> to return <code>true</code>, <code>signal(condition)</code> must be called. Calling <code>signal(condition)</code> more often is okay.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -234,7 +228,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

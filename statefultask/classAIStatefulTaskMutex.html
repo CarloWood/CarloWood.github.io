@@ -75,11 +75,11 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A task mutex. </p>
+<div class="textblock"><p>A task mutex.</p>
 <p>Prevent different tasks from concurrently entering the same critical area.</p>
 <p>Consider an object that is shared between tasks, but may not be simultaneously accessed by two different threads.</p>
 <p>For example,</p>
-<p>// Required memory management. utils::MemoryPagePool mpp(0x8000); AIStatefulTaskMutex::init(&amp;mpp); // A task mutex. <a class="el" href="classAIStatefulTaskMutex.html" title="A task mutex. ">AIStatefulTaskMutex</a> m;</p>
+<p>// Required memory management. utils::MemoryPagePool mpp(0x8000); AIStatefulTaskMutex::init(&amp;mpp); // A task mutex. <a class="el" href="classAIStatefulTaskMutex.html">AIStatefulTaskMutex</a> m;</p>
 <p>Then multiple running tasks could use this to prevent concurrent access:</p>
 <p>... case MyTask_lock: set_state(MyTask_locked); if (!m.lock(this, 1)) { wait(1); break; } [[fallthrough]]; case MyTask_locked: do_work(); m.unlock(); </p>
 </div>
@@ -95,7 +95,7 @@ Classes</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d03ec4978cad88116cb67bb218943b2"><td class="memItemLeft" align="right" valign="top"><a id="a2d03ec4978cad88116cb67bb218943b2"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTaskMutex.html#a2d03ec4978cad88116cb67bb218943b2">AIStatefulTaskMutex</a> ()</td></tr>
-<tr class="memdesc:a2d03ec4978cad88116cb67bb218943b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an unlocked <a class="el" href="classAIStatefulTaskMutex.html" title="A task mutex. ">AIStatefulTaskMutex</a>. <br /></td></tr>
+<tr class="memdesc:a2d03ec4978cad88116cb67bb218943b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an unlocked <a class="el" href="classAIStatefulTaskMutex.html">AIStatefulTaskMutex</a>. <br /></td></tr>
 <tr class="separator:a2d03ec4978cad88116cb67bb218943b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b47b6cb5326a9fa32062ec9785a0f4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTaskMutex.html#a9b47b6cb5326a9fa32062ec9785a0f4f">lock</a> (<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> *task, condition_type condition)</td></tr>
 <tr class="memdesc:a9b47b6cb5326a9fa32062ec9785a0f4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to obtain ownership for owner (recursive locking allowed).  <a href="#a9b47b6cb5326a9fa32062ec9785a0f4f">More...</a><br /></td></tr>
@@ -116,7 +116,7 @@ static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a cl
 <tr class="separator:ae3b45aae60eaa67cabaffe97222e5345"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae0140002adf6f9ad933b7e3a798a537"><td class="memItemLeft" align="right" valign="top"><a id="aae0140002adf6f9ad933b7e3a798a537"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTaskMutex.html#aae0140002adf6f9ad933b7e3a798a537">init</a> (utils::MemoryPagePool *mpp_ptr)</td></tr>
-<tr class="memdesc:aae0140002adf6f9ad933b7e3a798a537"><td class="mdescLeft">&#160;</td><td class="mdescRight">This must be called once before using a <a class="el" href="classAIStatefulTaskMutex.html" title="A task mutex. ">AIStatefulTaskMutex</a>. <br /></td></tr>
+<tr class="memdesc:aae0140002adf6f9ad933b7e3a798a537"><td class="mdescLeft">&#160;</td><td class="mdescRight">This must be called once before using a <a class="el" href="classAIStatefulTaskMutex.html">AIStatefulTaskMutex</a>. <br /></td></tr>
 <tr class="separator:aae0140002adf6f9ad933b7e3a798a537"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -181,7 +181,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIStatefulTask</b></
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

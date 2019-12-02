@@ -1,4 +1,4 @@
 <map id="AIStatefulTask" name="AIStatefulTask">
-<area shape="rect" id="node3" href="$classAITimer.html" title="The timer task. " alt="" coords="5,155,73,181"/>
-<area shape="rect" id="node4" href="$classExample.html" title="An example task class. " alt="" coords="97,155,171,181"/>
+<area shape="rect" id="node3" href="$classAITimer.html" title="AITimer" alt="" coords="5,155,73,181"/>
+<area shape="rect" id="node4" href="$classExample.html" title="Example" alt="" coords="97,155,171,181"/>
 </map>

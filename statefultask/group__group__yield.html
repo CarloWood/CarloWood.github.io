@@ -82,27 +82,21 @@ Collaboration diagram for Yield and engine control:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga00981f1360b10d5f99f805d501a537a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">AIStatefulTask::yield</a> ()</td></tr>
-<tr class="memdesc:ga00981f1360b10d5f99f805d501a537a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Yield to give CPU to other tasks, but do not block.  <a href="#ga00981f1360b10d5f99f805d501a537a2">More...</a><br /></td></tr>
 <tr class="separator:ga00981f1360b10d5f99f805d501a537a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32265465bc41279fea4654941ff31de7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">AIStatefulTask::target</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:ga32265465bc41279fea4654941ff31de7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue running from <em>engine</em>.  <a href="#ga32265465bc41279fea4654941ff31de7">More...</a><br /></td></tr>
 <tr class="separator:ga32265465bc41279fea4654941ff31de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafaad43cb215ff180e8fb9e288abd257c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#gafaad43cb215ff180e8fb9e288abd257c">AIStatefulTask::yield</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:gafaad43cb215ff180e8fb9e288abd257c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The above two combined.  <a href="#gafaad43cb215ff180e8fb9e288abd257c">More...</a><br /></td></tr>
 <tr class="separator:gafaad43cb215ff180e8fb9e288abd257c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga04f5c7619157f72cf98700e423bd6766"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga04f5c7619157f72cf98700e423bd6766">AIStatefulTask::yield_frame</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int frames)</td></tr>
-<tr class="memdesc:ga04f5c7619157f72cf98700e423bd6766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch to <em>engine</em> and sleep for <em>frames</em> frames.  <a href="#ga04f5c7619157f72cf98700e423bd6766">More...</a><br /></td></tr>
 <tr class="separator:ga04f5c7619157f72cf98700e423bd6766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa79810701038b0c5fa974fc4b64dc902"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">AIStatefulTask::yield_ms</a> (<a class="el" href="classAIEngine.html">AIEngine</a> *engine, unsigned int ms)</td></tr>
-<tr class="memdesc:gaa79810701038b0c5fa974fc4b64dc902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch to <em>engine</em> and sleep for <em>ms</em> milliseconds.  <a href="#gaa79810701038b0c5fa974fc4b64dc902">More...</a><br /></td></tr>
 <tr class="separator:gaa79810701038b0c5fa974fc4b64dc902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">AIStatefulTask::yield_if_not</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
-<tr class="memdesc:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not really yield, unless the current engine is not <em>engine</em>.  <a href="#ga669b3bea6b80ec684cb5b96b3fb84d22">More...</a><br /></td></tr>
 <tr class="separator:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>A call to yield*() has basically no effect on a task, except that its execution is delayed a bit: this causes the task to return to the <a class="el" href="classAIEngine.html" title="Task queue and dispatcher. ">AIEngine</a> main loop code. That way other running tasks (in that engine) will get the chance to execute before the current task is continued.</p>
-<p>Note that if a state calls <code>yield*</code>() without calling first <a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a> then this might <em>still</em> cause 100% cpu usage despite the call to <code>yield*</code> if the task runs in an engine without <a class="el" href="classAIEngine.html#a3d107f2e7c0a4f4e8cc02b1cc0d83457">max_duration</a> because the task will rapidly execute again and then call <code>yield*</code> over and over: an engine without max_duration keeps iterating over its tasks until all tasks finished. Otherwise the engine will return from <a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70" title="The main loop of the engine. ">AIEngine::mainloop</a> regardless after at least <code>AIEngine::sMaxDuration</code> milliseconds have passed (which can be set by calling <a class="el" href="classAIEngine.html#a3d107f2e7c0a4f4e8cc02b1cc0d83457">AIEngine::setMaxDuration(milliseconds)</a>). </p>
+<p>A call to yield*() has basically no effect on a task, except that its execution is delayed a bit: this causes the task to return to the <a class="el" href="classAIEngine.html">AIEngine</a> main loop code. That way other running tasks (in that engine) will get the chance to execute before the current task is continued.</p>
+<p>Note that if a state calls <code>yield*</code>() without calling first <a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a> then this might <em>still</em> cause 100% cpu usage despite the call to <code>yield*</code> if the task runs in an engine without <a class="el" href="classAIEngine.html#a3d107f2e7c0a4f4e8cc02b1cc0d83457">max_duration</a> because the task will rapidly execute again and then call <code>yield*</code> over and over: an engine without max_duration keeps iterating over its tasks until all tasks finished. Otherwise the engine will return from <a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70">AIEngine::mainloop</a> regardless after at least <code>AIEngine::sMaxDuration</code> milliseconds have passed (which can be set by calling <a class="el" href="classAIEngine.html#a3d107f2e7c0a4f4e8cc02b1cc0d83457">AIEngine::setMaxDuration(milliseconds)</a>). </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga32265465bc41279fea4654941ff31de7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga32265465bc41279fea4654941ff31de7">&#9670;&nbsp;</a></span>target()</h2>
@@ -127,8 +121,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Continue running from <em>engine</em>. </p>
+<p>Continue running from <em>engine</em>.</p>
 <p>The task will keep running in this engine until <code>target</code> is called again. Call <code>target(Handler::idle)</code> to return to running freely (with a default engine, etc, if one was given).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -161,8 +154,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Yield to give CPU to other tasks, but do not block. </p>
+<p>Yield to give CPU to other tasks, but do not block.</p>
 <p>If a task runs potentially too long, it is a good idea to regularly call this member function and break out of <code>multiplex_impl</code> in order not to let other tasks in the same engine starve. </p>
 
 </div>
@@ -190,8 +182,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>The above two combined. </p>
+<p>The above two combined.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handler</td><td>The required engine or thread pool queue to run in. </td></tr>
@@ -234,9 +225,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Switch to <em>engine</em> and sleep for <em>frames</em> frames. </p>
-<p>This function can only be used for an <em>engine</em> with a max_duration. One frame means one entry into <code><a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70" title="The main loop of the engine. ">AIEngine::mainloop</a></code>. So, for <em>frames</em> entries of <code>mainloop</code> this task will not be run.</p>
+<p>Switch to <em>engine</em> and sleep for <em>frames</em> frames.</p>
+<p>This function can only be used for an <em>engine</em> with a max_duration. One frame means one entry into <code><a class="el" href="classAIEngine.html#a64bcf4899082850d29960198aae37f70">AIEngine::mainloop</a></code>. So, for <em>frames</em> entries of <code>mainloop</code> this task will not be run.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">engine</td><td>The engine to sleep in. This must be an engine with a max_duration set. </td></tr>
@@ -270,8 +260,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Do not really yield, unless the current engine is not <em>engine</em>. </p>
+<p>Do not really yield, unless the current engine is not <em>engine</em>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handler</td><td>The required engine or thread pool queue to run in. </td></tr>
@@ -315,8 +304,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Switch to <em>engine</em> and sleep for <em>ms</em> milliseconds. </p>
+<p>Switch to <em>engine</em> and sleep for <em>ms</em> milliseconds.</p>
 <p>This function can only be used for an engine with a max_duration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -333,7 +321,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Nov 26 2019
+Revised Mon Dec 2 2019
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

@@ -1,6 +1,6 @@
-# cdeh v2.0 -- an automatic history and environment switch system.
+# cdeh v2.1 -- an automatic history and environment switch system.
 #
-# Copyright (C) 2007 (v1.0), 2018 (v2.0)  Carlo Wood <carlo@alinoe.com>
+# Copyright (C) 2007 (v1.0), 2020 (v2.0)  Carlo Wood <carlo@alinoe.com>
 #
 # $1 : PID of the shell
 # $2 : $HISTFILE
@@ -32,6 +32,7 @@ else
     echo 'unset CDEH_REMOVE_STORE' > "$CDEH_TMP/store.env"
     echo "$CDEH_TMP/store.env" > "$CDEH_TMP/envfiles"
     KEEP_ENVFILES=1
+    rm -f "$CDEH_TMP/histfile"
     EXITCODE=0
   fi
 fi
@@ -90,7 +91,8 @@ if [ "$PREVIOUS_DIR" != "$PWD" ]; then
   fi
   __cdeh_rebuild_source_dirs
   TITLE="`echo "[$CDEH_CURRENT_DIR]$PWD" | sed -e 's%\[[^]]*/%[%' -e 's%\(\[[^]]*\]\)'"$CDEH_CURRENT_DIR"'%\1 %' -e 's%\[\]%[/]%' -e 's% $%%' -e 's%^\[/\]$%'"$PWD"'%'`"
-  xtermset -title "$TITLE"
+  #xtermset -title "$TITLE"
+  echo -ne "\033]30;$TITLE\007"
   test -z "$CDEH_VERBOSE" || echo "$$ CDEH_NEW_DIR is now \"$CDEH_NEW_DIR\""
   INODE=$(stat "$CDEH_NEW_DIR" | awk '/^Device:/ { printf("%s:%d\n",$2, $4); }')
   if [ -f "$CDEH_TMP/preved" ]; then

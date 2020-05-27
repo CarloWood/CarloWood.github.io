@@ -1,0 +1,314 @@
+\_form#0:$\cup$
+\_form#1:$\mathbb{F}_q$
+\_form#2:$\cap$
+\_form#3:$\emptyset$
+\_form#4:$\in$
+\_form#5:$\mathbb{F}_{2^m}$
+\_form#6:$\mathbb{F}$
+\_form#7:$\alpha$
+\_form#8:\[ a = \sum_{i=0}^{m-1} c_i\alpha_i \]
+\_form#9:$\beta$
+\_form#10:$\sum_{i=0}^{i=m-1}n_ia_{0,i} = 0$
+\_form#11:\[ c_i = \begin{cases} 0 & i \neq j \\ 1 & i = j \end{cases} \]
+\_form#12:$\neq$
+\_form#13:$\mathbb{N}$
+\_form#14:$\equiv$
+\_form#15:$\geq$
+\_form#16:$\sqrt[4]{b}$
+\_form#17:$\sqrt[4]{b} = \sqrt{\sqrt{b}}$
+\_form#18:$\leq$
+\_form#19:\[ \begin{matrix} Tr(a_0) = 0 \\ Tr(a_1) = 1 \end{matrix} \]
+\_form#20:\[ Tr(a + t^j) = Tr(a) + Tr(t^j) = Tr(a) + 1 \]
+\_form#21:$\kappa$
+\_form#22:$\sqrt{b}$
+\_form#23:$\kappa_0$
+\_form#24:$\kappa_1$
+\_form#25:$ Tr(b/x^2) = Tr(\sqrt{b}/x) $
+\_form#26:$ 2 + 2 \cdot count $
+\_form#27:$ x=1 $
+\_form#28:$ x \neq 0 $
+\_form#29:$ x \neq 1 $
+\_form#30:$ x \mapsto x^2 $
+\_form#31:\[ (\#E - 2)/2 - 1 = \sum_{1 \le d < m, d|m} w(m, d) \cdot m/d \]
+\_form#32:\[ w(m, d) = \left|\left\{x \in \mathbb{F}_{2^m} \mid \mathrm{Tr}(x)=\mathrm{Tr}(1/x) \text{ and } \min \left\{k \in \mathbb{Z}^+ \mid x^{2^k} = x \right\} = m/d \right\}\right| \]
+\_form#33:\[ w(m, d) = \begin{cases} w(m / d, 1) & \mbox{if d is odd} \\ w(2m / d, 2) & \mbox{if d is even} \end{cases} \]
+\_form#34:\[ w(2m, 2) = foc(m)/m \]
+\_form#35:\[ foc(m) = 2^m - \sum_{0<d<m,\ d|m} foc(d) \]
+\_form#36:$\mathbb{F}_{2^2}$
+\_form#37:$\mathbb{F}_{2^n}$
+\_form#38:$\mathbb{F}_{2^4}$
+\_form#39:$ \mathbb{Z}_3 $
+\_form#40:$ \mathbb{F}_4 $
+\_form#41:$ \mathbb{F}_{p^m} $
+\_form#42:$ \mathbb{F}_{p^n} $
+\_form#43:$ \mathbb{F}_{2^2} $
+\_form#44:$\mathbb{Z}_7$
+\_form#45:$\mathbb{F}_{2^6}$
+\_form#46:$\mathbb{F}_{2^3}$
+\_form#47:$\mathbb{Z}_9$
+\_form#48:$ S = \{ 1, 2, 4, 8, 16-9 = 7, 32-27 = 5 \} = \{ 2^i \pmod{9} \mid i \in \mathbb{N} \}$
+\_form#49:$\cdot$
+\_form#50:$\qed$
+\_form#51:\[ Tr(x) = \sum_{i=0}^{m-1}{x^{2^i}} \]
+\_form#52:\[ Tr(x) = \sum_{i=0}^{m-1}{(g^n)^{2^i}} = \sum_{i=0}^{m-1}{(g^n)^{2^{(i\textrm{ mod }(m/d))}}} = d \sum_{i=0}^{m/d-1}{(g^n)^{2^i}} = 0 \]
+\_form#53:\[ ect1(m) = 2^{m-1} - \sum_{\mathrm{odd}\text{ }d\text{, }d|m}{ect1(m/d)} \]
+\_form#54:$ \alpha : K \rightarrow L $
+\_form#55:$\longrightarrow$
+\_form#56:$\ne$
+\_form#57:$\mathbb{Z}/n\mathbb{Z}$
+\_form#58:$\mathbb{Z}$
+\_form#59:$\times$
+\_form#60:$\mathbb{Z}/m\mathbb{Z}$
+\_form#61:\[ \left\{ \begin{array}{cccccc} 0 & (1,0) & (2,0) & (3,0) & \cdots & (n-1, 0) \\ (0,1) & (1,1) & (2,1) & (3,1) \\ (0,2) & (1,2) & (2,2) & (3,2) \\ \vdots & & & & \ddots \\ (0,m-1) & & & & & (n-1, m-1) \end{array} \right\} \]
+\_form#62:\[ \left\{ \begin{array}{cccccc} 0 & P & 2P & 3P & \cdots & (n-1)P \\ Q & P+Q & 2P+Q & 3P+Q \\ 2Q & P+2Q & 2P+2Q & 3P+2Q \\ \vdots & & & & \ddots \\ (m-1)Q & & & & & (n-1)P + (m-1)Q \end{array} \right\} \]
+\_form#63:\[ \left\{ \begin{array}{ccccc} 0 & 3 & 6 & 9 & 12 \\ 5 & 8 & 11 & 14 & 2 \\ 10 & 13 & 1 & 4 & 7 \end{array} \right\} \]
+\_form#64:\[ \left| C_3 \times C_5 \right| = \left| \left\{ \begin{array}{ccccc} 0 & 3 & 6 & 9 & 12 \\ 5 & 8 & 11 & 14 & 2 \\ 10 & 13 & 1 & 4 & 7 \end{array} \right\}\right| = \left\langle \begin{array}{ccccc} 1 & 5 & 5 & 5 & 5 \\ 3 & 15 & 15 & 15 & 15 \\ 3 & 15 & 15 & 15 & 15 \end{array} \right\rangle \]
+\_form#65:\[ \left| C_{21} \times C_{15} \right| = \left\langle \begin{array}{ccccccccccccccccccccc} 1 & 21 & 21 & 7 & 21 & 21 & 7 & 3 & 21 & 7 & 21 & 21 & 7 & 21 & 3 & 7 & 21 & 21 & 7 & 21 & 21 \\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ 5 & 105& 105& 35 & 105& 105& 35 & 15 & 105& 35 & 105& 105& 35 & 105& 15 & 35 & 105& 105& 35 & 105& 105\\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ 3 & 21 & 21 & 21 & 21 & 21 & 21 & 3 & 21 & 21 & 21 & 21 & 21 & 21 & 3 & 21 & 21 & 21 & 21 & 21 & 21 \\ 5 & 105& 105& 35 & 105& 105& 35 & 15 & 105& 35 & 105& 105& 35 & 105& 15 & 35 & 105& 105& 35 & 105& 105\\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ 5 & 105& 105& 35 & 105& 105& 35 & 15 & 105& 35 & 105& 105& 35 & 105& 15 & 35 & 105& 105& 35 & 105& 105\\ 3 & 21 & 21 & 21 & 21 & 21 & 21 & 3 & 21 & 21 & 21 & 21 & 21 & 21 & 3 & 21 & 21 & 21 & 21 & 21 & 21 \\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ 5 & 105& 105& 35 & 105& 105& 35 & 15 & 105& 35 & 105& 105& 35 & 105& 15 & 35 & 105& 105& 35 & 105& 105\\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105& 15 & 105& 105& 105& 105& 105& 105\\ \end{array} \right\rangle \]
+\_form#66:$\phi$
+\_form#67:$\rightarrow$
+\_form#68:$\mathbb{Z}/nm\mathbb{Z}$
+\_form#69:$\nmid$
+\_form#70:$\mid$
+\_form#71:$|$
+\_form#72:$\not\equiv$
+\_form#73:$\prod_{i=1}^{z}p_i^{\alpha_i}$
+\_form#74:$\prod_{i=1}^{z}p_i^{\beta_i}$
+\_form#75:$\alpha_i$
+\_form#76:$\beta_i$
+\_form#77:$\prod_{i=1}^{z}p_i^{\alpha_i + \beta_i}$
+\_form#78:$\prod_{i=1}^{z}p_i^{\gamma_i}$
+\_form#79:$\gamma_i$
+\_form#80:$p_i^{\gamma_i}\mid$
+\_form#81:$p_i^{\gamma_i}$
+\_form#82:$\sum_{i=0}^{k-1}$
+\_form#83:\[ \left| C_{3^3} \times C_{3^3} \right| = \left\langle \begin{array}{ccccccccccccccccccccccccccc} 1 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 3 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 & 9 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \end{array} \right\rangle \]
+\_form#84:\[ \left| C_{3^3} \times C_{3^3} \right| = \left\langle \begin{array}{ccccccccccccccccccccccccccc} 1 & 3 & 3 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 3 & 3 & 3 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 3 & 3 & 3 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 9 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 & 27 \\ \end{array} \right\rangle \]
+\_form#85:\[ s_i(k) = \begin{cases} p^{k m_i} & k \leq a_i \\ p^{a_i m_i} & k \geq a_i \end{cases} \]
+\_form#86:\[ t(k) = \begin{cases} p^{k (m_0 + m_1 + ... + m_n)} & k \leq a_0 \\ p^{a_0 m_0 + k(m_1 + ... + m_n)} & a_0 \leq k \leq a_1 \\ p^{a_0 m_0 + a_1 m_1 + k(m_2 + ... + m_n)} & a_1 \leq k \leq a_2 \\ \vdots & \vdots \\ p^{a_0 m_0 + a_1 m_1 + ... + a_n m_n} & k \geq a_n \end{cases} \]
+\_form#87:\[ [(C_{p^{a_0}})^{m_0} \times (C_{p^{a_1}})^{m_1} \times \ldots \times (C_{p^{a_n}})^{m_n}]_k = \begin{cases} 1 & k = 0 \\ p^{k(m_0+\ldots+m_n)} - p^{(k-1)(m_0+\ldots+m_n)} & 0 < k \leq a_0 \\ p^{a_0m_0+k(m_1+\ldots+m_n)} - p^{a_0m_0+(k-1)(m_1+\ldots+m_n)} & a_0 < k \leq a_1 \\ p^{a_0m_0+a_1m_1+k(m_2+\ldots+m_n)} - p^{a_0m_0+a_1m_1+(k-1)(m_2+\ldots+m_n)} & a_1 < k \leq a_2 \\ \vdots & \vdots \\ p^{a_0m_0+a_1m_1+\ldots+a_{n-1}m_{n-1}+km_n} - p^{a_0m_0+a_1m_1+\ldots+a_{n-1}m_{n-1}+(k-1)m_n} & a_{n-1} < k \leq a_n \\ 0 & k > a_n \end{cases} \]
+\_form#88:$\cdots$
+\_form#89:$ p \mid x^m-1 $
+\_form#90:$ p^n \mid k $
+\_form#91:$ p^{n+1} \mid x^{km}-1 $
+\_form#92:\[ (u-1)^n = \sum_{j=0}^n{(-1)^{n-j}\binom{n}{j}u^j} \]
+\_form#93:\[ \frac{u^k-1}{u-1} = \sum_{i=0}^{k-1}{u^i} \]
+\_form#94:\[ u^k-1 = (u-1)^{n+1} \sum_{i=0}^{k-n-1}{\binom{k-1-i}{n}u^i} + (u-1)R_{n,k}(u) \]
+\_form#95:\[ R_{n,k}(u) = \frac{u^k-1}{u-1} - (u-1)^n \sum_{i=0}^{k-n-1}{\binom{k-1-i}{n}u^i} \]
+\_form#96:\[ \begin{split} (u-1)^n \sum_{i=0}^{k-n-1}{\binom{k-1-i}{n}u^i} &= \sum_{j=0}^n{(-1)^{n-j}\binom{n}{j}u^j} \sum_{i=0}^{k-n-1}{\binom{k-1-i}{n}u^i} \\ &= \sum_{j=0}^n{\sum_{i=0}^{k-n-1} (-1)^{n-j} \binom{n}{j} \binom{k-1-i}{n} u^{i+j}} \end{split} \]
+\_form#97:$\binom{n}{j}$
+\_form#98:\[ \sum_{r=0}^{k-1}{\left(\sum_{i=0}^{k-n-1}(-1)^{n-(r-i)}\binom{n}{r-i}\binom{k-1-i}{n}\right)u^r} \]
+\_form#99:\[ \sum_{r=0}^{n-1}{\left(\sum_{i=0}^{k-n-1}(-1)^{n-(r-i)}\binom{n}{r-i}\binom{k-1-i}{n}\right)u^r}+ \sum_{r=n}^{k-1}{\left(\sum_{i=r-n}^r(-1)^{n-(r-i)}\binom{n}{r-i}\binom{k-1-i}{n}\right)u^r} \]
+\_form#100:$\sum_k\binom{n}{k}\binom{r-sk}{n}(-1)^k=s^n\text{,}\quad\text{integer $n \ge 0$}$
+\_form#101:\[ \sum_{i=r-n}^r(-1)^{n-(r-i)}\binom{n}{r-i}\binom{k-1-i}{n} = \sum_{i=0}^n(-1)^i\binom{n}{i}\binom{k-1-r+n-i}{n} = 1^n = 1 \]
+\_form#102:\[ \begin{split} R_{n,k}(u) &= \sum_{i=0}^{k-1}{u^i}- \left\{\sum_{r=0}^{n-1}{\left(\sum_{i=0}^{k-n-1}(-1)^{n-(r-i)}\binom{n}{r-i}\binom{k-1-i}{n}\right)u^r} + \sum_{r=n}^{k-1}{u^r}\right\} \\ &= \sum_{i=0}^{n-1}{\left(H[k-1-i] - \sum_{j=0}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n}\right)u^i} \end{split} \]
+\_form#103:$H[n]$
+\_form#104:\[ H[k-1-i] = \begin{cases}0 &\text{if $k \le i$}\\1 &\text{if $k > i$}\\\end{cases} \]
+\_form#105:\[ P_{i,n}(k) = H[k-1-i] - \sum_{j=0}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n}\quad\quad\text{if $k \ge 0$} \]
+\_form#106:\[ R_{n,k}(u) = \sum_{i=0}^{n-1} P_{i,n}(k) u^i \]
+\_form#107:\[ P_{i,n}(k) = \begin{cases} 0 & 0 \le k \le i \\ 1 & i < k \le n \\ \end{cases} \]
+\_form#108:\[ \begin{split} \sum_{j=i-n}^{i}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} &= (-1)^n \sum_{j=0}^{n}(-1)^{j}\binom{n}{j}\binom{k-1-i-((-1)j)}{n} = (-1)^n (-1)^n = 1 \end{split} \]
+\_form#109:\[ \begin{split} \sum_{j=i-n}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} &= 1 - \sum_{j=k-n}^{i}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} \end{split} \]
+\_form#110:\[ \sum_{j=i-n}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} = 1 + \sum_{j=i+1}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} = 1 \]
+\_form#111:$ \binom{n}{i-j} = 0 $
+\_form#112:\[ \begin{split} \sum_{j=i-n}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} &= \begin{cases} 0 & \text{if $k \le i$ (because then the sum is empty)} \\ 1 & \text{if $ k > i$} \end{cases} \\ &= H[k-i-1] \end{split} \]
+\_form#113:\[ \begin{split} P_{i,n}(k) &= \sum_{j=i-n}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} - \sum_{j=0}^{k-n-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} \\ &= \sum_{j=i-n}^{-1}(-1)^{n-(i-j)}\binom{n}{i-j}\binom{k-1-j}{n} \\ &= \sum_{j=0}^{n-1-i}(-1)^{j}\binom{n}{j}\binom{k-1-j-i+n}{n} \end{split} \]
+\_form#114:\[ \Delta^d [P_{i,n}](k)= \sum_{r=0}^d (-1)^{d-r} \binom{d}{r} P_{i,n}(k+r) \]
+\_form#115:$ \Delta^n [P_{i,n}](0) $
+\_form#116:$ \sum_{j=0}^{k} (-1)^j{n\choose j} = (-1)^k{n-1\choose k} $
+\_form#117:\[ \begin{split} \Delta^n [P_{i,n}](0) &= \sum_{r=0}^n (-1)^{n-r} \binom{n}{r} P_{i,n}(r) \\ &= \sum_{r=0}^n (-1)^{n-r} \binom{n}{r} H[r-1-i] \\ &= \sum_{r=i+1}^n (-1)^{n-r} \binom{n}{r} \\ &= \sum_{r=i+1}^n (-1)^{n-r} \binom{n}{n-r} \\ &= \sum_{r=0}^{n-1-i} (-1)^r \binom{n}{r} \\ &= (-1)^{n-1-i} \binom{n-1}{i} \end{split} \]
+\_form#118:$ P_{i,n}(k) = \hat{P}_{i,n}(k) = D_{i,n}(0,k) $
+\_form#119:$ D_{i,n}(d,k) = \Delta^d [\hat{P}_{i,n}](k) $
+\_form#120:\[ \begin{aligned} D_{i,n}(n,k) &= (-1)^{n-1-i} \binom{n-1}{i} \\ D_{i,n}(d,n-d) &= \Delta^d [P_{i,n}](n-d) \\ D_{i,n}(d-1,k+1) &= D_{i,n}(d-1,k) + D_{i,n}(d,k) \end{aligned} \]
+\_form#121:$ \Delta^0 [P_{i,n}](n-0) = P_{i,n}(n) = 1 $
+\_form#122:$ \Delta^d [P_{i,n}](k) $
+\_form#123:$ \Delta^d [P_{i,n}](n-d) = 0 $
+\_form#124:$ \Delta^d [P_{i+1,n+1}](k+1) = \Delta^d [P_{i,n}](k) $
+\_form#125:$ \Delta^d [P_{i,n}](n-d) = \Delta^d [P_{i-(n-d),n-(n-d)}](n-d-(n-d)) = \Delta^d [P_{i-(n-d),d}](0) $
+\_form#126:\[ \Delta^d [P_{i,n}](n-d) = \begin{cases} 1 & \text{if $d = 0$} \\ 0 & \text{if $d > 0$ and $i < n-d$} \\ \Delta^d [P_{i-(n-d),d}](0) & \text{if $d > 0$ and $i \ge n-d$} \end{cases} \]
+\_form#127:$ \binom{d-1}{i-(n-d)} = 0 $
+\_form#128:\[ \begin{aligned} D_{i,n}(n,k) &= (-1)^{n-1-i} \binom{n-1}{i} &\\ D_{i,n}(0,n) &= 1 &\text{($d = 0$)} \\ D_{i,n}(d,n-d) &= (-1)^{n-1-i} \binom{d-1}{i-(n-d)} &\text{if $d > 0$} \\ D_{i,n}(d-1,k+1) &= D_{i,n}(d-1,k) + D_{i,n}(d,k) \end{aligned} \]
+\_form#129:$ \binom{-1-y}{-1-x} = (-1)^{x-y}\binom{x}{y} $
+\_form#130:$ (-1)^{n-1-i} \binom{d-1}{i-(n-d)} =$
+\_form#131:$(-1)^{d-1-(i-(n-d))} \binom{d-1}{i-(n-d)} =$
+\_form#132:$\binom{-1-(i-(n-d))}{-1-(d-1)} =$
+\_form#133:$\binom{n-1-i}{0} = 1 $
+\_form#134:\[ \begin{array}{llllllllllll} 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 57 & 477 & 2277 \\ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 56 & 420 & 1800 & 5775 \\ 0 & 0 & 1 & -1 & 0 & 0 & 0 & 56 & 364 & 1380 & 3975 & 9625 \\ 0 & 1 & -2 & 1 & 0 & 0 & 56 & 308 & 1016 & 2595 & 5650 & 11011 \\ 1 & -3 & 3 & -1 & 0 & 56 & 252 & 708 & 1579 & 3055 & 5361 & 8757 \\ -4 & 6 & -4 & 1 & 56 & 196 & 456 & 871 & 1476 & 2306 & 3396 & 4781 \\ 10 & -10 & 5 & 55 & 140 & 260 & 415 & 605 & 830 & 1090 & 1385 & 1715 \\ -20 & 15 & 50 & 85 & 120 & 155 & 190 & 225 & 260 & 295 & 330 & 365 \\ 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 \end{array} \]
+\_form#135:$\binom{n-1}{i}$
+\_form#136:$\binom{8-1}{3}$
+\_form#137:\[ \begin{split} D_{i,n}(d,0) &= \Delta^d [P_{i,n}](0) \\ &= \sum_{r=0}^d{(-1)^{d-r}\binom{d}{r}H[r-1-i]} \\ &= \sum_{r=i+1}^d{(-1)^{d-r}\binom{d}{r}} \\ &= \sum_{0}^{d-i-1}{(-1)^r\binom{d}{r}} \\ &= \begin{cases} 0 &\text{if $d = 0$} \\ (-1)^{d-i-1}\binom{d-1}{i} &\text{if $d > 0$} \\ \end{cases} \end{split} \]
+\_form#138:\[ \begin{aligned} &{P^1}_{i,n}(k) = \hat{P}_{i,n}(k) - 1 \\ &{D^1}_{i,n}(d,k) = \Delta^d[{P^1}_i,n](k) \end{aligned} \]
+\_form#139:\[ \begin{array}{llllllllllll} -1 & -1 & -1 & -1 & 0 & 0 & 0 & 0 & 0 & 56 & 476 & 2276 \\ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 56 & 420 & 1800 & 5775 \\ 0 & 0 & 1 & -1 & 0 & 0 & 0 & 56 & 364 & 1380 & 3975 & 9625 \\ 0 & 1 & -2 & 1 & 0 & 0 & 56 & 308 & 1016 & 2595 & 5650 & 11011 \\ 1 & -3 & 3 & -1 & 0 & 56 & 252 & 708 & 1579 & 3055 & 5361 & 8757 \\ -4 & 6 & -4 & 1 & 56 & 196 & 456 & 871 & 1476 & 2306 & 3396 & 4781 \\ 10 & -10 & 5 & 55 & 140 & 260 & 415 & 605 & 830 & 1090 & 1385 & 1715 \\ -20 & 15 & 50 & 85 & 120 & 155 & 190 & 225 & 260 & 295 & 330 & 365 \\ 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 & 35 \end{array} \]
+\_form#140:\[ \begin{aligned} {D^1}_{i,n}(n,k) &= (-1)^{n-1-i} \binom{n-1}{i} \\ {D^1}_{i,n}(d,0) &= (-1)^{d-i-1} \binom{d-1}{i} \\ {D^1}_{i,n}(d-1,k+1) &= {D^1}_{i,n}(d-1,k) + {D^1}_{i,n}(d,k) \end{aligned} \]
+\_form#141:\[ \begin{array}{llllllllllll} 0 & 0 & 0 & 0 & 1 & 5 & 15 & 35 & 70 & 126 & 210 & 330 \\ 0 & 0 & 0 & 1 & 4 & 10 & 20 & 35 & 56 & 84 & 120 & 165 \\ 0 & 0 & 1 & 3 & 6 & 10 & 15 & 21 & 28 & 36 & 45 & 55 \\ 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\ 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \end{array} \]
+\_form#142:$ \binom{k}{j-d} $
+\_form#143:$ x\binom{k}{j-d} $
+\_form#144:\[ {D^1}_{i,n}(d,k) = \sum_{j=0}^n (-1)^{j-i-1}\binom{j-1}{i}\binom{k}{j-d} \]
+\_form#145:\[ \begin{split} \hat{P}_{i,n}(k) &= 1 + {D^1}_{i,n}(0,k) \\ &= 1 + \sum_{j=0}^n (-1)^{j-i-1}\binom{j-1}{i}\binom{k}{j} \\ &= \sum_{j=1}^n (-1)^{j-i-1}\binom{j-1}{i}\binom{k}{j} \\ &= \sum_{j=0}^{n-1} (-1)^{j-i}\binom{j}{i}\binom{k}{j+1} \\ &= \sum_{j=i}^{n-1} (-1)^{j-i}\binom{j}{i}\binom{k}{j+1} \\ &= \sum_{j=0}^{n-1-i} (-1)^j\binom{j+i}{i}\binom{k}{j+i+1} \\ &= \sum_{j=0}^{n-1-i} (-1)^j\binom{j+i}{i}\binom{k}{-1-i-j+k} \\ &= \sum_{j=0}^{n-1-i} (-1)^j\binom{n}{j}\binom{n-1-i-j+k}{n} \\ &= P_{i,n}(k) \end{split} \]
+\_form#146:\[ P_{i,n}(k) = k/n! \sum_{s=0}^{n-1} c(s,i,n) k^s \]
+\_form#147:\[ \begin{split} R_{n,k}(u) &= k/n! \sum_{i=0}^{n-1} \sum_{s=0}^{n-1} c(s,i,n) k^s u^i \\ &= k/n! \sum_{s=0}^{n-1} \sum_{i=0}^{n-1} c(s,i,n) u^i k^s \\ &= k/n! \sum_{s=0}^{n-1} g(n,s,u) k^s \end{split} \]
+\_form#148:\[ g(n,s,u) = \sum_{i=0}^{n-1} c(s,i,n) u^i \]
+\_form#149=394x38:\[ x^{km}-1 = (x^m-1)^{n+1} \sum_{i=0}^{k-n-1}{\binom{k-1-i}{n}x^{mi}} + (x^m-1) \sum_{i=0}^{n-1}{P_{i,n}(k)x^{mi}} \]
+\_form#150=81x16:$ \sum_{i=0}^{n-1}{c_i P_{i,n}(k)} $
+\_form#151=53x11:$0 \le i < n$
+\_form#152=406x46:\[ P_{i,n}(k) = \prod_{j=0}^i{(k-j)} \cdot \sum_{j=i+1}^n{\left((-1)^{(n+j)} \binom{n}{j} \prod_{z=i+1}^{j-1}{(k-z)} \prod_{l=j+1}^n{(k-l)}\right)} / n! \]
+\_form#153=9x11:$\le$
+\_form#154=69x19:$ \prod_{j=0}^i{(k-j)} $
+\_form#155=291x24:$\sum_{j=i+1}^n{\left((-1)^{(n+j)} \binom{n}{j} \prod_{z=i+1}^{j-1}{(k-z)} \prod_{l=j+1}^n{(k-l)}\right)}$
+\_form#156=61x14:$P_{0,1}(k) = k$
+\_form#157=130x14:$P_{0,2}(k) = k/2 \cdot (-k + 3)$
+\_form#158=120x14:$P_{1,2}(k) = k/2 \cdot ( k - 1)$
+\_form#159=160x15:$P_{0,3}(k) = k/6 \cdot ( k^2 - 6k + 11)$
+\_form#160=170x15:$P_{1,3}(k) = k/6 \cdot (-2k^2 + 9k - 7)$
+\_form#161=154x15:$P_{2,3}(k) = k/6 \cdot ( k^2 - 3k + 2)$
+\_form#162=223x15:$P_{0,4}(k) = k/24 \cdot ( -k^3 + 10k^2 - 35k + 50)$
+\_form#163=219x15:$P_{1,4}(k) = k/24 \cdot ( 3k^3 - 26k^2 + 69k - 46)$
+\_form#164=229x15:$P_{2,4}(k) = k/24 \cdot (-3k^3 + 22k^2 - 45k + 26)$
+\_form#165=200x15:$P_{3,4}(k) = k/24 \cdot ( k^3 - 6k^2 + 11k - 6)$
+\_form#166=271x15:$P_{0,5}(k) = k/120 \cdot ( k^4 - 15k^3 + 85k^2 - 225k + 274)$
+\_form#167=294x15:$P_{1,5}(k) = k/120 \cdot (-4k^4 + 55k^3 - 270k^2 + 545k - 326)$
+\_form#168=284x15:$P_{2,5}(k) = k/120 \cdot ( 6k^4 - 75k^3 + 320k^2 - 525k + 274)$
+\_form#169=294x15:$P_{3,5}(k) = k/120 \cdot (-4k^4 + 45k^3 - 170k^2 + 255k - 126)$
+\_form#170=259x15:$P_{4,5}(k) = k/120 \cdot ( k^4 - 10k^3 + 35k^2 - 50k + 24)$
+\_form#171=346x15:$P_{0,6}(k) = k/720 \cdot ( -k^5 + 21k^4 - 175k^3 + 735k^2 - 1624k + 1764)$
+\_form#172=350x15:$P_{1,6}(k) = k/720 \cdot ( 5k^5 - 99k^4 + 755k^3 - 2745k^2 + 4640k - 2556)$
+\_form#173=378x15:$P_{2,6}(k) = k/720 \cdot (-10k^5 + 186k^4 - 1300k^3 + 4170k^2 - 5890k + 2844)$
+\_form#174=368x15:$P_{3,6}(k) = k/720 \cdot ( 10k^5 - 174k^4 + 1120k^3 - 3270k^2 + 4270k - 1956)$
+\_form#175=353x15:$P_{4,6}(k) = k/720 \cdot ( -5k^5 + 81k^4 - 485k^3 + 1335k^2 - 1670k + 744)$
+\_form#176=318x15:$P_{5,6}(k) = k/720 \cdot ( k^5 - 15k^4 + 85k^3 - 225k^2 + 274k - 120)$
+\_form#177=60x14:$ P_{i,n}(0) = 0 $
+\_form#178=389x46:\[ Q_{i,n}(k) = \prod_{j=1}^i{(k-j)} \cdot \sum_{j=i+1}^n{\left((-1)^{(n+j)} \binom{n}{j} \prod_{z=i+1}^{j-1}{(k-z)} \prod_{l=j+1}^n{(k-l)}\right)} \]
+\_form#179=126x38:\[ Q_{i,n}(k) = \sum_{s=0}^{n-1}{c_s(i,n) k^s} \]
+\_form#180=43x13:$n,i \in \mathbb{Z}$
+\_form#181=365x54:\[ \eta(n,i) = \begin{cases} 0 & \text{if $n < 0$ or $i < 0$}\\ 1 & \text{if $n = 0$ and $i = 0$}\\ (n-1) \cdot \eta(n-1, i) + \eta(n-1, i-1) & \text{otherwise} \end{cases} \]
+\_form#182=364x285:\[ \begin{array}{lcll} \eta(0, 0) &=& 1 \\&&\\ \eta(0, i) &=& 0 & \text{for any $i \ne 0$} \\&&\\ \eta(n, 0) &=& 0 & \text{for any $n \ne 0$} \\&&\\ \eta(n, i) &=& 0 & \text{if $n < i$} \\&&\\ \eta(n, i) &>& 0 & \text{iff $i \ge 0$ and $n \ge i$} \\&&\\ \eta(n, 1) &=& (n-1)! & \text{if $n > 0$} \\&&\\ \eta(n, n) &=& 1 & \text{for any $n \ge 0$} \\&&\\ \sum_{i=0}^n {\eta(n, i)} &=& n! \\&&\\ \sum_{i=0}^{a}{\eta(n, i)} &=& n! - \sum_{i=0}^n {\eta(n, i+a+1)} \\&&\\ \sum_{i=0}^n {\eta(n,i) \binom{i}{s}} &=& \eta(n+1,s+1) \end{array} \]
+\_form#183=8x9:$\eta$
+\_form#184=184x15:$\eta(n,i) = |s(n,i)| = (-1)^{n-i} s(n,i)$
+\_form#185=303x19:\[ \begin{array}{ll} \prod_{j=0}^{b}{(k - j)} = \sum_{j=0}^{b+1}{(-1)^{b+1-j} \eta(b+1, j) k^j} & \text{if $b \ge -1$} \end{array} \]
+\_form#186=49x13:$b \ge a - 1$
+\_form#187=445x193:\[ \begin{array}{lcl} \prod_{j=a}^{b}{(k - j)} &=& \prod_{j=0}^{b-a}{((k - a) - j)}\\&&\\ &=& \sum_{j=0}^{b-a+1}{(-1)^{b-a+1-j} \eta(b-a+1, j) (k-a)^j}\\&&\\ &=& \sum_{j=0}^{b-a+1}{\left((-1)^{b-a+1-j} \eta(b-a+1, j) \sum_{h=0}^j{(-1)^{j-h}\binom{j}{h}a^{j-h}k^h}\right)}\\&&\\ &=& \sum_{j=0}^{b-a+1}{ \sum_{h=0}^j{(-1)^{b-a+1-h}\eta(b-a+1, j)\binom{j}{h}a^{j-h}k^h}}\\&&\\ &=& \sum_{h=0}^{b-a+1}{ \sum_{j=h}^{b-a+1}{(-1)^{b-a+1-h}\eta(b-a+1, j)\binom{j}{h}a^{j-h}k^h}}\\&&\\ &=& \sum_{h=0}^{b-a+1}{\left((-1)^{b-a+1-h}\sum_{j=h}^{b-a+1}{\eta(b-a+1, j)\binom{j}{h}a^{j-h}}\right)k^h} \end{array} \]
+\_form#188=591x195:\[ \begin{array}{lcl} Q_{i,n}(k) &=& \left(\sum_{h=0}^i{\left((-1)^{i-h}\sum_{r=h}^i{\eta(i, r)\binom{r}{h}}\right)k^h}\right)\cdot\\&&\\ && \sum_{j=i+1}^n{\left\{(-1)^{(n+j)} \binom{n}{j}\left( \sum_{g=0}^{j-1-i}{\left((-1)^{j-1-i-g}\sum_{z=g}^{j-1-i}{\eta(j-1-i, z)\binom{z}{g}(i+1)^{z-g}}\right)k^g}\right) \sum_{f=0}^{n-j}{\left((-1)^{n-j-f}\sum_{l=f}^{n-j}{\eta(n-j, l)\binom{l}{f}(j+1)^{l-f}}\right)k^f}\right\}}\\&&\\ &=& \sum_{j=i+1}^n{\sum_{h=0}^i{\sum_{r=h}^i{\sum_{g=0}^{j-1-i}{\sum_{z=g}^{j-1-i}{\sum_{f=0}^{n-j}{\sum_{l=f}^{n-j} {(-1)^{j+h+g+f-1}\eta(i,r)\eta(j-1-i,z)\eta(n-j,l)\binom{r}{h}\binom{n}{j} \binom{z}{g}\binom{l}{f}(i+1)^{z-g}(j+1)^{l-f}k^{h+g+f}}}}}}}}\\&&\\ &=& \sum_{j=i+1}^n\sum_{h=0}^i\sum_{r=h}^i\sum_{g=0}^{j-1-i}\sum_{z=g}^{j-1-i}\sum_{s=h+g}^{n-j+h+g}\sum_{l=s-h-g}^{n-j} (-1)^{j+s-1}\eta(i,r)\eta(j-1-i,z)\eta(n-j,l)\binom{r}{h}\binom{n}{j} \binom{z}{g}\binom{l}{s-h-g}(i+1)^{z-g}(j+1)^{l-s+h+g}k^s\\&&\\ &=& \sum_{s=0}^{n-1}\sum_{j=i+1}^n\sum_{h=\max(0,s+i+1-n)}^{\min(s,i)}\sum_{r=h}^i\sum_{g=\max(0,s-h+j-n)}^{\min(j-1-i,s-h)}\sum_{z=g}^{j-1-i}\sum_{l=s-h-g}^{n-j} (-1)^{j+s-1}\eta(i,r)\eta(j-1-i,z)\eta(n-j,l)\binom{r}{h}\binom{n}{j} \binom{z}{g}\binom{l}{s-h-g}(i+1)^{z-g}(j+1)^{l-s+h+g}k^s\\&&\\ &=& \sum_{s=0}^{n-1}\sum_{j=i+1}^n\sum_{h=s+i+1-n}^s\sum_{r=h}^i\sum_{g=s-h+j-n}^{s-h}\sum_{z=g}^{j-1-i}\sum_{l=s-h-g}^{n-j} (-1)^{j+s-1}\eta(i,r)\eta(j-1-i,z)\eta(n-j,l)\binom{r}{h}\binom{n}{j} \binom{z}{g}\binom{l}{s-h-g}(i+1)^{z-g}(j+1)^{l-s+h+g}k^s \end{array} \]
+\_form#189=36x14:$c_s(i,n)$
+\_form#190=591x153:\[ \begin{array}{lcl} c_s(i,n) &=& \sum_{j=i+1}^n\sum_{h=s+i+1-n}^s\sum_{r=h}^i\sum_{g=s-h+j-n}^{s-h}\sum_{z=g}^{j-1-i}\sum_{l=s-h-g}^{n-j} (-1)^{j+s-1}\eta(i,r)\eta(j-1-i,z)\eta(n-j,l)\binom{r}{h}\binom{n}{j}\binom{z}{g}\binom{l}{s-h-g}(i+1)^{z-g}(j+1)^{l-s+h+g}\\&&\\ &=& \sum_{j=i+1}^n\sum_{h=s+i+1-n}^s\sum_{r=h}^i\sum_{g=s-h+j-n}^{s-h}\sum_{z=g}^{j-1-i} (-1)^{n+h+g-1}\eta(i,r)\eta(j-1-i,z)\binom{r}{h}\binom{n}{j}\binom{z}{g}(i+1)^{z-g}(-1)^{n-j-s+h+g}\sum_{l=s-h-g}^{n-j}\eta(n-j,l)\binom{l}{s-h-g}(j+1)^{l-s+h+g}\\&&\\ &=& \sum_{j=i+1}^n\sum_{r=s+i+1-n}^i\sum_{h=s+i+1-n}^s\sum_{z=s-h+j-n}^{j-1-i}\sum_{g=s-h+j-n}^{s-h} (-1)^{n+h+g-1}\eta(i,r)\eta(j-1-i,z)\binom{r}{h}\binom{n}{j}\binom{z}{g}(i+1)^{z-g}(-1)^{n-j-s+h+g}\sum_{l=s-h-g}^{n-j}\eta(n-j,l)\binom{l}{s-h-g}(j+1)^{l-s+h+g}\\&&\\ &=& \sum_{j=i+1}^n\sum_{r=s+i+1-n}^i\sum_{z=j-n}^{j-1-i}\sum_{h=s-z+j-n}^s\sum_{g=s-h+j-n}^{s-h} (-1)^{n+h+g-1}\eta(i,r)\eta(j-1-i,z)\binom{r}{h}\binom{n}{j}\binom{z}{g}(i+1)^{z-g}(-1)^{n-j-s+h+g}\sum_{l=s-h-g}^{n-j}\eta(n-j,l)\binom{l}{s-h-g}(j+1)^{l-s+h+g}\\&&\\ &=& \sum_{j=i+1}^n\sum_{r=s+i+1-n}^i\sum_{z=j-n}^{j-1-i}\sum_{h=s-z+j-n}^s\sum_{f=0}^{n-j} (-1)^{n+s-f-1}\eta(i,r)\eta(j-1-i,z)\binom{r}{h}\binom{n}{j}\binom{z}{s-h-f}(i+1)^{z-s+h+f}(-1)^{n-j-f}\sum_{l=f}^{n-j}\eta(n-j,l)\binom{l}{f}(j+1)^{l-f}\\&&\\ \end{array} \]
+\_form#191=526x218:\[ \begin{array}{lcl} c_s(i,n) &=& \sum_{j=0}^{n-1-i}\sum_{r=0}^{n-1-s}\sum_{z=0}^{n-1-i}\sum_{h=0}^{z}\sum_{f=0}^{(n-1-i)-j}\sum_{l=0}^{((n-1-i)-j)-f} \\&&\\ && (-1)^{s+i+j}\eta(i,i-((n-1-s)-r))\eta(j,j-((n-1-i)-z))\eta((n-1-i)-j,l+f) \\&&\\ && \binom{s+r-(n-1-i)}{h+s-z}\binom{n}{j+i+1}\binom{z-((n-1-i)-j)}{z-h-f}\binom{l+f}{f}(i+1)^{h-(((n-1-i)-j)-f)}(j+i+2)^{l}\\&&\\ &=& \sum_{j=0}^{n-1-i} (-1)^{i+j} \binom{n}{j+i+1} \sum_{z=0}^{n-1-i} \eta(j,j-((n-1-i)-z)) \\&&\\ && \sum_{h=0}^{z} \sum_{f=0}^{(n-1-i)-j} \binom{z-((n-1-i)-j)}{z-h-f} (i+1)^{h-(((n-1-i)-j)-f)} \\&&\\ && \sum_{l=0}^{((n-1-i)-j)-f} \eta((n-1-i)-j,l+f) \binom{l+f}{f} (j+i+2)^{l} \\&&\\ && \sum_{r=0}^{n-1-s} (-1)^s \eta(i,i-((n-1-s)-r)) \binom{i-((n-1-s)-r)}{s-(z-h)} \end{array} \]
+\_form#192=591x121:\[ \begin{array}{lcl} c_s(i,n) &=& \sum_{j=0}^{n-1-i} (-1)^{(n-1-i)-j} \binom{n}{(n-1-i)-j} \sum_{z=0}^{n-1-i} \eta(j,j-((n-1-i)-z)) \\&&\\ && \sum_{h=0}^z \sum_{f=0}^h \binom{z-((n-1-i)-j)}{z-((n-1-i)-j)-f} (n-(n-1-i))^f \\&&\\ && \sum_{l=0}^{h-f} \eta((n-1-i)-j,((n-1-i)-j)-(h-f)+l) \binom{((n-1-i)-j)-(h-f)+l}{((n-1-i)-j)-(h-f)} (n+1-((n-1-i)-j))^{l} \\&&\\ && \sum_{r=0}^{n-1-s} (-1)^{n-1-s} \eta(i,i-((n-1-s)-r)) \binom{i-((n-1-s)-r)}{s-(z-h)} \end{array} \]
+\_form#193=70x10:$ \hat{\imath} = n-1-i $
+\_form#194=73x10:$ \hat{s} = n-1-s $
+\_form#195=18x16:$ \binom{n}{m} $
+\_form#196=31x16:$ \binom{n}{n-m} $
+\_form#197=396x251:\[ \begin{array}{lcl} c_{\hat{s}}(\hat{\imath},n) &=& \sum_{j=0}^{\hat{\imath}} (-1)^j \binom{n}{j} \sum_{z=0}^{\hat{\imath}} \eta(\hat{\imath}-j,\hat{\imath}-j-(\hat{\imath}-z)) \\&&\\ && \sum_{h=0}^z \sum_{r=0}^{\hat{s}} (-1)^{\hat{s}} \eta(n-1-\hat{\imath},n-1-\hat{\imath}-r) \binom{n-1-\hat{\imath}-r}{n-1-\hat{s}-(z-h)} \\&&\\ && \sum_{f=0}^h \binom{z-j}{f} (n-\hat{\imath})^f \\&&\\ && \sum_{l=0}^{h-f} \eta(j,j-(h-f)+l) \binom{j-(h-f)+l}{l} (n+1-j)^l \\&&\\ &=& \sum_{j=0}^{\hat{\imath}} (-1)^j \binom{n}{j} \sum_{z=j}^{\hat{\imath}} \eta(\hat{\imath}-j,\hat{\imath}-j-(\hat{\imath}-z)) \\&&\\ && \sum_{h=0}^z \sum_{r=0}^{n-1-\hat{\imath}} (-1)^{\hat{s}} \eta(n-1-\hat{\imath},n-1-\hat{\imath}-r) \binom{n-1-\hat{\imath}-r}{n-1-\hat{s}-(z-h)} \\&&\\ && \sum_{f=0}^h \binom{z-j}{f} (n-\hat{\imath})^f \\&&\\ && \sum_{l=h-f-j}^{h-f} \eta(j,j-(h-f)+l) \binom{j-(h-f)+l}{l} (n+1-j)^l \end{array} \]
+\_form#198=50x10:$ n-1-\hat{\imath} $
+\_form#199=363x120:\[ \begin{array}{lcl} c_{\hat{s}}(\hat{\imath},n) &=& \sum_{j=0}^{\hat{\imath}} (-1)^j \binom{n}{j} \sum_{z=j}^{\hat{\imath}} \eta(\hat{\imath}-j,\hat{\imath}-j-(\hat{\imath}-z)) \\&&\\ && \sum_{h=0}^z \sum_{r=0}^{n-1-\hat{\imath}} (-1)^{\hat{s}} \eta(n-1-\hat{\imath},r) \binom{r}{n-1-\hat{s}-(z-h)} \\&&\\ && \sum_{f=0}^h \binom{z-j}{f} (n-\hat{\imath})^f \\&&\\ && \sum_{l=h-f-j}^{h-f} \eta(j,j-(h-f)+l) \binom{j-(h-f)+l}{l} (n+1-j)^l \end{array} \]
+\_form#200=411x53:\[ \begin{array}{lcl} \prod_{j=-a}^{b}{(-j)} &=& \sum_{h=0}^{a+b+1}{ \sum_{j=h}^{a+b+1}{(-1)^{a+b+1-h}\eta(a+b+1, j)\binom{j}{h}(-a)^{j-h}0^h}}\\&&\\ &=& \sum_{j=0}^{a+b+1}{(-1)^{a+b+1-j}\eta(a+b+1, j) a^{j}} \end{array} \]
+\_form#201=73x16:$ \sum_{i=0}^{n-1}{Q_{i,n}(0)}$
+\_form#202=565x220:\[ \begin{array}{lcl} \sum_{i=0}^{n-1}{Q_{i,n}(0)} &=& \sum_{i=0}^{n-1}{\left((-1)^i\prod_{j=1}^i{j} \cdot \sum_{j=i+1}^n{\left((-1)^{n+j}\binom{n}{j}(-1)^{j-1-i}\prod_{z=i+1}^{j-1}{z} \cdot (-1)^{n-j} \prod_{l=j+1}^n{l}\right)}\right)}\\&&\\ &=& \sum_{i=0}^{n-1}{\left(i! \sum_{j=i+1}^n{\left((-1)^{j-1} \cdot n!/(j!\ (n-j)!) \cdot (j-1)!/i! \cdot n!/j!\right)}\right)}\\&&\\ &=& (n!)^2 \sum_{i=0}^{n-1}{\sum_{j=i+1}^n{\left((-1)^{j-1}/(j!\ (n-j)! j)\right)}}\\&&\\ &=& (n!)^2 \sum_{j=1}^n{\sum_{i=0}^{j-1}{\left((-1)^{j-1}/(j!\ (n-j)! j)\right)}}\\&&\\ &=& (n!)^2 \sum_{j=1}^n{\left((-1)^{j-1}/(j!\ (n-j)!)\right)}\\&&\\ &=& n! \left(\sum_{j=0}^n{\left((-1)^{j-1}\binom{n}{j}\right)} - \left((-1)^{0-1}\binom{n}{0}\right)\right)\\&&\\ &=& n! \end{array} \]
+\_form#203=131x24:$ \sum_{j=0}^n{\left((-1)^{j-1}\binom{n}{j}\right)} = 0 $
+\_form#204=31x13:$ n \ne 0 $
+\_form#205=30x13:$ k \ne 0 $
+\_form#206=336x35:\[ \sum_{k=0}^{n-a}(-1)^k\binom{n}{k}\binom{m-k}{n}= \sum_{k=0}^{n-a}(-1)^k\binom{k+a-1}{a-1}\binom{m-n+a}{k+a} \]
+\_form#207=11x10:$\mathbb{K}$
+\_form#208=9x13:$\psi$
+\_form#209=95x25:\[ \begin{matrix}\phi\colon \mathbb{F}_{2^m} &\to& \mathbb{F}_{2^m} \\ a &\mapsto& a^2 \end{matrix} \]
+\_form#210=129x31:\[ F = \left\{ \begin{pmatrix} a & 0 \\ 0 & a \\ \end{pmatrix} \,\vert\, a \in \mathbb{R} \right\} \]
+\_form#211=10x10:$\mathbb{R}$
+\_form#212=35x10:$F \cong \mathbb{R}$
+\_form#213=51x14:\[ K = F(t) \]
+\_form#214=73x31:\[ t = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} \]
+\_form#215=126x31:\[ t^2 + \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} \]
+\_form#216=213x31:\[ t^2 = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} = \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix} \]
+\_form#217=10x10:$\mathbb{C}$
+\_form#218=15x13:$\mathbb{Z}_n$
+\_form#219=14x13:$\mathbb{Z}_3$
+\_form#220=536x181:\[ G = \left\{ \begin{array}{ccccccccc} \begin{pmatrix} 1 & 0\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 1 & 2 \end{pmatrix}, \\ \begin{pmatrix} 1 & 0\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 0 & 2 \end{pmatrix}, \\ \begin{pmatrix} 0 & 1\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 2 & 0 \end{pmatrix}, \\ \begin{pmatrix} 0 & 1\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 0 & 2 \end{pmatrix}, \\ \begin{pmatrix} 2 & 2\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 1 & 0 \end{pmatrix}, \\ \begin{pmatrix} 2 & 2\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 2 & 1 \end{pmatrix} \end{array} \right\} \]
+\_form#221=40x31:$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$
+\_form#222=40x31:$\begin{pmatrix} 1 & 0 \\ 2 & 2 \end{pmatrix}$
+\_form#223=40x31:$\begin{pmatrix} 2 & 2 \\ 1 & 0 \end{pmatrix}$
+\_form#224=40x31:$\begin{pmatrix} 0 & 2 \\ 1 & 0 \end{pmatrix}$
+\_form#225=40x31:$\begin{pmatrix} 2 & 2 \\ 0 & 2 \end{pmatrix}$
+\_form#226=40x31:$\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}$
+\_form#227=145x31:\[ H_1 = \left\{ \begin{pmatrix} 0 & 2 \\ 2 & 0 \end{pmatrix}, \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \right\} \]
+\_form#228=195x31:\[ H_2 = \left\{ \begin{pmatrix} 0 & 1 \\ 2 & 2 \end{pmatrix}, \begin{pmatrix} 2 & 2 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \right\} \]
+\_form#229=348x31:\[ H_3 = \left\{ \begin{pmatrix} 0 & 1 \\ 2 & 1 \end{pmatrix}, \begin{pmatrix} 2 & 1 \\ 2 & 0 \end{pmatrix}, \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 1 & 2 \end{pmatrix}, \begin{pmatrix} 1 & 2 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \right\} \]
+\_form#230=195x31:\[ H_4 = \left\{ \begin{pmatrix} 2 & 1 \\ 2 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 1 & 2 \end{pmatrix}, \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \right\} \]
+\_form#231=145x31:\[ H_5 = \left\{ \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}, \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \right\} \]
+\_form#232=186x13:$P^x \cdot P^y = P^{(x + y \mod n)} = P^y \cdot P^x$
+\_form#233=238x61:\[ H_6 = \left\{ \begin{array}{ccc} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 1 \\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 2 \\ 1 & 2 \end{pmatrix}, \\ \begin{pmatrix} 0 & 2 \\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 0 \\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 1 \\ 0 & 1 \end{pmatrix} \end{array} \right\} \]
+\_form#234=429x31:\[ H_6 \cdot \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \left\{ \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} 2 & 1 \\ 2 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 1 & 2 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 2 & 0 \end{pmatrix}, \begin{pmatrix} 1 & 0 \\ 1 & 2 \end{pmatrix}, \begin{pmatrix} 2 & 1 \\ 0 & 1 \end{pmatrix} \right\} = H_6 \]
+\_form#235=444x31:\[ H_6 \cdot \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} = \left\{ \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 2 & 2 \end{pmatrix}, \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} 2 & 0 \\ 2 & 2 \end{pmatrix}, \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 1 & 0 \end{pmatrix} \right\} = coset_1 \]
+\_form#236=398x31:\[ \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} \cdot H_6 = \left\{ \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 1 & 1 \\ 2 & 1 \end{pmatrix}, \begin{pmatrix} 1 & 1 \\ 0 & 2 \end{pmatrix}, \begin{pmatrix} 2 & 2 \\ 0 & 2 \end{pmatrix}, \begin{pmatrix} 2 & 2 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 2 & 2 \\ 2 & 1 \end{pmatrix} \right\} \]
+\_form#237=400x31:\[ H_6 \cdot \begin{pmatrix} 2 & 0 \\ 2 & 2 \end{pmatrix} = \left\{ \begin{pmatrix} 2 & 0 \\ 2 & 2 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} 0 & 2 \\ 2 & 2 \end{pmatrix} \right\} \]
+\_form#238=68x14:\[ \left\{ xh \,\vert\, h \in H \right\} \]
+\_form#239=19x10:\[ xH \]
+\_form#240=70x14:\[ \left\{ xH \,\vert\, x \in G \right\} \]
+\_form#241=111x14:$A,B \in \left\{ xH \,\vert\, x \in G \right\}$
+\_form#242=129x14:\[ A = \left\{ ah \,\vert\, h \in H \right\} = aH \]
+\_form#243=126x14:\[ B = \left\{ bh \,\vert\, h \in H \right\} = bH \]
+\_form#244=43x13:$a,b \in G$
+\_form#245=169x14:\[ A \cdot B = \left\{ ah_1 \cdot bh_2 \,\vert\, h_1,h_2 \in H \right\} \]
+\_form#246=14x3:$\ldots$
+\_form#247=40x31:$\begin{pmatrix}2 & 0 \\ 0 & 2\end{pmatrix}$
+\_form#248=539x91:\[ N = \left\{ \begin{array}{cccccccc} \begin{pmatrix} 0 & 1\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 1 & 1 \end{pmatrix}, \\ \begin{pmatrix} 1 & 0\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 0 & 2 \end{pmatrix}, \\ \begin{pmatrix} 2 & 0\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 2 & 1 \end{pmatrix} \end{array} \right\} \]
+\_form#249=536x91:\[ O = \left\{ \begin{array}{cccccccc} \begin{pmatrix} 1 & 0\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 0\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 0\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 0 & 2 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 0 & 1 \end{pmatrix}, \\ \begin{pmatrix} 0 & 1\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 1\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 1 & 0 \end{pmatrix}, & \begin{pmatrix} 1 & 1\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 1\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 0 & 2 \end{pmatrix}, \\ \begin{pmatrix} 2 & 2\\ 0 & 1 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 1 & 1 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 1 & 2 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 2 & 1 \end{pmatrix}, & \begin{pmatrix} 0 & 2\\ 2 & 2 \end{pmatrix}, & \begin{pmatrix} 1 & 2\\ 2 & 0 \end{pmatrix}, & \begin{pmatrix} 2 & 2\\ 2 & 0 \end{pmatrix} \end{array} \right\} \]
+\_form#250=60x55:\[ \begin{matrix} N \cdot N = N \\ N \cdot O = O \\ O \cdot N = O \\ O \cdot O = N \end{matrix} \]
+\_form#251=181x14:\[ O \cdot O = \left\{ o_1h_1 \cdot o_1h_2 \,\vert\, h_1,h_2 \in N \right\} \]
+\_form#252=129x14:\[ O \cdot O = \left\{ o_1o_2h \,\vert\, h \in N \right\} \]
+\_form#253=8x14:$\notin$
+\_form#254=56x10:$O \cdot O = N$
+\_form#255=169x14:\[ A \cdot B = \left\{ abh \,\vert\, h \in N \right\} = (ab)N \]
+\_form#256=15x14:$\mathbb{Z}/$
+\_form#257=136x14:\[ \mathbb{Z}/n\mathbb{Z} = \left\{ x + n\mathbb{Z} \,\vert\, x \in \mathbb{Z} \right\} \]
+\_form#258=124x14:\[ G/N = \left\{ x \cdot N \,\vert\, x \in G \right\} \]
+\_form#259=58x13:$f: x \mapsto xk$
+\_form#260=15x9:$\pm{1}$
+\_form#261=13x6:$\infty$
+\_form#262=18x13:$S_{\infty}$
+\_form#263=20x13:$A_{\infty}$
+\_form#264=20x14:$\sqrt{E}$
+\_form#265=11x13:$\mathbb{Q}$
+\_form#266=40x15:$y=\sqrt{b}$
+\_form#267=31x11:$r \in \mathbb{Z}$
+\_form#268=59x14:$s \in \mathbb{Z}\setminus\{0\}$
+\_form#269=14x13:$\mathbb{Z}_5$
+\_form#270=14x13:$\mathbb{Z}_2$
+\_form#271=3x13:$\vdots$
+\_form#272=73x19:$\binom{n}{k} = \frac{n!}{(n-k)!k!} $
+\_form#273=250x29:\[ S_k(t_1, t_2, \ldots, t_n) = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n}{t_{i_1}t_{i_2} \cdots t_{i_k}} \]
+\_form#274=138x35:\[ N_k(t_1, t_2, \ldots, t_n) = \sum_{i=1}^n{t_i^k} \]
+\_form#275=266x26:\[ S_k = \frac{1}{k}(S_{k-1}N_1 - S_{k-2}N_2 + \ldots \pm S_1N_{k-1} \mp N_k) \]
+\_form#276=254x13:\[ N_k = S_1N_{k-1} - S_2N_{k-2} + \ldots \pm S_{k-1}N_1 \mp kS_k \]
+\_form#277=54x14:$A_yx = yx$
+\_form#278=173x61:\[ \begin{pmatrix} 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 1 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} = t \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} \]
+\_form#279=240x174:\[ \begin{pmatrix} 0 & 0 & 0 & \cdots & & & & \cdots & 0 & 1 \\ 1 & 0 & & & & & & & & 0 \\ 0 & 1 & 0 & & & & & & & 0 \\ 0 & & 1 & 0 & & & & & & \vdots \\ \vdots & & & \ddots & \ddots & & & & & 0 \\ & & & & 1 & 0 & & & & 1 \\ & & & & & 1 & 0 & & & 0 \\ \vdots & & & & & & \ddots & \ddots & & \vdots \\ 0 & & & & & & & 1 & 0 & 0 \\ 0 & \cdots & & & & & \cdots & 0 & 1 & 0 \end{pmatrix} \]
+\_form#280=130x39:\[ Tr(t) = \begin{cases} 0 & k \neq m - 1 \\ 1 & k = m - 1 \end{cases} \]
+\_form#281=229x61:\[ Frob(x) = \begin{pmatrix} 1 & 1 & 0 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} = \begin{pmatrix} z_0 \\ z_1 \\ z_2 \\ z_3 \end{pmatrix} \]
+\_form#282=241x61:\[ Frob^{-1}(z) = \begin{pmatrix} 1 & 0 & 1 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 1 \\ 0 & 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} z_0 \\ z_1 \\ z_2 \\ z_3 \end{pmatrix} = \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} \]
+\_form#283=341x61:\[ \begin{pmatrix} 1 & 1 & 0 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 1 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ \end{pmatrix} \begin{pmatrix} 1 & 0 & 1 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 1 \\ 0 & 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} z_0 \\ z_1 \\ z_2 \\ z_3 \end{pmatrix} = t \begin{pmatrix} z_0 \\ z_1 \\ z_2 \\ z_3 \end{pmatrix} \]
+\_form#284=169x61:\[ \begin{pmatrix} 1 & 0 & 1 & 0 \\ 0 & 1 & 1 & 1 \\ 1 & 0 & 1 & 1 \\ 0 & 1 & 0 & 1 \end{pmatrix} \begin{pmatrix} z_0 \\ z_1 \\ z_2 \\ z_3 \end{pmatrix} = t \begin{pmatrix} z_0 \\ z_1 \\ z_2 \\ z_3 \end{pmatrix} \]
+\_form#285=90x14:\[ (A_i - \lambda_iI)x_i = 0 \]
+\_form#286=8x10:$\lambda$
+\_form#287=49x13:\[ A_tx = tx \]
+\_form#288=79x14:\[ (A_t - tI)x = 0 \]
+\_form#289=88x38:\[ Tr(y) = \sum_{i=0}^{m-1}{y^{2^i}} \]
+\_form#290=180x18:$det \vert A_y \vert = \prod_{i=0}^{m-1}{y^{2^i}} = y^{2^m-1} = 1$
+\_form#291=173x61:\[ \begin{pmatrix} 0 & 1 & 1 & 1 \\ 1 & 1 & 0 & 0 \\ 1 & 1 & 1 & 1 \\ 0 & 0 & 1 & 0 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} = t \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} \]
+\_form#292=409x16:\[ Tr(t^3) = t^3 + t^6 + t^9 + t^{12} = t^3 + (t^3 + t^2) + (t^3 + t^2 + t + 1) + (t^3 + t) = 1 \]
+\_form#293=179x61:\[ \begin{pmatrix} 0 & 0 & 1 & 0 \\ 1 & 0 & 1 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 1 & 1 & 0 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} = t^3 \begin{pmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{pmatrix} \]
+\_form#294=75x14:$\vert A_\beta - \beta I \vert = 0$
+\_form#295=115x14:\[ Tr(y) = Tr(Frob(y)) \]
+\_form#296=143x118:\[ \] \begin{eqnarray*} x &=& y + y^2 \\ x^2 &=& y^2 + y^4 \\ x^4 &=& y^4 + y^8 \\ \vdots \\ x^{2^{m-2}} &=& y^{2^{m-2}} + y^{2^{m-1}} \\ x^{2^{m-1}} &=& y^{2^{m-1}} + y \end{eqnarray*} \[ \]
+\_form#297=146x15:$H^1(G,L) = H^1(G,L^*) = 0$
+\_form#298=24x9:$\iff$
+\_form#299=103x18:$Tr(x) = \sum_{i=0}^{m-1}{x^{2^i}}$
+\_form#300=171x106:\[ \begin{pmatrix} 0 & 1 & 0 & 0 & \cdots & 0 \\ 0 & 0 & 1 & 0 & \cdots & 0 \\ 0 & 0 & 0 & 1 & \ddots & \vdots \\ 0 & \vdots & \vdots & \ddots & \ddots & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 \\ r_0 & r_1 & r_2 & r_3 & \cdots & r_{m-1} \\ \end{pmatrix} \]
+\_form#301=194x106:\[ \left| \begin{matrix} -e & 1 & 0 & 0 & \cdots & 0 \\ 0 & -e & 1 & 0 & \cdots & 0 \\ 0 & 0 & -e & 1 & \ddots & \vdots \\ 0 & \vdots & \vdots & \ddots & \ddots & 0 \\ 0 & 0 & 0 & 0 & -e & 1 \\ r_0 & r_1 & r_2 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| \]
+\_form#302=380x91:\[ -e \left| \begin{matrix} -e & 1 & 0 & \cdots & 0 \\ 0 & -e & 1 & \ddots & \vdots \\ \vdots & \vdots & \ddots & \ddots & 0 \\ 0 & 0 & 0 & -e & 1 \\ r_1 & r_2 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| - 1 \cdot \left| \begin{matrix} 0 & 1 & 0 & \cdots & 0 \\ 0 & -e & 1 & \ddots & \vdots \\ \vdots & \vdots & \ddots & \ddots & 0 \\ 0 & 0 & 0 & -e & 1 \\ r_0 & r_2 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| \]
+\_form#303=590x91:\[ \left| \begin{matrix} 0 & 1 & 0 & \cdots & 0 \\ 0 & -e & 1 & \ddots & \vdots \\ \vdots & \vdots & \ddots & \ddots & 0 \\ 0 & 0 & 0 & -e & 1 \\ r_0 & r_2 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| = -1 \cdot \left| \begin{matrix} 0 & 1 & \ddots & \vdots \\ \vdots & \ddots & \ddots & 0 \\ 0 & 0 & -e & 1 \\ r_0 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| = \cdots = (-1)^{m-3} \left| \begin{matrix} 0 & 1 \\ r_0 & r_{m-1} - e \end{matrix} \right| = (-1)^{m-2} r_0 \]
+\_form#304=466x106:\[ \left| \begin{matrix} -e & 1 & 0 & 0 & \cdots & 0 \\ 0 & -e & 1 & 0 & \cdots & 0 \\ 0 & 0 & -e & 1 & \ddots & \vdots \\ 0 & \vdots & \vdots & \ddots & \ddots & 0 \\ 0 & 0 & 0 & 0 & -e & 1 \\ r_0 & r_1 & r_2 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| = -e \left| \begin{matrix} -e & 1 & 0 & \cdots & 0 \\ 0 & -e & 1 & \ddots & \vdots \\ \vdots & \vdots & \ddots & \ddots & 0 \\ 0 & 0 & 0 & -e & 1 \\ r_1 & r_2 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| + (-1)^{m-1} r_0 \]
+\_form#305=445x76:\[ (-1)^2 e^2 \left| \begin{matrix} -e & 1 & \ddots & \vdots \\ \vdots & \ddots & \ddots & 0 \\ 0 & 0 & -e & 1 \\ r_2 & r_3 & \cdots & r_{m-1} - e \end{matrix} \right| -e (-1)^{m-2} r_1 + (-1)^{m-1} r_0 = \cdots = (-1)^{m-1} r(e) \]
+\_form#306=98x18:$Tr(t) = \sum_{i=0}^{m-1}{t^{2^i}}$
+\_form#307=49x18:$\prod_{i=0}^{m-1}{t^{2^i}}$
+\_form#308=279x18:$Tr(t^n) = \sum_{i=0}^{m-1}{(t^{2^i})^n} = \sum_{i=0}^{m-1}{t^{2^in}} = \sum_{i=0}^{m-1}{(t^n)^{2^i}}$
+\_form#309=68x18:$\prod_{i=0}^{m-1}{(g^{2^i})^n}$
+\_form#310=121x18:$Tr(t^n) = \sum_{i=0}^{m-1}{(t^{2^i})^n}$
+\_form#311=131x38:\[ N_n = nS_n + \sum_{i=1}^{n-1} S_iN_{n-i} \]
+\_form#312=74x16:$\sum_{i=1}^{n-1} S_iN_{n-i}$
+\_form#313=176x39:\[ Tr(t^n) = N_n = \begin{cases} 0 & \text{ n is even } \\ S_n & \text{ n is odd } \end{cases} \]

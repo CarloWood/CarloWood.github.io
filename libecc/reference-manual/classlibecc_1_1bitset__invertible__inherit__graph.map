@@ -1,0 +1,7 @@
+<map id="libecc::bitset_invertible" name="libecc::bitset_invertible">
+<area shape="rect" id="node1" title="A bitset with a fixed number of bits, having possibly an infinite number of leading virtual 1&#39;s." alt="" coords="87,5,261,32"/>
+<area shape="rect" id="node2" href="$classlibecc_1_1bitset__invertible.html" title=" " alt="" coords="87,95,261,136"/>
+<area shape="rect" id="node3" href="$classlibecc_1_1bitset.html" title=" " alt="" coords="5,275,164,301"/>
+<area shape="rect" id="node4" href="$classlibecc_1_1bitset.html" title=" " alt="" coords="199,275,347,301"/>
+<area shape="rect" id="node5" href="$classlibecc_1_1bitset.html" title="A bitset with a fixed number of bits." alt="" coords="101,185,247,212"/>
+</map>

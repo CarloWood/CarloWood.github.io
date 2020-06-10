@@ -1,4 +1,4 @@
-srcdir=../../../libecc/doc/styles
+srcdir=/home/carlo/projects/libecc/libecc/doc/styles
 top_builddir=../..
 
 BROWSERS=netscape4 netscape6 mozilla konqueror ie

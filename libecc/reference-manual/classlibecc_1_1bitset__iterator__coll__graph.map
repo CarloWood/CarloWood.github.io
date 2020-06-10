@@ -1,4 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classlibecc_1_1bitset__index__iterator.html" title="A bitset index with increment/decrement methods." alt="" coords="5,83,299,112"/>
-<area shape="rect" id="node4" href="$classlibecc_1_1bitset__index.html" title="A bitset index." alt="" coords="81,5,223,35"/>
+<map id="libecc::bitset_iterator" name="libecc::bitset_iterator">
+<area shape="rect" id="node1" title="A non&#45;mutable bitset&#45;iterator." alt="" coords="17,184,177,211"/>
+<area shape="rect" id="node2" href="$structlibecc_1_1bitset__base.html" title=" " alt="" coords="5,95,188,121"/>
+<area shape="rect" id="node3" href="$structlibecc_1_1bitset__base.html" title="Base class of libecc::bitset." alt="" coords="25,5,168,32"/>
 </map>

@@ -1,8 +1,10 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$bitset_8h.html" title="Fixed size bitset." alt="" coords="255,83,364,112"/>
-<area shape="rect" id="node9" href="$polynomial_8h.html" title="Field of Polynomials with binairy coefficents and fixed reduction polynomial." alt="" coords="400,160,541,189"/>
-<area shape="rect" id="node5" href="$rng_8h.html" title="Random number generator." alt="" coords="5,160,99,189"/>
-<area shape="rect" id="node7" href="$sha_8h.html" title="SHA&#45;1." alt="" coords="123,160,219,189"/>
-<area shape="rect" id="node13" href="$fieldmath_8h.html" title="Number theory functions." alt="" coords="243,160,376,189"/>
-<area shape="rect" id="node11" href="$point_8h.html" title="Points on an Elliptic Curve." alt="" coords="417,237,524,267"/>
+<map id="libecc/debug.h" name="libecc/debug.h">
+<area shape="rect" id="node1" title="Debugging declarations and defines." alt="" coords="392,5,508,32"/>
+<area shape="rect" id="node2" href="$bitset_8h.html" title="Fixed size bitset." alt="" coords="263,80,376,107"/>
+<area shape="rect" id="node5" href="$polynomial_8h.html" title="Field of Polynomials with binairy coefficents and fixed reduction polynomial." alt="" coords="413,155,562,181"/>
+<area shape="rect" id="node8" href="$debug_8h_source.html" title=" " alt="" coords="487,80,562,107"/>
+<area shape="rect" id="node3" href="$rng_8h.html" title="Random number generator." alt="" coords="5,155,103,181"/>
+<area shape="rect" id="node4" href="$sha_8h.html" title="SHA&#45;1." alt="" coords="127,155,226,181"/>
+<area shape="rect" id="node7" href="$fieldmath_8h.html" title="Number theory functions." alt="" coords="250,155,389,181"/>
+<area shape="rect" id="node6" href="$point_8h.html" title="Points on an Elliptic Curve." alt="" coords="433,229,542,256"/>
 </map>

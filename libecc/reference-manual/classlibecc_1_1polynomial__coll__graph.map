@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classlibecc_1_1bitset.html" title="libecc::bitset\&lt; m \&gt;" alt="" coords="77,357,221,387"/>
-<area shape="rect" id="node4" href="$classlibecc_1_1bitset__invertible.html" title="libecc::bitset_invertible\&lt; N, false \&gt;" alt="" coords="5,181,251,211"/>
-<area shape="rect" id="node11" href="$classlibecc_1_1bitset.html" title="A bitset with a fixed number of bits." alt="" coords="149,261,291,291"/>
-<area shape="rect" id="node6" href="$structlibecc_1_1bitset__base.html" title="Base class of libecc::bitset." alt="" coords="68,5,247,35"/>
-<area shape="rect" id="node8" href="$classlibecc_1_1bitset__invertible.html" title="A bitset with a fixed number of bits, having possibly an infinite number of leading virtual 1&#39;s..." alt="" coords="144,85,411,115"/>
-</map>

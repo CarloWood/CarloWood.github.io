@@ -1,5 +1,5 @@
-srcdir=../../libecc/doc
-top_srcdir=../../libecc
+srcdir=/home/carlo/projects/libecc/libecc/doc
+top_srcdir=/home/carlo/projects/libecc/libecc
 top_builddir=..
 
 include $(srcdir)/doxygen.config.in

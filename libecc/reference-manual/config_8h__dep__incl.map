@@ -1,9 +1,11 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$debug_8h.html" title="Debugging declarations and defines." alt="" coords="347,83,461,112"/>
-<area shape="rect" id="node5" href="$bitset_8h.html" title="Fixed size bitset." alt="" coords="255,160,364,189"/>
-<area shape="rect" id="node11" href="$polynomial_8h.html" title="Field of Polynomials with binairy coefficents and fixed reduction polynomial." alt="" coords="400,237,541,267"/>
-<area shape="rect" id="node7" href="$rng_8h.html" title="Random number generator." alt="" coords="5,237,99,267"/>
-<area shape="rect" id="node9" href="$sha_8h.html" title="SHA&#45;1." alt="" coords="123,237,219,267"/>
-<area shape="rect" id="node15" href="$fieldmath_8h.html" title="Number theory functions." alt="" coords="243,237,376,267"/>
-<area shape="rect" id="node13" href="$point_8h.html" title="Points on an Elliptic Curve." alt="" coords="417,315,524,344"/>
+<map id="/home/carlo/projects/libecc/libecc&#45;objdir/include/libecc/config.h" name="/home/carlo/projects/libecc/libecc&#45;objdir/include/libecc/config.h">
+<area shape="rect" id="node1" title="Configuration defines." alt="" coords="330,5,501,61"/>
+<area shape="rect" id="node2" href="$debug_8h.html" title="Debugging declarations and defines." alt="" coords="357,109,473,136"/>
+<area shape="rect" id="node3" href="$bitset_8h.html" title="Fixed size bitset." alt="" coords="263,184,376,211"/>
+<area shape="rect" id="node9" href="$debug_8h_source.html" title=" " alt="" coords="469,184,543,211"/>
+<area shape="rect" id="node6" href="$polynomial_8h.html" title="Field of Polynomials with binairy coefficents and fixed reduction polynomial." alt="" coords="413,259,562,285"/>
+<area shape="rect" id="node4" href="$rng_8h.html" title="Random number generator." alt="" coords="5,259,103,285"/>
+<area shape="rect" id="node5" href="$sha_8h.html" title="SHA&#45;1." alt="" coords="127,259,226,285"/>
+<area shape="rect" id="node8" href="$fieldmath_8h.html" title="Number theory functions." alt="" coords="250,259,389,285"/>
+<area shape="rect" id="node7" href="$point_8h.html" title="Points on an Elliptic Curve." alt="" coords="433,333,542,360"/>
 </map>

@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html LANG="en_US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="author" content="Carlo Wood">
+<meta name="keywords" content="arch, pacman, cheat sheet, HOWTO">
+<title>HOWTO archlinux, cheat sheet</title>
+<link href="../css/common.css" rel="stylesheet" type="text/css">
+<link href="howto.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<div id="content">
+
+<h1>Arch Cheat Sheet</h1>
+
+<div id="date">Carlo Wood, Januari 2021</div>
+
+<h2>Table of contents</h2>
+
+<ul>
+<li><a href="#finding">Finding things</a>
+<li><a href="#queries">Queries</a>
+<li><a href="#customizing">Customizing packages</a>
+<li><a href="#errata">Pinning errata</a>
+</ul>
+
+<a name="finding">
+<h2>Finding things</h2>
+
+<p>If you want to find something, there are several
+classes of objects that you can start with.
+Click on the link describing what you already have.</p>
+
+<ul>
+<li><a href="#packages">Packages</a>
+<p>These are the archlinux packages. They have a <em>name</em>.
+<li><a href="#package files">Package files</a>
+  <p>These are the <code><em>name</em>-<em>version</em>-<em>arch</em>.pkg.tar.xz</code> files that contain a package.
+The first part of the file name is usually the package <em>name</em>.
+<li><a href="#sources">Sources</a>
+<p>A git source tree containing a PKGBUILD file.</p>
+<li><a href="#installed">Installed Files</a>
+<p>Any file that was installed and is part of an Arch package.</p>
+<li><a href="#apt-file">Other files</a>
+<p>Files that are not yet installed.</p>
+<li><a href="#apt-cache">Some keyword</a>
+<p>If you look for a packages related to some keyword.</p>
+</ul>
+
+<a name="packages">
+<h3>Packages</h3>
+
+<p>When looking for information, you normally first want to find
+the <b>package name</b>.
+Here is how to <b>list all packages</b> that are installed:
+
+<pre>
+pacman -Q
+</pre>
+
+The package <em>names</em> are listed in the first column.
+The second column is the version.
+
+If the package name is already known, one can get the installed
+version for a single package by running:
+
+<pre>
+dpkg -Q <i>name</i>
+</pre>
+
+Options that can be added to Q are:
+<ul>c : View the ChangeLog of a package if it exists.</ul>
+<ul>d : Restrict or filter output to packages installed as dependencies.
+        This option can be combined with -t for listing real orphans -
+        packages that were installed as dependencies but are no longer
+        required by any installed package.</ul>
+<ul>e : Restrict or filter output to explicitly installed packages.
+        This option can be combined with -t to list explicitly installed
+        packages that are not required by any other package.</ul>
+<ul>g : Display all packages that are members of a named group.
+        If a name is not specified, list all grouped packages.</ul>
+<ul>i : Display information on a given package.
+        The -p option can be used if querying a package file instead of the local database.
+        Passing two --info or -i flags will also display the list of backup files and their modification states.</ul>
+<ul>k : Check that all files owned by the given package(s) are present on the system.
+        Specifying this option twice will perform more detailed file checking
+        (including permissions, file sizes, and modification times) for
+        packages that contain the needed mtree file.</ul>
+<ul>l : List all files owned by a given package.</ul>
+<ul>m : Restrict or filter output to packages that were not found in the sync database(s).
+        Typically these are packages that were downloaded manually and installed with --upgrade.</ul>
+<ul>n : Restrict or filter output to packages that are found in the sync
+        database(s). This is the inverse filter of --foreign.</ul>
+<ul>p : Signifies that the package supplied on the command line is a file and not an entry in the database.</ul>
+<ul>t : Restrict or filter output to print only packages neither required nor optionally required by any
+        currently installed package. Specify this option twice to include packages which are optionally, but not
+        directly, required by another package.</ul>
+<ul>u : Restrict or filter output to packages that are out-of-date on the local system.
+        Only package versions are used to find outdated packages; replacements are not checked here.
+        This option works best if the sync database is refreshed using -Sy.</ul>
+</ol>
+
+<a name="package files">
+<h3>Package files</h3>
+
+<p>These are <code><em>name</em>-<em>version</em>-<em>arch</em>.pkg.tar.xz</code>
+files that contain a package. The first part of the file name up till the first dash
+is usually the package name.</p>
+
+<p>Information about a package file can be obtained with the command:</p>
+
+<pre>
+pacman -Qi -p <i>name-version-arch</i>.pkg.tar.xz
+</pre>
+
+<p>This should extract the <em>name</em> of this package:</p>
+
+<pre>
+pacman -Qi -p <i>package.pkg.tar.xz</i> | grep '^Name  *: ' | sed -e 's/Name  *: //'
+</pre>
+
+<a name="sources">
+<h3>Sources</h3>
+
+<p>Sources are normally not installed. You can only install
+them if you know the package name. When checking out the
+git repository of an arch package, a file named PKGBUILD
+is downloaded that will contain the name of the package
+in its content (after the <code>pkgname=</code> keyword).</p>
+
+<a name="installed">
+<h3>Installed files</h3>
+
+<p>If you have a file <code>/path/filename</code> installed, and you
+want to know what package it belongs to (if any), then issue the
+following command:</p>
+
+<pre>
+pacman -Qo /path/filename
+</pre>
+
+<p>This will print <code>/path/filename is owned by <em>name</em> <em>version</em></code>.</p>
+
+<p>The path can be relative or absolute, and one or more files can be specified.</p>
+
+<p>To search for regular expressions matching filenames (or descriptions)
+one can use: <code>pacman -Qs &lt;regexp&gt;</code>. When including multiple search terms,
+only packages with descriptions matching ALL of those terms are returned.</p>
+
+<p>The command can therefore also used to search in a fuzzy way for packages
+that have files installed matching the given pattern. It does however not
+find/return extra files created by maintainer scripts, nor will it list
+alternatives. You can therefore not conclude that it is safe to delete
+a file if <code>pacman -Qs</code> doesn't return any packages.</p>
+
+<a name="apt-file">
+<h3>Other files</h3>
+
+<p>In order to find packages that contain file patterns that you do not
+have installed, you need <code>pacman -F</code></p>.
+
+<p>You need to regularly synchronize its database by running,</p>
+
+<pre>
+sudo pacman -Fy
+</pre>
+
+<p>Then, search for the filename using,</p>
+
+<pre>
+pacman -F <i>/path/filename</i>
+</pre>
+
+or
+
+<pre>
+pacman -Fx <i><em>reg.exp</em></i>
+</pre>
+
+<p>will give you a list of packages containing <em>files</em> matching <i>reg.exp</i>.</p>
+
+<p>Note that it will NOT list manually installed packages (aka, from AUR)!
+For installed files you should use <code>pacman -Qo path</code> anyway.</p>
+
+<a name="apt-cache">
+<h3>Some keyword</h3>
+
+<p>...to do...</p>
+
+<a name="queries">
+<h2>Queries</h2>
+
+<p>Now you have the package <i>name</i>, you can query the package database
+about it.</p>
+
+<h3>Contents</h3>
+
+<p>To print a list of all installed files (again excluding extra files
+as generated by maintainer script or alternatives), issue the command:</p>
+
+<pre>
+pacman -Ql <i>name</i>
+</pre>
+
+<p>You can also use this command to find out if a package with that
+exact name is installed at all (or use just <code>pacman -Q <i>name</i></code>.</p>
+
+<p>Or, if you have a package file that isn't installed yet, you can list
+its contents with</p>
+
+<pre>
+pacman -Qlp <i>package.tar.xz</i>
+</pre>
+
+<h3>Version</h3>
+
+<p>To print the version of
+of an <em>installed</em> package, type</p>
+
+<pre>
+pacman -Q <i>name</i>
+</pre>
+
+<h3>Everything</h3>
+
+<p>More information about an installed package can be obtained
+with the command:</p>
+
+<pre>
+pacman -Qi <i>name</i>
+</pre>
+
+<p>Or, if the package isn't installed yet</p>
+
+<pre>
+pacman -Qip <i>package.pkg.tar.xz</i>
+</pre>
+
+<a name="customizing">
+<h2>Customizing packages</h2>
+
+<ul>
+<li><a href="#get">Getting the source</a>
+<li><a href="#build">Building from source</a>
+<li><a href="#create">Creating a patch</a>
+<li><a href="#add">Adding a patch to a debian package</a>
+<li><a href="#dpkg-source">Creating a source package</a>
+<li><a href="#repository">Setting up a repository</a>
+<li><a href="#pinning">Pinning the packages of your local repository</a>
+</ul>
+
+<a name="get">
+<h3>Getting the source</h3>
+
+<p>To work with Archlinux source packages, do as root:</p>
+
+<pre>
+pacman ... build essentials?
+</pre>
+
+<p>Often, a single source package generates multiple binary packages.
+In order to find the name of the source that belongs to some package,
+use <code>pacman ???</code>. For example,</p>
+
+<pre>
+pacman -??? <i>name</i>
+</pre>
+
+<p>should print the source name of the package.</p>
+
+<p>This name can then be used to download the sources with
+the command:</p>
+
+<pre>
+??? <i>name</i>
+</pre>
+
+<a name="build">
+<h3>Building from source</h3>
+
+<p>In order to build a package, execute once as root:</p>
+
+<a name="create">
+<h3>Creating a patch</h3>
+
+<a name="add">
+<h3>Adding a patch to an arch package</h3>
+
+<a name="dpkg-source">
+<h3>Creating a source package</h3>
+
+<a name="repository">
+<h3>Setting up a repository</h3>
+
+<a name="pinning">
+<h3>Pinning the packages of your local repository</h3>
+
+</div> <!-- content -->
+
+<div id="footer">Copyright &copy; 2021 Carlo Wood</div>
+
+</body>
+</html>
+

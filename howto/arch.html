@@ -53,54 +53,56 @@ The first part of the file name is usually the package <em>name</em>.
 <h3>Packages</h3>
 
 <p>When looking for information, you normally first want to find
-the <b>package name</b>.
-Here is how to <b>list all packages</b> that are installed:
+the <b>package name</b>.</p>
+
+<p>Here is how to <b>list all packages</b> that are installed:</p>
 
 <pre>
 pacman -Q
 </pre>
 
-The package <em>names</em> are listed in the first column.
-The second column is the version.
+<p>The package <em>names</em> are listed in the first column.
+The second column is the version.</p>
 
-If the package name is already known, one can get the installed
-version for a single package by running:
+<p>If the package name is already known, one can get the installed
+version for a single package by running:</p>
 
 <pre>
 dpkg -Q <i>name</i>
 </pre>
 
-Options that can be added to Q are:
-<ul>c : View the ChangeLog of a package if it exists.</ul>
-<ul>d : Restrict or filter output to packages installed as dependencies.
+<p>Options that can be added to Q are:
+<ul>
+<li>c : View the ChangeLog of a package if it exists.
+<li>d : Restrict or filter output to packages installed as dependencies.
         This option can be combined with -t for listing real orphans -
         packages that were installed as dependencies but are no longer
-        required by any installed package.</ul>
-<ul>e : Restrict or filter output to explicitly installed packages.
+        required by any installed package.
+<li>e : Restrict or filter output to explicitly installed packages.
         This option can be combined with -t to list explicitly installed
-        packages that are not required by any other package.</ul>
-<ul>g : Display all packages that are members of a named group.
-        If a name is not specified, list all grouped packages.</ul>
-<ul>i : Display information on a given package.
+        packages that are not required by any other package.
+<li>g : Display all packages that are members of a named group.
+        If a name is not specified, list all grouped packages.
+<li>i : Display information on a given package.
         The -p option can be used if querying a package file instead of the local database.
-        Passing two --info or -i flags will also display the list of backup files and their modification states.</ul>
-<ul>k : Check that all files owned by the given package(s) are present on the system.
+        Passing two --info or -i flags will also display the list of backup files and their modification states.
+<li>k : Check that all files owned by the given package(s) are present on the system.
         Specifying this option twice will perform more detailed file checking
         (including permissions, file sizes, and modification times) for
-        packages that contain the needed mtree file.</ul>
-<ul>l : List all files owned by a given package.</ul>
-<ul>m : Restrict or filter output to packages that were not found in the sync database(s).
-        Typically these are packages that were downloaded manually and installed with --upgrade.</ul>
-<ul>n : Restrict or filter output to packages that are found in the sync
-        database(s). This is the inverse filter of --foreign.</ul>
-<ul>p : Signifies that the package supplied on the command line is a file and not an entry in the database.</ul>
-<ul>t : Restrict or filter output to print only packages neither required nor optionally required by any
+        packages that contain the needed mtree file.
+<li>l : List all files owned by a given package.
+<li>m : Restrict or filter output to packages that were not found in the sync database(s).
+        Typically these are packages that were downloaded manually and installed with --upgrade.
+<li>n : Restrict or filter output to packages that are found in the sync
+        database(s). This is the inverse filter of --foreign.
+<li>p : Signifies that the package supplied on the command line is a file and not an entry in the database.
+<li>t : Restrict or filter output to print only packages neither required nor optionally required by any
         currently installed package. Specify this option twice to include packages which are optionally, but not
-        directly, required by another package.</ul>
-<ul>u : Restrict or filter output to packages that are out-of-date on the local system.
+        directly, required by another package.
+<li>u : Restrict or filter output to packages that are out-of-date on the local system.
         Only package versions are used to find outdated packages; replacements are not checked here.
-        This option works best if the sync database is refreshed using -Sy.</ul>
-</ol>
+        This option works best if the sync database is refreshed using -Sy.
+</ul></p>
 
 <a name="package files">
 <h3>Package files</h3>

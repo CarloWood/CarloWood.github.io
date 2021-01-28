@@ -178,7 +178,7 @@ pacman -F <i>/path/filename</i>
 or
 
 <pre>
-pacman -Fx <i><em>reg.exp</em></i>
+pacman -Fx <i>reg.exp</i>
 </pre>
 
 <p>will give you a list of packages containing <em>files</em> matching <i>reg.exp</i>.</p>
@@ -189,13 +189,19 @@ For installed files you should use <code>pacman -Qo path</code> anyway.</p>
 <a name="apt-cache">
 <h3>Some keyword</h3>
 
-<p>...to do...</p>
+<p>To search each package in the sync databases for names or descriptions that match <i>reg.exp</i>, do</p>
+
+<pre>
+pacman -Ss <i>reg.exp</i>
+</pre>
+
+<p>When you include multiple search terms, only packages with descriptions
+matching ALL of those terms will be returned.</p>
 
 <a name="queries">
 <h2>Queries</h2>
 
-<p>Now you have the package <i>name</i>, you can query the package database
-about it.</p>
+<p>Now you have the package <i>name</i>, you can query the package database about it.</p>
 
 <h3>Contents</h3>
 

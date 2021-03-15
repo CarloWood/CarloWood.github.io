@@ -74,7 +74,7 @@ $(function() {
 <div class="title">C++ Prerequisites </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h3>Library initialization.</h3>
+<div class="textblock"><h3>Library initialization</h3>
 <p>Once the build system has been set up correctly (see <a class="el" href="compiling.html">Compiling</a>) there are still a few things to be taken care of at the C++ level; lets write a quick 'Hello World'.</p>
 <p>In fact, a lot of prerequisites are due to <a href="http://libcwd.sourceforge.net/index.html"><b>libcwd</b></a>: </p><ol class="prerequisites">
 <li>
@@ -122,7 +122,7 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="line"> </div>
 <div class="line">  Dout(dc::notice, <span class="stringliteral">&quot;Leaving main()&quot;</span>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>which requires linking with <span class="tt">libcwds_r</span>.</p>
+</div><!-- fragment --><p>which requires (linking with object code from) submodule <a href="https://github.com/CarloWood/cwds"> <span class="tt">cwds</span></a> (which in turn requires <span class="tt">libcwd_r</span>).</p>
 <p>A minimal program that has a thread pool, looks something like this:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;sys.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;threadpool/AIThreadPool.h&quot;</span>    <span class="comment">// Includes debug.h.</span></div>
@@ -143,7 +143,7 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="line"> </div>
 <div class="line">  Dout(dc::notice, <span class="stringliteral">&quot;Leaving main()&quot;</span>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>which requires, additionally, linking with <span class="tt">libthreadpool libthreadsafe libutils</span>.</p>
+</div><!-- fragment --><p>which requires, additionally, submodules <a href="https://github.com/CarloWood/threadpool"> <span class="tt">threadpool</span></a> <a href="https://github.com/CarloWood/ai-threadsafe"> <span class="tt">threadsafe</span></a> and <a href="https://github.com/CarloWood/ai-utils"> <span class="tt">utils</span></a>.</p>
 <p>A minimal program that has an event loop (for I/O), looks something like this:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;sys.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;evio/EventLoop.h&quot;</span></div>
@@ -173,7 +173,7 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="line"> </div>
 <div class="line">  Dout(dc::notice, <span class="stringliteral">&quot;Leaving main()&quot;</span>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>which requires, additionally, linking with <span class="tt">libevio</span>.</p>
+</div><!-- fragment --><p>which requires, additionally, submodule <a href="https://github.com/CarloWood/evio"> <span class="tt">evio</span></a>.</p>
 <p>When you actually use a task, so far we only used submodules other than <span class="tt">statefultask</span>, it is a good idea to also create the <span class="inlinecode">AIMemoryPagePool</span> object, just in case (although this is really only required when you use <a class="el" href="classAIStatefulTaskMutex.html">AIStatefulTaskMutex</a> (indirectly)).</p>
 <p>Assume we have a task <span class="inlinecode">task::HelloWorld</span> and want to run that, after initialization. Then we can run this task in the thread pool:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;sys.h&quot;</span></div>
@@ -208,7 +208,7 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="ttc" id="aDefaultMemoryPagePool_8h_html"><div class="ttname"><a href="DefaultMemoryPagePool_8h.html">DefaultMemoryPagePool.h</a></div><div class="ttdoc">Declaration of class DefaultMemoryPagePool.</div></div>
 <div class="ttc" id="aclassstatefultask_1_1DefaultMemoryPagePool_html"><div class="ttname"><a href="classstatefultask_1_1DefaultMemoryPagePool.html">statefultask::DefaultMemoryPagePool</a></div><div class="ttdef"><b>Definition:</b> DefaultMemoryPagePool.h:116</div></div>
 <div class="ttc" id="anamespacetask_html"><div class="ttname"><a href="namespacetask.html">task</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
-</div><!-- fragment --><p>which requires, additionally, linking with <span class="tt">libstatefultask.la</span> (and <span class="tt">libhelloworldtask.la</span>).</p>
+</div><!-- fragment --><p>which requires, additionally, submodules <a href="https://github.com/CarloWood/ai-statefultask"> <span class="tt">statefultask</span></a> (and <a href="https://github.com/CarloWood/helloworld-task"> <span class="tt">helloworld-task</span></a>).</p>
 <p>Note that <span class="inlinecode">AIMemoryPagePool</span> is created <em>before</em> <span class="inlinecode">AIThreadPool</span>. This is important because tasks can continue running until the thread pool is destructed, so <span class="inlinecode">mpp</span> must be destructed <em>after</em> <span class="inlinecode">thread_pool</span>!</p>
 <p>Also note that the task is run by passing a handler. Try what happens when you don't pass anything and just call <span class="inlinecode">run()</span>.</p>
 <p>It is also possible to run a task in an <a class="el" href="classAIEngine.html">AIEngine</a>. An <a class="el" href="classAIEngine.html">AIEngine</a> requires a main loop somewhere to be run from, which we don't have in a small  <span class="tt">Hello World</span> type program, so we have to add one for demonstration purposes. I'm also adding the event loop back, pretending we're doing I/O.</p>
@@ -275,6 +275,15 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="line">}</div>
 <div class="ttc" id="aAIEngine_8h_html"><div class="ttname"><a href="AIEngine_8h.html">AIEngine.h</a></div><div class="ttdoc">Declaration of class AIEngine.</div></div>
 <div class="ttc" id="aclassAIEngine_html"><div class="ttname"><a href="classAIEngine.html">AIEngine</a></div><div class="ttdef"><b>Definition:</b> AIEngine.h:109</div></div>
+</div><!-- fragment --><h3>Linking</h3>
+<p>Using <code>cmake</code>, each submodule is an OBJECT library and needs to be added to <code>target_link_libraries</code> of the final executable (or shared library if you'd make that instead). To make that easier, they all automatically add themselves to the cmake variable <code>AICXX_OBJECTS_LIST</code>, so you only have to link with that. Task submodules are not added at the moment, so those have to be added specifically.</p>
+<p>For example the above would have the following entry in <code>CMakeLists.txt</code>:</p>
+<div class="fragment"><div class="line">add_executable(helloworld helloworld.cxx)</div>
+<div class="line">target_link_libraries(helloworld PRIVATE AICxx::helloworld-task ${AICXX_OBJECTS_LIST})</div>
+</div><!-- fragment --><p>while the <code>src/Makefile.am</code> when using GNU autotools would contain:</p>
+<div class="fragment"><div class="line">helloworld_SOURCES = helloworld.cxx</div>
+<div class="line">helloworld_CXXFLAGS = @LIBCWD_R_FLAGS@</div>
+<div class="line">helloworld_LDADD = ../helloworld-task/libhelloworldtask.la ../statefultask/libstatefultask.la ../evio/libevio.la ../threadpool/libthreadpool.la ../threadsafe/libthreadsafe.la ../utils/libutils_r.la ../cwds/libcwds_r.la</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- HTML footer for doxygen 1.8.11-->

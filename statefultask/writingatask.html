@@ -106,7 +106,7 @@ $(function() {
 <div class="line"> <span class="keyword">public</span>:</div>
 <div class="line">  <span class="comment">// In debug mode, passing `true` to the constructor of a task causes</span></div>
 <div class="line">  <span class="comment">// debug output to dc::statefultask regarding running the state machine.</span></div>
-<div class="line">  MyTask(CWDEBUG_ONLY(<span class="keywordtype">bool</span> debug)) : <a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>(CWDEBUG_ONLY(debug)) { }</div>
+<div class="line">  MyTask(CWDEBUG_ONLY(<span class="keywordtype">bool</span> debug = <span class="keyword">false</span>)) : <a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>(CWDEBUG_ONLY(debug)) { }</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">char</span> <span class="keyword">const</span>* MyTask::state_str_impl(state_type run_state)</div>

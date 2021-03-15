@@ -1,3 +1,4 @@
 <map id="AIStatefulTask::Handler::Handle" name="AIStatefulTask::Handler::Handle">
-<area shape="rect" id="node2" href="$classAIEngine.html" title="AIEngine" alt="" coords="49,5,124,32"/>
+<area shape="rect" id="node1" title="Contains extra data that depends on the type of the Handler." alt="" coords="5,95,180,136"/>
+<area shape="rect" id="node2" href="$classAIEngine.html" title=" " alt="" coords="53,5,132,32"/>
 </map>

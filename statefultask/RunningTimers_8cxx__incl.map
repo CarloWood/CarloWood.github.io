@@ -1,8 +1,0 @@
-<map id="statefultask/RunningTimers.cxx" name="statefultask/RunningTimers.cxx">
-<area shape="rect" id="node3" href="$RunningTimers_8h.html" title="Declaration of class RunningTimers. " alt="" coords="582,80,703,107"/>
-<area shape="rect" id="node21" href="$AIThreadPool_8h.html" title="Thread pool implementation. " alt="" coords="1776,162,1888,189"/>
-<area shape="rect" id="node7" href="$TimerQueue_8h.html" title="Declaration of class TimerQueue. " alt="" coords="476,162,580,189"/>
-<area shape="rect" id="node10" href="$Timer_8h.html" title="Declaration of class Timer. " alt="" coords="329,251,396,278"/>
-<area shape="rect" id="node22" href="$AIObjectQueue_8h.html" title="A FIFO buffer for moveable objects. " alt="" coords="1493,251,1616,278"/>
-<area shape="rect" id="node26" href="$AIQueueHandle_8h.html" title="Declaration of AIQueueHandle. " alt="" coords="900,251,1025,278"/>
-</map>

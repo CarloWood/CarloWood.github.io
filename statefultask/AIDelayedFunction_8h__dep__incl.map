@@ -1,3 +1,4 @@
 <map id="statefultask/AIDelayedFunction.h" name="statefultask/AIDelayedFunction.h">
-<area shape="rect" id="node2" href="$AIPackagedTask_8h.html" title="Run code in a thread. Declaration of template class AIPackagedTask. " alt="" coords="11,80,216,107"/>
+<area shape="rect" id="node1" title="Declaration of AIDelayedFunction, an object storing a function pointer and its arguments." alt="" coords="5,5,244,32"/>
+<area shape="rect" id="node2" href="$AIPackagedTask_8h.html" title="Run code in a thread. Declaration of template class AIPackagedTask." alt="" coords="15,80,234,107"/>
 </map>

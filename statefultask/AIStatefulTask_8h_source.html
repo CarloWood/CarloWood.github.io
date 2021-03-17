@@ -384,33 +384,33 @@ $(function() {
 <div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
 <div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="preprocessor">#if defined(CWDEBUG) &amp;&amp; !defined(DOXYGEN)</span></div>
 <div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;NAMESPACE_DEBUG_CHANNELS_START</div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="keyword">extern</span> channel_ct statefultask;</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="keyword">extern</span> channel_ct <a class="code" href="namespacestatefultask.html">statefultask</a>;</div>
 <div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;NAMESPACE_DEBUG_CHANNELS_END</div>
 <div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160; </div>
-<div class="line"><a name="l00726"></a><span class="lineno"><a class="line" href="namespacetask.html">  726</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacetask.html">task</a> {</div>
+<div class="line"><a name="l00726"></a><span class="lineno"><a class="line" href="namespacestatefultask.html">  726</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestatefultask.html">statefultask</a> {</div>
 <div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160; </div>
 <div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TaskType, <span class="keyword">typename</span>... ARGS, <span class="keyword">typename</span> = <span class="keyword">typename</span> std::enable_if&lt;std::is_base_of&lt;AIStatefulTask, TaskType&gt;::value&gt;::type&gt;</div>
-<div class="line"><a name="l00763"></a><span class="lineno"><a class="line" href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">  763</a></span>&#160;boost::intrusive_ptr&lt;TaskType&gt; <a class="code" href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">create</a>(ARGS&amp;&amp;... args)</div>
+<div class="line"><a name="l00763"></a><span class="lineno"><a class="line" href="namespacestatefultask.html#ac67db08e3c2ac065b81402ca29bf2200">  763</a></span>&#160;boost::intrusive_ptr&lt;TaskType&gt; <a class="code" href="namespacestatefultask.html#ac67db08e3c2ac065b81402ca29bf2200">create</a>(ARGS&amp;&amp;... args)</div>
 <div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;{</div>
 <div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;<span class="preprocessor">#ifdef CWDEBUG</span></div>
 <div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;<span class="preprocessor">#if CWDEBUG_LOCATION</span></div>
 <div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;  LibcwDoutScopeBegin(LIBCWD_DEBUGCHANNELS, ::libcwd::libcw_do, dc::statefultask)</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;  LibcwDoutStream &lt;&lt; <span class="stringliteral">&quot;Entering task::create&lt;&quot;</span> &lt;&lt; libcwd::type_info_of&lt;TaskType&gt;().demangled_name();</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;  (LibcwDoutStream &lt;&lt; ... &lt;&lt; (<span class="stringliteral">&quot;, &quot;</span> + libcwd::type_info_of&lt;ARGS&gt;().demangled_name())) &lt;&lt; <span class="stringliteral">&quot;&gt;(&quot;</span> &lt;&lt; join(<span class="stringliteral">&quot;, &quot;</span>, args...) &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;  LibcwDoutStream &lt;&lt; <span class="stringliteral">&quot;Entering statefultask::create&lt;&quot;</span> &lt;&lt; libcwd::type_info_of&lt;TaskType&gt;().demangled_name();</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;  (LibcwDoutStream &lt;&lt; ... &lt;&lt; (std::string(<span class="stringliteral">&quot;, &quot;</span>) + libcwd::type_info_of&lt;ARGS&gt;().demangled_name())) &lt;&lt; <span class="stringliteral">&quot;&gt;(&quot;</span> &lt;&lt; join(<span class="stringliteral">&quot;, &quot;</span>, args...) &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
 <div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;  LibcwDoutScopeEnd;</div>
 <div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;  ::NAMESPACE_DEBUG::Indent indentation(2);</div>
 <div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;  DoutEntering(dc::evio, <span class="stringliteral">&quot;task::create&lt;&gt;(&quot;</span> &lt;&lt; join(<span class="stringliteral">&quot;, &quot;</span>, args...) &lt;&lt; <span class="charliteral">&#39;)&#39;</span>)</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;  DoutEntering(dc::evio, <span class="stringliteral">&quot;statefultask::create&lt;&gt;(&quot;</span> &lt;&lt; join(<span class="stringliteral">&quot;, &quot;</span>, args...) &lt;&lt; <span class="charliteral">&#39;)&#39;</span>)</div>
 <div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;  TaskType* <a class="code" href="namespacetask.html">task</a> = <span class="keyword">new</span> TaskType(std::forward&lt;ARGS&gt;(args)...);</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;  AllocTag2(<a class="code" href="namespacetask.html">task</a>, <span class="stringliteral">&quot;Created with task::create&quot;</span>);</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;  Dout(dc::statefultask, <span class="stringliteral">&quot;Returning task pointer &quot;</span> &lt;&lt; (<span class="keywordtype">void</span>*)<a class="code" href="namespacetask.html">task</a> &lt;&lt; <span class="stringliteral">&quot; [&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>*<span class="keyword">&gt;</span>(<a class="code" href="namespacetask.html">task</a>) &lt;&lt; <span class="stringliteral">&quot;].&quot;</span>);</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespacetask.html">task</a>;</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;  TaskType* task = <span class="keyword">new</span> TaskType(std::forward&lt;ARGS&gt;(args)...);</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;  AllocTag2(task, <span class="stringliteral">&quot;Created with statefultask::create&quot;</span>);</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;  Dout(dc::statefultask, <span class="stringliteral">&quot;Returning task pointer &quot;</span> &lt;&lt; (<span class="keywordtype">void</span>*)task &lt;&lt; <span class="stringliteral">&quot; [&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>*<span class="keyword">&gt;</span>(task) &lt;&lt; <span class="stringliteral">&quot;].&quot;</span>);</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;  <span class="keywordflow">return</span> task;</div>
 <div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;}</div>
 <div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160; </div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;} <span class="comment">// namespace task</span></div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;} <span class="comment">// namespace statefultask</span></div>
 <div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160; </div>
 <div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIStatefulTaskMutex_8h.html">AIStatefulTaskMutex.h</a>&quot;</span></div>
 <div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160; </div>
@@ -478,8 +478,8 @@ $(function() {
 <div class="ttc" id="agroup__group__yield_html_ga32265465bc41279fea4654941ff31de7"><div class="ttname"><a href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">AIStatefulTask::target</a></div><div class="ttdeci">void target(Handler handler)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1392</div></div>
 <div class="ttc" id="agroup__group__yield_html_ga669b3bea6b80ec684cb5b96b3fb84d22"><div class="ttname"><a href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">AIStatefulTask::yield_if_not</a></div><div class="ttdeci">bool yield_if_not(Handler handler)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1418</div></div>
 <div class="ttc" id="agroup__group__yield_html_gaa79810701038b0c5fa974fc4b64dc902"><div class="ttname"><a href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">AIStatefulTask::yield_ms</a></div><div class="ttdeci">void yield_ms(AIEngine *engine, unsigned int ms)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1437</div></div>
-<div class="ttc" id="anamespacetask_html"><div class="ttname"><a href="namespacetask.html">task</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
-<div class="ttc" id="anamespacetask_html_aaf85b35668e9562dc3647e4fd1a9e2fe"><div class="ttname"><a href="namespacetask.html#aaf85b35668e9562dc3647e4fd1a9e2fe">task::create</a></div><div class="ttdeci">boost::intrusive_ptr&lt; TaskType &gt; create(ARGS &amp;&amp;... args)</div><div class="ttdoc">Convenience function to create tasks.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:763</div></div>
+<div class="ttc" id="anamespacestatefultask_html"><div class="ttname"><a href="namespacestatefultask.html">statefultask</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
+<div class="ttc" id="anamespacestatefultask_html_ac67db08e3c2ac065b81402ca29bf2200"><div class="ttname"><a href="namespacestatefultask.html#ac67db08e3c2ac065b81402ca29bf2200">statefultask::create</a></div><div class="ttdeci">boost::intrusive_ptr&lt; TaskType &gt; create(ARGS &amp;&amp;... args)</div><div class="ttdoc">Convenience function to create tasks.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:763</div></div>
 <div class="ttc" id="astructAIStatefulTask_1_1Handler_html"><div class="ttname"><a href="structAIStatefulTask_1_1Handler.html">AIStatefulTask::Handler</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:141</div></div>
 <div class="ttc" id="astructAIStatefulTask_1_1Handler_html_a0941f2c6ab21a2d61027f3c01db83dad"><div class="ttname"><a href="structAIStatefulTask_1_1Handler.html#a0941f2c6ab21a2d61027f3c01db83dad">AIStatefulTask::Handler::m_handle</a></div><div class="ttdeci">Handle m_handle</div><div class="ttdoc">Extra data that depends on m_type.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:166</div></div>
 <div class="ttc" id="astructAIStatefulTask_1_1Handler_html_a31078b881cbbf42d2e3e3998b905d1b2"><div class="ttname"><a href="structAIStatefulTask_1_1Handler.html#a31078b881cbbf42d2e3e3998b905d1b2">AIStatefulTask::Handler::special_t</a></div><div class="ttdeci">special_t</div><div class="ttdoc">A typed use by the constuctor Handler(special_t).</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:150</div></div>
@@ -510,7 +510,7 @@ $(function() {
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 16 2021
+Revised Wed Mar 17 2021
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

@@ -83,7 +83,7 @@ $(function() {
 <div class="line">{</div>
 <div class="line"> <span class="keyword">public</span>:</div>
 <div class="line">  <span class="comment">// Task is the (base class of the) class containing this MyTool as member object.</span></div>
-<div class="line">  MyTool(<a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>* <a class="code" href="namespacetask.html">task</a>) : <a class="code" href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a>(<a class="code" href="namespacetask.html">task</a>) { }</div>
+<div class="line">  MyTool(<a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>* task) : <a class="code" href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a>(task) { }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">void</span> f()</div>
 <div class="line">  {</div>
@@ -94,7 +94,6 @@ $(function() {
 <div class="ttc" id="aclassAIFriendOfStatefulTask_html"><div class="ttname"><a href="classAIFriendOfStatefulTask.html">AIFriendOfStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIFriendOfStatefulTask.h:61</div></div>
 <div class="ttc" id="aclassAIFriendOfStatefulTask_html_aa8c4615a17a1488aea2d872faa8ceb34"><div class="ttname"><a href="classAIFriendOfStatefulTask.html#aa8c4615a17a1488aea2d872faa8ceb34">AIFriendOfStatefulTask::yield</a></div><div class="ttdeci">void yield()</div><div class="ttdoc">Proxy for AIStatefulTask::yield.</div><div class="ttdef"><b>Definition:</b> AIFriendOfStatefulTask.h:83</div></div>
 <div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:86</div></div>
-<div class="ttc" id="anamespacetask_html"><div class="ttname"><a href="namespacetask.html">task</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
 </div><!-- fragment --> </div>
 <p><code>#include &lt;<a class="el" href="AIFriendOfStatefulTask_8h_source.html">AIFriendOfStatefulTask.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -194,7 +193,7 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 16 2021
+Revised Wed Mar 17 2021
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

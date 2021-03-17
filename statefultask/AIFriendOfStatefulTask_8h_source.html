@@ -88,7 +88,7 @@ $(function() {
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classAIFriendOfStatefulTask.html#a226acfd25ffb33f1954041040cb9302e">   67</a></span>&#160;  <a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>* <a class="code" href="classAIFriendOfStatefulTask.html#a226acfd25ffb33f1954041040cb9302e">m_task</a>;     </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classAIFriendOfStatefulTask.html#a722046a07e56ab98ca741d12a47211b6">   70</a></span>&#160;  <a class="code" href="classAIFriendOfStatefulTask.html#a722046a07e56ab98ca741d12a47211b6">AIFriendOfStatefulTask</a>(<a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>* <a class="code" href="namespacetask.html">task</a>) : <a class="code" href="classAIFriendOfStatefulTask.html#a226acfd25ffb33f1954041040cb9302e">m_task</a>(<a class="code" href="namespacetask.html">task</a>) { }</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classAIFriendOfStatefulTask.html#a722046a07e56ab98ca741d12a47211b6">   70</a></span>&#160;  <a class="code" href="classAIFriendOfStatefulTask.html#a722046a07e56ab98ca741d12a47211b6">AIFriendOfStatefulTask</a>(<a class="code" href="classAIStatefulTask.html">AIStatefulTask</a>* task) : <a class="code" href="classAIFriendOfStatefulTask.html#a226acfd25ffb33f1954041040cb9302e">m_task</a>(task) { }</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classAIFriendOfStatefulTask.html#a708e3c487bfa9bfcbea7f3ff5662b5dc">   73</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classAIFriendOfStatefulTask.html#a708e3c487bfa9bfcbea7f3ff5662b5dc">set_state</a>(<a class="code" href="classAIFriendOfStatefulTask.html#a5ec41fa75a5eda7923dc635a97e7b707">state_type</a> new_state) { <a class="code" href="classAIFriendOfStatefulTask.html#a226acfd25ffb33f1954041040cb9302e">m_task</a>-&gt;<a class="code" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a>(new_state); }</div>
 <div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classAIFriendOfStatefulTask.html#ad8b5cd853d59466d3ade73320eef2ed3">   75</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classAIFriendOfStatefulTask.html#ad8b5cd853d59466d3ade73320eef2ed3">wait</a>(<a class="code" href="classAIFriendOfStatefulTask.html#a1a684a5e0c43ec6ca497ac5d86fb6e21">condition_type</a> conditions) { <a class="code" href="classAIFriendOfStatefulTask.html#a226acfd25ffb33f1954041040cb9302e">m_task</a>-&gt;<a class="code" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">wait</a>(conditions); }</div>
@@ -133,13 +133,12 @@ $(function() {
 <div class="ttc" id="agroup__group__yield_html_ga32265465bc41279fea4654941ff31de7"><div class="ttname"><a href="group__group__yield.html#ga32265465bc41279fea4654941ff31de7">AIStatefulTask::target</a></div><div class="ttdeci">void target(Handler handler)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1392</div></div>
 <div class="ttc" id="agroup__group__yield_html_ga669b3bea6b80ec684cb5b96b3fb84d22"><div class="ttname"><a href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">AIStatefulTask::yield_if_not</a></div><div class="ttdeci">bool yield_if_not(Handler handler)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1418</div></div>
 <div class="ttc" id="agroup__group__yield_html_gaa79810701038b0c5fa974fc4b64dc902"><div class="ttname"><a href="group__group__yield.html#gaa79810701038b0c5fa974fc4b64dc902">AIStatefulTask::yield_ms</a></div><div class="ttdeci">void yield_ms(AIEngine *engine, unsigned int ms)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1437</div></div>
-<div class="ttc" id="anamespacetask_html"><div class="ttname"><a href="namespacetask.html">task</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.11-->
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 16 2021
+Revised Wed Mar 17 2021
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

@@ -192,7 +192,7 @@ Waiting</h1>
 <p>For example,</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> some_event()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="namespacetask.html">task</a>.signal(1);</div>
+<div class="line">  task.signal(1);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">...</div>
@@ -200,14 +200,13 @@ Waiting</h1>
 <div class="line">    set_state(MyTask_state21);  <span class="comment">// Continue with state21.</span></div>
 <div class="line">    wait(1);                    <span class="comment">// Go idle until some_event() is called.</span></div>
 <div class="line">    <span class="keywordflow">break</span>;</div>
-<div class="ttc" id="anamespacetask_html"><div class="ttname"><a href="namespacetask.html">task</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
 </div><!-- fragment --><p>Often you want to wait for a real condition however, for example <span class="inlinecode">x > y</span>, and it is not really possible to call <span class="inlinecode">signal</span> when that happens and then still be sure that this condition is still true once the task starts running again.</p>
 <p>In general, you will only have events that when they happen make it possible, preferably likely that the condition that you are waiting for is true.</p>
 <p>Code that needs this will typically look like this:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> some_event()</div>
 <div class="line">{</div>
 <div class="line">  ++x;  <span class="comment">// Now x might have become larger than y.</span></div>
-<div class="line">  <a class="code" href="namespacetask.html">task</a>.signal(1);</div>
+<div class="line">  task.signal(1);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">...</div>
@@ -219,7 +218,8 @@ Waiting</h1>
 <div class="fragment"><div class="line"><span class="keywordflow">case</span> MyTask_state30:</div>
 <div class="line">  m_task = <span class="keyword">new</span> MyChildTask;</div>
 <div class="line">  m_task-&gt;run(handler, <span class="keyword">this</span>, 2);  <span class="comment">// 2 is just the condition bit to be used.</span></div>
-<div class="line">  set_state(MyTask_state31);      <span class="comment">// Continue with state31 once m_task has finished.</span></div>
+<div class="line">  set_state(MyTask_state31);      <span class="comment">// Continue with state31...</span></div>
+<div class="line">  wait(2);                        <span class="comment">// ...once m_task has finished.</span></div>
 <div class="line">  <span class="keywordflow">break</span>;</div>
 </div><!-- fragment --><p>Running some computational extensive function in another thread (see <a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html">AIPackagedTask</a>):</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>MyTask : <a class="code" href="classAIStatefulTask.html">AIStatefulTask</a></div>
@@ -250,13 +250,15 @@ Waiting</h1>
 <div class="line">  <span class="keywordflow">case</span> MyTask_state21:</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordtype">int</span> result = m_calculate.get();     <span class="comment">// Get the result.</span></div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><p>Note that upon a successful queue by <a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a816b3e159ae2494035995ef96d02cf4b">dispatch</a>, <a class="el" href="group__group__wait.html#ga2af39e888e9cfd3936e9fbfe399c08af">wait_until</a> was already called on the current task; no additional call to wait is necessary here.</p>
+<p><a class="el" href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html">AIPackagedTask</a> also has a constructor that allows using a member function of some object to be used as callback. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- HTML footer for doxygen 1.8.11-->
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 16 2021
+Revised Wed Mar 17 2021
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

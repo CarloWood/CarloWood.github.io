@@ -194,9 +194,9 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">try</span></div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> <a class="code" href="namespacetask.html">task</a> = task::create&lt;task::HelloWorld&gt;();</div>
-<div class="line">    <a class="code" href="namespacetask.html">task</a>-&gt;initialize(42);</div>
-<div class="line">    <a class="code" href="namespacetask.html">task</a>-&gt;run(low_priority_queue);      <span class="comment">// Must have a non-immediate handler because it calls yield().</span></div>
+<div class="line">    <span class="keyword">auto</span> task = task::create&lt;task::HelloWorld&gt;();</div>
+<div class="line">    task-&gt;initialize(42);</div>
+<div class="line">    task-&gt;run(low_priority_queue);      <span class="comment">// Must have a non-immediate handler because it calls yield().</span></div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">catch</span> (AIAlert::Error <span class="keyword">const</span>&amp; error)</div>
 <div class="line">  {</div>
@@ -207,7 +207,6 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="line">}</div>
 <div class="ttc" id="aDefaultMemoryPagePool_8h_html"><div class="ttname"><a href="DefaultMemoryPagePool_8h.html">DefaultMemoryPagePool.h</a></div><div class="ttdoc">Declaration of class DefaultMemoryPagePool.</div></div>
 <div class="ttc" id="aclassstatefultask_1_1DefaultMemoryPagePool_html"><div class="ttname"><a href="classstatefultask_1_1DefaultMemoryPagePool.html">statefultask::DefaultMemoryPagePool</a></div><div class="ttdef"><b>Definition:</b> DefaultMemoryPagePool.h:116</div></div>
-<div class="ttc" id="anamespacetask_html"><div class="ttname"><a href="namespacetask.html">task</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
 </div><!-- fragment --><p>which requires, additionally, submodules <a href="https://github.com/CarloWood/ai-statefultask"> <span class="tt">statefultask</span></a> (and <a href="https://github.com/CarloWood/helloworld-task"> <span class="tt">helloworld-task</span></a>).</p>
 <p>Note that <span class="inlinecode">AIMemoryPagePool</span> is created <em>before</em> <span class="inlinecode">AIThreadPool</span>. This is important because tasks can continue running until the thread pool is destructed, so <span class="inlinecode">mpp</span> must be destructed <em>after</em> <span class="inlinecode">thread_pool</span>!</p>
 <p>Also note that the task is run by passing a handler. Try what happens when you don't pass anything and just call <span class="inlinecode">run()</span>.</p>
@@ -238,11 +237,11 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <div class="line">    <span class="keywordtype">bool</span> test_finished = <span class="keyword">false</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// All tasks are created (somewhere, often as member variable of an object).</span></div>
-<div class="line">    <span class="keyword">auto</span> <a class="code" href="namespacetask.html">task</a> = task::create&lt;task::HelloWorld&gt;();</div>
+<div class="line">    <span class="keyword">auto</span> task = task::create&lt;task::HelloWorld&gt;();</div>
 <div class="line">    <span class="comment">// Often initialized before (re)running them.</span></div>
-<div class="line">    <a class="code" href="namespacetask.html">task</a>-&gt;initialize(42);</div>
+<div class="line">    task-&gt;initialize(42);</div>
 <div class="line">    <span class="comment">// And finally started by calling one of the run() member functions.</span></div>
-<div class="line">    <a class="code" href="namespacetask.html">task</a>-&gt;run(&amp;engine, [&amp;](<span class="keywordtype">bool</span> CWDEBUG_ONLY(success)){</div>
+<div class="line">    task-&gt;run(&amp;engine, [&amp;](<span class="keywordtype">bool</span> CWDEBUG_ONLY(success)){</div>
 <div class="line">        test_finished = <span class="keyword">true</span>;</div>
 <div class="line">        Dout(dc::notice, <span class="stringliteral">&quot;Inside the call-back (&quot;</span> &lt;&lt;</div>
 <div class="line">            (success ? <span class="stringliteral">&quot;success&quot;</span> : <span class="stringliteral">&quot;failure&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;).&quot;</span>);</div>
@@ -290,7 +289,7 @@ Create zero or more <a class="el" href="classAIEngine.html">AIEngine</a> objects
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 16 2021
+Revised Wed Mar 17 2021
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

@@ -80,17 +80,16 @@ $(function() {
 <ol>
 <li>
 <p class="startli">The quick and dirty way, where you just want to run a task a single time. The task will delete itself when finished. </p><div class="fragment"><div class="line"><span class="comment">// Here &#39;task&#39; is usually just some automatic variable.</span></div>
-<div class="line">MyTask* <a class="code" href="namespacetask.html">task</a> = <span class="keyword">new</span> MyTask(my_args);</div>
-<div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;my_initialization(my_params); <span class="comment">// Assuming MyTask needs this.</span></div>
-<div class="line"><a class="code" href="namespacetask.html">task</a>-&gt;run(handler, callback_args);  <span class="comment">// This will cause &#39;task&#39; to</span></div>
+<div class="line">MyTask* task = <span class="keyword">new</span> MyTask(my_args);</div>
+<div class="line">task-&gt;my_initialization(my_params); <span class="comment">// Assuming MyTask needs this.</span></div>
+<div class="line">task-&gt;run(handler, callback_args);  <span class="comment">// This will cause &#39;task&#39; to</span></div>
 <div class="line">                                    <span class="comment">// be deleted when finished.</span></div>
 <div class="line"><span class="comment">// Do not use &#39;task&#39; anymore here.</span></div>
-<div class="ttc" id="anamespacetask_html"><div class="ttname"><a href="namespacetask.html">task</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:726</div></div>
 </div><!-- fragment --><p class="endli"></p>
 </li>
 <li>
 If you want to control the life-time of the Task. <div class="fragment"><div class="line"><span class="comment">// In general &#39;m_task&#39; will be a member variable of an object.</span></div>
-<div class="line">@oost::intrusive_ptr&lt;MyTask&gt; m_task = task::create&lt;MyTask&gt;(my_args);</div>
+<div class="line">boost::intrusive_ptr&lt;MyTask&gt; m_task = task::create&lt;MyTask&gt;(my_args);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Then, every time you want to run it:</span></div>
 <div class="line">m_task-&gt;my_initialization(my_params);</div>
@@ -105,7 +104,7 @@ If you want to control the life-time of the Task. <div class="fragment"><div cla
 <p> <span class="inlinecode">callback_args</span> are the arguments of one of the <a class="el" href="group__group__run.html">AIStatefulTask::run</a> member functions. See the documentation of that member function for a description of those arguments.</p>
 <p>Any thread may create a stateful task object, initialize it by calling its initializing member function and call one of the <a class="el" href="group__group__run.html">AIStatefulTask::run</a> methods, which might or might not immediately start to execute the task.</p>
 <p>The call to <code>run</code> causes a call to <a class="el" href="classExample.html#a22ac76bde007a560c6428ac0f997a4ee">initialize_impl</a>, which must call <a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a> at least once (only the last call is used). Upon return from <code>initialize_impl</code>, <a class="el" href="classExample.html#a5e23b83406c365bed7cbeeb196071726">multiplex_impl</a> will be called with that state.</p>
-<p><code>multiplex_impl</code> may never reentrant (cause itself to be called) and should end by callling either one of <a class="el" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">wait</a>, <a class="el" href="group__group__yield.html#ga00981f1360b10d5f99f805d501a537a2">yield</a>, <a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish</a> [or <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort</a>].</p>
+<p><code>multiplex_impl</code> may never reentrant (cause itself to be called) and should end by callling either one of <a class="el" href="group__group__wait.html">wait</a>, <a class="el" href="group__group__yield.html">yield</a>, <a class="el" href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">finish</a> [or <a class="el" href="group__group__public.html#gac520d813fed06cba4eef1913c3daca3f">abort</a>].</p>
 <p>Leaving <code>multiplex_impl</code> without calling any of those might result in an immediate reentry, which could cause the task to enter an infinite loop without reaching the main loop again, unless the state is changed with <a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a>.</p>
 <p>If <code>multiplex_impl</code> calls <a class="el" href="group__group__wait.html#gaf6b0f3ba324cd8ca6b4a2f925c106897">wait(condition)</a>, and there was only one call to <a class="el" href="group__group__public.html#ga8b7111d021ba8507748df416a0631e5d">signal(condition)</a> since the last call to <span class="inlinecode">wait(condition)</span>, then <code>multiplex_impl</code> will not be called again until  <span class="inlinecode">signal(condition)</span> is called from outside.</p>
 <p>If <code>multiplex_impl</code> calls <code>finish</code> then <a class="el" href="classExample.html#a418945b72b830cbc95f3d2cb10f62e83">finish_impl</a> will be called [if instead it calls <code>abort</code> then first <a class="el" href="classExample.html#ada8595c90689acf0b8c89ce7a4786b5a">abort_impl</a> will be called, followed by a call to <code>finish_impl</code>]. Upon return from <code>multiplex_impl</code>, and if <code>finish</code> [or <code>abort</code>] was called, the call back passed to <code>run</code> will be called.</p>
@@ -116,7 +115,7 @@ If you want to control the life-time of the Task. <div class="fragment"><div cla
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 16 2021
+Revised Wed Mar 17 2021
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

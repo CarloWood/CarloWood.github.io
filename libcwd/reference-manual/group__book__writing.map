@@ -1,11 +1,12 @@
 <map id="Writing Debug Output" name="Writing Debug Output">
-<area shape="rect" id="node1" href="$group__group__formatting.html" title="Format Of The Debug\l Output" alt="" coords="210,5,359,47"/>
-<area shape="rect" id="node2" href="$group__group__control__flags.html" title="Control Flags" alt="" coords="235,71,335,98"/>
-<area shape="rect" id="node4" href="$group__group__debug__channels.html" title="Controlling The Output\l Level (Debug Channels)" alt="" coords="201,123,368,164"/>
-<area shape="rect" id="node5" href="$group__group__fatal__output.html" title="Fatal Debug Output" alt="" coords="217,189,353,215"/>
-<area shape="rect" id="node6" href="$group__group__debug__object.html" title="The Output Device \l(Debug Object)" alt="" coords="217,240,353,281"/>
-<area shape="rect" id="node7" href="$group__group__destination.html" title="Setting The Output\l Destination" alt="" coords="219,305,351,347"/>
-<area shape="rect" id="node8" href="$group__book__writing__intro.html" title="Writing Debug Output\l: Introduction" alt="" coords="211,371,359,412"/>
-<area shape="rect" id="node9" href="$group__chapter__nesting.html" title="Nesting Debug Output" alt="" coords="209,437,361,463"/>
-<area shape="rect" id="node10" href="$group__group__special.html" title="Special Functions And\l Utilities" alt="" coords="208,488,361,529"/>
+<area shape="rect" id="node1" href="$group__group__control__flags.html" title=" " alt="" coords="253,5,361,31"/>
+<area shape="rect" id="node2" href="$group__group__formatting.html" title=" " alt="" coords="226,55,387,95"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,241,168,267"/>
+<area shape="rect" id="node4" href="$group__group__debug__channels.html" title=" " alt="" coords="216,119,397,159"/>
+<area shape="rect" id="node5" href="$group__group__fatal__output.html" title=" " alt="" coords="233,184,380,209"/>
+<area shape="rect" id="node6" href="$group__group__debug__object.html" title=" " alt="" coords="233,234,380,274"/>
+<area shape="rect" id="node7" href="$group__group__destination.html" title=" " alt="" coords="235,298,379,338"/>
+<area shape="rect" id="node8" href="$group__book__writing__intro.html" title=" " alt="" coords="225,362,388,402"/>
+<area shape="rect" id="node9" href="$group__chapter__nesting.html" title=" " alt="" coords="223,427,390,452"/>
+<area shape="rect" id="node10" href="$group__group__special.html" title=" " alt="" coords="225,477,389,517"/>
 </map>

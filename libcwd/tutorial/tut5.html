@@ -423,7 +423,7 @@ When we run this program with parameter &quot;/bin/ls&quot; we get something lik
 
 <PRE class="output">
 <!-- START OUTPUT examples5/test5.4.3-bin /bin/ls -->
-NOTICE  : stat(&quot;/bin/ls&quot;, { inode:9441; size:133792 }) = 0
+NOTICE  : stat(&quot;/bin/ls&quot;, { inode:1310862; size:141936 }) = 0
 </PRE>
 
 <P>And when we use a file that doesn't exist, we get something like:</P>
@@ -506,8 +506,8 @@ output of <SPAN class="filename">strace(1)</SPAN>:</P>
 
 <PRE class="output">
 <!-- START OUTPUT examples5/test5.4.4-bin /bin/ls -->
-NOTICE  : stat_with_buf_alloc(&quot;/bin/ls&quot;, MALLOC  : operator new (size = 144) = 0x55555593a7d0 [test5.4.4.cc:22]
-{ inode:9441; size:133792 }) = 0
+NOTICE  : stat_with_buf_alloc(&quot;/bin/ls&quot;, MALLOC  : operator new (size = 144) = 0x55cf2ef80540 [test5.4.4.cc:22]
+{ inode:1310862; size:141936 }) = 0
 </PRE>
 
 <A NAME="interrupted"></A>
@@ -578,8 +578,8 @@ int main(int argc, char* argv[])
 <PRE class="output">
 <!-- START OUTPUT examples5/test5.4.5-bin /bin/ls -->
 NOTICE  : stat_with_buf_alloc(&quot;/bin/ls&quot;, &lt;unfinished&gt;
-MALLOC  :     operator new (size = 144) = 0x55555593a9c0 [test5.4.5.cc:22]
-NOTICE  : &lt;continued&gt; { inode:9441; size:133792 }) = 0
+MALLOC  :     operator new (size = 144) = 0x5557db1f5830 [test5.4.5.cc:22]
+NOTICE  : &lt;continued&gt; { inode:1310862; size:141936 }) = 0
 </PRE>
 
 <A NAME="Methods"></A>

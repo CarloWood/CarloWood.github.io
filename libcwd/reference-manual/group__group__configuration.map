@@ -1,12 +1,13 @@
 <map id="Configuration Options And Macros" name="Configuration Options And Macros">
-<area shape="rect" id="node1" href="$group__enable__libbfd.html" title="&#45;&#45;enable&#45;libbfd (CWDEBUG\l_LIBBFD)" alt="" coords="441,5,624,47"/>
-<area shape="rect" id="node2" href="$group__book__start.html" title="Configuration, Installation\l And Getting Started" alt="" coords="5,267,176,308"/>
-<area shape="rect" id="node3" href="$group__enable__marker.html" title="&#45;&#45;enable&#45;marker (CWDEBUG\l_MARKER)" alt="" coords="437,71,628,112"/>
-<area shape="rect" id="node5" href="$group__enable__magic.html" title="&#45;&#45;enable&#45;magic (CWDEBUG\l_MAGIC)" alt="" coords="439,136,626,177"/>
-<area shape="rect" id="node6" href="$group__enable__debug.html" title="&#45;&#45;enable&#45;debug (CWDEBUG\l_DEBUG)" alt="" coords="439,201,626,243"/>
-<area shape="rect" id="node7" href="$group__enable__debug__output.html" title="&#45;&#45;enable&#45;debug&#45;output\l (CWDEBUG_DEBUGOUTPUT)" alt="" coords="425,267,640,308"/>
-<area shape="rect" id="node8" href="$group__enable__location.html" title="&#45;&#45;enable&#45;location \l(CWDEBUG_LOCATION)" alt="" coords="445,332,621,373"/>
-<area shape="rect" id="node9" href="$group__enable__alloc.html" title="&#45;&#45;enable&#45;alloc (CWDEBUG\l_ALLOC)" alt="" coords="443,397,622,439"/>
-<area shape="rect" id="node10" href="$group__enable__glibcxx__debug.html" title="&#45;&#45;enable&#45;glibcxx_debug\l (CWDEBUG_GLIBCXX_DEBUG)" alt="" coords="420,463,645,504"/>
-<area shape="rect" id="node11" href="$group__enable__debugm.html" title="&#45;&#45;enable&#45;debugm (CWDEBUG\l_DEBUGM)" alt="" coords="434,528,631,569"/>
+<area shape="rect" id="node1" href="$group__enable__libbfd.html" title=" " alt="" coords="505,5,664,45"/>
+<area shape="rect" id="node2" href="$group__book__start.html" title=" " alt="" coords="5,261,196,301"/>
+<area shape="rect" id="node4" title=" " alt="" coords="244,261,407,301"/>
+<area shape="rect" id="node3" href="$group__enable__marker.html" title=" " alt="" coords="501,69,669,109"/>
+<area shape="rect" id="node5" href="$group__enable__magic.html" title=" " alt="" coords="507,133,663,173"/>
+<area shape="rect" id="node6" href="$group__enable__debug.html" title=" " alt="" coords="505,197,664,237"/>
+<area shape="rect" id="node7" href="$group__enable__debug__output.html" title=" " alt="" coords="455,261,715,301"/>
+<area shape="rect" id="node8" href="$group__enable__location.html" title=" " alt="" coords="495,325,674,365"/>
+<area shape="rect" id="node9" href="$group__enable__alloc.html" title=" " alt="" coords="507,389,662,429"/>
+<area shape="rect" id="node10" href="$group__enable__glibcxx__debug.html" title=" " alt="" coords="479,454,690,509"/>
+<area shape="rect" id="node11" href="$group__enable__debugm.html" title=" " alt="" coords="499,533,670,573"/>
 </map>

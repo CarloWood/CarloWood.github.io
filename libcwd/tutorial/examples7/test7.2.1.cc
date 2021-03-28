@@ -10,11 +10,11 @@ template<typename T1, typename T2>
     double d;
   };
 
-int main(void)
+int main()
 {
-  Debug( libcw_do.on() );
-  Debug( dc::malloc.on() );
-  Debug( dc::notice.on() );
+  Debug(libcw_do.on());
+  Debug(dc::malloc.on());
+  Debug(dc::notice.on());
 
   Foo<char, int>* f = new Foo<char, int>;
   AllocTag(f, "Our test object");
@@ -44,6 +44,4 @@ int main(void)
       << alloc->location()
       << '.');
 #endif
-
-  return 0;
 }

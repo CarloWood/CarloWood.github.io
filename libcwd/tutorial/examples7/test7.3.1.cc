@@ -3,15 +3,15 @@
 
 using namespace libcwd;
 
-int main(void)
+int main()
 {
-  Debug( libcw_do.on() );
-  Debug( dc::malloc.on() );
+  Debug(libcw_do.on());
+  Debug(dc::malloc.on());
 
   char* memory_leak = new char [300];
   AllocTag(memory_leak, "memory_leak");
 
-  // Debug( make_invisible(memory_leak) );
+  // Debug(make_invisible(memory_leak));
 
 #if CWDEBUG_ALLOC
   if (mem_blocks() > 0)
@@ -19,6 +19,4 @@ int main(void)
   else
     Dout(dc::malloc, "No memory leaks.");
 #endif
-
-  return 0;
 }

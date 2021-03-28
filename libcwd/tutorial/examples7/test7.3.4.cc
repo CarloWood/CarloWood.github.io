@@ -1,11 +1,11 @@
 #include "sys.h"
 #include "debug.h"
 
-int main(void)
+int main()
 {
-  Debug( make_all_allocations_invisible_except(NULL) );
-  Debug( libcw_do.on() );
-  Debug( dc::malloc.on() );
+  Debug(make_all_allocations_invisible_except(NULL));
+  Debug(libcw_do.on());
+  Debug(dc::malloc.on());
 
   int* p1 = new int [10];
   AllocTag(p1, "p1");
@@ -20,12 +20,10 @@ int main(void)
   int* p3 = new int [30];
   AllocTag(p3, "p3");
 
-  Debug( list_allocations_on(libcw_do) );
+  Debug(list_allocations_on(libcw_do));
 
 #if CWDEBUG_MARKER
   // Delete the marker while there are still allocations inside it
   delete marker;
 #endif
-
-  return 0;
 }

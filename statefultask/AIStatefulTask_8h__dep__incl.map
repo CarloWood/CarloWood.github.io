@@ -1,10 +1,11 @@
 <map id="statefultask/AIStatefulTask.h" name="statefultask/AIStatefulTask.h">
-<area shape="rect" id="node1" title="Declaration of base class AIStatefulTask." alt="" coords="693,5,903,32"/>
+<area shape="rect" id="node1" title="Declaration of base class AIStatefulTask." alt="" coords="796,5,1005,32"/>
 <area shape="rect" id="node2" href="$AIEngine_8h.html" title="Declaration of class AIEngine." alt="" coords="243,87,417,114"/>
 <area shape="rect" id="node5" href="$AIFriendOfStatefulTask_8h.html" title="Base class of classes that extend AIStatefulTask derived tasks as member function." alt="" coords="452,80,675,121"/>
 <area shape="rect" id="node7" href="$AIStatefulTaskMutex_8cxx.html" title="Implementation of AIStatefulTaskMutex." alt="" coords="699,80,897,121"/>
 <area shape="rect" id="node8" href="$AITimer_8h.html" title="Generate a timer event. Declaration of class AITimer." alt="" coords="921,87,1088,114"/>
 <area shape="rect" id="node10" href="$Broker_8h_source.html" title=" " alt="" coords="1113,87,1270,114"/>
+<area shape="rect" id="node11" href="$TaskEvent_8h_source.html" title=" " alt="" coords="1295,87,1477,114"/>
 <area shape="rect" id="node3" href="$AIEngine_8cxx.html" title="Implementation of AIEngine." alt="" coords="5,169,193,196"/>
 <area shape="rect" id="node4" href="$AIStatefulTask_8cxx.html" title="Implementation of AIStatefulTask." alt="" coords="218,169,442,196"/>
 <area shape="rect" id="node6" href="$AIPackagedTask_8h.html" title="Run code in a thread. Declaration of template class AIPackagedTask." alt="" coords="466,169,685,196"/>

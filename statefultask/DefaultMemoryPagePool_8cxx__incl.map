@@ -1,11 +1,13 @@
 <map id="statefultask/DefaultMemoryPagePool.cxx" name="statefultask/DefaultMemoryPagePool.cxx">
-<area shape="rect" id="node1" title="Implementation of DefaultMemoryPagePool." alt="" coords="148,5,355,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="149,95,205,121"/>
-<area shape="rect" id="node3" href="$DefaultMemoryPagePool_8h.html" title="Declaration of class DefaultMemoryPagePool." alt="" coords="229,95,423,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="138,169,317,196"/>
-<area shape="rect" id="node5" href="$AIStatefulTaskMutex_8h.html" title="Mutex for stateful tasks. Declaration of class AIStatefulTaskMutex." alt="" coords="341,169,509,196"/>
+<area shape="rect" id="node1" title="Implementation of DefaultMemoryPagePool." alt="" coords="384,5,591,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="385,95,441,121"/>
+<area shape="rect" id="node3" href="$DefaultMemoryPagePool_8h.html" title="Declaration of class DefaultMemoryPagePool." alt="" coords="465,95,659,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="374,169,553,196"/>
+<area shape="rect" id="node5" href="$AIStatefulTaskMutex_8h.html" title="Mutex for stateful tasks. Declaration of class AIStatefulTaskMutex." alt="" coords="577,169,745,196"/>
 <area shape="rect" id="node6" title=" " alt="" coords="5,244,196,271"/>
 <area shape="rect" id="node7" title=" " alt="" coords="220,244,435,271"/>
-<area shape="rect" id="node8" title=" " alt="" coords="459,244,588,271"/>
-<area shape="rect" id="node9" title=" " alt="" coords="613,244,687,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="459,244,667,271"/>
+<area shape="rect" id="node9" title=" " alt="" coords="692,244,824,271"/>
+<area shape="rect" id="node10" title=" " alt="" coords="848,244,977,271"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1002,244,1077,271"/>
 </map>

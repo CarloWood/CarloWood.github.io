@@ -131,10 +131,10 @@ $(function() {
 <div class="line">   <span class="comment">// The default finish_impl() does nothing.</span></div>
 <div class="line">   <span class="keywordtype">void</span> <a class="code hl_function" href="classExample.html#a418945b72b830cbc95f3d2cb10f62e83">finish_impl</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:90</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_a44dbafd7818db7873d075eb059808c74"><div class="ttname"><a href="classAIStatefulTask.html#a44dbafd7818db7873d075eb059808c74">AIStatefulTask::state_end</a></div><div class="ttdeci">static constexpr state_type state_end</div><div class="ttdoc">The next state value to use for derived classes.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:123</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_a5bdb546808c3ff5820246f45b8a54973"><div class="ttname"><a href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">AIStatefulTask::state_type</a></div><div class="ttdeci">uint32_t state_type</div><div class="ttdoc">The type of run_state.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:92</div></div>
-<div class="ttc" id="aclassExample_html"><div class="ttname"><a href="classExample.html">Example</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:190</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:96</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_a44dbafd7818db7873d075eb059808c74"><div class="ttname"><a href="classAIStatefulTask.html#a44dbafd7818db7873d075eb059808c74">AIStatefulTask::state_end</a></div><div class="ttdeci">static constexpr state_type state_end</div><div class="ttdoc">The next state value to use for derived classes.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:137</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_a5bdb546808c3ff5820246f45b8a54973"><div class="ttname"><a href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">AIStatefulTask::state_type</a></div><div class="ttdeci">uint32_t state_type</div><div class="ttdoc">The type of run_state.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:98</div></div>
+<div class="ttc" id="aclassExample_html"><div class="ttname"><a href="classExample.html">Example</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:194</div></div>
 <div class="ttc" id="aclassExample_html_a22ac76bde007a560c6428ac0f997a4ee"><div class="ttname"><a href="classExample.html#a22ac76bde007a560c6428ac0f997a4ee">Example::initialize_impl</a></div><div class="ttdeci">void initialize_impl() override</div></div>
 <div class="ttc" id="aclassExample_html_a418945b72b830cbc95f3d2cb10f62e83"><div class="ttname"><a href="classExample.html#a418945b72b830cbc95f3d2cb10f62e83">Example::finish_impl</a></div><div class="ttdeci">void finish_impl() override</div></div>
 <div class="ttc" id="aclassExample_html_a5e23b83406c365bed7cbeeb196071726"><div class="ttname"><a href="classExample.html#a5e23b83406c365bed7cbeeb196071726">Example::multiplex_impl</a></div><div class="ttdeci">void multiplex_impl(state_type run_state) override</div></div>
@@ -163,6 +163,8 @@ Collaboration diagram for Example:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:a6413bee327f9927c5db607032e503fdf"><td class="memItemLeft" align="right" valign="top">char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExample.html#a6413bee327f9927c5db607032e503fdf">condition_str_impl</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> run_state) const override</td></tr>
+<tr class="separator:a6413bee327f9927c5db607032e503fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a687afefc68ce4d0339aad98e38ba06ee"><td class="memItemLeft" align="right" valign="top">char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExample.html#a687afefc68ce4d0339aad98e38ba06ee">state_str_impl</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> run_state) const override</td></tr>
 <tr class="separator:a687afefc68ce4d0339aad98e38ba06ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22ac76bde007a560c6428ac0f997a4ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExample.html#a22ac76bde007a560c6428ac0f997a4ee">initialize_impl</a> () override</td></tr>
@@ -204,6 +206,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AIStatefulTask</b
 <tr class="separator:gaa79810701038b0c5fa974fc4b64dc902 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga669b3bea6b80ec684cb5b96b3fb84d22 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">yield_if_not</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
 <tr class="separator:ga669b3bea6b80ec684cb5b96b3fb84d22 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d326f3307cb8c6b60cd1431bbb4f4fd inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">virtual char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">task_name_impl</a> () const =0</td></tr>
+<tr class="memdesc:a3d326f3307cb8c6b60cd1431bbb4f4fd inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be used to get a human readable name of the most-derived class. It must be guaranteed to always return the same pointer value so it can be used with Tracy (for example).  <a href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">More...</a><br /></td></tr>
+<tr class="separator:a3d326f3307cb8c6b60cd1431bbb4f4fd inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -223,6 +228,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>condition_type</b> =
 <tr class="memdesc:ab2831a32490449ec5320f939363ea059 inherit pub_types_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the skip_wait and idle bit masks. <br /></td></tr>
 <tr class="separator:ab2831a32490449ec5320f939363ea059 inherit pub_types_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classAIStatefulTask"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classAIStatefulTask')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
+<tr class="memitem:a167155bba28eccf21ff70feda444e514 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a167155bba28eccf21ff70feda444e514" name="a167155bba28eccf21ff70feda444e514"></a>
+<a class="el" href="structAIStatefulTask_1_1Conditions.html">Conditions</a>&#160;</td><td class="memItemRight" valign="bottom"><b>print_conditions</b> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
+<tr class="separator:a167155bba28eccf21ff70feda444e514 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a527201e427df104779c634c146a5ebda inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask</a> (bool debug)</td></tr>
 <tr class="separator:a527201e427df104779c634c146a5ebda inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac40d1760493b87dcd12920caf0165f87 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler, std::function&lt; void(bool)&gt; cb_function)</td></tr>
@@ -261,6 +269,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (std::functio
 <tr class="separator:a855cb8523b22595dc5ef69361633e7bb inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09e20373d0b86c70a80a27e754c1bd66 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">duration_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66">getDuration</a> () const</td></tr>
 <tr class="separator:a09e20373d0b86c70a80a27e754c1bd66 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6770fb348d783ab15be88e7c4b280686 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a6770fb348d783ab15be88e7c4b280686">task_name</a> () const</td></tr>
+<tr class="separator:a6770fb348d783ab15be88e7c4b280686 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classAIStatefulTask"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classAIStatefulTask')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
 <tr class="memitem:a416f76c11dda361438485e424e43e501 inherit pub_static_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">static char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a416f76c11dda361438485e424e43e501">state_str</a> (<a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022">base_state_type</a> state)</td></tr>
 <tr class="separator:a416f76c11dda361438485e424e43e501 inherit pub_static_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -328,6 +338,57 @@ static constexpr <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff582
 <div class="line">}</div>
 </div><!-- fragment --> 
 <p>Reimplemented from <a class="el" href="classAIStatefulTask.html#a61a6f86a6e413cf7391b756b0038d4f0">AIStatefulTask</a>.</p>
+
+</div>
+</div>
+<a id="a6413bee327f9927c5db607032e503fdf" name="a6413bee327f9927c5db607032e503fdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6413bee327f9927c5db607032e503fdf">&#9670;&nbsp;</a></span>condition_str_impl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char const  * Example::condition_str_impl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a>&#160;</td>
+          <td class="paramname"><em>run_state</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Stringify a condition, for debugging output.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">condition</td><td>A user defined condition. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string literal with the human readable name of the condition.</dd></dl>
+<p>This is a virtual function of the base class <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> and should be overridden by every derived class.</p>
+<p ><a class="el" href="classExample.html">Example</a> implementation:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> <span class="keyword">const</span>* <a class="code hl_function" href="classExample.html#a6413bee327f9927c5db607032e503fdf">Example::condition_str_impl</a>(<a class="code hl_typedef" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition)<span class="keyword"> const</span></div>
+<div class="line"><span class="keyword"></span>{</div>
+<div class="line">  <span class="keywordflow">switch</span>(condition)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// A complete listing of all condition_type bits defined by Example.</span></div>
+<div class="line">    AI_CASE_RETURN(foo_condition);</div>
+<div class="line">    <span class="comment">// ...</span></div>
+<div class="line">    AI_CASE_RETURN(bar_condition);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> direct_base_type::condition_str_impl(condition);</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassAIStatefulTask_html_ab2831a32490449ec5320f939363ea059"><div class="ttname"><a href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">AIStatefulTask::condition_type</a></div><div class="ttdeci">uint32_t condition_type</div><div class="ttdoc">The type of the skip_wait and idle bit masks.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:99</div></div>
+<div class="ttc" id="aclassExample_html_a6413bee327f9927c5db607032e503fdf"><div class="ttname"><a href="classExample.html#a6413bee327f9927c5db607032e503fdf">Example::condition_str_impl</a></div><div class="ttdeci">char const * condition_str_impl(condition_type run_state) const override</div></div>
+</div><!-- fragment --> 
+<p>Reimplemented from <a class="el" href="classAIStatefulTask.html#af3b57cd42410030d584aaf3c12e37110">AIStatefulTask</a>.</p>
 
 </div>
 </div>
@@ -422,14 +483,18 @@ static constexpr <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff582
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Initialization of a task.</p>
-<p >The default <code>initialize_impl</code> sets the state to the first state, as is done in the example below. When the default is overridden then the new implementation must at least call <a class="el" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a> once.</p>
+<p >Return a human readable name for the most derived class.</p>
+<dl class="section return"><dt>Returns</dt><dd>A string literal with the human readable name of the (most derived) task.</dd></dl>
+<p>This is a virtual function of the base class <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a> and must be overridden by every derived class.</p>
 <p ><a class="el" href="classExample.html">Example</a> implementation:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="classExample.html#a22ac76bde007a560c6428ac0f997a4ee">Example::initialize_impl</a>()</div>
-<div class="line">{</div>
-<div class="line">  <a class="code hl_function" href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">set_state</a>(Example_start);</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__group__protected_html_ga160831e7b091af4095a9f60e33834328"><div class="ttname"><a href="group__group__protected.html#ga160831e7b091af4095a9f60e33834328">AIStatefulTask::set_state</a></div><div class="ttdeci">void set_state(state_type new_state)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1276</div></div>
+<div class="fragment"><div class="line">   <span class="keywordtype">char</span> <span class="keyword">const</span>* <a class="code hl_function" href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">Example::task_name_impl</a>()<span class="keyword"> const</span></div>
+<div class="line"><span class="keyword">   </span>{</div>
+<div class="line">     <span class="keywordflow">return</span> <span class="stringliteral">&quot;Example&quot;</span>;</div>
+<div class="line">   }</div>
+<div class="line">  /</div>
+<div class="line"><span class="keywordtype">char</span> <span class="keyword">const</span>* <a class="code hl_function" href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">task_name_impl</a>() <span class="keyword">const override</span>;</div>
+<div class="line"> </div>
+<div class="ttc" id="aclassAIStatefulTask_html_a3d326f3307cb8c6b60cd1431bbb4f4fd"><div class="ttname"><a href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">AIStatefulTask::task_name_impl</a></div><div class="ttdeci">virtual char const * task_name_impl() const =0</div><div class="ttdoc">This can be used to get a human readable name of the most-derived class. It must be guaranteed to alw...</div></div>
 </div><!-- fragment --> 
 <p>Reimplemented from <a class="el" href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">AIStatefulTask</a>.</p>
 
@@ -482,7 +547,7 @@ static constexpr <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff582
 <div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__group__protected_html_gaf7642911a8012284ec7aa5a9a700b06b"><div class="ttname"><a href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">AIStatefulTask::finish</a></div><div class="ttdeci">void finish()</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1645</div></div>
+<div class="ttc" id="agroup__group__protected_html_gaf7642911a8012284ec7aa5a9a700b06b"><div class="ttname"><a href="group__group__protected.html#gaf7642911a8012284ec7aa5a9a700b06b">AIStatefulTask::finish</a></div><div class="ttdeci">void finish()</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1725</div></div>
 </div><!-- fragment --> 
 <p>Implements <a class="el" href="classAIStatefulTask.html#a57233a1b95a6fdbef04c4cab3fd890ae">AIStatefulTask</a>.</p>
 
@@ -547,7 +612,7 @@ static constexpr <a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff582
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

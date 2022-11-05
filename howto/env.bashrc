@@ -104,13 +104,13 @@ function __cdeh_clear_environment ()
   for name in $(declare -p | \
                 /bin/grep '^declare -[AFafgilntux-]* ' | \
                 /bin/sed -e 's/=.*//;s/.* //' | \
-                /bin/egrep -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|FUNCNAME|GROUPS|LINENO|RANDOM|SECONDS|HOME|PATH|PS1|PROMPT_COMMAND|PWD|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_)$)'); do
+                /bin/grep -E -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|FUNCNAME|GROUPS|LINENO|RANDOM|SECONDS|HOME|PATH|PS1|PROMPT_COMMAND|PWD|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_)$)'); do
     unset $name
   done
   for name in $(declare -F | \
                 /bin/grep '^declare -[[:alnum:]]*f' | \
                 /bin/sed -e 's/.* //' | \
-                /bin/egrep -v '^__cdeh_'); do
+                /bin/grep -E -v '^__cdeh_'); do
     unset -f $name
   done
   for name in $(alias -p | \

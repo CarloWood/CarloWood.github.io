@@ -132,6 +132,10 @@ Collaboration diagram for AIStatefulTask:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Actuation.html">Actuation</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Conditions.html">Conditions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -154,6 +158,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>condition_type</b> =
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a167155bba28eccf21ff70feda444e514"><td class="memItemLeft" align="right" valign="top"><a id="a167155bba28eccf21ff70feda444e514" name="a167155bba28eccf21ff70feda444e514"></a>
+<a class="el" href="structAIStatefulTask_1_1Conditions.html">Conditions</a>&#160;</td><td class="memItemRight" valign="bottom"><b>print_conditions</b> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
+<tr class="separator:a167155bba28eccf21ff70feda444e514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a527201e427df104779c634c146a5ebda"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask</a> (bool debug)</td></tr>
 <tr class="separator:a527201e427df104779c634c146a5ebda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac40d1760493b87dcd12920caf0165f87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler, std::function&lt; void(bool)&gt; cb_function)</td></tr>
@@ -192,6 +199,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (std::functio
 <tr class="separator:a855cb8523b22595dc5ef69361633e7bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09e20373d0b86c70a80a27e754c1bd66"><td class="memItemLeft" align="right" valign="top">duration_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66">getDuration</a> () const</td></tr>
 <tr class="separator:a09e20373d0b86c70a80a27e754c1bd66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6770fb348d783ab15be88e7c4b280686"><td class="memItemLeft" align="right" valign="top">char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a6770fb348d783ab15be88e7c4b280686">task_name</a> () const</td></tr>
+<tr class="separator:a6770fb348d783ab15be88e7c4b280686"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -266,9 +275,15 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AIStatefulTask</b
 <tr class="memitem:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">yield_if_not</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
 <tr class="separator:ga669b3bea6b80ec684cb5b96b3fb84d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:af3b57cd42410030d584aaf3c12e37110"><td class="memItemLeft" align="right" valign="top">virtual char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#af3b57cd42410030d584aaf3c12e37110">condition_str_impl</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition) const</td></tr>
+<tr class="memdesc:af3b57cd42410030d584aaf3c12e37110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to stringify a condition type for debugging output.  <a href="classAIStatefulTask.html#af3b57cd42410030d584aaf3c12e37110">More...</a><br /></td></tr>
+<tr class="separator:af3b57cd42410030d584aaf3c12e37110"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf2da57033c2f1d05a7f6b59fe392d67"><td class="memItemLeft" align="right" valign="top">virtual char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">state_str_impl</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> run_state) const</td></tr>
 <tr class="memdesc:abf2da57033c2f1d05a7f6b59fe392d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to stringify a run state for debugging output. Must be overridden.  <a href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">More...</a><br /></td></tr>
 <tr class="separator:abf2da57033c2f1d05a7f6b59fe392d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d326f3307cb8c6b60cd1431bbb4f4fd"><td class="memItemLeft" align="right" valign="top">virtual char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">task_name_impl</a> () const =0</td></tr>
+<tr class="memdesc:a3d326f3307cb8c6b60cd1431bbb4f4fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be used to get a human readable name of the most-derived class. It must be guaranteed to always return the same pointer value so it can be used with Tracy (for example).  <a href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">More...</a><br /></td></tr>
+<tr class="separator:a3d326f3307cb8c6b60cd1431bbb4f4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe86c9acff86165977302965e5401e20"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">initialize_impl</a> ()</td></tr>
 <tr class="memdesc:afe86c9acff86165977302965e5401e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called for base state <a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022ae322cda5bdc1ea7d2daf120cc69f091a">bs_initialize</a>.  <a href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">More...</a><br /></td></tr>
 <tr class="separator:afe86c9acff86165977302965e5401e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,6 +308,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIFriendOfStatefulTa
 <tr class="memitem:a2372a59209f35056d3f3d961e84a65d4"><td class="memItemLeft" align="right" valign="top"><a id="a2372a59209f35056d3f3d961e84a65d4" name="a2372a59209f35056d3f3d961e84a65d4"></a>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></tr>
 <tr class="separator:a2372a59209f35056d3f3d961e84a65d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f852dae432f7ea7b8c948fc05308cdc"><td class="memItemLeft" align="right" valign="top"><a id="a1f852dae432f7ea7b8c948fc05308cdc" name="a1f852dae432f7ea7b8c948fc05308cdc"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;, <a class="el" href="structAIStatefulTask_1_1Conditions.html">Conditions</a>)</td></tr>
+<tr class="separator:a1f852dae432f7ea7b8c948fc05308cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="acb2390570fc523acceee2a25fc054022" name="acb2390570fc523acceee2a25fc054022"></a>
@@ -482,6 +500,37 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if this task is actually added to <em>handler</em>. </dd></dl>
+
+</div>
+</div>
+<a id="af3b57cd42410030d584aaf3c12e37110" name="af3b57cd42410030d584aaf3c12e37110"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3b57cd42410030d584aaf3c12e37110">&#9670;&nbsp;</a></span>condition_str_impl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char const  * AIStatefulTask::condition_str_impl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a>&#160;</td>
+          <td class="paramname"><em>condition</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called to stringify a condition type for debugging output. </p>
+<p >See <a class="el" href="classExample.html#example_task">example_task</a> for a description of the virtual functions. </p>
+
+<p>Reimplemented in <a class="el" href="classExample.html#a6413bee327f9927c5db607032e503fdf">Example</a>.</p>
 
 </div>
 </div>
@@ -829,9 +878,63 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
 </div><div class="memdoc">
 
 <p>Called to stringify a run state for debugging output. Must be overridden. </p>
-<p >See <a class="el" href="classExample.html#example_task">example_task</a> for a description of the virtual functions. </p>
 
 <p>Reimplemented in <a class="el" href="classExample.html#a687afefc68ce4d0339aad98e38ba06ee">Example</a>, <a class="el" href="classAITimer.html#a8e24c03469c693fa42579632eb392e61">AITimer</a>, and <a class="el" href="classtask_1_1Broker.html#a807d2ba8bc7cec305940c82576bd4a4c">task::Broker&lt; Task, Args &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a6770fb348d783ab15be88e7c4b280686" name="a6770fb348d783ab15be88e7c4b280686"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6770fb348d783ab15be88e7c4b280686">&#9670;&nbsp;</a></span>task_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char const  * AIStatefulTask::task_name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Return human readable name of (most derived) task. </p>
+
+</div>
+</div>
+<a id="a3d326f3307cb8c6b60cd1431bbb4f4fd" name="a3d326f3307cb8c6b60cd1431bbb4f4fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d326f3307cb8c6b60cd1431bbb4f4fd">&#9670;&nbsp;</a></span>task_name_impl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual char const  * AIStatefulTask::task_name_impl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This can be used to get a human readable name of the most-derived class. It must be guaranteed to always return the same pointer value so it can be used with Tracy (for example). </p>
+
+<p>Implemented in <a class="el" href="classAITimer.html#a84130e69c9bd1dc9ea6c1258b6b9897d">AITimer</a>, and <a class="el" href="classtask_1_1Broker.html#ae59f1116e3e0f84ba84e854e173c8774">task::Broker&lt; Task, Args &gt;</a>.</p>
 
 </div>
 </div>
@@ -883,7 +986,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AIEngine</b></td></t
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

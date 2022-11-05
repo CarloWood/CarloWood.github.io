@@ -89,7 +89,7 @@ class AIPackagedTask&lt; R(Args...)&gt;</div><p >A wrapper for a <em>(member) fu
 <div class="line">};</div>
 <div class="ttc" id="aclassAIFriendOfStatefulTask_html_a1a684a5e0c43ec6ca497ac5d86fb6e21"><div class="ttname"><a href="classAIFriendOfStatefulTask.html#a1a684a5e0c43ec6ca497ac5d86fb6e21">AIFriendOfStatefulTask::condition_type</a></div><div class="ttdeci">AIStatefulTask::condition_type condition_type</div><div class="ttdoc">Proxy for AIStatefulTask::condition_type.</div><div class="ttdef"><b>Definition:</b> AIFriendOfStatefulTask.h:64</div></div>
 <div class="ttc" id="aclassAIPackagedTask_3_01R_07Args_8_8_8_08_4_html_a072d9d06adc511cbcb4f49bfe3e5b7ba"><div class="ttname"><a href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a072d9d06adc511cbcb4f49bfe3e5b7ba">AIPackagedTask&lt; R(Args...)&gt;::AIPackagedTask</a></div><div class="ttdeci">AIPackagedTask(AIStatefulTask *parent_task, AIStatefulTask::condition_type condition, R(*fp)(Args...), AIQueueHandle object_queue_handle)</div><div class="ttdef"><b>Definition:</b> AIPackagedTask.h:179</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:90</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:96</div></div>
 </div><!-- fragment --><p >where as <a class="el" href="writingatask.html#waiting">usual</a> <code>retrieve_condition</code> should be different from any other condition bits that this task is using. And where <code>queue_handle</code> is a handle that was previously returned by AIThreadPool::new_queue().</p>
 <p >Then this function can be called (repeatedly, with different parameters if need be) from <code>multiplex_impl</code> as follows:</p>
 <div class="fragment"><div class="line">...</div>
@@ -409,7 +409,7 @@ template&lt;typename R , typename ... Args&gt; </div>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

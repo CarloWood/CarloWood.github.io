@@ -246,7 +246,7 @@ $(function() {
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>}</div>
 <div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
 <div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="comment">// Called by parent task to dispatch the job to its own thread.</span></div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment">// After finishing the job, the parent will be signalled with</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment">// After finishing the job, the parent will be signaled with</span></div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment">// m_condition set during construction.</span></div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="comment">//</span></div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment">// Returns true upon a successful queue; false when the queue is full</span></div>
@@ -286,17 +286,17 @@ $(function() {
 <div class="ttc" id="aclassAIPackagedTask_3_01R_07Args_8_8_8_08_4_html_a736fd6b64f1547354970f9c417b70b87"><div class="ttname"><a href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#a736fd6b64f1547354970f9c417b70b87">AIPackagedTask&lt; R(Args...)&gt;::get</a></div><div class="ttdeci">R get() const</div><div class="ttdef"><b>Definition:</b> AIPackagedTask.h:230</div></div>
 <div class="ttc" id="aclassAIPackagedTask_3_01R_07Args_8_8_8_08_4_html_abdeaea2fd63db8bc6a643ccc67bbdcf2"><div class="ttname"><a href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#abdeaea2fd63db8bc6a643ccc67bbdcf2">AIPackagedTask&lt; R(Args...)&gt;::swap</a></div><div class="ttdeci">void swap(AIPackagedTask &amp;other) noexcept</div><div class="ttdoc">Exchange the state with that of other.</div><div class="ttdef"><b>Definition:</b> AIPackagedTask.h:199</div></div>
 <div class="ttc" id="aclassAIPackagedTask_3_01R_07Args_8_8_8_08_4_html_ac933acb37de54338cf8c5dfeebcac472"><div class="ttname"><a href="classAIPackagedTask_3_01R_07Args_8_8_8_08_4.html#ac933acb37de54338cf8c5dfeebcac472">AIPackagedTask&lt; R(Args...)&gt;::AIPackagedTask</a></div><div class="ttdeci">AIPackagedTask(AIStatefulTask *parent_task, AIStatefulTask::condition_type condition, C *object, R(C::*memfp)(Args...), AIQueueHandle object_queue_handle)</div><div class="ttdef"><b>Definition:</b> AIPackagedTask.h:192</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:90</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_a527201e427df104779c634c146a5ebda"><div class="ttname"><a href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask::AIStatefulTask</a></div><div class="ttdeci">AIStatefulTask(bool debug)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:299</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:96</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_a527201e427df104779c634c146a5ebda"><div class="ttname"><a href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask::AIStatefulTask</a></div><div class="ttdeci">AIStatefulTask(bool debug)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:352</div></div>
 <div class="ttc" id="aclassAIStatefulTask_html_a57233a1b95a6fdbef04c4cab3fd890ae"><div class="ttname"><a href="classAIStatefulTask.html#a57233a1b95a6fdbef04c4cab3fd890ae">AIStatefulTask::multiplex_impl</a></div><div class="ttdeci">virtual void multiplex_impl(state_type run_state)=0</div><div class="ttdoc">Called for base state bs_multiplex.</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_ab2831a32490449ec5320f939363ea059"><div class="ttname"><a href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">AIStatefulTask::condition_type</a></div><div class="ttdeci">uint32_t condition_type</div><div class="ttdoc">The type of the skip_wait and idle bit masks.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:93</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_abf2da57033c2f1d05a7f6b59fe392d67"><div class="ttname"><a href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">AIStatefulTask::state_str_impl</a></div><div class="ttdeci">virtual char const * state_str_impl(state_type run_state) const</div><div class="ttdoc">Called to stringify a run state for debugging output. Must be overridden.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1195</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_ab2831a32490449ec5320f939363ea059"><div class="ttname"><a href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">AIStatefulTask::condition_type</a></div><div class="ttdeci">uint32_t condition_type</div><div class="ttdoc">The type of the skip_wait and idle bit masks.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:99</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_abf2da57033c2f1d05a7f6b59fe392d67"><div class="ttname"><a href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">AIStatefulTask::state_str_impl</a></div><div class="ttdeci">virtual char const * state_str_impl(state_type run_state) const</div><div class="ttdoc">Called to stringify a run state for debugging output. Must be overridden.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1273</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.11-->
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

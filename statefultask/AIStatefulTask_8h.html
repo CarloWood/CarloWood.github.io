@@ -89,6 +89,7 @@ $(function() {
 <code>#include &quot;utils/AIRefCount.h&quot;</code><br />
 <code>#include &quot;utils/macros.h&quot;</code><br />
 <code>#include &quot;utils/FuzzyBool.h&quot;</code><br />
+<code>#include &quot;utils/is_power_of_two.h&quot;</code><br />
 <code>#include &quot;debug.h&quot;</code><br />
 <code>#include &lt;list&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
@@ -108,11 +109,12 @@ Include dependency graph for AIStatefulTask.h:</div>
 <area shape="rect" title=" " alt="" coords="987,80,1126,107"/>
 <area shape="rect" title=" " alt="" coords="1150,80,1265,107"/>
 <area shape="rect" title=" " alt="" coords="220,155,352,181"/>
+<area shape="rect" title=" " alt="" coords="1289,80,1464,107"/>
 <area shape="rect" title=" " alt="" coords="377,155,451,181"/>
-<area shape="rect" title=" " alt="" coords="1289,80,1331,107"/>
-<area shape="rect" title=" " alt="" coords="1355,80,1422,107"/>
-<area shape="rect" title=" " alt="" coords="1447,80,1533,107"/>
-<area shape="rect" title=" " alt="" coords="1557,80,1612,107"/>
+<area shape="rect" title=" " alt="" coords="1489,80,1531,107"/>
+<area shape="rect" title=" " alt="" coords="1555,80,1622,107"/>
+<area shape="rect" title=" " alt="" coords="1647,80,1733,107"/>
+<area shape="rect" title=" " alt="" coords="1757,80,1812,107"/>
 <area shape="rect" href="AIStatefulTaskMutex_8h.html" title="Mutex for stateful tasks. Declaration of class AIStatefulTaskMutex." alt="" coords="374,80,542,107"/>
 <area shape="rect" title=" " alt="" coords="476,155,691,181"/>
 <area shape="rect" title=" " alt="" coords="715,155,923,181"/>
@@ -124,17 +126,22 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="AIStatefulTask_8h__dep__incl.png" border="0" usemap="#astatefultask_2AIStatefulTask_8hdep" alt=""/></div>
 <map name="astatefultask_2AIStatefulTask_8hdep" id="astatefultask_2AIStatefulTask_8hdep">
-<area shape="rect" title="Declaration of base class AIStatefulTask." alt="" coords="796,5,1005,32"/>
+<area shape="rect" title="Declaration of base class AIStatefulTask." alt="" coords="999,5,1208,32"/>
 <area shape="rect" href="AIEngine_8h.html" title="Declaration of class AIEngine." alt="" coords="243,87,417,114"/>
-<area shape="rect" href="AIFriendOfStatefulTask_8h.html" title="Base class of classes that extend AIStatefulTask derived tasks as member function." alt="" coords="452,80,675,121"/>
-<area shape="rect" href="AIStatefulTaskMutex_8cxx.html" title="Implementation of AIStatefulTaskMutex." alt="" coords="699,80,897,121"/>
-<area shape="rect" href="AITimer_8h.html" title="Generate a timer event. Declaration of class AITimer." alt="" coords="921,87,1088,114"/>
-<area shape="rect" href="Broker_8h_source.html" title=" " alt="" coords="1113,87,1270,114"/>
-<area shape="rect" href="TaskEvent_8h_source.html" title=" " alt="" coords="1295,87,1477,114"/>
-<area shape="rect" href="AIEngine_8cxx.html" title="Implementation of AIEngine." alt="" coords="5,169,193,196"/>
-<area shape="rect" href="AIStatefulTask_8cxx.html" title="Implementation of AIStatefulTask." alt="" coords="218,169,442,196"/>
-<area shape="rect" href="AIPackagedTask_8h.html" title="Run code in a thread. Declaration of template class AIPackagedTask." alt="" coords="466,169,685,196"/>
-<area shape="rect" href="AITimer_8cxx.html" title="Implementation of AITimer." alt="" coords="914,169,1095,196"/>
+<area shape="rect" href="AIFriendOfStatefulTask_8h.html" title="Base class of classes that extend AIStatefulTask derived tasks as member function." alt="" coords="505,80,728,121"/>
+<area shape="rect" href="AIStatefulTaskMutex_8cxx.html" title="Implementation of AIStatefulTaskMutex." alt="" coords="709,169,906,211"/>
+<area shape="rect" href="AIStatefulTaskMutex_8h.html" title="Mutex for stateful tasks. Declaration of class AIStatefulTaskMutex." alt="" coords="937,80,1134,121"/>
+<area shape="rect" href="TaskEvent_8h_source.html" title=" " alt="" coords="1084,266,1267,293"/>
+<area shape="rect" href="AITimer_8h.html" title="Generate a timer event. Declaration of class AITimer." alt="" coords="1212,87,1379,114"/>
+<area shape="rect" href="Broker_8h_source.html" title=" " alt="" coords="1403,87,1561,114"/>
+<area shape="rect" href="ResourcePool_8h_source.html" title=" " alt="" coords="1585,87,1789,114"/>
+<area shape="rect" href="RunningTasksTracker_8h_source.html" title=" " alt="" coords="1813,80,2007,121"/>
+<area shape="rect" href="AIEngine_8cxx.html" title="Implementation of AIEngine." alt="" coords="5,177,193,203"/>
+<area shape="rect" href="AIStatefulTask_8cxx.html" title="Implementation of AIStatefulTask." alt="" coords="218,177,442,203"/>
+<area shape="rect" href="AIPackagedTask_8h.html" title="Run code in a thread. Declaration of template class AIPackagedTask." alt="" coords="466,177,685,203"/>
+<area shape="rect" href="DefaultMemoryPagePool_8h.html" title="Declaration of class DefaultMemoryPagePool." alt="" coords="931,169,1137,211"/>
+<area shape="rect" href="DefaultMemoryPagePool_8cxx.html" title="Implementation of DefaultMemoryPagePool." alt="" coords="853,259,1060,300"/>
+<area shape="rect" href="AITimer_8cxx.html" title="Implementation of AITimer." alt="" coords="1213,177,1394,203"/>
 </map>
 </div>
 </div>
@@ -144,10 +151,14 @@ This graph shows which files directly or indirectly include this file:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Actuation.html">AIStatefulTask::Actuation</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Handler.html">AIStatefulTask::Handler</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionAIStatefulTask_1_1Handler_1_1Handle.html">AIStatefulTask::Handler::Handle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains extra data that depends on the type of the <a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a>.  <a href="unionAIStatefulTask_1_1Handler_1_1Handle.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAIStatefulTask_1_1Conditions.html">AIStatefulTask::Conditions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -182,7 +193,7 @@ template&lt;task::TaskType TaskType, typename... ARGS&gt; </td></tr>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

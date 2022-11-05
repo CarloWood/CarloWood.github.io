@@ -77,8 +77,8 @@ $(function() {
 <div class="textblock"><p >A typical Task will look like,</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="AIStatefulTask_8h.html">statefultask/AIStatefulTask.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">class </span>MyTask : <span class="keyword">public</span> <a class="code hl_class" href="classAIStatefulTask.html">AIStatefulTask</a></div>
-<div class="line">{</div>
+<div class="line"><span class="keyword">class </span>MyTask final : <span class="keyword">public</span> <a class="code hl_class" href="classAIStatefulTask.html">AIStatefulTask</a>      <span class="comment">// Use final unless other tasks are allowed</span></div>
+<div class="line">{                                               <span class="comment">// to derive from this task.</span></div>
 <div class="line"> <span class="keyword">protected</span>:</div>
 <div class="line">  <span class="keyword">using</span> direct_base_type = <a class="code hl_function" href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask</a>;      <span class="comment">// The immediate base class of this task.</span></div>
 <div class="line"> </div>
@@ -92,7 +92,8 @@ $(function() {
 <div class="line"> <span class="keyword">public</span>:</div>
 <div class="line">  <span class="keyword">static</span> state_type <span class="keyword">constexpr</span> state_end = MyTask_done + 1;  <span class="comment">// The last state plus one.</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">// Construct a MyTask object.</span></div>
+<div class="line">  <span class="comment">// In debug mode, passing `true` to the constructor of a task causes</span></div>
+<div class="line">  <span class="comment">// debug output to dc::statefultask regarding running the state machine.</span></div>
 <div class="line">  MyTask(CWDEBUG_ONLY(<span class="keywordtype">bool</span> debug = <span class="keyword">false</span>)) : <a class="code hl_class" href="classAIStatefulTask.html">AIStatefulTask</a>(CWDEBUG_ONLY(debug))</div>
 <div class="line">  {</div>
 <div class="line">    DoutEntering(dc::statefultask(mSMDebug), <span class="stringliteral">&quot;MyTask() [&quot;</span> &lt;&lt; (<span class="keywordtype">void</span>*)<span class="keyword">this</span> &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>);</div>
@@ -108,15 +109,13 @@ $(function() {
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">initialize_impl</a>() <span class="keyword">override</span>;  <span class="comment">// Default starts with first state.</span></div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="classAIStatefulTask.html#a61a6f86a6e413cf7391b756b0038d4f0">abort_impl</a>() <span class="keyword">override</span>;       <span class="comment">// Default does nothing.</span></div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="classAIStatefulTask.html#a872025f08ce55e54810495690da7b337">finish_impl</a>() <span class="keyword">override</span>;      <span class="comment">// Default does nothing.</span></div>
-<div class="line"> </div>
-<div class="line"> <span class="keyword">public</span>:</div>
-<div class="line">  <span class="comment">// In debug mode, passing `true` to the constructor of a task causes</span></div>
-<div class="line">  <span class="comment">// debug output to dc::statefultask regarding running the state machine.</span></div>
-<div class="line">  MyTask(CWDEBUG_ONLY(<span class="keywordtype">bool</span> debug = <span class="keyword">false</span>)) : <a class="code hl_class" href="classAIStatefulTask.html">AIStatefulTask</a>(CWDEBUG_ONLY(debug)) { }</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">char</span> <span class="keyword">const</span>* MyTask::state_str_impl(state_type run_state)</div>
-<div class="line">{</div>
+<div class="line"><span class="keywordtype">char</span> <span class="keyword">const</span>* MyTask::state_str_impl(state_type run_state)<span class="keyword"> const</span></div>
+<div class="line"><span class="keyword"></span>{</div>
+<div class="line">  <span class="comment">// Use the following two lines when this class is not final.</span></div>
+<div class="line">  <span class="comment">// If this fails then a derived class forgot to add an AI_CASE_RETURN for this state.</span></div>
+<div class="line">  ASSERT(run_state &lt; state_end);</div>
 <div class="line">  <span class="keywordflow">switch</span> (run_state)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// A complete listing of my_task_state_type.</span></div>
@@ -124,8 +123,8 @@ $(function() {
 <div class="line">    ...a list of all states...</div>
 <div class="line">    AI_CASE_RETURN(MyTask_done);</div>
 <div class="line">  }</div>
-<div class="line">  ASSERT(<span class="keyword">false</span>);</div>
-<div class="line">  <span class="keywordflow">return</span> <span class="stringliteral">&quot;UNKNOWN STATE&quot;</span>;</div>
+<div class="line">  AI_NEVER_REACHED      <span class="comment">// Use this when this task is derived from AIStatefulTask.</span></div>
+<div class="line">  <span class="keywordflow">return</span> direct_base_type::state_str_impl(run_state);   <span class="comment">// Use this instead when it is derived from a task that it extents.</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> MyTask::multiplex_impl(state_type run_state)</div>
@@ -143,13 +142,13 @@ $(function() {
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="ttc" id="aAIStatefulTask_8h_html"><div class="ttname"><a href="AIStatefulTask_8h.html">AIStatefulTask.h</a></div><div class="ttdoc">Declaration of base class AIStatefulTask.</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:90</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_a527201e427df104779c634c146a5ebda"><div class="ttname"><a href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask::AIStatefulTask</a></div><div class="ttdeci">AIStatefulTask(bool debug)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:299</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:96</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_a527201e427df104779c634c146a5ebda"><div class="ttname"><a href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask::AIStatefulTask</a></div><div class="ttdeci">AIStatefulTask(bool debug)</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:352</div></div>
 <div class="ttc" id="aclassAIStatefulTask_html_a57233a1b95a6fdbef04c4cab3fd890ae"><div class="ttname"><a href="classAIStatefulTask.html#a57233a1b95a6fdbef04c4cab3fd890ae">AIStatefulTask::multiplex_impl</a></div><div class="ttdeci">virtual void multiplex_impl(state_type run_state)=0</div><div class="ttdoc">Called for base state bs_multiplex.</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_a61a6f86a6e413cf7391b756b0038d4f0"><div class="ttname"><a href="classAIStatefulTask.html#a61a6f86a6e413cf7391b756b0038d4f0">AIStatefulTask::abort_impl</a></div><div class="ttdeci">virtual void abort_impl()</div><div class="ttdoc">Called for base state bs_abort.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1209</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_a872025f08ce55e54810495690da7b337"><div class="ttname"><a href="classAIStatefulTask.html#a872025f08ce55e54810495690da7b337">AIStatefulTask::finish_impl</a></div><div class="ttdeci">virtual void finish_impl()</div><div class="ttdoc">Called for base state bs_finish.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1214</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_abf2da57033c2f1d05a7f6b59fe392d67"><div class="ttname"><a href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">AIStatefulTask::state_str_impl</a></div><div class="ttdeci">virtual char const * state_str_impl(state_type run_state) const</div><div class="ttdoc">Called to stringify a run state for debugging output. Must be overridden.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1195</div></div>
-<div class="ttc" id="aclassAIStatefulTask_html_afe86c9acff86165977302965e5401e20"><div class="ttname"><a href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">AIStatefulTask::initialize_impl</a></div><div class="ttdeci">virtual void initialize_impl()</div><div class="ttdoc">Called for base state bs_initialize.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1202</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_a61a6f86a6e413cf7391b756b0038d4f0"><div class="ttname"><a href="classAIStatefulTask.html#a61a6f86a6e413cf7391b756b0038d4f0">AIStatefulTask::abort_impl</a></div><div class="ttdeci">virtual void abort_impl()</div><div class="ttdoc">Called for base state bs_abort.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1287</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_a872025f08ce55e54810495690da7b337"><div class="ttname"><a href="classAIStatefulTask.html#a872025f08ce55e54810495690da7b337">AIStatefulTask::finish_impl</a></div><div class="ttdeci">virtual void finish_impl()</div><div class="ttdoc">Called for base state bs_finish.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1292</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_abf2da57033c2f1d05a7f6b59fe392d67"><div class="ttname"><a href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">AIStatefulTask::state_str_impl</a></div><div class="ttdeci">virtual char const * state_str_impl(state_type run_state) const</div><div class="ttdoc">Called to stringify a run state for debugging output. Must be overridden.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1273</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html_afe86c9acff86165977302965e5401e20"><div class="ttname"><a href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">AIStatefulTask::initialize_impl</a></div><div class="ttdeci">virtual void initialize_impl()</div><div class="ttdoc">Called for base state bs_initialize.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.cxx:1280</div></div>
 </div><!-- fragment --><p >Then in  <span class="inlinecode">multiplex_impl</span> each state need to be implemented. Here are a few examples.</p>
 <h1><a class="anchor" id="changing_state"></a>
 Changing state</h1>
@@ -264,7 +263,7 @@ Waiting</h1>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

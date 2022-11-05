@@ -89,6 +89,14 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstatefultask_1_1DefaultMemoryPagePool.html">DefaultMemoryPagePool</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstatefultask_1_1ResourceFactory.html">ResourceFactory</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstatefultask_1_1ResourcePool.html">ResourcePool</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstatefultask_1_1RunningTasksTracker.html">RunningTasksTracker</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstatefultask_1_1TaskCounterGate.html">TaskCounterGate</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstatefultask_1_1TaskEvent.html">TaskEvent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -145,9 +153,9 @@ template&lt;task::TaskType TaskType, typename... ARGS&gt; </div>
 <div class="line">    m_task-&gt;run(...);</div>
 <div class="line">  }</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:90</div></div>
-<div class="ttc" id="anamespacestatefultask_html"><div class="ttname"><a href="namespacestatefultask.html">statefultask</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:761</div></div>
-<div class="ttc" id="anamespacestatefultask_html_ad23ba020b800ff63e1de770b59b95b40"><div class="ttname"><a href="namespacestatefultask.html#ad23ba020b800ff63e1de770b59b95b40">statefultask::create</a></div><div class="ttdeci">boost::intrusive_ptr&lt; TaskType &gt; create(ARGS &amp;&amp;... args)</div><div class="ttdoc">Convenience function to create tasks.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:798</div></div>
+<div class="ttc" id="aclassAIStatefulTask_html"><div class="ttname"><a href="classAIStatefulTask.html">AIStatefulTask</a></div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:96</div></div>
+<div class="ttc" id="anamespacestatefultask_html"><div class="ttname"><a href="namespacestatefultask.html">statefultask</a></div><div class="ttdoc">Tasks defined by the library project are put into this namespace.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:857</div></div>
+<div class="ttc" id="anamespacestatefultask_html_ad23ba020b800ff63e1de770b59b95b40"><div class="ttname"><a href="namespacestatefultask.html#ad23ba020b800ff63e1de770b59b95b40">statefultask::create</a></div><div class="ttdeci">boost::intrusive_ptr&lt; TaskType &gt; create(ARGS &amp;&amp;... args)</div><div class="ttdoc">Convenience function to create tasks.</div><div class="ttdef"><b>Definition:</b> AIStatefulTask.h:894</div></div>
 </div><!-- fragment --><p >Or, for a one-shot task</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = statefultask::create&lt;ATask&gt;(<span class="comment">/* constructor arguments of ATask */</span>);</div>
 <div class="line">task-&gt;init(...);</div>
@@ -160,7 +168,7 @@ template&lt;task::TaskType TaskType, typename... ARGS&gt; </div>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

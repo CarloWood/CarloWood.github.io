@@ -120,6 +120,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>terminate</b> (std::f
 boost::intrusive_ptr&lt; Task const &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (<a class="el" href="classstatefultask_1_1BrokerKey.html">statefultask::BrokerKey</a> const &amp;key, std::function&lt; void(bool)&gt; &amp;&amp;callback)</td></tr>
 <tr class="separator:a44544633cf380836bd6d3b3b9646bd20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classAIStatefulTask"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classAIStatefulTask')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classAIStatefulTask.html">AIStatefulTask</a></td></tr>
+<tr class="memitem:a167155bba28eccf21ff70feda444e514 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top"><a id="a167155bba28eccf21ff70feda444e514" name="a167155bba28eccf21ff70feda444e514"></a>
+<a class="el" href="structAIStatefulTask_1_1Conditions.html">Conditions</a>&#160;</td><td class="memItemRight" valign="bottom"><b>print_conditions</b> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> conditions)</td></tr>
+<tr class="separator:a167155bba28eccf21ff70feda444e514 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a527201e427df104779c634c146a5ebda inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a527201e427df104779c634c146a5ebda">AIStatefulTask</a> (bool debug)</td></tr>
 <tr class="separator:a527201e427df104779c634c146a5ebda inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac40d1760493b87dcd12920caf0165f87 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__run.html#gac40d1760493b87dcd12920caf0165f87">run</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> default_handler, std::function&lt; void(bool)&gt; cb_function)</td></tr>
@@ -158,6 +161,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (std::functio
 <tr class="separator:a855cb8523b22595dc5ef69361633e7bb inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09e20373d0b86c70a80a27e754c1bd66 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">duration_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a09e20373d0b86c70a80a27e754c1bd66">getDuration</a> () const</td></tr>
 <tr class="separator:a09e20373d0b86c70a80a27e754c1bd66 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6770fb348d783ab15be88e7c4b280686 inherit pub_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#a6770fb348d783ab15be88e7c4b280686">task_name</a> () const</td></tr>
+<tr class="separator:a6770fb348d783ab15be88e7c4b280686 inherit pub_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -211,6 +216,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a807d2ba8bc7cec305940c82576bd4a4c"><td class="memItemLeft" align="right" valign="top">char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask_1_1Broker.html#a807d2ba8bc7cec305940c82576bd4a4c">state_str_impl</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> run_state) const override</td></tr>
 <tr class="memdesc:a807d2ba8bc7cec305940c82576bd4a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to stringify a run state for debugging output. Must be overridden.  <a href="classtask_1_1Broker.html#a807d2ba8bc7cec305940c82576bd4a4c">More...</a><br /></td></tr>
 <tr class="separator:a807d2ba8bc7cec305940c82576bd4a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae59f1116e3e0f84ba84e854e173c8774"><td class="memItemLeft" align="right" valign="top">char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask_1_1Broker.html#ae59f1116e3e0f84ba84e854e173c8774">task_name_impl</a> () const override</td></tr>
+<tr class="memdesc:ae59f1116e3e0f84ba84e854e173c8774"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be used to get a human readable name of the most-derived class. It must be guaranteed to always return the same pointer value so it can be used with Tracy (for example).  <a href="classtask_1_1Broker.html#ae59f1116e3e0f84ba84e854e173c8774">More...</a><br /></td></tr>
+<tr class="separator:ae59f1116e3e0f84ba84e854e173c8774"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a526c1698a1fc7f3445ec75c01a03e488"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask_1_1Broker.html#a526c1698a1fc7f3445ec75c01a03e488">multiplex_impl</a> (<a class="el" href="classAIStatefulTask.html#a5bdb546808c3ff5820246f45b8a54973">state_type</a> run_state) override</td></tr>
 <tr class="memdesc:a526c1698a1fc7f3445ec75c01a03e488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called for base state <a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022a9b6c32619c183bf636f8a38c30fa1ecc">bs_multiplex</a>.  <a href="classtask_1_1Broker.html#a526c1698a1fc7f3445ec75c01a03e488">More...</a><br /></td></tr>
 <tr class="separator:a526c1698a1fc7f3445ec75c01a03e488"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,6 +254,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AIStatefulTask</b
 <tr class="separator:gaa79810701038b0c5fa974fc4b64dc902 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga669b3bea6b80ec684cb5b96b3fb84d22 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__yield.html#ga669b3bea6b80ec684cb5b96b3fb84d22">yield_if_not</a> (<a class="el" href="structAIStatefulTask_1_1Handler.html">Handler</a> handler)</td></tr>
 <tr class="separator:ga669b3bea6b80ec684cb5b96b3fb84d22 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3b57cd42410030d584aaf3c12e37110 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">virtual char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#af3b57cd42410030d584aaf3c12e37110">condition_str_impl</a> (<a class="el" href="classAIStatefulTask.html#ab2831a32490449ec5320f939363ea059">condition_type</a> condition) const</td></tr>
+<tr class="memdesc:af3b57cd42410030d584aaf3c12e37110 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to stringify a condition type for debugging output.  <a href="classAIStatefulTask.html#af3b57cd42410030d584aaf3c12e37110">More...</a><br /></td></tr>
+<tr class="separator:af3b57cd42410030d584aaf3c12e37110 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe86c9acff86165977302965e5401e20 inherit pro_methods_classAIStatefulTask"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">initialize_impl</a> ()</td></tr>
 <tr class="memdesc:afe86c9acff86165977302965e5401e20 inherit pro_methods_classAIStatefulTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called for base state <a class="el" href="classAIStatefulTask.html#acb2390570fc523acceee2a25fc054022ae322cda5bdc1ea7d2daf120cc69f091a">bs_initialize</a>.  <a href="classAIStatefulTask.html#afe86c9acff86165977302965e5401e20">More...</a><br /></td></tr>
 <tr class="separator:afe86c9acff86165977302965e5401e20 inherit pro_methods_classAIStatefulTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -367,9 +378,39 @@ template&lt;TaskType Task, typename... Args&gt; </div>
 </div><div class="memdoc">
 
 <p>Called to stringify a run state for debugging output. Must be overridden. </p>
-<p >See <a class="el" href="classExample.html#example_task">example_task</a> for a description of the virtual functions. </p>
 
 <p>Reimplemented from <a class="el" href="classAIStatefulTask.html#abf2da57033c2f1d05a7f6b59fe392d67">AIStatefulTask</a>.</p>
+
+</div>
+</div>
+<a id="ae59f1116e3e0f84ba84e854e173c8774" name="ae59f1116e3e0f84ba84e854e173c8774"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae59f1116e3e0f84ba84e854e173c8774">&#9670;&nbsp;</a></span>task_name_impl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;TaskType Task, typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char const  * <a class="el" href="classtask_1_1Broker.html">task::Broker</a>&lt; Task, Args &gt;::task_name_impl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This can be used to get a human readable name of the most-derived class. It must be guaranteed to always return the same pointer value so it can be used with Tracy (for example). </p>
+
+<p>Implements <a class="el" href="classAIStatefulTask.html#a3d326f3307cb8c6b60cd1431bbb4f4fd">AIStatefulTask</a>.</p>
 
 </div>
 </div>
@@ -381,7 +422,7 @@ template&lt;TaskType Task, typename... Args&gt; </div>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Tue Mar 8 2022
+Revised Sat Nov 5 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

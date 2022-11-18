@@ -99,7 +99,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Abort the task (unsuccessful finish).</p>
-<p >This function can be called from <code>multiplex_imp</code>, but also by a child task and therefore by any thread. The child task should use a <code>boost::intrusive_ptr&lt;<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>&gt;</code> to access this task.</p>
+<p >This function can be called from <code>multiplex_impl</code>, but also by a child task and therefore by any thread. The child task should use a <code>boost::intrusive_ptr&lt;<a class="el" href="classAIStatefulTask.html">AIStatefulTask</a>&gt;</code> to access this task.</p>
 <p >A call to <code>abort</code> and <code>finish</code> will cause a task to not call <code>multiplex_impl</code> again at all after leaving it (except when <code>finish_impl</code> calls <code>run</code> again, in which case the task is restarted from the beginning). </p>
 
 </div>
@@ -157,7 +157,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <hr class="footer"/>
 <address class="footer" style="text-align:left; margin-left: 10px; font-size: 90%;">
-Revised Sat Nov 5 2022
+Revised Tue Nov 15 2022
 <span style="float:right;">Copyright &copy; Carlo Wood, 2018-2019.</span>
 </address>
 </body>

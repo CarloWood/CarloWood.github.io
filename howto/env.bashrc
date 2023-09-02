@@ -75,7 +75,7 @@ function __cdeh_store_environment ()
         name=$3;
         gsub("=.*","",name);
         gsub("-+", "-g", $2);
-        show=!index($2,"r") && !match(name, "^((__cdeh_|CDEH_|BASH|PULSE_PROP_OVERRIDE)|(name|HISTFILE|HISTFILESIZE|HISTSIZE|PIPESTATUS|PWD|_)$)")
+        show=!index($2,"r") && !match(name, "^((__cdeh_|CDEH_|BASH|PULSE_PROP_OVERRIDE)|(name|HISTFILE|HISTFILESIZE|HISTSIZE|PIPESTATUS|PWD|_|SSH_AGENT_PID|SSH_AUTH_SOCK)$)")
       }
       {
         if (show)
@@ -104,7 +104,7 @@ function __cdeh_clear_environment ()
   for name in $(declare -p | \
                 /bin/grep '^declare -[AFafgilntux-]* ' | \
                 /bin/sed -e 's/=.*//;s/.* //' | \
-                /bin/grep -E -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|FUNCNAME|GROUPS|LINENO|RANDOM|SECONDS|HOME|PATH|PS1|PROMPT_COMMAND|PWD|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_)$)'); do
+                /bin/grep -E -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|FUNCNAME|GROUPS|LINENO|RANDOM|SECONDS|HOME|PATH|PS1|PROMPT_COMMAND|PWD|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_|SSH_AGENT_PID|SSH_AUTH_SOCK)$)'); do
     unset $name
   done
   for name in $(declare -F | \

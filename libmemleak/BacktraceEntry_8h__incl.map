@@ -1,4 +1,13 @@
 <map id="src/include/BacktraceEntry.h" name="src/include/BacktraceEntry.h">
-<area shape="rect" id="node2" href="$Header_8h.html" title="This file contains the declaration of struct Header. " alt="" coords="14,80,89,107"/>
-<area shape="rect" id="node4" href="$Interval_8h.html" title="This file contains the declaration of struct Interval. " alt="" coords="115,80,191,107"/>
+<area shape="rect" id="Node000001" title="This file contains the declaration of struct BacktraceEntry." alt="" coords="5,5,210,33"/>
+<area shape="rect" id="Node000002" href="$Header_8h.html" title="This file contains the declaration of struct Header." alt="" coords="15,81,94,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,35,74,70,70,67,96,32"/>
+<area shape="rect" id="Node000004" href="$Interval_8h.html" title="This file contains the declaration of struct Interval." alt="" coords="119,81,203,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="119,32,145,67,141,70,115,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="19,157,89,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="57,109,57,142,52,142,52,109"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="113,157,209,184"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="164,109,164,142,158,142,158,109"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="232,157,322,184"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="183,107,245,146,243,151,180,111"/>
 </map>

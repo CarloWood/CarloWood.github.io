@@ -1,3 +1,13 @@
+Version 2.22 --> 2.23
+
+* Bug fix; cleaning up a path like "/path/a/../b/foo" before printing was broken in 2.22.
+
+Version 2.21 --> 2.22
+
+* Improved Windows support (by Mitch Capper).
+* The function that decides if a found path is executable (file_status)
+  was updated to that of bash version 5.2.
+
 Version 2.20 --> 2.21
 
 * Upgraded code from bash to version 4.3 (now uses eaccess).

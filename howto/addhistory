@@ -1,3 +1,8 @@
+if [ -f "$CDEH_HISTROOT`pwd`"/history ]; then
+  echo "$CDEH_HISTROOT`pwd`/history already exists."
+  exit 1
+fi
+
 mkdir -p "$CDEH_HISTROOT`pwd`"
-touch "$CDEH_HISTROOT`pwd`"/history
+history | sed -e 's/^[[:space:]]*[[:digit:]]*[[:space:]]*//' > "$CDEH_HISTROOT`pwd`"/history
 echo -n > "$CDEH_TMP/prevwd"

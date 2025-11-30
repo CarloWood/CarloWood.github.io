@@ -1,7 +1,7 @@
 <map id="BacktraceEntry" name="BacktraceEntry">
 <area shape="rect" id="Node000001" title="Backtrace representation." alt="" coords="5,133,126,161"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="141,135,149,139,152,147,144,157,127,162,125,156,142,153,147,147,145,143,139,140"/>
-<area shape="rect" id="Node000002" href="$structInterval.html" title="Backtrace specific Time interval." alt="" coords="30,9,101,36"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="68,51,68,133,63,133,63,51"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="117,11,125,15,128,23,120,33,102,36,101,31,117,28,123,22,121,19,115,16"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="142,135,149,140,152,147,144,157,127,162,125,156,142,153,147,146,145,143,140,140"/>
+<area shape="rect" id="Node000002" href="$structInterval.html" title="Backtrace specific Time interval." alt="" coords="30,8,101,36"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="68,52,68,133,63,133,63,52"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="118,11,125,15,128,23,120,33,102,36,101,31,117,28,123,22,121,19,115,16"/>
 </map>

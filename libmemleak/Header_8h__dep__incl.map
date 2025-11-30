@@ -1,7 +1,7 @@
 <map id="src/include/Header.h" name="src/include/Header.h">
 <area shape="rect" id="Node000001" title="This file contains the declaration of struct Header." alt="" coords="31,5,184,33"/>
 <area shape="rect" id="Node000002" href="$BacktraceEntry_8h.html" title="This file contains the declaration of struct BacktraceEntry." alt="" coords="5,81,210,109"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,48,110,81,105,81,105,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,49,110,81,105,81,105,49"/>
 <area shape="rect" id="Node000003" href="$sort_8h.html" title="This file contains the declaration of the sorting functions." alt="" coords="41,157,174,184"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,124,110,156,105,156,105,124"/>
 </map>

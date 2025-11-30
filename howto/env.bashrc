@@ -1,14 +1,18 @@
-# cdeh v2.0 -- an automatic history and environment switch system.
+# cdeh v2.1 -- an automatic history and environment switch system.
 #
-# Copyright (C) 2007 (v1.0), 2018 (v2.0)  Carlo Wood <carlo@alinoe.com>
+# Copyright (C) 2007 (v1.0), 2018 (v2.0), 2025 (v2.1)  Carlo Wood <carlo@alinoe.com>
 
 # Write history on exit.
 function exit ()
-{
-  history -a $HISTFILE
-  unset -f exit
-  rm -rf "/tmp/cdeh.$CDEH_USER/$$"
-  exit $1
+{  
+  if [ ${#FUNCNAME[@]} -eq 1 ]; then
+    # This is not a function; we are really exiting the shell with PID $$.
+    history -a $HISTFILE
+    test -z "$CDEH_VERBOSE" || echo "$$ CALLING exit: rm -rf \"/tmp/cdeh.$CDEH_USER/$$\""
+    rm -rf "/tmp/cdeh.$CDEH_USER/$$"
+    test -z "$CDEH_VERBOSE" || sleep 1
+  fi
+  builtin exit "${1:-0}"
 }
 
 function __cdeh_sanity ()
@@ -45,6 +49,7 @@ if __cdeh_sanity; then
   # introduced after first having succesfully set PROMPT_COMMAND.
   CDEH_TEST=`echo $PROMPT_COMMAND | grep do_prompt`;
   if test -n "$CDEH_TEST"; then
+    test -z "$CDEH_VERBOSE" || echo "$$ CLEARING PROMPT_COMMAND (goodbye)"
     unset PROMPT_COMMAND
   fi
   unset CDEH_TEST
@@ -69,13 +74,14 @@ echo -n > "$CDEH_TMP/preved"
 
 function __cdeh_store_environment ()
 {
+  test -z "$CDEH_VERBOSE" || echo "$$ STORING ENVIRONMENT to $CDEH_TMP/env.base"
   declare -p | awk '
       BEGIN { show=0 }
       /^declare -/ {
         name=$3;
         gsub("=.*","",name);
         gsub("-+", "-g", $2);
-        show=!index($2,"r") && !match(name, "^((__cdeh_|CDEH_|BASH|PULSE_PROP_OVERRIDE)|(name|HISTFILE|HISTFILESIZE|HISTSIZE|PIPESTATUS|PWD|_|SSH_AGENT_PID|SSH_AUTH_SOCK)$)")
+        show=!index($2,"r") && !match(name, "^((__cdeh_|CDEH_|BASH|PULSE_PROP_OVERRIDE)|(name|HISTFILE|HISTFILESIZE|HISTSIZE|PIPESTATUS|PWD|_|SSH_AGENT_PID|SSH_AUTH_SOCK|HOME|CODEX_REPOBASE|CODEX_SHELL)$)")
       }
       {
         if (show)
@@ -104,7 +110,7 @@ function __cdeh_clear_environment ()
   for name in $(declare -p | \
                 /bin/grep '^declare -[AFafgilntux-]* ' | \
                 /bin/sed -e 's/=.*//;s/.* //' | \
-                /bin/grep -E -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|FUNCNAME|GROUPS|LINENO|RANDOM|SECONDS|HOME|PATH|PS1|PROMPT_COMMAND|PWD|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_|SSH_AGENT_PID|SSH_AUTH_SOCK)$)'); do
+                /bin/grep -E -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|DISPLAY|FUNCNAME|GROUPS|HOSTNAME|LINENO|RANDOM|SECONDS|PATH|PS1|PROMPT_COMMAND|PWD|SHELL|TERM|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_|SSH_AGENT_PID|SSH_AUTH_SOCK|HOME|CODEX_REPOBASE|CODEX_SHELL)$)'); do
     unset $name
   done
   for name in $(declare -F | \
@@ -144,7 +150,9 @@ function __cdeh_rebuild_source_dirs ()
   CDEH_CURRENT_DIR="/"
   cdeh_i=0
   unset CDEH_SOURCE_DIRS
-  CDEH_DESCENT_DIR="$PWD"
+  # PWD is allowed to be anything that resolves to the current working directory.
+  # This script however requires a canonical form (e.g. no trailing slash).
+  CDEH_DESCENT_DIR=$(realpath -s "$PWD")
   until [ "$CDEH_DESCENT_DIR" = "" ]; do
     if [ -f "$CDEH_DESCENT_DIR/env.source" ]; then
       CDEH_SOURCE_DIRS[cdeh_i]="$CDEH_DESCENT_DIR"
@@ -169,15 +177,16 @@ function __cdeh_rebuild_source_dirs ()
 
 function __cdeh_rebuild_envfiles ()
 {
+  # Append because there might be some debug echo's in the file that we want to print.
   echo "__cdeh_reset_environment" >> "$CDEH_TMP/envfiles"
   cdeh_j=$cdeh_i
   while test $cdeh_j -gt 0; do
    cdeh_j=$((cdeh_j - 1))
-   echo ${CDEH_SOURCE_DIRS[$cdeh_j]}/env.source >> "$CDEH_TMP/envfiles"
+   echo "${CDEH_SOURCE_DIRS[$cdeh_j]}/env.source" >> "$CDEH_TMP/envfiles"
   done
 }
 
-declare -xf __cdeh_store_environment __cdeh_resource __cdeh_rebuild_source_dirs __cdeh_rebuild_envfiles
+declare -xf __cdeh_store_environment __cdeh_clear_environment __cdeh_resource __cdeh_rebuild_source_dirs __cdeh_rebuild_envfiles
 
 function resource ()
 {
@@ -215,6 +224,7 @@ if [ "$TOPPROJECT" = "TOPPROJECT_IS_NOT_SET" -a ! -z "$DEFAULT_TOPPROJECT" ]; th
   export TOPPROJECT=$DEFAULT_TOPPROJECT
 fi
 
+test -z "$CDEH_VERBOSE" || echo "$$ INITIALIZING PROMPT_COMMAND"
 export PROMPT_COMMAND='
     if "$CDEH_ROOT"/do_prompt $$ "$HISTFILE"; then
       if test -f "$CDEH_TMP/histfile"; then
@@ -233,3 +243,6 @@ export PROMPT_COMMAND='
 export CDEH_STORE_ENVIRONMENT="yes"
 
 fi # __cdeh_sanity succeeded.
+
+# So that Codex can use it too.
+declare -fx resource

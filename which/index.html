@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML LANG="en">
+<!-- $Id: index.html.in,v 1.17 2008-01-18 18:19:11 carlo Exp $ -->
 <HEAD>
 	<META name="Author" content="Carlo Wood">
 	<META http-equiv="content-type" content="text/html; charset=iso-8859-1">
@@ -14,7 +15,7 @@
 <H2>Downloading</H2>
 
 <P>
-<LI><A HREF="which-2.23.tar.gz">which-2.23.tar.gz</A>
+<LI><A HREF="which-2.24.tar.gz">which-2.24.tar.gz</A>
 </P>
 
 <H2>What is new?</H2>
@@ -23,119 +24,117 @@
 
 <H2>ChangeLog</H2>
 
-<A HREF="https://github.com/CarloWood/which/compare/V2_22...V2_23?diff=unified&w=">See github</A>
+<A HREF="https://github.com/CarloWood/which/compare/V2_23...V2_24?diff=unified&w=">See github</A>
 
 <H2>Manual page</H2>
 
 <PRE>
 NAME
-       which - shows the full path of (shell) commands.
+     which - shows the full path of (shell) commands.
 
 SYNOPSIS
-       which [options] [--] programname [...]
+     which [options] [--] programname [...]
 
 DESCRIPTION
-       Which takes one or more arguments. For each of its arguments it prints
-       to stdout the full path of the executables that would have been exe-
-       cuted when this argument had been entered at the shell prompt. It does
-       this by searching for an executable or script in the directories listed
-       in the environment variable PATH using the same algorithm as bash(1).
+     Which  takes  one or more arguments. For each of its arguments it prints to
+     stdout the full path of the executables that would have been executed  when
+     this argument had been entered at the shell prompt. It does this by search-
+     ing  for  an executable or script in the directories listed in the environ-
+     ment variable PATH using the same algorithm as bash(1).
 
-       This man page is generated from the file which.texinfo.
+     This man page is generated from the file which.texinfo.
 
 OPTIONS
-       --all, -a
-           Print all matching executables in PATH, not just the first.
+     --all, -a
+         Print all matching executables in PATH, not just the first.
 
-       --read-alias, -i
-           Read aliases from stdin, reporting matching ones on stdout. This is
-           useful in combination with using an alias for which itself. For ex-
-           ample
-           alias which='alias | which -i'.
+     --read-alias, -i
+         Read aliases from stdin, reporting matching ones  on  stdout.  This  is
+         useful in combination with using an alias for which itself. For example
+         alias which='alias | which -i'.
 
-       --skip-alias
-           Ignore  option  `--read-alias', if any. This is useful to explicity
-           search for normal binaries, while using the  `--read-alias'  option
-           in an alias or function for which.
+     --skip-alias
+         Ignore  option  `--read-alias',  if  any.  This  is useful to explicity
+         search for normal binaries, while using the `--read-alias' option in an
+         alias or function for which.
 
-       --read-functions
-           Read shell function definitions from stdin, reporting matching ones
-           on  stdout.  This is useful in combination with using a shell func-
-           tion for which itself.  For example:
-           which() { declare -f | which --read-functions $@ }
-           export -f which
+     --read-functions
+         Read shell function definitions from stdin, reporting matching ones  on
+         stdout.  This  is useful in combination with using a shell function for
+         which itself.  For example:
+         which() { declare -f | which --read-functions $@ }
+         export -f which
 
-       --skip-functions
-           Ignore option `--read-functions', if any. This is useful to explic-
-           ity search for normal binaries, while using the  `--read-functions'
-           option in an alias or function for which.
+     --skip-functions
+         Ignore option `--read-functions', if any. This is useful  to  explicity
+         search  for  normal binaries, while using the `--read-functions' option
+         in an alias or function for which.
 
-       --skip-dot
-           Skip directories in PATH that start with a dot.
+     --skip-dot
+         Skip directories in PATH that start with a dot.
 
-       --skip-tilde
-           Skip  directories  in  PATH that start with a tilde and executables
-           which reside in the HOME directory.
+     --skip-tilde
+         Skip directories in PATH that start with a tilde and executables  which
+         reside in the HOME directory.
 
-       --show-dot
-           If a directory in PATH starts with a dot and a matching  executable
-           was found for that path, then print "./programname" rather than the
-           full path.
+     --show-dot
+         If  a directory in PATH starts with a dot and a matching executable was
+         found for that path, then print "./programname" rather  than  the  full
+         path.
 
-       --show-tilde
-           Output  a  tilde  when a directory matches the HOME directory. This
-           option is ignored when which is invoked as root.
+     --show-tilde
+         Output a tilde when a directory matches the HOME directory. This option
+         is ignored when which is invoked as root.
 
-       --tty-only
-           Stop processing options on the right if not on tty.
+     --tty-only
+         Stop processing options on the right if not on tty.
 
-       --version,-v,-V
-           Print version information on standard  output  then  exit  success-
-           fully.
+     --version,-v,-V
+         Print version information on standard output then exit successfully.
 
-       --help
-           Print usage information on standard output then exit successfully.
+     --help
+         Print usage information on standard output then exit successfully.
 
 RETURN VALUE
-       Which  returns  the number of failed arguments, or -1 when no `program-
-       name' was given.
+     Which  returns  the number of failed arguments, or -1 when no `programname'
+     was given.
 
 EXAMPLE
-       The recommended way to use this utility is by adding an alias (C shell)
-       or shell function (Bourne shell) for which like the following:
+     The recommended way to use this utility is by adding an alias (C shell)  or
+     shell function (Bourne shell) for which like the following:
 
-       [ba]sh:
+     [ba]sh:
 
-            which ()
-            {
-              (alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@
-            }
-            export -f which
+          which ()
+          {
+            (alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+          }
+          export -f which
 
-       [t]csh:
+     [t]csh:
 
-            alias which 'alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+          alias which 'alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
 
-       This will print the readable ~/ and ./ when starting  which  from  your
-       prompt, while still printing the full path when used from a script:
+     This  will  print  the  readable  ~/  and  ./ when starting which from your
+     prompt, while still printing the full path when used from a script:
 
-            > which q2
-            ~/bin/q2
-            > echo $(which q2)
-            /home/carlo/bin/q2
+          > which q2
+          ~/bin/q2
+          > echo `which q2`
+          /home/carlo/bin/q2
 
 
 BUGS
-       The  HOME  directory  is determined by looking for the HOME environment
-       variable, which aborts when this variable doesn't  exist.   Which  will
-       consider  two  equivalent  directories to be different when one of them
-       contains a path with a symbolic link.
+     The HOME directory is determined by looking for the HOME environment  vari-
+     able,  which  aborts when this variable doesn't exist.  Which will consider
+     two equivalent directories to be different when one of them contains a path
+     with a symbolic link.
 
 AUTHOR
-       Carlo Wood <carlo@gnu.org>
+     Carlo Wood <carlo@gnu.org>
 
 SEE ALSO
-       bash(1)
+     bash(1)
 
 </PRE>
 
@@ -145,14 +144,15 @@ SEE ALSO
 >#! /bin/bash
 >umask 022
 >export PATH=".:~/bin:/bin:/usr/bin"
->alias /home/carlo/projects/savannah.which/which/build/which="$BUILDDIR/which"
+>export HOME=`(cd ~; pwd)`
+>alias /home/carlo/projects/which/build/which="$BUILDDIR/which"
 
 >touch cat; chmod 755 cat; pwd
-/home/carlo/projects/savannah.which/which/build
+/home/carlo/projects/which/build
 >alias
 
->/home/carlo/projects/savannah.which/which/build/which
-Usage: /home/carlo/projects/savannah.which/which/build/which [options] [--] COMMAND [...]
+>/home/carlo/projects/which/build/which
+Usage: /home/carlo/projects/which/build/which [options] [--] COMMAND [...]
 Write the full path of COMMAND(s) to standard output.
 
   --version, -[vV] Print version and exit successfully.
@@ -178,155 +178,149 @@ the full path of each command used inside of those.
 
 Report bugs to <which-bugs@gnu.org>.
 
->/home/carlo/projects/savannah.which/which/build/which --version
-GNU which v2.23, Copyright (C) 1999 - 2025 Carlo Wood.
+>/home/carlo/projects/which/build/which --version
+GNU which v2.24, Copyright (C) 1999 - 2026 Carlo Wood.
 GNU which comes with ABSOLUTELY NO WARRANTY;
 This program is free software; your freedom to use, change
 and distribute this program is protected by the GPL.
 
->/home/carlo/projects/savannah.which/which/build/which -- --version
-/home/carlo/projects/savannah.which/which/build/which: no --version in (.:~/bin:/bin:/usr/bin)
+>/home/carlo/projects/which/build/which -- --version
+/home/carlo/projects/which/build/which: no --version in (.:~/bin:/bin:/usr/bin)
 
->/home/carlo/projects/savannah.which/which/build/which cat
-/home/carlo/projects/savannah.which/which/build/cat
+>/home/carlo/projects/which/build/which cat
+/home/carlo/projects/which/build/cat
 
->/home/carlo/projects/savannah.which/which/build/which --show-tilde cat
-~/projects/savannah.which/which/build/cat
+>/home/carlo/projects/which/build/which --show-tilde cat
+~/projects/which/build/cat
 
->/home/carlo/projects/savannah.which/which/build/which --show-dot cat
+>/home/carlo/projects/which/build/which --show-dot cat
 ./cat
 
->/home/carlo/projects/savannah.which/which/build/which --show-tilde --show-dot cat
+>/home/carlo/projects/which/build/which --show-tilde --show-dot cat
 ./cat
 
->/home/carlo/projects/savannah.which/which/build/which --skip-dot cat
+>/home/carlo/projects/which/build/which --skip-dot cat
 /bin/cat
 
->(cd /bin; /home/carlo/projects/savannah.which/which/build/which cat)
+>(cd /bin; /home/carlo/projects/which/build/which cat)
 /usr/bin/cat
 
->(cd /bin; /home/carlo/projects/savannah.which/which/build/which --show-dot cat)
+>(cd /bin; /home/carlo/projects/which/build/which --show-dot cat)
 ./cat
 
->(cd /bin; PATH=".:/bin:/usr/bin" /home/carlo/projects/savannah.which/which/build/which --show-dot cat)
+>(cd /bin; PATH=".:/bin:/usr/bin" /home/carlo/projects/which/build/which --show-dot cat)
 ./cat
 
->(cd /bin; PATH="/bin:.:/usr/bin" /home/carlo/projects/savannah.which/which/build/which --show-dot cat)
+>(cd /bin; PATH="/bin:.:/usr/bin" /home/carlo/projects/which/build/which --show-dot cat)
 /bin/cat
 
->(cd /bin; PATH=".:/bin:/usr/bin" /home/carlo/projects/savannah.which/which/build/which --skip-dot --show-dot cat)
+>(cd /bin; PATH=".:/bin:/usr/bin" /home/carlo/projects/which/build/which --skip-dot --show-dot cat)
 /bin/cat
 
->/home/carlo/projects/savannah.which/which/build/which ls
+>/home/carlo/projects/which/build/which ls
 /bin/ls
 
->/home/carlo/projects/savannah.which/which/build/which xxx
-/home/carlo/projects/savannah.which/which/build/which: no xxx in (.:~/bin:/bin:/usr/bin)
+>/home/carlo/projects/which/build/which xxx
+/home/carlo/projects/which/build/which: no xxx in (.:~/bin:/bin:/usr/bin)
 
->/home/carlo/projects/savannah.which/which/build/which ./ls
-/home/carlo/projects/savannah.which/which/build/which: no ls in (.)
+>/home/carlo/projects/which/build/which ./ls
+/home/carlo/projects/which/build/which: no ls in (.)
 
->(cd /; /home/carlo/projects/savannah.which/which/build/which bin/ls)
+>(cd /; /home/carlo/projects/which/build/which bin/ls)
 /bin/ls
 
->(cd /; /home/carlo/projects/savannah.which/which/build/which --show-dot bin/ls)
+>(cd /; /home/carlo/projects/which/build/which --show-dot bin/ls)
 ./bin/ls
 
->(cd /; /home/carlo/projects/savannah.which/which/build/which --show-dot /bin/ls)
+>(cd /; /home/carlo/projects/which/build/which --show-dot /bin/ls)
 /bin/ls
 
->(cd /; /home/carlo/projects/savannah.which/which/build/which --show-dot bin/xxx)
-/home/carlo/projects/savannah.which/which/build/which: no xxx in (./bin)
+>(cd /; /home/carlo/projects/which/build/which --show-dot bin/xxx)
+/home/carlo/projects/which/build/which: no xxx in (./bin)
 
->(cd /; /home/carlo/projects/savannah.which/which/build/which --show-dot /bin/xxx)
-/home/carlo/projects/savannah.which/which/build/which: no xxx in (/bin)
+>(cd /; /home/carlo/projects/which/build/which --show-dot /bin/xxx)
+/home/carlo/projects/which/build/which: no xxx in (/bin)
 
->/home/carlo/projects/savannah.which/which/build/which --all cat
-/home/carlo/projects/savannah.which/which/build/cat
+>/home/carlo/projects/which/build/which --all cat
+/home/carlo/projects/which/build/cat
 /bin/cat
 /usr/bin/cat
 
 >touch xxx
->/home/carlo/projects/savannah.which/which/build/which ./xxx
-/home/carlo/projects/savannah.which/which/build/which: no xxx in (.)
+>/home/carlo/projects/which/build/which ./xxx
+/home/carlo/projects/which/build/which: no xxx in (.)
 
 >chmod 711 xxx
->/home/carlo/projects/savannah.which/which/build/which ./xxx
-/home/carlo/projects/savannah.which/which/build/xxx
+>/home/carlo/projects/which/build/which ./xxx
+/home/carlo/projects/which/build/xxx
 
 >chmod 655 cat
->/home/carlo/projects/savannah.which/which/build/which cat
+>/home/carlo/projects/which/build/which cat
 /bin/cat
 
 >su
 >chown root cat
 >exit
->/home/carlo/projects/savannah.which/which/build/which cat
-/home/carlo/projects/savannah.which/which/build/cat
+>/home/carlo/projects/which/build/which cat
+/home/carlo/projects/which/build/cat
 
 >su
 >chmod 545 cat
 >exit
->/home/carlo/projects/savannah.which/which/build/which cat
+>/home/carlo/projects/which/build/which cat
 /bin/cat
 
 >su
 >chgrp bin cat
 >exit
->/home/carlo/projects/savannah.which/which/build/which cat
-/home/carlo/projects/savannah.which/which/build/cat
+>/home/carlo/projects/which/build/which cat
+/home/carlo/projects/which/build/cat
 
 >su
 >chmod 541 cat
 >exit
->/home/carlo/projects/savannah.which/which/build/which cat
-/home/carlo/projects/savannah.which/which/build/cat
+>/home/carlo/projects/which/build/which cat
+/home/carlo/projects/which/build/cat
 >su
 >rm -f cat
 
 >chown root xxx
 >exit
->/home/carlo/projects/savannah.which/which/build/which ./xxx
-/home/carlo/projects/savannah.which/which/build/xxx
+>/home/carlo/projects/which/build/which ./xxx
+/home/carlo/projects/which/build/xxx
 
 >su
 >chmod 700 xxx
 >exit
->/home/carlo/projects/savannah.which/which/build/which ./xxx
-/home/carlo/projects/savannah.which/which/build/which: no xxx in (.)
+>/home/carlo/projects/which/build/which ./xxx
+/home/carlo/projects/which/build/which: no xxx in (.)
 
 >id
-uid=1000(carlo) gid=1000(carlo) groups=1000(carlo),0(root),150(wireshark),960(docker),972(deluge),973(realtime),995(audio),998(wheel)
+uid=1000(carlo) gid=1000(carlo) groups=1000(carlo),0(root),150(wireshark),943(brlapi),946(libvirt),960(docker),972(deluge),973(realtime),995(audio),998(wheel),1001(remountd)
 >ls -l xxx
--rwx------ 1 root carlo 0 Feb  1 19:56 xxx
+-rwx------ 1 root carlo 0 May 14 14:56 xxx
 >su
 >chmod 750 xxx
 >chgrp carlo xxx
 >exit
->/home/carlo/projects/savannah.which/which/build/which ./xxx
-/home/carlo/projects/savannah.which/which/build/xxx
+>/home/carlo/projects/which/build/which ./xxx
+/home/carlo/projects/which/build/xxx
 
 >su
 >chgrp bin xxx
 >exit
->/home/carlo/projects/savannah.which/which/build/which ./xxx
-/home/carlo/projects/savannah.which/which/build/which: no xxx in (.)
+>/home/carlo/projects/which/build/which ./xxx
+/home/carlo/projects/which/build/which: no xxx in (.)
 
->mkdir -p {a,b}
->touch b/test
->chmod 755 b/test
->(cd a; /home/carlo/projects/savannah.which/which/build/which ../b/test)
-/home/carlo/projects/savannah.which/which/build/b/test
-
->alias which='alias | /home/carlo/projects/savannah.which/which/build/which --tty-only --read-alias --show-tilde --show-dot'
+>alias which='alias | /home/carlo/projects/which/build/which --tty-only --read-alias --show-tilde --show-dot'
 >alias test1='test1'
 >alias test2='echo "test2" | cat | sort'
 >alias test3='  echo "test2"|cat&sort'
 >alias test4='	ls &&sort ||/usr/bin/which || exit'
 
 >which which
-alias which='alias | /home/carlo/projects/savannah.which/which/build/which --tty-only --read-alias --show-tilde --show-dot'
-	~/projects/savannah.which/which/build/which
+alias which='alias | /home/carlo/projects/which/build/which --tty-only --read-alias --show-tilde --show-dot'
+	~/projects/which/build/which
 >which test1
 alias test1='test1'
 >which test2

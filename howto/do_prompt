@@ -1,4 +1,4 @@
-# cdeh v2.1 -- an automatic history and environment switch system.
+# cdeh v2.2 (2026) -- an automatic history and environment switch system.
 #
 # Copyright (C) 2007 (v1.0), 2020 (v2.0)  Carlo Wood <carlo@alinoe.com>
 #
@@ -122,5 +122,7 @@ if [ "$PREVIOUS_DIR" != "$PWD" ]; then
       EXITCODE=0
     fi
   fi
+  # Issue OSC7 terminal sequence.
+  printf "\e]7;file://%s%s\e\\" "${HOSTNAME}" "${PWD}"
 fi
 exit $EXITCODE

@@ -8,9 +8,9 @@ function exit ()
   if [ ${#FUNCNAME[@]} -eq 1 ]; then
     # This is not a function; we are really exiting the shell with PID $$.
     history -a $HISTFILE
-    test -z "$CDEH_VERBOSE" || echo "$$ CALLING exit: rm -rf \"/tmp/cdeh.$CDEH_USER/$$\""
+    test -z "${CDEH_VERBOSE:-}" || echo "$$ CALLING exit: rm -rf \"/tmp/cdeh.$CDEH_USER/$$\""
     rm -rf "/tmp/cdeh.$CDEH_USER/$$"
-    test -z "$CDEH_VERBOSE" || sleep 1
+    test -z "${CDEH_VERBOSE:-}" || sleep 1
   fi
   builtin exit "${1:-0}"
 }
@@ -49,7 +49,7 @@ if __cdeh_sanity; then
   # introduced after first having succesfully set PROMPT_COMMAND.
   CDEH_TEST=`echo $PROMPT_COMMAND | grep do_prompt`;
   if test -n "$CDEH_TEST"; then
-    test -z "$CDEH_VERBOSE" || echo "$$ CLEARING PROMPT_COMMAND (goodbye)"
+    test -z "${CDEH_VERBOSE:-}" || echo "$$ CLEARING PROMPT_COMMAND (goodbye)"
     unset PROMPT_COMMAND
   fi
   unset CDEH_TEST
@@ -74,14 +74,14 @@ echo -n > "$CDEH_TMP/preved"
 
 function __cdeh_store_environment ()
 {
-  test -z "$CDEH_VERBOSE" || echo "$$ STORING ENVIRONMENT to $CDEH_TMP/env.base"
+  test -z "${CDEH_VERBOSE:-}" || echo "$$ STORING ENVIRONMENT to $CDEH_TMP/env.base"
   declare -p | awk '
       BEGIN { show=0 }
       /^declare -/ {
         name=$3;
         gsub("=.*","",name);
         gsub("-+", "-g", $2);
-        show=!index($2,"r") && !match(name, "^((__cdeh_|CDEH_|BASH|PULSE_PROP_OVERRIDE)|(name|HISTFILE|HISTFILESIZE|HISTSIZE|PIPESTATUS|PWD|_|SSH_AGENT_PID|SSH_AUTH_SOCK|HOME|CODEX_REPOBASE|CODEX_SHELL)$)")
+        show=!index($2,"r") && !match(name, "^((__cdeh_|CDEH_|BASH|PULSE_PROP_OVERRIDE)|(name|HISTFILE|HISTFILESIZE|HISTSIZE|PIPESTATUS|PWD|_|SSH_AGENT_PID|SSH_AUTH_SOCK|HOME)$)")
       }
       {
         if (show)
@@ -106,11 +106,11 @@ function __cdeh_store_environment ()
 
 function __cdeh_clear_environment ()
 {
-  test -z "$CDEH_VERBOSE" || echo "$$ CLEARING ENVIRONMENT"
+  test -z "${CDEH_VERBOSE:-}" || echo "$$ CLEARING ENVIRONMENT"
   for name in $(declare -p | \
                 /bin/grep '^declare -[AFafgilntux-]* ' | \
                 /bin/sed -e 's/=.*//;s/.* //' | \
-                /bin/grep -E -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|DISPLAY|FUNCNAME|GROUPS|HOSTNAME|LINENO|RANDOM|SECONDS|PATH|PS1|PROMPT_COMMAND|PWD|SHELL|TERM|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_|SSH_AGENT_PID|SSH_AUTH_SOCK|HOME|CODEX_REPOBASE|CODEX_SHELL)$)'); do
+                /bin/grep -E -v '^((__cdeh_|CDEH_|BASH_|PULSE_PROP_OVERRIDE)|(BASH|BASHPID|BASHOPTS|COMP_WORDBREAKS|DIRSTACK|DISPLAY|FUNCNAME|GROUPS|HOSTNAME|LINENO|RANDOM|SECONDS|PATH|PS1|PROMPT_COMMAND|PWD|SHELL|TERM|name|HISTFILE|HISTFILESIZE|HISTSIZE|HISTCMD|HISTCONTROL|PIPESTATUS|HOSTFILE|MAILCHECK|_|SSH_AGENT_PID|SSH_AUTH_SOCK|HOME)$)'); do
     unset $name
   done
   for name in $(declare -F | \
@@ -134,10 +134,10 @@ function __cdeh_resource ()
   for __cdeh_env_file in $CDEH_ENVFILES; do
     if test "$__cdeh_env_file" = "__cdeh_reset_environment"; then
       __cdeh_clear_environment
-      test -z "$CDEH_VERBOSE" || echo "$$ RELOADING SAVED ENVIRONMENT from $CDEH_TMP/env.base"
+      test -z "${CDEH_VERBOSE:-}" || echo "$$ RELOADING SAVED ENVIRONMENT from $CDEH_TMP/env.base"
       source "$CDEH_TMP/env.base"
     else
-      test -z "$CDEH_VERBOSE" || echo "$$ Sourcing \"$__cdeh_env_file\""
+      test -z "${CDEH_VERBOSE:-}" || echo "$$ Sourcing \"$__cdeh_env_file\""
       source "$__cdeh_env_file"
     fi
   done
@@ -224,7 +224,7 @@ if [ "$TOPPROJECT" = "TOPPROJECT_IS_NOT_SET" -a ! -z "$DEFAULT_TOPPROJECT" ]; th
   export TOPPROJECT=$DEFAULT_TOPPROJECT
 fi
 
-test -z "$CDEH_VERBOSE" || echo "$$ INITIALIZING PROMPT_COMMAND"
+test -z "${CDEH_VERBOSE:-}" || echo "$$ INITIALIZING PROMPT_COMMAND"
 export PROMPT_COMMAND='
     if "$CDEH_ROOT"/do_prompt $$ "$HISTFILE"; then
       if test -f "$CDEH_TMP/histfile"; then

@@ -1,3 +1,7 @@
+Version 2.24 --> 2.25
+
+* The changes of 2.22 and 2.23 were not in 2.24 because accidently used an old repository.
+
 Version 2.23 --> 2.24
 
 * Bug fix for an out of bounds stack read (by Daniel Anderson)
@@ -5,13 +9,11 @@ Version 2.23 --> 2.24
 
 Version 2.22 --> 2.23
 
-* No idea - but it was released on https://carlowood.github.io/which/
-  which *is* the official release site (probably an erroneous automated
-  release and not really different from 2.22).
+* Bug fix; cleaning up a path like "/path/a/../b/foo" before printing was broken in 2.22.
 
 Version 2.21 --> 2.22
 
-* Windows support improved (by Mitch Capper)
+* Improved Windows support (by Mitch Capper).
 * The function that decides if a found path is executable (file_status)
   was updated to that of bash version 5.2.
 

@@ -20,7 +20,7 @@ var searchData=
   ['2019_17',['7 Sept 2019',['../release-notes.html#autotoc_md13',1,'']]],
   ['2021_18',['28 March 2021',['../release-notes.html#autotoc_md11',1,'']]],
   ['2024_19',['2 November 2024',['../release-notes.html#autotoc_md9',1,'']]],
-  ['2026_20',['4 June 2026',['../release-notes.html#autotoc_md7',1,'']]],
+  ['2026_20',['4 July 2026',['../release-notes.html#autotoc_md7',1,'']]],
   ['21_20june_202002_21',['21 June 2002',['../release-notes.html#autotoc_md75',1,'']]],
   ['21_20may_202003_22',['21 May 2003',['../release-notes.html#autotoc_md57',1,'']]],
   ['21_20may_202007_23',['21 May 2007',['../release-notes.html#autotoc_md25',1,'']]],

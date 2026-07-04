@@ -102,15 +102,36 @@ $(function(){initNavTree('release-notes.html','',''); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="latest"></a></p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
-?? June 2026</h2>
+4 June 2026</h2>
 <p>Release of libcwd-2.0.0.</p>
-<p>This is the first released of libcwd under the MIT license!</p>
-<p>After that, the biggest change is probably that support for memory allocation debugging has been removed.</p>
-<p>Other changes include,</p>
+<p>This is the first release of libcwd under the MIT license!</p>
+<p>After that, the biggest change is probably that support for memory allocation debugging has been removed and several things previously part of cwds have been incorporated into libcwd; namely</p>
+<ul>
+<li>NAMESPACE_DEBUG + init() and init_thread().</li>
+<li>Indent and Mark (declared under libcwd instead of NAMESPACE_DEBUG).</li>
+</ul>
+<p>Other changes include:</p>
 <ul>
 <li>libcwd_r.so was renamed to libcwd.so</li>
-<li><a class="el" href="debug_8h.html#acd8dd41e8a67bba7ccfb3b50f7aa88a5" title="Encapsulation macro for general debugging code.">Debug(main_reached())</a> must now be called at the top of main. This also does what check_configuration() did, which therefore no longer exists.</li>
 <li>Complete rewrite of ELF/DWARF debug information loading code; dc::bfd was renamed to dc::elfutils.</li>
+<li>Several classes have been renamed:<ul>
+<li>channel_ct -&gt; <a class="el" href="classChannel.html" title="This object represents a debug channel, it has a fixed label. A debug channel can be viewed upon as a...">Channel</a></li>
+<li>location_ct -&gt; Location</li>
+<li>debug_ct -&gt; DebugObject</li>
+<li>debug_string_ct -&gt; DebugString</li>
+<li>type_info_ct -&gt; TypeInfo</li>
+</ul>
+</li>
+<li><span class="tt"><a class="el" href="group__fatal-debug-output.html#ga1eec86ccc5e0dc1bd75d5bcc2209d433" title="Macro for writing fatal debug output to the default debug object libcw_do .">DoutFatal</a>(dc::fatal, ..</span> now return 180 as exit code instead of 254.</li>
+<li>Instead of DEBUGCHANNELS, one has to define (and use) LIBCWD_DEBUG_CHANNELS.</li>
+<li>LIBCWD_DEBUGCHANNELS has been renamed to LIBCWD_DEBUG_CHANNELS.</li>
+</ul>
+<p>Things that have been REMOVED:</p>
+<ul>
+<li>Support for memory allocation debugging, and therefore also dc::malloc.</li>
+<li>Support for autotools.</li>
+<li>libcwd/sys.h has been removed (is no longer required).</li>
+<li>libcwd/cwprint.h has been removed.</li>
 </ul>
 <p>For a more detailed list, see the NEWS file.</p>
 <hr  />

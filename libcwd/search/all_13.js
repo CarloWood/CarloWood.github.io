@@ -12,5 +12,5 @@ var searchData=
   ['jun_202004_9',['Jun 2004',['../release-notes.html#autotoc_md47',1,'23 Jun 2004'],['../release-notes.html#autotoc_md45',1,'24 Jun 2004']]],
   ['jun_202010_10',['2 Jun 2010',['../release-notes.html#autotoc_md17',1,'']]],
   ['june_202002_11',['June 2002',['../release-notes.html#autotoc_md77',1,'18 June 2002'],['../release-notes.html#autotoc_md75',1,'21 June 2002']]],
-  ['june_202026_12',['?? June 2026',['../release-notes.html#autotoc_md7',1,'']]]
+  ['june_202026_12',['4 June 2026',['../release-notes.html#autotoc_md7',1,'']]]
 ];

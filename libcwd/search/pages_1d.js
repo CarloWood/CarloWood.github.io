@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['way_20around_0',['14. Why do you turn on the debug object after you enable a debug channel, why not the other way around?',['../group__tutorial-faq.html#faq_order',1,'']]],
+  ['what_20is_20a_20debug_20channel_1',['9. Why do you call it a Debug &lt;em&gt;Channel&lt;/em&gt;? What &lt;em&gt;is&lt;/em&gt; a Debug Channel?',['../group__tutorial-faq.html#faq_channel',1,'']]],
+  ['what_20is_20a_20debug_20object_2',['15. Why do you call it a Debug &lt;em&gt;Object&lt;/em&gt;? What &lt;em&gt;is&lt;/em&gt; a Debug Object?',['../group__tutorial-faq.html#faq_object',1,'']]],
+  ['what_20is_20defined_20exactly_20in_20libcwd_20debug_20h_3',['4. What is defined &lt;em&gt;exactly&lt;/em&gt; in &lt;span class=&quot;tt&quot;&gt;libcwd/debug.h&lt;/span&gt;?',['../group__tutorial-faq.html#faq_debug_h',1,'']]],
+  ['what_20is_20the_20maximum_20length_20of_20a_20label_4',['20. What is the maximum length of a label?',['../group__tutorial-faq.html#faq_label',1,'']]],
+  ['when_20the_20debug_20channel_20and_20or_20debug_20object_20are_20turned_20off_5',['18. Is the second field of the macro still evaluated when the Debug Channel and/or Debug Object are turned off?',['../group__tutorial-faq.html#faq_evaluation',1,'']]],
+  ['when_20using_20gitache_6',['How to configure libcwd when using gitache',['../group__configuration-options-and-macros.html#autotoc_md126',1,'']]],
+  ['which_20debug_20channels_20exist_20can_20i_20make_20my_20own_7',['7. Which Debug Channels exist? Can I make my own?',['../group__tutorial-faq.html#faq_debugchannels',1,'']]],
+  ['why_20are_20debug_20objects_20turned_20off_20at_20creation_8',['13. Why are Debug Objects turned off at creation?',['../group__tutorial-faq.html#faq_whyoff',1,'']]],
+  ['why_20are_20you_20using_20macros_20for_20debug_20and_20dout_9',['5. Why are you using macros for &lt;span class=&quot;tt&quot;&gt;Debug&lt;/span&gt; and &lt;span class=&quot;tt&quot;&gt;Dout&lt;/span&gt;?',['../group__tutorial-faq.html#faq_macros',1,'']]],
+  ['why_20do_20i_20have_20to_20use_20the_20dc_3a_3a_20prefix_10',['21. Why do I have to use the &lt;span class=&quot;tt&quot;&gt;dc::&lt;/span&gt; prefix?',['../group__tutorial-faq.html#faq_prefix',1,'']]],
+  ['why_20do_20i_20need_20to_20type_20the_20debug_20around_20it_11',['6. Why do I need to type the &lt;span class=&quot;tt&quot;&gt;Debug(  )&lt;/span&gt; around it?',['../group__tutorial-faq.html#faq_debug',1,'']]],
+  ['why_20do_20you_20call_20it_20a_20debug_20channel_20what_20is_20a_20debug_20channel_12',['9. Why do you call it a Debug &lt;em&gt;Channel&lt;/em&gt;? What &lt;em&gt;is&lt;/em&gt; a Debug Channel?',['../group__tutorial-faq.html#faq_channel',1,'']]],
+  ['why_20do_20you_20call_20it_20a_20debug_20object_20what_20is_20a_20debug_20object_13',['15. Why do you call it a Debug &lt;em&gt;Object&lt;/em&gt;? What &lt;em&gt;is&lt;/em&gt; a Debug Object?',['../group__tutorial-faq.html#faq_object',1,'']]],
+  ['why_20do_20you_20turn_20on_20the_20debug_20object_20after_20you_20enable_20a_20debug_20channel_20why_20not_20the_20other_20way_20around_14',['14. Why do you turn on the debug object after you enable a debug channel, why not the other way around?',['../group__tutorial-faq.html#faq_order',1,'']]],
+  ['why_20does_20it_20print_20spaces_20between_20the_20label_20and_20the_20colon_20how_20is_20the_20field_20width_20of_20the_20label_20determined_15',['23. Why does it print spaces between the label and the colon? How is the field width of the label determined?',['../group__tutorial-faq.html#faq_labelwidth',1,'']]],
+  ['why_20isn_20t_20it_20part_20of_20the_20macro_16',['16. Do I need to type that semi-colon after the macro? Why isn&apos;t it part of the macro?',['../group__tutorial-faq.html#faq_semicolon',1,'']]],
+  ['why_20not_20the_20other_20way_20around_17',['14. Why do you turn on the debug object after you enable a debug channel, why not the other way around?',['../group__tutorial-faq.html#faq_order',1,'']]],
+  ['width_20of_20the_20label_20determined_18',['23. Why does it print spaces between the label and the colon? How is the field width of the label determined?',['../group__tutorial-faq.html#faq_labelwidth',1,'']]],
+  ['with_20a_20new_20project_19',['Using libcwd with a new project',['../quick-reference.html#autotoc_md5',1,'']]],
+  ['won_20t_20this_20define_20make_20my_20code_20non_20portable_20',['1. Won&apos;t this define make my code non-portable?',['../group__tutorial-faq.html#faq_gnu_source',1,'']]],
+  ['world_21',['&lt;span class=&quot;tt&quot;&gt;Dout(dc::notice, &quot;Hello World&quot;);&lt;/span&gt;',['../group__tutorial-hello-world.html#autotoc_md134',1,'']]]
+];

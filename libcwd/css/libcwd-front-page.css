@@ -1,0 +1,284 @@
+/* Libcwd-specific customization layered on top of the vendored Doxygen Awesome theme. */
+
+html {
+  --primary-color: #1779c4;
+  --primary-dark-color: #335c80;
+  --primary-light-color: #70b1e9;
+  --page-font-size: 17px;
+  --content-line-height: 29px;
+  --content-maxwidth: 1050px;
+  --content-shell-left-margin: min(100px, max(0px, calc((100% - var(--content-maxwidth)) / 2)));
+  --content-text-inline-padding: 25px;
+  --side-nav-fixed-width: 335px;
+  --top-height: calc(var(--brand-font-size) + var(--page-font-size) + var(--brand-tagline-gap) +
+    var(--spacing-medium) + var(--spacing-medium) + var(--spacing-large) + var(--spacing-large) +
+    var(--searchbar-height) + 2px);
+  --side-nav-background: #1c263f;
+  --side-nav-foreground: #f1fdff;
+  --sidebar-muted-foreground: #c8d9df;
+  --header-background: var(--side-nav-background);
+  --header-foreground: var(--side-nav-foreground);
+  --searchbar-background: var(--side-nav-foreground);
+  --searchbar-border-radius: var(--border-radius-medium);
+  --sidebar-brand-background: #98b4e3;
+  --brand-font-size: 32pt;
+  --brand-tagline-gap: calc(var(--brand-font-size) * .05);
+  --brand-version-cap-center-offset: calc(var(--brand-font-size) * .08);
+}
+
+html.dark-mode {
+  --side-nav-background: #1c263f;
+  --side-nav-foreground: #f1fdff;
+  --header-background: var(--side-nav-background);
+  --header-foreground: var(--side-nav-foreground);
+  --searchbar-background: var(--page-background-color);
+}
+
+code em,
+span.tt em,
+.code em,
+.filename em {
+  font-size: .9em;
+  white-space: nowrap;
+}
+
+/* Styling for the \exampleoutput and \shellcommand Doxygen aliases defined in
+   doxygen.config.in. Restored from the legacy doc/styles/main.css, with the
+   defines.h macros resolved: FOREGROUND_COLOR_EXAMPLE -> #2323DC,
+   BACKGROUND_COLOR_EXAMPLE -> inherit, NORMAL_SIZE -> the page body size. */
+.example-output {
+  color: #2323DC;
+  background-color: inherit;
+}
+
+PRE.example-output {
+  margin-left: 30px;
+}
+
+.shell-command {
+  font-family: fixed, monospace;
+  font-size: var(--page-font-size);
+}
+
+.filename {
+  font-family: courier, monospace;
+}
+
+.about-example-output div.fragment .line,
+.about-example-output pre.fragment {
+  font-family: Hack, "DejaVu Sans Mono", monospace !important;
+  font-size: smaller !important;
+  line-height: normal !important;
+}
+
+.about-example-output div.fragment .line a,
+.about-example-output div.fragment .line span,
+.about-example-output pre.fragment a,
+.about-example-output pre.fragment span {
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+
+pre.fragment div.doxygen-awesome-fragment-wrapper pre.fragment {
+  padding: 0;
+  border: 0;
+}
+
+#titlearea {
+  padding: 0;
+}
+
+#projectalign {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--spacing-medium);
+  row-gap: var(--brand-tagline-gap);
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #000;
+  background: var(--sidebar-brand-background);
+}
+
+#projectname {
+  display: contents;
+}
+
+.brand__name,
+.brand__name:link,
+.brand__name:visited,
+.brand__name:hover,
+.brand__name:focus,
+.brand__name:active {
+  display: inline-flex;
+  align-items: center;
+  height: var(--brand-font-size);
+  color: black !important;
+  font-family: lucidux sans, avantgarde, sans-serif;
+  font-size: var(--brand-font-size);
+  font-weight: bold;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.brand__letters,
+.brand__mark {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+}
+
+.brand__mark {
+  color: #d92323;
+}
+
+#projectnumber {
+  align-self: center;
+  color: black;
+  font-weight: 700;
+  line-height: 1;
+  padding-right: var(--spacing-small);
+  transform: translateY(var(--brand-version-cap-center-offset));
+  white-space: nowrap;
+}
+
+#projectbrief {
+  grid-column: 1 / -1;
+  align-self: start;
+  padding: 0;
+  color: #5e502f;
+  font-size: 80%;
+  line-height: 1;
+}
+
+/* Doxygen Awesome creates the desktop search box in #searchBoxPos2 through Doxygen's menu.js.
+   Keep that canonical search form in the same sidebar slot that the old handcrafted #searcharea occupied. */
+@media screen and (min-width: 768px) {
+  #main-nav {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px var(--spacing-large) var(--spacing-large);
+    background-image: url("../images/main-nav-background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  #main-menu {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+  }
+
+  #main-menu > #searchBoxPos2 {
+    display: flex !important;
+    float: none !important;
+    gap: var(--spacing-small);
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+  }
+
+  #main-menu > #searchBoxPos2 #MSearchBox {
+    margin: 0;
+    width: calc(100% - var(--searchbar-height) - var(--spacing-small));
+  }
+
+  #main-menu > #searchBoxPos2 #MSearchField {
+    width: calc(100% - 64px);
+  }
+
+  #main-menu > #searchBoxPos2 doxygen-awesome-dark-mode-toggle {
+    flex: 0 0 var(--searchbar-height);
+    margin: 0;
+  }
+}
+
+#nav-tree a,
+#nav-tree .label {
+  color: var(--side-nav-foreground) !important;
+}
+
+/* Doxygen emits a project-root tree item above the configured navigation tabs.
+   Hide that redundant root row while keeping its children as the visible top-level navigation. */
+/*
+#nav-tree-contents > ul > li:first-child > .item {
+  display: none;
+}
+
+#nav-tree-contents > ul > li:first-child > .children_ul {
+  display: block !important;
+}
+
+#nav-tree-contents > ul > li:first-child > .children_ul > li > .item > a > .arrow {
+  padding-left: 0 !important;
+}
+
+#nav-tree-contents > ul > li:first-child > .children_ul > li > .item > .arrow {
+  width: 16px !important;
+}
+*/
+
+#nav-tree .selected a {
+  color: #fce5ac !important;
+}
+
+div.header .headertitle,
+div.contents {
+  width: min(100%, var(--content-maxwidth));
+  margin-right: auto;
+  margin-left: var(--content-shell-left-margin);
+}
+
+div.contents {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+div.header .headertitle .title {
+  box-sizing: border-box;
+  max-width: none;
+  margin-right: 0;
+  margin-left: 0;
+  padding-right: var(--content-text-inline-padding);
+  padding-left: var(--content-text-inline-padding);
+}
+
+div.contents .textblock {
+  box-sizing: border-box;
+  padding-right: var(--content-text-inline-padding);
+  padding-left: var(--content-text-inline-padding);
+}
+
+div.contents .textblock > :not(hr) {
+  box-sizing: border-box;
+}
+
+div.contents .textblock > ul,
+div.contents .textblock > ol {
+  padding-left: 1.25em;
+}
+
+div.contents .textblock > hr {
+  margin-right: calc(-1 * var(--content-text-inline-padding));
+  margin-left: calc(-1 * var(--content-text-inline-padding));
+  box-shadow: none;
+}
+
+#nav-path .footer {
+  white-space: normal;
+}
+
+/* The release notes page is a chronological list with one heading per release.
+   Suppress Doxygen's page outline there so the side panel does not become a long duplicate date index. */
+#container:has(.textblock > p > a#latest) {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+#container:has(.textblock > p > a#latest) #page-nav {
+  display: none !important;
+}

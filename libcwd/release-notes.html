@@ -105,33 +105,33 @@ $(function(){initNavTree('release-notes.html','',''); });
 4 July 2026</h2>
 <p>Release of libcwd-2.0.0.</p>
 <p>This is the first release of libcwd under the MIT license!</p>
-<p>After that, the biggest change is probably that support for memory allocation debugging has been removed and several things previously part of cwds have been incorporated into libcwd; namely</p>
+<p>After that, the biggest change is probably that support for memory allocation debugging has been removed and several things previously part of <a href="https://github.com/CarloWood/cwds">cwds</a> have been incorporated into libcwd; namely</p>
 <ul>
-<li>NAMESPACE_DEBUG + init() and init_thread().</li>
-<li>Indent and Mark (declared under libcwd instead of NAMESPACE_DEBUG).</li>
+<li><span class="tt">NAMESPACE_DEBUG</span> + <span class="tt">init()</span> and <span class="tt">init_thread()</span>.</li>
+<li><span class="tt">Indent</span> and <span class="tt">Mark</span> (declared under <span class="tt"><a class="el" href="namespacelibcwd.html" title="namespace for libcwd.">libcwd</a></span> instead of <span class="tt">NAMESPACE_DEBUG</span>).</li>
 </ul>
 <p>Other changes include:</p>
 <ul>
 <li>libcwd_r.so was renamed to libcwd.so</li>
-<li>Complete rewrite of ELF/DWARF debug information loading code; dc::bfd was renamed to dc::elfutils.</li>
+<li>Complete rewrite of ELF/DWARF debug information loading code; <span class="tt">dc::bfd</span> was renamed to <span class="tt">dc::elfutils</span>.</li>
 <li>Several classes have been renamed:<ul>
-<li>channel_ct -&gt; <a class="el" href="classChannel.html" title="This object represents a debug channel, it has a fixed label. A debug channel can be viewed upon as a...">Channel</a></li>
-<li>location_ct -&gt; Location</li>
-<li>debug_ct -&gt; DebugObject</li>
-<li>debug_string_ct -&gt; DebugString</li>
-<li>type_info_ct -&gt; TypeInfo</li>
+<li><span class="tt">channel_ct</span> -&gt; <span class="tt"><a class="el" href="classChannel.html" title="This object represents a debug channel, it has a fixed label. A debug channel can be viewed upon as a...">Channel</a></span></li>
+<li><span class="tt">location_ct</span> -&gt; <span class="tt">Location</span></li>
+<li><span class="tt">debug_ct</span> -&gt; <span class="tt">DebugObject</span></li>
+<li><span class="tt">debug_string_ct</span> -&gt; <span class="tt">DebugString</span></li>
+<li><span class="tt">type_info_ct</span> -&gt; <span class="tt">TypeInfo</span></li>
 </ul>
 </li>
-<li><span class="tt"><a class="el" href="group__fatal-debug-output.html#ga1eec86ccc5e0dc1bd75d5bcc2209d433" title="Macro for writing fatal debug output to the default debug object libcw_do .">DoutFatal</a>(dc::fatal, ..</span> now return 180 as exit code instead of 254.</li>
-<li>Instead of DEBUGCHANNELS, one has to define (and use) LIBCWD_DEBUG_CHANNELS.</li>
-<li>LIBCWD_DEBUGCHANNELS has been renamed to LIBCWD_DEBUG_CHANNELS.</li>
+<li><span class="tt"><a class="el" href="group__fatal-debug-output.html#ga1eec86ccc5e0dc1bd75d5bcc2209d433" title="Macro for writing fatal debug output to the default debug object libcw_do .">DoutFatal</a>(dc::fatal, ..</span> now returns 180 as exit code instead of 254.</li>
+<li>Instead of <span class="tt">DEBUGCHANNELS</span>, one has to define (and use) <span class="tt"><a class="el" href="cwds__debug_8h.html#a597d1811719cdd8b9dc68733e26c4077" title="The namespace containing the current debug channels (dc) namespace.">LIBCWD_DEBUG_CHANNELS</a></span>.</li>
+<li><span class="tt">LIBCWD_DEBUGCHANNELS</span> has been renamed to <span class="tt"><a class="el" href="cwds__debug_8h.html#a597d1811719cdd8b9dc68733e26c4077" title="The namespace containing the current debug channels (dc) namespace.">LIBCWD_DEBUG_CHANNELS</a></span>.</li>
 </ul>
 <p>Things that have been REMOVED:</p>
 <ul>
 <li>Support for memory allocation debugging, and therefore also dc::malloc.</li>
 <li>Support for autotools.</li>
-<li>libcwd/sys.h has been removed (is no longer required).</li>
-<li>libcwd/cwprint.h has been removed.</li>
+<li><span class="tt">libcwd/sys.h</span> has been removed (is no longer required).</li>
+<li><span class="tt">libcwd/cwprint.h</span> has been removed.</li>
 </ul>
 <p>For a more detailed list, see the NEWS file.</p>
 <hr  />

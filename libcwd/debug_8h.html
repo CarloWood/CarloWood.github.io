@@ -112,7 +112,9 @@ $(function(){initNavTree('debug_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:libcwd_3A_3AIndent" id="r_libcwd_3A_3AIndent"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structlibcwd_1_1Indent.html">libcwd::Indent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for marking scopes with indented debug output.  <a href="structlibcwd_1_1Indent.html#details">More...</a><br /></td></tr>
 <tr class="memitem:libcwd_3A_3AMark" id="r_libcwd_3A_3AMark"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structlibcwd_1_1Mark.html">libcwd::Mark</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for marking scopes with a marker character.  <a href="structlibcwd_1_1Mark.html#details">More...</a><br /></td></tr>
 <tr class="memitem:Channel" id="r_Channel"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classChannel.html">Channel</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This object represents a debug channel, it has a fixed label. A debug channel can be viewed upon as a single bit: on or off.  <a href="classChannel.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
@@ -239,7 +241,7 @@ Macros</h2></td></tr>
 <div class="line">LibcwDoutStream &lt;&lt; <span class="stringliteral">&quot;Entering &quot;</span> &lt;&lt; __VA_ARGS__;                                \</div>
 <div class="line">LibcwDoutScopeEnd;                                                            \</div>
 <div class="line"><a class="code hl_struct" href="structlibcwd_1_1Indent.html">::libcwd::Indent</a> __cwds_debug_indent(__cwds_debug_indentation);</div>
-<div class="ttc" id="astructlibcwd_1_1Indent_html"><div class="ttname"><a href="structlibcwd_1_1Indent.html">libcwd::Indent</a></div><div class="ttdef"><b>Definition</b> debug.h:173</div></div>
+<div class="ttc" id="astructlibcwd_1_1Indent_html"><div class="ttname"><a href="structlibcwd_1_1Indent.html">libcwd::Indent</a></div><div class="ttdoc">Interface for marking scopes with indented debug output.</div><div class="ttdef"><b>Definition</b> debug.h:173</div></div>
 </div><!-- fragment --><p>Debugging macro.</p>
 <p>Print "Entering " &lt;&lt; <em class="arg">data</em> to channel <em class="arg">cntrl</em> and increment debugging output indentation until the end of the current scope. </p>
 
